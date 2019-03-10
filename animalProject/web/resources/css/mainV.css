@@ -1,0 +1,47 @@
+/*
+ 2019-02-15 mainView1.html
+*/
+@charset "UTF-8";
+ html {
+	background: url(../resources/images/giphy.gif) no-repeat center center fixed; 
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+}
+
+filter: progid:DXimageTransform.Microsoft.AlphaImage(src='.dog1.jpg',sizingMethod='scale');
+-ms-filter: progid:DXimageTransform.Microsoft.AlphaImage(src='.dog1.jpg',sizingMethod='scale');
+
+img.bg{
+	min-height: 100%;
+	min-width: 1024px;
+	width: 100%;
+	height: auto;
+	position fixed;
+	top: 0;
+	left: 0;
+}
+@media screen and (max-width: 1024px){
+	img.bg{
+	left: 50%
+	margin-left: -512px}
+	
+}
+#bg{
+	position: fixed;
+	top: -50%;
+	left: -50%;
+	min-width: 200%;
+	min-height: 200%;
+}
+#bg img{
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	margin: auto;
+	min-width: 50%;
+	min-height: 50%;
+} 
