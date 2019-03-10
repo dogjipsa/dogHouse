@@ -88,6 +88,7 @@ nav ul li {
   border: 1px solid #2f343e;
   position: relative;
 }
+<<<<<<< HEAD
 nav ul li.unread:after {
   content: attr(data-content);
   position: absolute;
@@ -103,6 +104,9 @@ nav ul li.unread:after {
   background: #ef5952;
   font-size: 8px;
 }
+=======
+
+>>>>>>> master
 nav ul li:not(:last-child) {
   border-bottom: none;
 }
@@ -220,6 +224,10 @@ main section:hover {
 	transition: all 0.3s;
 	float: right;
 	margin: 30px;
+<<<<<<< HEAD
+=======
+	
+>>>>>>> master
 }
 .btn:after {
 	content: '';
