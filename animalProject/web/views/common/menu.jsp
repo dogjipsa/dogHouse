@@ -7,13 +7,13 @@
 <title>Insert title here</title>
 </head>
 <body>
-
+<nav>
 		<label for='menu_state'><i class="fa"></i></label>
 		<ul class='icon' id='icon'>
 			<li><img id='logo' src='/doggybeta/resources/images/doglogo.png'
-				width='80%' /> <a id='doghouse1'><span>도그하우스</span></a></li>
+				width='80%' /> </li>
 			<li id='icon1'><a href='#'> <span>홈</span> </a>
-			</a></li>
+			</li>
 			<li id='icon2' class="m1"><a href="#"><span>About us</span></a>
 				<ul class="m2">
 					<li>회사소개</li>
@@ -55,11 +55,15 @@
 		if ($(this).children('.m2').is(':visible')) {
 			$(this).children('.m2').slideUp(800);
 		} else {
+			
 			$(this).children('.m2').slideDown(800);
+			$('.fa').ready(function(){
+				event.stopPropagation()
+			});
 		}
 
 	});
 	</script>
-	
+	</nav>
 </body>
 </html>

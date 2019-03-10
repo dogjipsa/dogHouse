@@ -14,7 +14,10 @@
 <link href="/doggybeta/resources/css/mainV2.css" rel="stylesheet"
 	type="text/css">
 <link rel="stylesheet" type="text/css"
-	href=/doggybeta/resources/css/multiscroll.css" />
+	href="/doggybeta/resources/css/multiscroll.css" />
+	
+
+	
 <script type="text/javascript"
 	src="/doggybeta/resources/js/jquery-3.3.1.min.js"></script>
 <script type="text/javascript">
@@ -32,9 +35,9 @@
 </div> -->
 <body>
 	<input type='checkbox' id='menu_state' checked />
-	<nav>
+	
 	<%@ include file="../views/common/menu.jsp" %>
-	</nav>
+	
 	<main>
 	<div id='slide'>
 		<input type='radio' name='pos' id='pos1' checked /> <input
@@ -63,5 +66,9 @@
 구조화된 HTML은 HTML 태그를 본연의 용도에 맞게 사용하는 것이다. 
 	</p>
 	</section> -->
+	
+	
+	
+<%@ include file="views/common/footer.jsp" %>
 </body>
 </html>

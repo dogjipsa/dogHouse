@@ -42,19 +42,19 @@ input[type="checkbox"]:checked ~ nav ul li a span {
 input[type="checkbox"]:checked ~ main {
   left: 200px;
 }
-nav {
+nav {/* 왼쪽 메뉴  */
   position: fixed;
   z-index: 9;
   top: 0;
   left: 0;
   bottom: 0;
-  background: #efaf47;
+  background: #222;
   color: #9aa3a8;
   width: 50px;
   transition: all 0.15s ease-in-out;
   box-shadow: 5px 5px rgba(153,153,153,0.5);
 }
-nav label[for="menu_state"] i {
+nav label[for="menu_state"] i { /* 메뉴버튼 */
   cursor: pointer;
   position: absolute;
   top: 50%;
@@ -72,11 +72,11 @@ nav label[for="menu_state"] i {
   transition: width 0.15s ease-in-out;
   z-index: 1;
 }
-nav label[for="menu_state"] i::before {
+nav label[for="menu_state"] i::before {/* 메뉴를 접을 수 있는 작은 메뉴버튼  */
   margin-top: 2px;
   content: "\f054";
 }
-nav ul {
+nav ul {/* 왼쪽 메뉴 위치  */
   overflow: hidden;
   display: block;
   width: 50px;
@@ -84,15 +84,15 @@ nav ul {
   padding: 0;
   margin: 0;
 }
-nav ul li {
+nav ul li {/* 왼쪽 메뉴 border  */
   border: 1px solid #2f343e;
   position: relative;
 }
 
-nav ul li:not(:last-child) {
+nav ul li:not(:last-child) { /* 뭔지 잘 모르겠음  */
   border-bottom: none;
 }
-nav ul li a {
+nav ul li a {/* 메인메뉴 꾸밈  */
   position: relative;
   display: block;
   white-space: nowrap;
@@ -102,29 +102,29 @@ nav ul li a {
   width: 100%;
   transition: all 0.15s ease-in-out;
 }
-nav ul li a:hover {
+nav ul li a:hover {/* 메뉴에 마우스 올렸을 때  */
   background: #4c515d;
   color: #fff;
 }
-nav ul li a * {
+nav ul li a * {/* 모르겠음  */
   height: 100%;
   display: inline-block;
 }
-nav ul li a i {
+ nav ul li a i {/* 모르겠음  */
   text-align: center;
   width: 50px;
   z-index: 999999;
-}
-nav ul li a i.fa {
+} 
+nav ul li a i.fa { /*모르겠음*/
   line-height: 50px;
 }
-nav ul li a span {
-  padding-left: 25px;
+nav ul li a span {/* 작은 메뉴버튼을 접었을 때   */
+  padding-left: 25px; /* 메뉴 글자 왼쪽간격 */
   opacity: 0;
-  line-height: 50px;
+  line-height: 50px;/*  메뉴글자 높이 관련 */
   transition: opacity 0.1s ease-in-out;
 }
-main {
+main { /* 메인 사진 위치 관련 */
   position: absolute;
   transition: all 0.15s ease-in-out;
   width: 150%;
@@ -154,12 +154,11 @@ main section {
 main section:hover {
   box-shadow: 0 10px 20px rgba(0,0,0,0.9);
 } */
-.icon a:before {
-	margin-left: 15px;
-	padding-right: 10px;	
-}
+
+
+/* .icon은 아이콘 관련*/
 #icon1 a:before {
-	content: '\f015';
+	content: '\f015'; /*구글에 fontawesome 사이트 들어가면 나오는 아이콘의 고유번호*/
 	font-family: FontAwesome;
 }
 #icon2 a:before {
@@ -188,7 +187,7 @@ main section:hover {
 	color: snow;
 	cursor: pointer;
 }
-.btn {
+.btn { /* 로그인,회원가입 버튼  */
 	border: none;
 	color: inherit;
 	background: none;
@@ -206,7 +205,6 @@ main section:hover {
 	transition: all 0.3s;
 	float: right;
 	margin: 30px;
-	
 }
 .btn:after {
 	content: '';
@@ -216,7 +214,7 @@ main section:hover {
 	-moz-transition: all 0.3s;
 	transition: all 0.3s;
 }
-.btn-1 {
+.btn-1 { /*버튼 색 */
 	border: 3px solid #000;
 	color: #fff;
 }
@@ -291,7 +289,7 @@ main section:hover {
 #slide label:hover{
 	box-shadow: 0 1px 1px 1px rgba(0,0,0,0.7);
 }
-#slide label{
+#slide label{/* 사진 아래에 동그란거  */
 	box-shadow: 0 1px 3px rgba(0,0,0,0.9), 0 1px 2px rgba(0,0,0,0.9);
 	display:inline-block;
 	vertical-align:middle;
