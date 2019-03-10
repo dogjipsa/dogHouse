@@ -2,7 +2,6 @@
     <wb-module deploy-name="animalProject">
         <wb-resource deploy-path="/" source-path="/web" tag="defaultRootSource"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src"/>
-        <wb-resource deploy-path="/WEB-INF/classes" source-path="/"/>
         <property name="context-root" value="doggybeta"/>
         <property name="java-output-path" value="/animalProject/build/classes"/>
     </wb-module>
