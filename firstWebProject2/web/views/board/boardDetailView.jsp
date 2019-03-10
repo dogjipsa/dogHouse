@@ -1,0 +1,63 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ page import="member.model.vo.Member, board.model.vo.Board, java.sql.Date"  %>
+<%
+	Board board = (Board)request.getAttribute("board");
+	int currentPage = ((Integer)request.getAttribute("currentPage")).intValue();
+	
+	Member loginUser = (Member)session.getAttribute("loginUser");
+%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>first</title>
+</head>
+<body>
+<%@ include file="../common/header.jsp" %>
+<hr style="clear:both;">
+<h2 align="center"><%= board.getBoardNum() %></h2>
+<br>
+<table align="center" cellpadding="10" cellspacing="0" border="1" width="500">
+<tr>
+	<th>제목</th>
+	<td><%= board.getBoardTitle() %></td>
+</tr>
+<tr>
+	<th>작성자</th>
+	<td><%= board.getBoardWriter() %></td>
+</tr>
+<tr>
+	<th>첨부파일</th>
+	<td>
+		<% if(board.getBoardOriginalFilename() != null){ %>
+				<a><%= board.getBoardOriginalFilename() %></a>
+		<% }else { %>
+			첨부파일 없음
+		<% } %>
+	
+	</td>
+</tr>
+<tr>
+	<th>내용</th>
+	<td><%= board.getBoardContent() %></td>
+</tr>
+<tr>
+	<th colspan="2">
+	<% if(loginUser != null){ %>
+			<a href="/first/views/board/boardReplyForm.jsp?bnum=<%= board.getBoardNum() %>&page=<%= currentPage %>">[댓글달기]</a>
+	<% } %>
+	&nbsp; &nbsp;
+	<% if(loginUser.getUserId().equals(board.getBoardWriter())) %>
+	<a href="/first/bupview?bnum=<%= board.getBoardNum() %>">[수정페이지로 이동]</a>
+	&nbsp; &nbsp;
+	<a href="/first/bdelete?bnum=<%= board.getBoardNum() %>">[글삭제]</a>
+	<a href="/first/blist?page=<%= currentPage%>">[목록]</a>
+	</th>
+</tr>
+</table>
+
+<hr>
+<%@ include file="../common/footer.jsp" %>
+</body>
+</html>
