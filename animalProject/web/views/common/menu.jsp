@@ -26,12 +26,12 @@
 			
 			<li id='icon1'><a href='/doggybeta'> <span>홈</span> </a>
 			</li>
-			<li id='icon2' class="m1"><a href="/doggybeta/views/aboutus/introduce.jsp"><span>About us</span></a>
+			<li  class="m1"><a href="/doggybeta/views/aboutus/introduce.jsp" id='icon2'><span>&nbsp;&nbsp;&nbsp;About us</span></a>
 				<ul class="m2">
 					<li><a href="/doggybeta/views/aboutus/introduce.jsp">회사소개</a></li>
-					<li>연혁</li>
-					<li>팀 도그집사</li>
-					<li>오시는 길</li>
+					<li><a>연혁</a></li>
+					<li><a>팀 도그집사</a></li>
+					<li><a>오시는 길</a></li>
 				</ul>
 			</li>
 			<li id='icon3'><a href='#'> <span>펫시터 찾기</span></a>

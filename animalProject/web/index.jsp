@@ -33,8 +33,9 @@
 </head>
 <body>
 	<%@ include file="../views/common/menu.jsp"%>
-		<div class="content" style="max-width: 100%; margin-left: 10%; min-height: 100%;">
+		<div class="content" style="margin-left: 10%; min-height: 100%;">
 			<!-- 내용작성  -->
+			
 			<div class="w3-container"></div>
 
 			<div class="w3-content w3-display-container" style="max-width: 100%;">
@@ -57,8 +58,9 @@
 						class="w3-badge demo w3-border w3-transparent w3-hover-white"
 						onclick="currentDiv(3)"></span>
 				</div>
-			<%@ include file="views/common/footer.jsp"%>
+				<%@ include file="views/common/footer.jsp"%>
 			</div>
+			
 
 		</div>
 	
