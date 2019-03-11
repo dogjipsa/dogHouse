@@ -15,10 +15,11 @@
     margin-bottom:0;
     border-top-width: 0;
 } */
-footer {
+footer{
 	width:120%;
-	height:5%;
+	height:5%; 
 	position:absolute;
+	bottom:0; 
 	bottom:0; 
 	left:0;
 	background:#ccc;

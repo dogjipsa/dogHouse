@@ -79,40 +79,34 @@ nav ul li a {/* 메인메뉴 꾸밈  */
   white-space: nowrap;
   text-decoration: none;
   color: #fff;
-  height: 50px;
   width: 100%;
   transition: all 0.15s ease-in-out;
 }
+
 nav ul li a:hover {/* 메뉴에 마우스 올렸을 때  */
   background: #4c515d;
   color: #fff;
 }
 
 nav ul li a span {/* 작은 메뉴버튼을 접었을 때   */
-  padding-left: 25px; /* 메뉴 글자 왼쪽간격 */
+  padding-left: 10px; /* 메뉴 글자 왼쪽간격 */
   opacity: 0;
   line-height: 50px;/*  메뉴글자 높이 관련 */
   transition: opacity 0.1s ease-in-out;
 }
-main { /* 메인 사진 위치 관련 */
-  position: absolute;
-  transition: all 0.15s ease-in-out;
-  width: 150%;
-  top: 530px;
-  left: 50px;
-}
+
 
 
 
 /* .icon은 아이콘 관련*/
-a{/* 왼쪽 간격  */
-	padding-left: 20px;
-}
+
+
 #icon1 a:before {
 	content: '\f015'; /*구글에 fontawesome 사이트 들어가면 나오는 아이콘의 고유번호*/
 	font-family: FontAwesome;
+	
 }
-#icon2 a:before {
+#icon2 :before {
 	content: '\f002';
 	font-family: FontAwesome;
 }
@@ -137,6 +131,7 @@ a{/* 왼쪽 간격  */
 	text-align: center;
 	color: snow;
 	cursor: pointer;
+	
 }
 .btn { /* 로그인,회원가입 버튼  */
 	border: none;
