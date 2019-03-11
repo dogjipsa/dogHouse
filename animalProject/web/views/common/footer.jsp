@@ -6,19 +6,29 @@
 <meta charset="UTF-8">
 <title></title>
 <style>
-footer {
+
+/* footer {
 	text-align:center;
-    position:absolute;
     bottom:0;
     width:120%;
-    height:70px;   
     background:#ccc;
+    margin-bottom:0;
+    border-top-width: 0;
+} */
+footer {
+	width:120%;
+	height:5%;
+	position:absolute;
+	bottom:0; 
+	left:0;
+	background:#ccc;
+	text-align:center;
 }
 </style>
 </head>
 <body>
 
-<footer align="center">
+<footer>
 copyright@kh.org 2019-03-04 master : 홍길동 <br>
 tel : 02-1234-5678, 서울시 강남구 역삼동 777, fax : 02-1111-2356
 </footer>

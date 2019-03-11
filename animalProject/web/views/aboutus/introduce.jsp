@@ -8,5 +8,11 @@
 </head>
 <body>
 <%@ include file="../common/menu.jsp" %>
+	<div class="content" style="max-width: 100%; margin-left: 10%;  min-height:100%;"><!-- 내용작성  -->	
+		
+		<h1>안녕하세요 도그집사입니다.</h1>
+		
+	<%@ include file="..//common/footer.jsp"%>
+	</div>
 </body>
 </html>
