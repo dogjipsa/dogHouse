@@ -5,16 +5,29 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<link
+	href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css"
+	rel="stylesheet" />
+<link href="/doggybeta/resources/css/mainV2.css" rel="stylesheet"
+	type="text/css">
+<script type="text/javascript"
+	src="/doggybeta/resources/js/jquery-3.3.1.min.js"></script>
 </head>
 <body>
 <nav>
-		<label for='menu_state'><i class="fa"></i></label>
+	
+		
+		<ul class='doghouse'>
+			<li><a><span>doghouse</span></a></li>
+		</ul>
+		<button class='btn btn-1 btn-sign'>회원가입/로그인</button>
 		<ul class='icon' id='icon'>
-			<li><img id='logo' src='/doggybeta/resources/images/doglogo.png'
-				width='80%' /> </li>
+			<!-- <li><img id='logo' src='/doggybeta/resources/images/doglogo.png'
+				width='80%' /><a><span>doghouse</span> </a></li> -->
+			
 			<li id='icon1'><a href='#'> <span>홈</span> </a>
 			</li>
-			<li id='icon2' class="m1"><a href="#"><span>About us</span></a>
+			<li id='icon2' class="m1"><a href="/doggybeta/views/aboutus/1.jsp"><span>About us</span></a>
 				<ul class="m2">
 					<li>회사소개</li>
 					<li>연혁</li>
@@ -50,6 +63,7 @@
 			</li>
 
 		</ul>
+		
 		 <script type="text/javascript">
 	$('.m1').hover(function() {
 		if ($(this).children('.m2').is(':visible')) {
