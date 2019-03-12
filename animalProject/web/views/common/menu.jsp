@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -14,8 +14,8 @@
 	src="/doggybeta/resources/js/jquery-3.3.1.min.js"></script>
 </head>
 <body>
-<input type='checkbox' id='menu_state' checked />
-<nav>
+	<input type='checkbox' id='menu_state' checked />
+	<nav>
 		<ul class='doghouse'>
 			<li><a><span>doghouse</span></a></li>
 		</ul>
@@ -23,60 +23,56 @@
 		<ul class='icon' id='icon'>
 			<!-- <li><img id='logo' src='/doggybeta/resources/images/doglogo.png'
 				width='80%' /><a><span>doghouse</span> </a></li> -->
-			
-			<li id='icon1'><a href='/doggybeta'> <span>홈</span> </a>
-			</li>
-			<li  class="m1"><a href="/doggybeta/views/aboutus/introduce.jsp" id='icon2'><span>&nbsp;&nbsp;&nbsp;About us</span></a>
-				<ul class="m2">
-					<li><a href="/doggybeta/views/aboutus/introduce.jsp">회사소개</a></li>
-					<li><a>연혁</a></li>
-					<li><a>팀 도그집사</a></li>
-					<li><a>오시는 길</a></li>
-				</ul>
-			</li>
-			<li id='icon3'><a href='#'> <span>펫시터 찾기</span></a>
+
+			<li><a href='/doggybeta' id='icon1'> <span>&nbsp;&nbsp;&nbsp;홈</span>
 			</a></li>
-			<li id='icon4' class="m1"><a href='#'> <span>게시판</span>
+			<li class="m1"><a
+				href="/doggybeta/views/aboutus/companyintroduce.jsp" id='icon2'><span>&nbsp;&nbsp;&nbsp;About
+						us</span></a>
+				<ul class="m2">
+					<li><a href="/doggybeta/views/aboutus/companyIntroduce.jsp">회사소개</a></li>
+					<li><a>연혁</a></li>
+					<li><a href="/doggybeta/views/aboutus/teamIntroduce.jsp">팀
+							도그집사</a></li>
+					<li><a href="/doggybeta/views/aboutus/location.jsp">오시는 길</a></li>
+				</ul></li>
+			<li><a href='#' id='icon3'> <span>&nbsp;&nbsp;&nbsp;펫시터	찾기</span></a> </li>
+			<li class="m1"><a href='#'  id='icon4'> <span>&nbsp;&nbsp;&nbsp;게시판</span>
 			</a>
 				<ul class="m2">
-					<li>공지사항</li>
-					<li>자유게시판</li>
-					<li>팁</li>
+					<li><a href='#'>공지사항</a></li>
+					<li><a href='#'>자유게시판</a></li>
+					<li><a href='#'>팁</a></li>
 				</ul></li>
-			<li id='icon5' class="m1"><a href="#"> <span>고객센터</span></a>
+			<li class="m1"><a href="#" id='icon5'> <span>&nbsp;&nbsp;&nbsp;고객센터</span></a>
 				<ul class="m2">
-					<li>FAQ</li>
-					<li>이용방법</li>
-					<li>1:1문의</li>
-				</ul>
-			</li>
+					<li><a href='#'>FAQ</a></li>
+					<li><a href='#'>이용방법</a></li>
+					<li><a href='#'>1:1문의</a></li>
+				</ul></li>
 
-
-			<li id='icon6' class="m1"><a href="#"><span>마이페이지</span></a>
+			<li class="m1"><a href="#" id='icon6'><span>&nbsp;&nbsp;&nbsp;마이페이지</span></a>
 				<ul class="m2">
-					<li>정보수정</li>
-					<li>이용내역/예약확인</li>
-					<li>펫시터신청</li>
-					<li>사전문의확인</li>
-				</ul>
-			</li>
+					<li><a href='#'>정보수정</a></li>
+					<li><a href='#'>이용내역/예약확인</a></li>
+					<li><a href='#'>펫시터신청</a></li>
+					<li><a href='#'>사전문의확인</a></li>
+				</ul></li>
 
 		</ul>
-		
-		 <script type="text/javascript">
-	$('.m1').hover(function() {
-		if ($(this).children('.m2').is(':visible')) {
-			$(this).children('.m2').slideUp(800);
-		} else {
-			
-			$(this).children('.m2').slideDown(800);
-			$('.fa').ready(function(){
-				event.stopPropagation()
-			});
-		}
 
-	});
-	</script>
+		<script type="text/javascript">
+			$('.m1').hover(function() {
+				if ($(this).children('.m2').is(':visible')) {
+					$(this).children('.m2').slideUp(800);
+				} else {
+					$(this).children('.m2').slideDown(800);
+					$('.fa').ready(function() {
+						event.stopPropagation()
+					});
+				}
+			});
+		</script>
 	</nav>
 </body>
 </html>

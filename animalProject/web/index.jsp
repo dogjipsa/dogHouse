@@ -33,7 +33,7 @@
 </head>
 <body>
 	<%@ include file="../views/common/menu.jsp"%>
-		<div class="content" style="margin-left: 10%; min-height: 100%;">
+		<div style="margin-left: 10%; min-height: 100%;">
 			<!-- 내용작성  -->
 			
 			<div class="w3-container"></div>

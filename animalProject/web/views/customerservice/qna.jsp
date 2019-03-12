@@ -7,12 +7,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-<%@ include file="../common/menu.jsp" %>
-	<div style=" margin-left: 10%;  min-height:100%;"><!-- 내용작성  -->	
-		
-		<h1>오시는길</h1>
-		
-	<%@ include file="..//common/footer.jsp"%>
-	</div>
+
 </body>
 </html>
