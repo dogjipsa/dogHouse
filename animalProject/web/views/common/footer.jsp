@@ -17,7 +17,7 @@
 } */
 footer{
 	width:120%;
-	height:5%; 
+	height:8%; 
 	position:absolute;
 	bottom:0; 
 	bottom:0; 

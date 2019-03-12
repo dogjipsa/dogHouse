@@ -1,14 +1,4 @@
 @charset "UTF-8";
-
-/* body {
-	background: url(../../resources/images/backdog1.jpg) center center fixed no-repeat;
-	-webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
-    background-size: cover;
- 
-    overflow: hidden;
-} */
 body {
 	overflow:hidden;
 	height:100%;
@@ -94,35 +84,30 @@ nav ul li a span {/* 작은 메뉴버튼을 접었을 때   */
   line-height: 50px;/*  메뉴글자 높이 관련 */
   transition: opacity 0.1s ease-in-out;
 }
-
-
-
-
 /* .icon은 아이콘 관련*/
 
-
-#icon1 a:before {
+#icon1 span:before {
 	content: '\f015'; /*구글에 fontawesome 사이트 들어가면 나오는 아이콘의 고유번호*/
 	font-family: FontAwesome;
 	
 }
-#icon2 :before {
+#icon2 span:before {
 	content: '\f002';
 	font-family: FontAwesome;
 }
-#icon3 a:before {
+#icon3 span:before {
 	content: '\f002';
 	font-family: FontAwesome;
 }
-#icon4 a:before {
+#icon4 :before {
 	content: '\f0ca';
 	font-family: FontAwesome;
 }
-#icon5 a:before {
+#icon5 :before {
 	content: '\f075';
 	font-family: FontAwesome;
 }
-#icon6 a:before {
+#icon6 :before {
 	content: '\f075';
 	font-family: FontAwesome;
 }
@@ -131,7 +116,6 @@ nav ul li a span {/* 작은 메뉴버튼을 접었을 때   */
 	text-align: center;
 	color: snow;
 	cursor: pointer;
-	
 }
 .btn { /* 로그인,회원가입 버튼  */
 	border: none;
