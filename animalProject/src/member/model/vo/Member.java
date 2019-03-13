@@ -5,97 +5,120 @@ import java.sql.Date;
 public class Member {
 
 	public Member() {}
-	
-	private int freeBoardNo;
-	private String freeBoardTitle;
-	private String freeBoardContent;
-	private Date freeBoardDate;
-	private String freeBoardFile;
-	private int freeBoardViews;
-	private int freeBoardRecommend;
+
 	private String userId;
-	private String freeBoardDeleteYN;
-	public int getFreeBoardNo() {
-		return freeBoardNo;
-	}
+	private String userPwd;
+	private String email;
+	private String userName;
+	private String phone;
+	private String address;
+	private String job;
+	private String petSitter;
+	private int price;
+	private Date userDate;
 	
-
-	public Member(int freeBoardNo, String freeBoardTitle, String freeBoardContent, Date freeBoardDate,
-			String freeBoardFile, int freeBoardViews, int freeBoardRecommend, String userId, String freeBoardDeleteYN) {
+	public Member(String userId, String userPwd, String email, String userName, String phone, String address,
+			String job, String petSitter, int price, Date userDate) {
 		super();
-		this.freeBoardNo = freeBoardNo;
-		this.freeBoardTitle = freeBoardTitle;
-		this.freeBoardContent = freeBoardContent;
-		this.freeBoardDate = freeBoardDate;
-		this.freeBoardFile = freeBoardFile;
-		this.freeBoardViews = freeBoardViews;
-		this.freeBoardRecommend = freeBoardRecommend;
 		this.userId = userId;
-		this.freeBoardDeleteYN = freeBoardDeleteYN;
+		this.userPwd = userPwd;
+		this.email = email;
+		this.userName = userName;
+		this.phone = phone;
+		this.address = address;
+		this.job = job;
+		this.petSitter = petSitter;
+		this.price = price;
+		this.userDate = userDate;
 	}
 
-	public void setFreeBoardNo(int freeBoardNo) {
-		this.freeBoardNo = freeBoardNo;
-	}
-	public String getFreeBoardTitle() {
-		return freeBoardTitle;
-	}
-	public void setFreeBoardTitle(String freeBoardTitle) {
-		this.freeBoardTitle = freeBoardTitle;
-	}
-	public String getFreeBoardContent() {
-		return freeBoardContent;
-	}
-	public void setFreeBoardContent(String freeBoardContent) {
-		this.freeBoardContent = freeBoardContent;
-	}
-	public Date getFreeBoardDate() {
-		return freeBoardDate;
-	}
-	public void setFreeBoardDate(Date freeBoardDate) {
-		this.freeBoardDate = freeBoardDate;
-	}
-	public String getFreeBoardFile() {
-		return freeBoardFile;
-	}
-	public void setFreeBoardFile(String freeBoardFile) {
-		this.freeBoardFile = freeBoardFile;
-	}
-	public int getFreeBoardViews() {
-		return freeBoardViews;
-	}
-	public void setFreeBoardViews(int freeBoardViews) {
-		this.freeBoardViews = freeBoardViews;
-	}
-	public int getFreeBoardRecommend() {
-		return freeBoardRecommend;
-	}
-	public void setFreeBoardRecommend(int freeBoardRecommend) {
-		this.freeBoardRecommend = freeBoardRecommend;
-	}
 	public String getUserId() {
 		return userId;
 	}
+
 	public void setUserId(String userId) {
 		this.userId = userId;
 	}
-	public String getFreeBoardDeleteYN() {
-		return freeBoardDeleteYN;
-	}
-	public void setFreeBoardDeleteYN(String freeBoardDeleteYN) {
-		this.freeBoardDeleteYN = freeBoardDeleteYN;
+
+	public String getUserPwd() {
+		return userPwd;
 	}
 
+	public void setUserPwd(String userPwd) {
+		this.userPwd = userPwd;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+
+	public String getPhone() {
+		return phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	public String getJob() {
+		return job;
+	}
+
+	public void setJob(String job) {
+		this.job = job;
+	}
+
+	public String getPetSitter() {
+		return petSitter;
+	}
+
+	public void setPetSitter(String petSitter) {
+		this.petSitter = petSitter;
+	}
+
+	public int getPrice() {
+		return price;
+	}
+
+	public void setPrice(int price) {
+		this.price = price;
+	}
+
+	public Date getUserDate() {
+		return userDate;
+	}
+
+	public void setUserDate(Date userDate) {
+		this.userDate = userDate;
+	}
 
 	@Override
 	public String toString() {
-		return "Member [freeBoardNo=" + freeBoardNo + ", freeBoardTitle=" + freeBoardTitle + ", freeBoardContent="
-				+ freeBoardContent + ", freeBoardDate=" + freeBoardDate + ", freeBoardFile=" + freeBoardFile
-				+ ", freeBoardViews=" + freeBoardViews + ", freeBoardRecommend=" + freeBoardRecommend + ", userId="
-				+ userId + ", freeBoardDeleteYN=" + freeBoardDeleteYN + "]";
+		return "Member [userId=" + userId + ", userPwd=" + userPwd + ", email=" + email + ", userName=" + userName
+				+ ", phone=" + phone + ", address=" + address + ", job=" + job + ", petSitter=" + petSitter + ", price="
+				+ price + ", userDate=" + userDate + "]";
 	}
-
 	
-
+	
+	
 }
-
