@@ -18,7 +18,9 @@
 <script type="text/javascript"
 	src="/doggybeta/resources/js/jquery-3.3.1.min.js"></script>
 <script type="text/javascript">
-	
+	function loginBtn() {
+		location.href = "/doggybeta/views/common/loginView.jsp";
+	}
 </script>
 <!-- javascript -->
 <script type="text/javascript"
@@ -51,7 +53,7 @@
 		</p>
 	</div>
 	</main>
-	<button class='btn btn-1 btn-sign'>회원가입/로그인</button>
+	<button class='btn btn-1 btn-sign' onclick="loginBtn();">회원가입/로그인</button>
 	<!-- <header></header> -->
 	<!-- <section></section> -->
 	<!-- <section>
