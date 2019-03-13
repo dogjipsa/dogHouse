@@ -1,6 +1,6 @@
 @charset "UTF-8";
-body {
-	overflow:hidden;
+body,html {
+
 	height:100%;
 }
 
@@ -16,7 +16,7 @@ input[type="checkbox"]#menu_state {
   display: none;
 }
 input[type="checkbox"]:checked ~ nav {/* 왼쪽 메뉴 크기  */
-  width: 10%;
+  width: 200px;
 }
 input[type="checkbox"]:checked ~ nav label[for="menu_state"] i::before {
   content: "\f053";
