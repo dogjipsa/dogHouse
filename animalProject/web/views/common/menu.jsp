@@ -19,7 +19,7 @@
 		<ul class='doghouse'>
 			<li><a><span>doghouse</span></a></li>
 		</ul>
-		<button class='btn btn-1 btn-sign'>회원가입/로그인</button>
+		<button class='btn btn-1 btn-sign'><a href="">회원가입<br>로그인</a></button>
 		<ul class='icon' id='icon'>
 			<!-- <li><img id='logo' src='/doggybeta/resources/images/doglogo.png'
 				width='80%' /><a><span>doghouse</span> </a></li> -->
@@ -27,7 +27,7 @@
 			<li><a href='/doggybeta' id='icon1'> <span>&nbsp;&nbsp;&nbsp;홈</span>
 			</a></li>
 			<li class="m1"><a
-				href="/doggybeta/views/aboutus/companyintroduce.jsp" id='icon2'><span>&nbsp;&nbsp;&nbsp;About
+				href="/doggybeta/views/aboutus/companyIntroduce.jsp" id='icon2'><span>&nbsp;&nbsp;&nbsp;About
 						us</span></a>
 				<ul class="m2">
 					<li><a href="/doggybeta/views/aboutus/companyIntroduce.jsp">회사소개</a></li>
