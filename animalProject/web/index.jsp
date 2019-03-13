@@ -1,69 +1,101 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Dog House</title>
-<meta name="description" content="">
-<meta name="author" content="">
+
 <!-- css -->
-<link
-	href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css"
-	rel="stylesheet" />
-<link href="/doggybeta/resources/css/mainV2.css" rel="stylesheet"
-	type="text/css">
+
 <link rel="stylesheet" type="text/css"
-	href=/doggybeta/resources/css/multiscroll.css" />
+	href="/doggybeta/resources/css/multiscroll.css" />
+
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<style>
+.mySlides {
+	display: none
+}
+
+.w3-left, .w3-right, .w3-badge {
+	cursor: pointer
+}
+.w3-badge {
+	height: 13px;
+	width: 13px;
+	padding: 0
+}
+</style>
+
 <script type="text/javascript"
 	src="/doggybeta/resources/js/jquery-3.3.1.min.js"></script>
-<script type="text/javascript">
-	function loginBtn() {
-		location.href = "/doggybeta/views/common/loginView.jsp";
-	}
-</script>
-<!-- javascript -->
-<script type="text/javascript"
-	src="/doggybeta/resources/js/multiscroll.js"></script>
-	<style type="text/css">
-	
-	</style>
+
 </head>
-<!-- <div id="bgimage">
-	<img src="/doggybeta/resources/images/backdog1.jpg" alt="" >
-</div> -->
 <body>
-	<input type='checkbox' id='menu_state' checked />
-	<nav>
-	<%@ include file="../views/common/menu.jsp" %>
-	</nav>
-	<main>
-	<div id='slide'>
-		<input type='radio' name='pos' id='pos1' checked /> <input
-			type='radio' name='pos' id='pos2' /> <input type='radio' name='pos'
-			id='pos3' />
-		<ul>
-			<li></li>
-			<li></li>
-			<li></li>
-		</ul>
-		<p class='pos'>
-			<label for='pos1'></label> <label for='pos2'></label> <label
-				for='pos3'></label>
-		</p>
-	</div>
-	</main>
-	<button class='btn btn-1 btn-sign' onclick="loginBtn();">회원가입/로그인</button>
-	<!-- <header></header> -->
-	<!-- <section></section> -->
-	<!-- <section>
-	<p>
-	과거에는 HTML에 디자인적 요소를 포함하여 작성하는 것이 일반적이었다. 다시 말해서 온갖 레이아웃, 디자인 정보를 HTML 안에 욱여넣다 보니 HTML의 본연의 목적인 구조화된 문서가 아닌 디자인을 위한 문서로 전락하고 말았다. 표를 작성해야 하는 <table> 태그가 레이아웃을 구성하는 용도로 쓰이는 등으로 인해 HTML 소스코드만 보면 이 문서가 어떤 문서인지 전문가조차 알기 힘든 상황이었다.[2]
+	<%@ include file="../views/common/menu.jsp"%>
+		<div style="margin-left: 10%; min-height: 100%;">
+			<!-- 내용작성  -->
+			
+			<div class="w3-container"></div>
 
-이에 따라 W3C에서는 "디자인적 요소를 HTML과 완전히 분리시켜 구조화된 HTML을 만들어보자!" 라는 목적으로 CSS를 발표했다. 거기에 따라 bgcolor 등과 같이 HTML에서 디자인에 관련된 요소들은 전부 사용하지 말 것을 권고하고 있다. CSS 발표 이후로 HTML문서의 구조화를 도와주는 div, span, section 등의 새로운 태그가 도입되고 strike, font 등의 스타일 태그는 비권장 태그로 전환되다가 HTML5에서는 아예 삭제되었다. table은 표 형태의 데이터를 표현하는 용도에만 쓰도록 권고하면서 표의 구조화를 도와줄 thead, tbody태그가 새로 소개되었다.
+			<div class="w3-content w3-display-container" style="max-width: 100%;">
+				<img class="mySlides" src="/doggybeta/resources/images/backdog1.jpg"
+					style="width: 100%;"> <img class="mySlides"
+					src="/doggybeta/resources/images/dog2.jpg" style="width: 100%">
+				<img class="mySlides" src="/doggybeta/resources/images/backdog1.jpg"
+					style="width: 100%">
+				<div
+					class="w3-center w3-container w3-section w3-large w3-text-white w3-display-bottommiddle"
+					style="width: 100%">
+					<div class="w3-left w3-hover-text-khaki" onclick="plusDivs(-1)">
+						<font size=15pt>&#10094;</font>
+					</div>
+					<div class="w3-right w3-hover-text-khaki" onclick="plusDivs(1)">&#10095;</div>
+					<span class="w3-badge demo w3-border w3-transparent w3-hover-white"
+						onclick="currentDiv(1)"></span> <span
+						class="w3-badge demo w3-border w3-transparent w3-hover-white"
+						onclick="currentDiv(2)"></span> <span
+						class="w3-badge demo w3-border w3-transparent w3-hover-white"
+						onclick="currentDiv(3)"></span>
+				</div>
+				<%@ include file="views/common/footer.jsp"%>
+			</div>
+			
 
-구조화된 HTML은 HTML 태그를 본연의 용도에 맞게 사용하는 것이다. 
-	</p>
-	</section> -->
+		</div>
+	
+	<script>
+		var slideIndex = 1;
+		showDivs(slideIndex);
+
+		function plusDivs(n) {
+			showDivs(slideIndex += n);
+		}
+
+		function currentDiv(n) {
+			showDivs(slideIndex = n);
+		}
+
+		function showDivs(n) {
+			var i;
+			var x = document.getElementsByClassName("mySlides");
+			var dots = document.getElementsByClassName("demo");
+			if (n > x.length) {
+				slideIndex = 1
+			}
+			if (n < 1) {
+				slideIndex = x.length
+			}
+			for (i = 0; i < x.length; i++) {
+				x[i].style.display = "none";
+			}
+			for (i = 0; i < dots.length; i++) {
+				dots[i].className = dots[i].className.replace(" w3-white", "");
+			}
+			x[slideIndex - 1].style.display = "block";
+			dots[slideIndex - 1].className += " w3-white";
+		}
+	</script>
+	
 </body>
 </html>
