@@ -47,7 +47,9 @@ nav {/* 왼쪽 메뉴  */
   box-shadow: 5px 5px rgba(153,153,153,0.5);
   
 }
-
+nav a{/* 회원가입,로그인 버튼 밑줄 삭제  */
+	text-decoration:none
+}
 
 nav ul {/* 왼쪽 메뉴 위치  */
   overflow: hidden;
