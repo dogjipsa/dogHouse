@@ -124,7 +124,7 @@ nav ul li a span {/* 작은 메뉴버튼을 접었을 때   */
 	cursor: pointer;
 
 	display: inline-block;
-	margin: 15px 30px;
+	margin: 5px 5px;
 	text-transform: uppercase;
 	letter-spacing: 1px;
 	font-weight: 700;
