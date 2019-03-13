@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.sql.Date;
 
 public class Member implements Serializable{
+
+
 	   private static final long serialVersionUID = -5224047403963087858L;
 
 	   public Member() {}
@@ -19,6 +21,7 @@ public class Member implements Serializable{
 	   private int price;
 	   private Date userDate;
 	   
+
 	   public Member(String userId, String userPwd, String email, String userName, String phone, String address,
 	         String job, String petSitter, int price, Date userDate) {
 	      super();
