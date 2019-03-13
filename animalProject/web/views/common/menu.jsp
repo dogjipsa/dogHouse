@@ -102,8 +102,11 @@
 				<div class="section3">
 					<div class="image_box">
 						<div class="image_box_pic"></div>				
-						<label id="file_btn"><input type="file" name="afile" class="ps_input">Add a profile pic</label>
+						<input type="file" id="real-file" hidden="hidden" />
+						<button type="button" id="fake-file-btn">Choose a File</button>
+						<span id="file-text"></span>
 					</div>
+					<div class="map_box"></div>
 					<span><button>펫시터 등록하기</button></span>
 				</div>
 			</form>
