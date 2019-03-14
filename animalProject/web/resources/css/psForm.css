@@ -8,9 +8,6 @@
 	height: 700px;
 	background-color: rgba(0,0,0,0.7);
 	border-radius: 20px;
-	
-}
-.ps_reg_form form {
 	display: grid;
 	grid-template-columns: 1fr 1fr 1fr;
 }
@@ -26,24 +23,24 @@
 .ps_reg_form .close:hover {
   opacity: 0.6;
 }
-.ps_reg_form form .section1 {
+.ps_reg_form .section1 {
 	display: grid;
 	grid-column:span 1;
 	margin: 20px;
 	padding: 0 50px; 
 }
-.ps_reg_form form .section2 {
+.ps_reg_form .section2 {
 	display: grid;
 	grid-column:span 1;
 	margin: 20px;
 	padding: 0 50px; 
 }
-.ps_reg_form form .section3 {
+.ps_reg_form .section3 {
 	display: grid;
 	grid-column:span 1;
 	margin: 30px;
 }
-form p{
+.ps_reg_form p{
 	font-weight: 600;
 	color: white;
 }
@@ -75,7 +72,7 @@ form p{
 	box-shadow: 8px 20px 52px 3px rgba(245,242,245,0.4);
 }
 .section3 .map_box{
-	border:1px solid white;
+	border:1px solid rgba(255,255,255,0.2);
 	height: 300px;
 }
 .ps_reg_form input[type="file"]{
@@ -115,5 +112,7 @@ form p{
 	opacity: 0.8;
 }
 .ps_reg_form #submit-btn {
-	
+	background: #747d8c;
+	width: 400px;
+	height: 40px;
 }

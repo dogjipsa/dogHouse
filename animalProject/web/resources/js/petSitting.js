@@ -25,3 +25,45 @@ realFileBtn.addEventListener('change', () =>{
 		customTxt.innerHTML = realFileBtn.value.match(/[\/\\]([\w\d\s\.\-\(\)]+)$/)[1];
 	}
 });
+
+// 펫시터 등록 버튼 클릭 시 발생 이벤트
+const submitBtn = document.getElementById('submit-btn'); 
+
+function handleRadio(name){
+	const radioBtns = document.getElementsByName(name);
+		for(let i = 0; i < radioBtns.length; i++){
+			if(radioBtns[i].checked)
+				return radioBtns[i].value; // 체크된 라디오 버튼 value 리턴
+		}
+}
+function checkInputs(obj){
+	for(let i in obj){
+		if(obj[i] === "") return false;
+	}
+}
+submitBtn.addEventListener('click', ()=>{
+	const toSend = {
+		userid : document.querySelector('.section1 .input_id').value,
+		username : document.querySelector('.section1 .input_name').value,
+		agree : handleRadio('agree'),
+		phone : document.querySelector('.section2 .input_phone').value,
+		email : document.querySelector('.section2 .input_email').value,
+		address : document.querySelector('.section2 .input_addr').value,
+		price : document.querySelector('.section2 .input_price').value
+	}
+	if(checkInputs(toSend)){
+		
+		const jsonString = JSON.stringify(toSend);
+		const xhr = new XMLHttpRequest();
+		
+		xhr.onload = function(){
+			
+		}
+		
+		xhr.open('POST','/doggybeta/pss');
+		xhr.setRequestHeader("Content-Type","application/json")
+		xhr.send(jsonString);
+	} else {
+		
+	}
+})
