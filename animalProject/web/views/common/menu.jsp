@@ -107,7 +107,7 @@
 						<span id="file-text"></span>
 					</div>
 					<div class="map_box"></div>
-					<span><button>펫시터 등록하기</button></span>
+					<span><button type="submit" id="submit-btn">펫시터 등록하기</button></span>
 				</div>
 			</form>
 		</div>

@@ -76,7 +76,7 @@ form p{
 }
 .section3 .map_box{
 	border:1px solid white;
-	height: 250px;
+	height: 300px;
 }
 .ps_reg_form input[type="file"]{
 	display:none;
@@ -113,4 +113,7 @@ form p{
 .ps_reg_form button:hover{
 	cursor: pointer;
 	opacity: 0.8;
+}
+.ps_reg_form #submit-btn {
+	
 }
