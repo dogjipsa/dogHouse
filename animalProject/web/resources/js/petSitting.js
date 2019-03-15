@@ -51,8 +51,8 @@ submitBtn.addEventListener('click', ()=>{
 		address : document.querySelector('.section2 .input_addr').value,
 		price : document.querySelector('.section2 .input_price').value
 	}
-	if(checkInputs(toSend)){
-		
+	if(checkInputs(toSend) && toSend.agree === 'agree'){
+		// 모든 인풋 정보가 들어왔을경우
 		const jsonString = JSON.stringify(toSend);
 		const xhr = new XMLHttpRequest();
 		
@@ -64,6 +64,7 @@ submitBtn.addEventListener('click', ()=>{
 		xhr.setRequestHeader("Content-Type","application/json")
 		xhr.send(jsonString);
 	} else {
-		
+		// 필수 인풋 정보가 들어오지 않았을 경우
+		console.log('xxxxx');
 	}
 })
