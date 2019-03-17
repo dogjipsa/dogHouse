@@ -20,10 +20,11 @@ const customTxt = document.getElementById("file-text");
 customBtn.addEventListener('click', () =>{
 	realFileBtn.click();
 });
+
 realFileBtn.addEventListener('change', () =>{
-	if(realFileBtn.value){
+	// 업로드 하면 버튼 옆에 파일명(경로제외) 출력 됨.
+	if(realFileBtn.value)
 		customTxt.innerHTML = realFileBtn.value.match(/[\/\\]([\w\d\s\.\-\(\)]+)$/)[1];
-	}
 });
 
 // 펫시터 등록 버튼 클릭 시 발생 이벤트
@@ -36,10 +37,12 @@ function handleRadio(name){
 				return radioBtns[i].value; // 체크된 라디오 버튼 value 리턴
 		}
 }
+// 필수 입력항목 체크
 function checkInputs(obj){
 	for(let i in obj){
 		if(obj[i] === "") return false;
 	}
+	return true;
 }
 submitBtn.addEventListener('click', ()=>{
 	const toSend = {
@@ -52,6 +55,7 @@ submitBtn.addEventListener('click', ()=>{
 		price : document.querySelector('.section2 .input_price').value
 	}
 	if(checkInputs(toSend) && toSend.agree === 'agree'){
+		console.log('oooo');
 		// 모든 인풋 정보가 들어왔을경우
 		const jsonString = JSON.stringify(toSend);
 		const xhr = new XMLHttpRequest();
