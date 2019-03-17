@@ -11,12 +11,12 @@ public class Review implements Serializable {
 	private String point;
 	private String reviewContent;
 	private String reviewOriginFile;
-	private String reviewreFile;
+	private String reviewReFile;
 	
 	public Review() {}
-
+	
 	public Review(int reviewNo, String userId, int bookingNo, String point, String reviewContent,
-			String reviewOriginFile, String reviewreFile) {
+			String reviewOriginFile, String reviewReFile) {
 		super();
 		this.reviewNo = reviewNo;
 		this.userId = userId;
@@ -24,8 +24,10 @@ public class Review implements Serializable {
 		this.point = point;
 		this.reviewContent = reviewContent;
 		this.reviewOriginFile = reviewOriginFile;
-		this.reviewreFile = reviewreFile;
+		this.reviewReFile = reviewReFile;
 	}
+
+
 
 	public int getReviewNo() {
 		return reviewNo;
@@ -75,23 +77,22 @@ public class Review implements Serializable {
 		this.reviewOriginFile = reviewOriginFile;
 	}
 
-	public String getReviewreFile() {
-		return reviewreFile;
+	public String getReviewReFile() {
+		return reviewReFile;
 	}
 
-	public void setReviewreFile(String reviewreFile) {
-		this.reviewreFile = reviewreFile;
+	public void setReviewReFile(String reviewReFile) {
+		this.reviewReFile = reviewReFile;
 	}
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
-	
+
 	@Override
 	public String toString() {
-		return
-				this.reviewNo + ", " + this.userId + ", " + this.bookingNo + ", " + this.point + ", "
-			  + this.reviewContent + ", " + this.reviewOriginFile + ", " + this.reviewreFile;
+		return reviewNo + ", " + userId + ", " + bookingNo + ", " + point + ", " + reviewContent + ", "
+				+ reviewOriginFile + ", " + reviewReFile;
 	}
-
+	
 }

@@ -1,6 +1,5 @@
 package member.model.service;
 
-
 import static common.JDBCTemplate.*;
 
 import java.sql.Connection;
@@ -14,18 +13,25 @@ public class MemberService {
 	
 	public MemberService() {}
 
-	public Member selectLogin(String userId, String userPwd) {
+	public Member loginMember(String userid, String userpwd) {
 		Connection conn = getConnection();
-		Member loginUser = 
-				mdao.selectLogin(conn, userId, userPwd);
+		System.out.println(userid +"=service="+userpwd);
+		Member loginUser = mdao.loginCheck(conn, userid, userpwd);
 		close(conn);
+		
 		return loginUser;
 	}
 
-	public int selectCheckId(String userId) {
+	public int findPassword(Member member) {
 		Connection conn = getConnection();
-		int result = mdao.selectCheckId(conn, userId);
+		int result = mdao.findPassword(conn, member);
+		
+		if(result > 0)
+			commit(conn);
+		else
+			rollback(conn);
 		close(conn);
+		
 		return result;
 	}
 
@@ -40,14 +46,6 @@ public class MemberService {
 		return result;
 	}
 
-	public Member selectMember(String userId) {
-		Connection conn = getConnection();
-		Member member = 
-				mdao.selectMember(conn, userId);
-		close(conn);
-		return member;
-	}
-
 	public int updateMember(Member member) {
 		Connection conn = getConnection();
 		int result = mdao.updateMember(conn, member);
@@ -59,9 +57,9 @@ public class MemberService {
 		return result;
 	}
 
-	public int deleteMember(String userId) {
+	public int deleteMember(Member member) {
 		Connection conn = getConnection();
-		int result = mdao.deleteMember(conn, userId);
+		int result = mdao.deleteMember(conn, member);
 		if(result > 0)
 			commit(conn);
 		else
@@ -70,20 +68,20 @@ public class MemberService {
 		return result;
 	}
 
-	public ArrayList<Member> selectList() {
+	public ArrayList<Member> selectAllList() {
 		Connection conn = getConnection();
-		ArrayList<Member> list = mdao.selectList(conn);
+		ArrayList<Member> list = mdao.selectAllList(conn);
 		close(conn);
 		return list;
 	}
+
+	public Member selectMember(String userId) {
+		Connection conn = getConnection();
+		Member member = mdao.selectMember(conn, userId);
+		close(conn);
+		return member;
+	}
+
+	
+
 }
-
-
-
-
-
-
-
-
-
-

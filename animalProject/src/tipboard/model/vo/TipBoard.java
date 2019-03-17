@@ -18,9 +18,10 @@ public class TipBoard implements Serializable{
 	private String tipBoardDelete;
 	
 	public TipBoard() {}
-
-	public TipBoard(int tipBoardNo, String tipBoardTitle, String tipBoardContent, Date tipBoardDate, String tipBoardOriginFile,
-			String tipBoardReFile, int tipBoardViews, int tipBoardRecommend, String userId, String tipBoardDelete) {
+	
+	public TipBoard(int tipBoardNo, String tipBoardTitle, String tipBoardContent, Date tipBoardDate,
+			String tipBoardOriginFile, String tipBoardReFile, int tipBoardViews, int tipBoardRecommend, String userId,
+			String tipBoardDelete) {
 		super();
 		this.tipBoardNo = tipBoardNo;
 		this.tipBoardTitle = tipBoardTitle;
@@ -33,96 +34,76 @@ public class TipBoard implements Serializable{
 		this.userId = userId;
 		this.tipBoardDelete = tipBoardDelete;
 	}
-
-	public int getTipNo() {
+	public int getTipBoardNo() {
 		return tipBoardNo;
 	}
-
-	public void setTipNo(int tipBoardNo) {
+	public void setTipBoardNo(int tipBoardNo) {
 		this.tipBoardNo = tipBoardNo;
 	}
-	
-	public String getTipBoardTitle () {
+	public String getTipBoardTitle() {
 		return tipBoardTitle;
 	}
-	
 	public void setTipBoardTitle(String tipBoardTitle) {
 		this.tipBoardTitle = tipBoardTitle;
 	}
-
 	public String getTipBoardContent() {
 		return tipBoardContent;
 	}
-
 	public void setTipBoardContent(String tipBoardContent) {
 		this.tipBoardContent = tipBoardContent;
 	}
-
 	public Date getTipBoardDate() {
 		return tipBoardDate;
 	}
-
 	public void setTipBoardDate(Date tipBoardDate) {
 		this.tipBoardDate = tipBoardDate;
 	}
-
 	public String getTipBoardOriginFile() {
 		return tipBoardOriginFile;
 	}
-
 	public void setTipBoardOriginFile(String tipBoardOriginFile) {
 		this.tipBoardOriginFile = tipBoardOriginFile;
 	}
-
 	public String getTipBoardReFile() {
 		return tipBoardReFile;
 	}
-
 	public void setTipBoardReFile(String tipBoardReFile) {
 		this.tipBoardReFile = tipBoardReFile;
 	}
-
 	public int getTipBoardViews() {
 		return tipBoardViews;
 	}
-
 	public void setTipBoardViews(int tipBoardViews) {
 		this.tipBoardViews = tipBoardViews;
 	}
-
 	public int getTipBoardRecommend() {
 		return tipBoardRecommend;
 	}
-
 	public void setTipBoardRecommend(int tipBoardRecommend) {
 		this.tipBoardRecommend = tipBoardRecommend;
 	}
-
 	public String getUserId() {
 		return userId;
 	}
-
 	public void setUserId(String userId) {
 		this.userId = userId;
 	}
-
 	public String getTipBoardDelete() {
 		return tipBoardDelete;
 	}
-
 	public void setTipBoardDelete(String tipBoardDelete) {
 		this.tipBoardDelete = tipBoardDelete;
 	}
-
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
 	
 	@Override
 	public String toString() {
-		return
-				this.tipBoardNo + ", " + this.tipBoardTitle + ", " + this.tipBoardContent + ", " + this.tipBoardDate + ", " + this.tipBoardOriginFile + ", "
-		   	+	this.tipBoardReFile + ", " + this.tipBoardViews + ", " + this.tipBoardRecommend + ", " + this.userId + ", " + this.tipBoardDelete;
+		return tipBoardNo + ", " + tipBoardTitle + ", " + tipBoardContent + ", " + tipBoardDate + ", "
+				+ tipBoardOriginFile + ", " + tipBoardReFile + ", " + tipBoardViews + ", " + tipBoardRecommend + ", "
+				+ userId + ", " + tipBoardDelete;
 	}
+	
 	
 }

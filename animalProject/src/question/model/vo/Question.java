@@ -6,64 +6,64 @@ import java.sql.Date;
 public class Question implements Serializable {
 	private static final long serialVersionUID = -4625653056618896760L;
 	
-	private int inquireNo;
-	private String inquireTitle;
-	private String inquireContent;
-	private Date inquireDate;
-	private String replyYn;
+	private int questionNo;
+	private String questionTitle;
+	private String questionContent;
+	private Date questionDate;
+	private String questionreplyYn;
 	private String userId;
 	
 	public Question () {}
 
-	public Question(int inquireNo, String inquireTitle, String inquireContent, Date inquireDate,
-			String replyYn, String userId) {
+	public Question(int questionNo, String questionTitle, String questionContent, Date questionDate,
+			String questionreplyYn, String userId) {
 		super();
-		this.inquireNo = inquireNo;
-		this.inquireTitle = inquireTitle;
-		this.inquireContent = inquireContent;
-		this.inquireDate = inquireDate;
-		this.replyYn = replyYn;
+		this.questionNo = questionNo;
+		this.questionTitle = questionTitle;
+		this.questionContent = questionContent;
+		this.questionDate = questionDate;
+		this.questionreplyYn = questionreplyYn;
 		this.userId = userId;
 	}
 
-	public int getInquireNo() {
-		return inquireNo;
+	public int getQuestionNo() {
+		return questionNo;
 	}
 
-	public void setInquireNo(int inquireNo) {
-		this.inquireNo = inquireNo;
+	public void setQuestionNo(int questionNo) {
+		this.questionNo = questionNo;
 	}
 
-	public String getInquireTitle() {
-		return inquireTitle;
+	public String getQuestionTitle() {
+		return questionTitle;
 	}
 
-	public void setInquireTitle(String inquireTitle) {
-		this.inquireTitle = inquireTitle;
+	public void setQuestionTitle(String questionTitle) {
+		this.questionTitle = questionTitle;
 	}
 
-	public String getInquireContent() {
-		return inquireContent;
+	public String getQuestionContent() {
+		return questionContent;
 	}
 
-	public void setInquireContent(String inquireContent) {
-		this.inquireContent = inquireContent;
+	public void setQuestionContent(String questionContent) {
+		this.questionContent = questionContent;
 	}
 
-	public Date getInquireDate() {
-		return inquireDate;
+	public Date getQuestionDate() {
+		return questionDate;
 	}
 
-	public void setInquireDate(Date inquireDate) {
-		this.inquireDate = inquireDate;
+	public void setQuestionDate(Date questionDate) {
+		this.questionDate = questionDate;
 	}
 
-	public String getReplyYn() {
-		return replyYn;
+	public String getQuestionreplyYn() {
+		return questionreplyYn;
 	}
 
-	public void setReplyYn(String replyYn) {
-		this.replyYn = replyYn;
+	public void setQuestionreplyYn(String questionreplyYn) {
+		this.questionreplyYn = questionreplyYn;
 	}
 
 	public String getUserId() {
@@ -77,12 +77,14 @@ public class Question implements Serializable {
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
-	
+
 	@Override
-	public String toString () {
-		return
-				this.inquireNo + ", " + this.inquireTitle + ", " + this.inquireContent + ", " + this.inquireDate + ", "
-			  + this.replyYn + ", " + this.userId;
+	public String toString() {
+		return "Question [questionNo=" + questionNo + ", questionTitle=" + questionTitle + ", questionContent="
+				+ questionContent + ", questionDate=" + questionDate + ", questionreplyYn=" + questionreplyYn
+				+ ", userId=" + userId + "]";
 	}
 
-}
+	
+	
+	}
