@@ -34,41 +34,57 @@ function handleRadio(name){
 	const radioBtns = document.getElementsByName(name);
 		for(let i = 0; i < radioBtns.length; i++){
 			if(radioBtns[i].checked)
-				return radioBtns[i].value; // 체크된 라디오 버튼 value 리턴
+				return radioBtns[i]; // 체크된 라디오 버튼 리턴
 		}
 }
 // 필수 입력항목 체크
 function checkInputs(obj){
 	for(let i in obj){
-		if(obj[i] === "") return false;
+		obj[i].style.borderBottom = "1px solid white";
+		if(obj[i].value === ""){
+			obj[i].style.borderBottom = "1px solid red";
+
+			return false;
+		} 
 	}
-	return true;
+		return true;
 }
-	submitBtn.addEventListener('change', ()=>{
+submitBtn.addEventListener('click', (e)=>{
 		const toSend = {
-		userid : document.querySelector('.section1 .input_id').value,
-		username : document.querySelector('.section1 .input_name').value,
+		userid : document.querySelector('.section1 .input_id'),
+		username : document.querySelector('.section1 .input_name'),
 		agree : handleRadio('agree'),
-		phone : document.querySelector('.section2 .input_phone').value,
-		email : document.querySelector('.section2 .input_email').value,
-		address : document.querySelector('.section2 .input_addr').value,
-		price : document.querySelector('.section2 .input_price').value
+		phone : document.querySelector('.section2 .input_phone'),
+		email : document.querySelector('.section2 .input_email'),
+		address : document.querySelector('.section2 .input_addr'),
+		price : document.querySelector('.section2 .input_price'),
+		pic : document.querySelector('.section3 #real-file')
 	}
-	if(checkInputs(toSend) && toSend.agree === 'agree'){
-		submitBtn.style.opacity = "0.8";
+	if(checkInputs(toSend) && toSend.agree.value === 'agree'){
 		// 모든 인풋 정보가 들어왔을경우
-		const jsonString = JSON.stringify(toSend);
+		const values = {
+				userid : document.querySelector('.section1 .input_id').value,
+				username : document.querySelector('.section1 .input_name').value,
+				agree : handleRadio('agree').value,
+				phone : document.querySelector('.section2 .input_phone').value,
+				email : document.querySelector('.section2 .input_email').value,
+				address : document.querySelector('.section2 .input_addr').value,
+				price : document.querySelector('.section2 .input_price').value,
+				pic : document.querySelector('.section3 #real-file').value
+			}
+		const jsonString = JSON.stringify(values);
 		const xhr = new XMLHttpRequest();
 		
 		xhr.onload = function(){
 			
 		}
 		
-		xhr.open('POST','/doggybeta/pss');
-		xhr.setRequestHeader("Content-Type","application/json")
+		xhr.open('POST','/doggybeta/hostup');
+		xhr.setRequestHeader("Content-Type","multipart/form-data");
 		xhr.send(jsonString);
 	} else {
 		// 필수 인풋 정보가 들어오지 않았을 경우
 		console.log('xxxxx');
 	}
 })
+

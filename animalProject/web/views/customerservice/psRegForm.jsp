@@ -9,7 +9,7 @@
 </head>
 <body>
 	<!-- 펫시터 신청 버튼 클릭시 생성 보여지는 HTML 부분. 로그인 부분 구현시 인풋에 세션으로 값 넣어놓고 readonly 처리할 것  -->
-		<div class="ps_reg_form">
+		<form class="ps_reg_form" method="POST" enctype="application/x-www-form-urlencoded">
 			<span class="close">x</span>
 				<div class="section1">
 					<p>아이디</p>
@@ -42,7 +42,7 @@
 				<div class="section3">
 					<div class="image_box">
 						<div class="image_box_pic"></div>				
-						<input type="file" id="real-file" hidden="hidden" />
+						<input type="file" name="pic" id="real-file" hidden="hidden" />
 						<span>
 							<button type="button" id="fake-file-btn" class="normal_btn">Choose a File</button>&nbsp;
 							<span id="file-text"></span>
@@ -51,7 +51,7 @@
 					<div class="map_box"></div>
 					<span><button type="submit" id="submit-btn">펫시터 등록하기</button></span>
 				</div>
-		</div>
+			</form>
 		<script type="text/javascript"src="/doggybeta/resources/js/petSitting.js"></script>
 </body>
 </html>
