@@ -90,15 +90,6 @@ public class PetDao {
 		ResultSet rset = null;
 
 		String query = "SELECT * FROM PET WHERE USER_ID = ?";
-	/*	PET_NO	NUMBER
-		PET_NAME	VARCHAR2(100 BYTE)
-		PET_BREADS	VARCHAR2(100 BYTE)
-		PET_DATE	VARCHAR2(100 BYTE)
-		PET_SIZE	VARCHAR2(100 BYTE)
-		PET_GENDER	VARCHAR2(100 BYTE)
-		PET_NEUTRALIZE	VARCHAR2(100 BYTE)
-		PET_CHARATER	VARCHAR2(100 BYTE)
-		USER_ID	VARCHAR2(100 BYTE)*/
 		try {
 			pstmt = conn.prepareStatement(query);
 			pstmt.setString(1, userid);
