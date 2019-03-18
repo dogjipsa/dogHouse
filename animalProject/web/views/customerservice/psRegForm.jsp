@@ -17,11 +17,11 @@
 					<p>이름</p>
 					<input name="username" placeholder="이름 입력"  class="ps_input input_name" autocomplete="off">
 					<p>회원 약관</p>
-					<button>내용보기</button>
+					<button class="normal_btn">내용보기</button>
 					<p>개인 정보 수집</p>
-					<button>내용보기</button>
+					<button class="normal_btn">내용보기</button>
 					<p>제 3자 개인 정보 제공</p>
-					<button>내용보기</button>
+					<button class="normal_btn">내용보기</button>
 					<p>전체 동의 여부</p>
 					<span><label>
 					<input type="radio" name="agree" value="agree" checked> 동의
@@ -44,7 +44,7 @@
 						<div class="image_box_pic"></div>				
 						<input type="file" id="real-file" hidden="hidden" />
 						<span>
-							<button type="button" id="fake-file-btn">Choose a File</button>&nbsp;
+							<button type="button" id="fake-file-btn" class="normal_btn">Choose a File</button>&nbsp;
 							<span id="file-text"></span>
 						</span>
 					</div>

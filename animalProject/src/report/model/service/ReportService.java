@@ -25,4 +25,26 @@ public class ReportService {
 		return result;
 	}
 
+	public int reportUpdate(Report r) {
+		Connection conn = getConnection();
+		int result = rdao.reportUpdate(conn, r);
+		if(result > 0)
+			commit(conn);
+		else
+			rollback(conn);
+		close(conn);
+		return result;
+	}
+
+	public int reportDelete(int rno) {
+		Connection conn = getConnection();
+		int result = rdao.reportDelete(conn, rno);
+		if(result > 0)
+			commit(conn);
+		else
+			rollback(conn);
+		close(conn);
+		return result;
+	}
+
 }

@@ -44,8 +44,8 @@ function checkInputs(obj){
 	}
 	return true;
 }
-submitBtn.addEventListener('click', ()=>{
-	const toSend = {
+	submitBtn.addEventListener('change', ()=>{
+		const toSend = {
 		userid : document.querySelector('.section1 .input_id').value,
 		username : document.querySelector('.section1 .input_name').value,
 		agree : handleRadio('agree'),
@@ -55,7 +55,7 @@ submitBtn.addEventListener('click', ()=>{
 		price : document.querySelector('.section2 .input_price').value
 	}
 	if(checkInputs(toSend) && toSend.agree === 'agree'){
-		console.log('oooo');
+		submitBtn.style.opacity = "0.8";
 		// 모든 인풋 정보가 들어왔을경우
 		const jsonString = JSON.stringify(toSend);
 		const xhr = new XMLHttpRequest();

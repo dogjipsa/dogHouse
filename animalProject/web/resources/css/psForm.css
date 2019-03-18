@@ -8,7 +8,7 @@
 	height: 700px;
 	background-color: rgba(0,0,0,0.7);
 	border-radius: 20px;
-	display: grid;
+	display: none;
 	grid-template-columns: 1fr 1fr 1fr;
 }
 .ps_reg_form .close {
@@ -96,7 +96,7 @@
 	opacity:0.8;
 }
 
-.ps_reg_form button{
+.ps_reg_form .normal_btn{
   border: none;
   outline: none;
   width: 140px;
@@ -107,12 +107,16 @@
   border-radius: 10px;
   margin-bottom: 10px;
 }
-.ps_reg_form button:hover{
+.ps_reg_form .normal_btn:hover{
 	cursor: pointer;
 	opacity: 0.8;
 }
 .ps_reg_form #submit-btn {
 	background: #747d8c;
+	color: white;
 	width: 400px;
 	height: 40px;
+	opacity: 0.8;
+	cursor: pointer;
 }
+

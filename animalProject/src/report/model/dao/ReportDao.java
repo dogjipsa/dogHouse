@@ -31,4 +31,43 @@ public class ReportDao {
 		return result;
 	}
 
+	public int reportUpdate(Connection conn, Report r) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		
+		String query="update from report set report_content = ?, report_category = ? ,board_no = ? where report_no = ?";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, r.getReportContent());
+			pstmt.setString(2, r.getReportCategory());
+			pstmt.setInt(3, r.getBoardNo());
+			pstmt.setInt(4, r.getReportNo());
+			result = pstmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
+
+	public int reportDelete(Connection conn, int rno) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		
+		String query="delete report where report_no = ?";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, rno);
+			result = pstmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
+
 }

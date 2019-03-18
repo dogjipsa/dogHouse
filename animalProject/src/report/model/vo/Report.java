@@ -11,7 +11,6 @@ public class Report implements Serializable{
 	private String userId;
 	
 	public Report() {
-		// TODO Auto-generated constructor stub
 	}
 
 	public Report(int reportNo, String reportContent, String reportCategory, int boardNo, String userId) {
