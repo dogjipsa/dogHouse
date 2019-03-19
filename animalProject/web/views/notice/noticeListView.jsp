@@ -9,6 +9,7 @@
 <head>
 <title>Dog House</title>
 <link rel="shortcut icon" href="/doggybeta/resources/images/favicon.ico">
+<link href="/doggybeta/resources/css/footer.css" rel="stylesheet" type="text/css">
 <script type="text/javascript" src="/doggybeta/resources/js/jquery-3.3.1.min.js"></script>
 <script type="text/javascript">
 function showWriteForm(){
@@ -102,6 +103,8 @@ center{
 </style>
 <body>
 <%@ include file="../common/menu.jsp"%>
+	<div id="wrap">
+		  <div id="content">
 <div class="main">
 <h2 align="center">공지사항 게시판</h2>
 </div>
@@ -178,6 +181,8 @@ center{
 </div>
 
 
-<%@ include file="../common/footer.jsp"%>
+</div>
+		<div id="footer"><%@ include file="..//common/footer.jsp"%></div>
+	</div>
 </body>
 </html>
