@@ -161,14 +161,14 @@
 				<%
 					} else {
 				%>
-				<a href="/doggybeta/tlist?tpage=1">[맨처음]</a>&nbsp;
+				<a href="/doggybeta/tlist?page=1">[맨처음]</a>&nbsp;
 				<%
 					}
 				%>
 				<%
 					if ((currentPage - 10) < startPage && (currentPage - 10) > 1) {
 				%>
-				<a href="/doggybeta/tlist?tpage=<%=startPage - 10%>">[prev]</a>
+				<a href="/doggybeta/tlist?page=<%=startPage - 10%>">[prev]</a>
 				<%
 					} else {
 				%>
