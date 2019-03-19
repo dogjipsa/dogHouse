@@ -114,7 +114,8 @@ public class MemberDao {
 			pstat.setString(3, member.getUserName());
 			pstat.setString(4, member.getAddress());
 			pstat.setString(5, member.getPhone());
-			pstat.setString(6, member.getJob());
+			
+			pstat.setString(6, member.getJop());
 			pstat.setString(7, "n");
 			pstat.setInt(8, 0);
 			pstat.setString(9, member.getUserPwd());
