@@ -7,7 +7,7 @@
 <title>Dog House</title>
 
 <!-- css -->
-
+<!-- 변경확인용 주석  -->
 
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <link href="/doggybeta/resources/css/footer.css" rel="stylesheet" type="text/css">
