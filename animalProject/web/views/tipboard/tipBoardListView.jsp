@@ -24,7 +24,10 @@
 		}
 	}
 
+
 	/* Member loginUser = (Member) session.getAttribute("loginUser"); */
+
+
 %>
 <!DOCTYPE html>
 <html>
@@ -70,7 +73,8 @@
 </script>
 </head>
 <body>
-<%@ include file="..//common/menu.jsp" %>
+
+	<%@ include file="..//common/menu.jsp"%>
 
 	<div id="wrap">
 		<div id="content">
