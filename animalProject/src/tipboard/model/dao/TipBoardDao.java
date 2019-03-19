@@ -48,7 +48,9 @@ public class TipBoardDao {
 			int startRow = (currentPage -1) * limit + 1;
 			int endRow = startRow + limit - 1;
 			
-			String query = "select * from tipboard order by tipboard_no desc";
+			String query = "SELECT *  FROM (SELECT ROWNUM RNUM,  TIPBOARD_NO,TIPBOARD_TITLE,TIPBOARD_CONTENT,TIPBOARD_DATE,TIPBOARD_ORIGINFILE,TIPBOARD_VIEWS,TIPBOARD_RECOMMEND,USER_ID,TIPBOARD_DELETE,TIPBOARD_REFILE " + 
+					"				FROM (SELECT * FROM TIPBOARD )) " + 
+					"				WHERE RNUM >= ? AND RNUM <= ?";
 			
 			try {
 				stmt = conn.createStatement();
