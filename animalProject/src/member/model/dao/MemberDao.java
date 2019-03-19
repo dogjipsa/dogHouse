@@ -128,6 +128,32 @@ public class MemberDao {
 			close(pstat);
 		}
 		return result;
+	} 
+
+
+	public int updateHost(Connection conn, Member m) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String query = "update member set petsitter = '1', phone=? , email = ?, address = ? , price = ?, user_originfile = ?, user_refile =? where user_id = ?";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, m.getPhone());
+			pstmt.setString(2, m.getEmail());
+			pstmt.setString(3, m.getAddress());
+			pstmt.setInt(4, m.getPrice());
+			pstmt.setString(5, m.getUseroriginfile());
+			pstmt.setString(6, m.getUserrefile());
+			pstmt.setString(7, m.getUserId());
+			
+			result = pstmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		
+		return result;
 	}
 
 	

@@ -1,0 +1,124 @@
+@charset "UTF-8";
+
+.ps_reg_form {
+	position: absolute;
+	top: 12%;
+	left: 400px;
+	width: 1300px;
+	height: 700px;
+	background-color: rgba(0,0,0,0.7);
+	border-radius: 20px;
+	display: none;
+	grid-template-columns: 1fr 1fr 1fr;
+}
+.ps_reg_form .close {
+  position: absolute;
+  right: 25px;
+  top: 0;
+  color: white;
+  font-size: 25px;
+  font-weight: bold;
+  cursor: pointer;
+}
+.ps_reg_form .close:hover {
+  opacity: 0.6;
+}
+.ps_reg_form .section1 {
+	display: grid;
+	grid-column:span 1;
+	margin: 20px;
+	padding: 0 50px; 
+}
+.ps_reg_form .section2 {
+	display: grid;
+	grid-column:span 1;
+	margin: 20px;
+	padding: 0 50px; 
+}
+.ps_reg_form .section3 {
+	display: grid;
+	grid-column:span 1;
+	margin: 30px;
+}
+.ps_reg_form p{
+	font-weight: 600;
+	color: white;
+}
+.ps_reg_form .ps_input{
+  border: none;
+  border-bottom: 1px solid #fff;
+  background: transparent;
+  outline: none;
+  height: 40px;
+  color: #fff;
+  font-size: 16px;
+}
+.section3 .image_box{
+	height: 250px;
+	display: flex;
+	flex-direction: column;
+	/* align-items: center; */
+	align-items: right;
+	justify-content: space-between;
+}
+
+.section3 .image_box .image_box_pic {
+	background-color: rgba(255,255,255,0.5);
+	border-radius: 20px;
+	width: 300px;
+	height: 180px;
+	-webkit-box-shadow: 8px 20px 52px 3px rgba(245,242,245,0.4);
+	-moz-box-shadow: 8px 20px 52px 3px rgba(245,242,245,0.4);
+	box-shadow: 8px 20px 52px 3px rgba(245,242,245,0.4);
+}
+.section3 .map_box{
+	border:1px solid rgba(255,255,255,0.2);
+	height: 300px;
+}
+.ps_reg_form input[type="file"]{
+	display:none;
+}
+
+.ps_reg_form #file_btn{
+  display:block;
+  border: none;
+  outline: none;
+  width: 140px;
+  height: 25px;
+  background: #c0c0c0;
+  border-radius: 5px;
+  color: #fff;
+  font-size: 14px;
+  text-align: center;
+}
+.ps_reg_form #file_btn:hover{
+	cursor: pointer;
+	opacity:0.8;
+}
+
+.ps_reg_form .normal_btn{
+  border: none;
+  outline: none;
+  width: 140px;
+  height: 25px;
+  background: #58B19F;
+  color: #fff;
+  font-size: 14px;
+  border-radius: 10px;
+  margin-bottom: 10px;
+}
+.ps_reg_form .normal_btn:hover{
+	cursor: pointer;
+	opacity: 0.8;
+}
+.ps_reg_form #submit-btn {
+	background: #747d8c;
+	color: white;
+	width: 400px;
+	height: 40px;
+	cursor: pointer;
+	border: none;
+	outline: none;
+	border-radius: 10px; 
+}
+
