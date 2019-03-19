@@ -119,11 +119,12 @@
 				<ul class="m2">
 					<li><a href='#'>정보수정</a></li>
 					<li><a href='#'>이용내역/예약확인</a></li>
-					<li><a href='#'>펫시터신청</a></li>
+					<li><a href='#' id="pet_reg__btn">펫시터신청</a></li>
 					<li><a href='#'>사전문의확인</a></li>
 				</ul></li>
 
 		</ul>
+		<%@ include file= "../customerservice/psRegForm.jsp"%>
 	</nav>
 	<!-- ------------------------------------------------- -->
 	<form class="login-form" method='post' action='/doggybeta/jipsalogin'>
@@ -201,7 +202,7 @@
 				<ul class="m2">
 					<li><a href='#'>정보수정</a></li>
 					<li><a href='#'>이용내역/예약확인</a></li>
-					<li><a href='#'>펫시터신청</a></li>
+					<li><a href='#' id="pet_reg__btn">펫시터신청</a></li>
 					<li><a href='#'>사전문의확인</a></li>
 				</ul></li>
 		</ul>

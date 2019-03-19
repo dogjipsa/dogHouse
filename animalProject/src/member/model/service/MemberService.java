@@ -58,7 +58,17 @@ public class MemberService {
 		return result;
 	}
 
-	
+
+	public int updateHost(Member m) {
+		Connection conn = getConnection();
+		int result = mdao.updateHost(conn, m);
+		if(result > 0)
+			commit(conn);
+		else
+			rollback(conn);
+		close(conn);
+		return result;
+	}
 
 	
 
