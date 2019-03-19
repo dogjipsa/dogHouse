@@ -54,6 +54,10 @@
   color: #fff;
   font-size: 16px;
 }
+.section1 label {
+	color : white;
+}
+
 .section3 .image_box{
 	height: 250px;
 	display: flex;
@@ -95,6 +99,10 @@
 .ps_reg_form #file_btn:hover{
 	cursor: pointer;
 	opacity:0.8;
+}
+
+#file-text {
+	color : white;
 }
 
 .ps_reg_form .normal_btn{

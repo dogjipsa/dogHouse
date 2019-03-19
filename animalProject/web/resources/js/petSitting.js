@@ -13,18 +13,33 @@ xBtn.addEventListener('click', ()=>{
 });
 
 // 이미지 파일 업로드 시 발생 이벤트
-const realFileBtn = document.getElementById("real-file");
+const realFile = document.getElementById("real-file");
 const customBtn = document.getElementById("fake-file-btn");
 const customTxt = document.getElementById("file-text");
+const imageBox_pic = document.querySelector('.section3 .image_box .image_box_pic');
 
 customBtn.addEventListener('click', () =>{
-	realFileBtn.click();
+	realFile.click();
 });
 
-realFileBtn.addEventListener('change', () =>{
+function readURL(input){
+	alert('running 0');
+	if(input.files && input.files[0]){
+		const reader = new FileReader();
+		alert('running1');
+		reader.onload = function(e){
+			alert('running2');
+			imageBox_pic.setAttribute('src', e.target.result);
+		}
+		reader.readAsDataURL(input.files[0]);
+	}
+}
+
+realFile.addEventListener('change', () =>{
 	// 업로드 하면 버튼 옆에 파일명(경로제외) 출력 됨.
-	if(realFileBtn.value)
-		customTxt.innerHTML = realFileBtn.value.match(/[\/\\]([\w\d\s\.\-\(\)]+)$/)[1];
+	readURL(this);
+	 if(realFile.value)
+	 	customTxt.innerHTML = realFile.value.match(/[\/\\]([\w\d\s\.\-\(\)]+)$/)[1];
 });
 
 // 펫시터 등록 버튼 클릭 시 발생 이벤트

@@ -213,9 +213,9 @@
 			<span class="close">x</span>
 				<div class="section1">
 					<p>아이디</p>
-					<input name="userid" placeholder="<%=loginUser.getUserId() %>"  class="ps_input input_id" autocomplete="off" readonly>
+					<input name="userid" value="<%=loginUser.getUserId() %>"  class="ps_input input_id" autocomplete="off" readonly>
 					<p>이름</p>
-					<input name="username" placeholder="이름 입력"  class="ps_input input_name" autocomplete="off" readonly>
+					<input name="username" value="<%=loginUser.getUserName() %>"  class="ps_input input_name" autocomplete="off" >
 					<p>회원 약관</p>
 					<button class="normal_btn">내용보기</button>
 					<p>개인 정보 수집</p>
@@ -231,9 +231,9 @@
 				</div>
 				<div class="section2">
 					<p>연락처</p>
-					<input name="phone" placeholder="핸드폰 번호 입력" class="ps_input input_phone" autocomplete="off">
+					<input name="phone" value="<%=loginUser.getPhone() %>" class="ps_input input_phone" autocomplete="off" >
 					<p>이메일</p>
-					<input name="email" placeholder="이메일 입력" class="ps_input input_email" autocomplete="off">
+					<input name="email" value="<%=loginUser.getEmail() %>" class="ps_input input_email" autocomplete="off" >
 					<p>펫시팅 장소</p>
 					<input name="addr" placeholder="장소/위치 입력" class="ps_input input_addr" autocomplete="off" >
 					<p>희망 시급(원)</p>
@@ -241,7 +241,7 @@
 				</div>
 				<div class="section3">
 					<div class="image_box">
-						<div class="image_box_pic"></div>				
+						<img class="image_box_pic" />				
 						<input type="file" id="real-file" hidden="hidden" />
 						<span>
 							<button type="button" id="fake-file-btn" class="normal_btn">Choose a File</button>&nbsp;
