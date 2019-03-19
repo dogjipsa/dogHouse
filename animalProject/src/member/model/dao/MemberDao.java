@@ -3,7 +3,7 @@ package member.model.dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.util.ArrayList;
+import java.sql.Statement;
 
 import static common.JDBCTemplate.*;
 import member.model.vo.Member;
@@ -42,7 +42,6 @@ public class MemberDao {
 				member.setUserDelete(rSet.getString("user_delete"));
 				
 			}
-			System.out.println("member : " + member.toString());
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -57,7 +56,6 @@ public class MemberDao {
 		int result = 0;
 		PreparedStatement pstat = null;
 		ResultSet rSet = null;
-		
 		query.append("select count(*) from member where user_id = ? and email = ?");
 		
 		try {
@@ -81,29 +79,55 @@ public class MemberDao {
 		return result;
 	}
 
+	public int updateTempPassword(Connection conn, Member member) {
+		int result = 0;
+		PreparedStatement pstat = null;
+		query.append("update member set password = ? where user_id = ?");
+		try {
+			pstat = conn.prepareStatement(query.toString());
+			
+			pstat.setString(1, member.getUserPwd());
+			pstat.setString(2, member.getUserId());
+			
+			result = pstat.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(pstat);
+		}
+		return result;
+	}
+
 	public int insertMember(Connection conn, Member member) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	public int updateMember(Connection conn, Member member) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	public int deleteMember(Connection conn, Member member) {
-		// 메소드 이름은 delete 지만 update set deleteyn을 'y'로 변경
-		return 0;
-	}
-
-	public ArrayList<Member> selectAllList(Connection conn) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public Member selectMember(Connection conn, String userId) {
-		// TODO Auto-generated method stub
-		return null;
+		int result = 0;
+		PreparedStatement pstat = null;
+		
+		query.append("insert into member values ( ");
+		query.append("?,?,?,?,?,?,?,?,sysdate,?,? )");
+		
+		try {
+			
+			pstat = conn.prepareStatement(query.toString());
+			
+			pstat.setString(1, member.getUserId());
+			pstat.setString(2, member.getEmail());
+			pstat.setString(3, member.getUserName());
+			pstat.setString(4, member.getAddress());
+			pstat.setString(5, member.getPhone());
+			pstat.setString(6, member.getJob());
+			pstat.setString(7, "n");
+			pstat.setInt(8, 0);
+			pstat.setString(9, member.getUserPwd());
+			pstat.setString(10, "n");
+			
+			result = pstat.executeUpdate();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(pstat);
+		}
+		return result;
 	}
 
 	public int updateHost(Connection conn, Member m) {
@@ -130,5 +154,5 @@ public class MemberDao {
 		
 		return result;
 	}
-
+	
 }

@@ -1,6 +1,6 @@
 @charset "UTF-8";
-body {
-	overflow:hidden;
+body,html {
+
 	height:100%;
 }
 
@@ -16,7 +16,7 @@ input[type="checkbox"]#menu_state {
   display: none;
 }
 input[type="checkbox"]:checked ~ nav {/* 왼쪽 메뉴 크기  */
-  width: 10%;
+  width: 200px;
 }
 input[type="checkbox"]:checked ~ nav label[for="menu_state"] i::before {
   content: "\f053";
@@ -47,7 +47,9 @@ nav {/* 왼쪽 메뉴  */
   box-shadow: 5px 5px rgba(153,153,153,0.5);
   
 }
-
+nav a{/* 회원가입,로그인 버튼 밑줄 삭제  */
+	text-decoration:none
+}
 
 nav ul {/* 왼쪽 메뉴 위치  */
   overflow: hidden;
@@ -122,7 +124,6 @@ nav ul li a span {/* 작은 메뉴버튼을 접었을 때   */
 	color: inherit;
 	background: none;
 	cursor: pointer;
-
 	display: inline-block;
 	margin: 5px 5px;
 	text-transform: uppercase;
@@ -135,33 +136,16 @@ nav ul li a span {/* 작은 메뉴버튼을 접었을 때   */
 	transition: all 0.3s;
 
 }
-.btn:after {
-	content: '';
-	position: absolute;
-	z-index: -1;
-	-webkit-transition: all 0.3s;
-	-moz-transition: all 0.3s;
-	transition: all 0.3s;
-}
+
 .btn-1 { /*버튼 색 */
 	border: 3px solid #000;
 	color: #fff;
 }
-.btn-sign:after {
-	width: 0%;
-	height: 100%;
-	top: 0;
-	left: 0;
-	background: #222;
-}
+
 
 .btn-sign:hover,
 .btn-sign:active {
 	color: #ECDBA4;
 	border: 3px solid #ECDBA4;
-}
-.btn-sign:hover:after,
-.btn-sign:active:after {
-	width: 100%;
 }
 

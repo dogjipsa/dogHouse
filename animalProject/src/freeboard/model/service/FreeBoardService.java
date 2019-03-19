@@ -114,11 +114,6 @@ public class FreeBoardService {
 		return list;
 	}
 
-	public int deleteBoard(int boardNum) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
 	
 	
 }

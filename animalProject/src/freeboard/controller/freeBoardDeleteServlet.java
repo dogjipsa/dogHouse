@@ -9,8 +9,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import freeboard.model.service.FreeBoardService;
-
 
 /**
  * Servlet implementation class BoardDeleteServlet
@@ -34,7 +32,7 @@ public class freeBoardDeleteServlet extends HttpServlet {
 		//게시글 (원글, 댓글) 삭제 처리용 컨트롤러
 		int boardNum = Integer.parseInt(request.getParameter("bnum"));
 		
-		if(new FreeBoardService().deleteBoard(boardNum) > 0) {
+		if(new BoardService().deleteBoard(boardNum) > 0) {
 			response.sendRedirect("/first/blist?page=1");
 		}else {
 			RequestDispatcher view = request.getRequestDispatcher("views/board/boardError.jsp");

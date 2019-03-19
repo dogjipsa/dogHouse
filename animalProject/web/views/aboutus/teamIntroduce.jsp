@@ -5,14 +5,17 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<link href="/doggybeta/resources/css/footer.css" rel="stylesheet" type="text/css">
 </head>
 <body>
-<%@ include file="../common/menu.jsp" %>
-	<div style=" margin-left: 10%;  min-height:100%;"><!-- 내용작성  -->	
+<%@ include file="..//common/menu.jsp" %>
+	<div id="wrap">
+		  <div id="content">
+			<!-- 내용작성  -->
+			<h1>안녕하세요 도그집사입니다.안녕하세요 도그집사입니다.안녕하세요 도그집사입니다.안녕하세요 도그집사입니다.안녕하세요 도그집사입니다.</h1>
 		
-		<h1>팀 도그집사</h1>
-		
-	<%@ include file="..//common/footer.jsp"%>
+		</div>
+		<div id="footer"><%@ include file="..//common/footer.jsp"%></div>
 	</div>
 </body>
 </html>

@@ -7,7 +7,10 @@
 <title>Dog House</title>
 
 <!-- css -->
+<!-- 변경확인용 주석2  -->
+
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link href="/doggybeta/resources/css/footer.css" rel="stylesheet" type="text/css">
 <style>
 .mySlides {
 	display: none
@@ -28,8 +31,9 @@
 
 </head>
 <body>
-	<%@ include file="../views/common/menu.jsp"%>
-		<div style="margin-left: 10%; min-height: 100%;">
+	<%@ include file="..//views/common/menu.jsp" %>
+	<div id="wrap">
+		  <div id="content">
 			<!-- 내용작성  -->
 			
 			<div class="w3-container"></div>
@@ -54,12 +58,10 @@
 						class="w3-badge demo w3-border w3-transparent w3-hover-white"
 						onclick="currentDiv(3)"></span>
 				</div>
-				<%@ include file="views/common/footer.jsp"%>
 			</div>
-			
-
 		</div>
-	
+		<div id="footer"><%@ include file="..//views/common/footer.jsp"%></div>
+	</div>
 	<script>
 		var slideIndex = 1;
 		showDivs(slideIndex);

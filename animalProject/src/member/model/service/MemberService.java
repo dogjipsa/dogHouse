@@ -17,6 +17,7 @@ public class MemberService {
 		Connection conn = getConnection();
 		System.out.println(userid +"=service="+userpwd);
 		Member loginUser = mdao.loginCheck(conn, userid, userpwd);
+		System.out.println("loginUser : " + loginUser);
 		close(conn);
 		
 		return loginUser;
@@ -35,6 +36,17 @@ public class MemberService {
 		return result;
 	}
 
+	public int updateTempPassword(Member member) {
+		Connection conn = getConnection();
+		int result = mdao.updateTempPassword(conn, member);
+		if(result > 0)
+			commit(conn);
+		else
+			rollback(conn);
+		close(conn);
+		return result;
+	}
+
 	public int insertMember(Member member) {
 		Connection conn = getConnection();
 		int result = mdao.insertMember(conn, member);
@@ -44,42 +56,6 @@ public class MemberService {
 			rollback(conn);
 		close(conn);
 		return result;
-	}
-
-	public int updateMember(Member member) {
-		Connection conn = getConnection();
-		int result = mdao.updateMember(conn, member);
-		if(result > 0)
-			commit(conn);
-		else
-			rollback(conn);
-		close(conn);
-		return result;
-	}
-
-	public int deleteMember(Member member) {
-		Connection conn = getConnection();
-		int result = mdao.deleteMember(conn, member);
-		if(result > 0)
-			commit(conn);
-		else
-			rollback(conn);
-		close(conn);
-		return result;
-	}
-
-	public ArrayList<Member> selectAllList() {
-		Connection conn = getConnection();
-		ArrayList<Member> list = mdao.selectAllList(conn);
-		close(conn);
-		return list;
-	}
-
-	public Member selectMember(String userId) {
-		Connection conn = getConnection();
-		Member member = mdao.selectMember(conn, userId);
-		close(conn);
-		return member;
 	}
 
 	public int updateHost(Member m) {

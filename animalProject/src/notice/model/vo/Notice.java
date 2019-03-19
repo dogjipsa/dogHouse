@@ -11,7 +11,7 @@ public class Notice implements Serializable {
 	private String noticeContent;
 	private Date noticeDate;
 	private String noticeOriginFile;
-	private String noriceReFile;
+	private String noticeReFile;
 	private int noticeViews;
 	private String managerId;
 	private String noticeDelete;
@@ -19,14 +19,14 @@ public class Notice implements Serializable {
 	public Notice () {}
 
 	public Notice(int noticeNo, String noticeTitle, String noticeContent, Date noticeDate, String noticeOriginFile,
-			String noriceReFile, int noticeViews, String managerId, String noticeDelete) {
+			String noticeReFile, int noticeViews, String managerId, String noticeDelete) {
 		super();
 		this.noticeNo = noticeNo;
 		this.noticeTitle = noticeTitle;
 		this.noticeContent = noticeContent;
 		this.noticeDate = noticeDate;
 		this.noticeOriginFile = noticeOriginFile;
-		this.noriceReFile = noriceReFile;
+		this.noticeReFile = noticeReFile;
 		this.noticeViews = noticeViews;
 		this.managerId = managerId;
 		this.noticeDelete = noticeDelete;
@@ -72,12 +72,12 @@ public class Notice implements Serializable {
 		this.noticeOriginFile = noticeOriginFile;
 	}
 
-	public String getNoriceReFile() {
-		return noriceReFile;
+	public String getNoticeReFile() {
+		return noticeReFile;
 	}
 
-	public void setNoriceReFile(String noriceReFile) {
-		this.noriceReFile = noriceReFile;
+	public void setNoticeReFile(String noticeReFile) {
+		this.noticeReFile = noticeReFile;
 	}
 
 	public int getNoticeViews() {
@@ -112,7 +112,7 @@ public class Notice implements Serializable {
 	public String toString () {
 		return
 				this.noticeNo + ", " + this.noticeTitle + ", " + this.noticeContent + ", " + this.noticeDate + ", " + this.noticeOriginFile + ", "
-			  + this.noriceReFile + ", " + this.noticeViews + ", " + this.managerId + ", " + this.noticeDelete;
+			  + this.noticeReFile + ", " + this.noticeViews + ", " + this.managerId + ", " + this.noticeDelete;
 	}
 
 }

@@ -15,17 +15,17 @@
     margin-bottom:0;
     border-top-width: 0;
 } */
-footer{
-	width:120%;
-	height:8%; 
+/* footer{
+	width:100%;
+	height:60px; 
 	position:absolute;
-	bottom:0; 
 	bottom:0; 
 	left:0;
 	background:#ccc;
 	text-align:center;
-}
+} */
 </style>
+
 </head>
 <body>
 

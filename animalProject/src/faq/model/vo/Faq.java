@@ -10,19 +10,27 @@ public class Faq implements Serializable {
 	private String faqTitle;
 	private String faqContent;
 	private Date faqDate;
-	private int faqViews;
 	private String managerId;
+	private String faqType;
 	
 	public Faq () {}
 
-	public Faq(int faqNo, String faqTitle, String faqContent, Date faqDate, int faqViews, String managerId) {
+	public Faq(int faqNo, String faqTitle, String faqContent, Date faqDate, String managerId, String faqType) {
 		super();
 		this.faqNo = faqNo;
 		this.faqTitle = faqTitle;
 		this.faqContent = faqContent;
 		this.faqDate = faqDate;
-		this.faqViews = faqViews;
 		this.managerId = managerId;
+		this.faqType = faqType;
+	}
+	
+	public String getFaqType() {
+		return faqType;
+	}
+	
+	public void setFaqType(String faqType) {
+		this.faqType = faqType;
 	}
 
 	public int getFaqNo() {
@@ -57,14 +65,6 @@ public class Faq implements Serializable {
 		this.faqDate = faqDate;
 	}
 
-	public int getFaqViews() {
-		return faqViews;
-	}
-
-	public void setFaqViews(int faqViews) {
-		this.faqViews = faqViews;
-	}
-
 	public String getManagerId() {
 		return managerId;
 	}
@@ -80,7 +80,7 @@ public class Faq implements Serializable {
 	@Override
 	public String toString() {
 		return this.faqNo + ", " + this.faqTitle + ", " + this.faqContent + ", " + this.faqDate + ", "
-			 + this.faqViews + ", " + this.managerId;
+			 + ", " + this.managerId + ", " + this.faqType;
 	}
 
 }

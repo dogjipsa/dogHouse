@@ -1,8 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
- <%@page import = "member.model.vo.Member, freeboard.model.vo.FreeBoard, java.util.ArrayList"%>
+ <%@page import = "member.model.vo.Member, board.model.vo.Board, java.util.ArrayList"%>
  <%
- 		ArrayList<FreeBoard> list = (ArrayList<FreeBoard>)request.getAttribute("list");
+ 		ArrayList<Board> list = (ArrayList<Board>)request.getAttribute("list");
  		//getParameter = 뷰에서 서블릿 요청/getAttribute 포워드 요청 차이
  		int listCount = ((Integer)request.getAttribute("listCount")).intValue();
  		int startPage = ((Integer)request.getAttribute("startPage")).intValue();
@@ -26,6 +26,7 @@ function showWriteForm(){
 </script>
 </head>
 <body>
+<%@ include file="../common/header.jsp" %>
 <hr style="clear:both;">
 <h2 align ="center" >게시글 목록</h2>
 <h4 align ="center">총 게시글 갯수 : <%=listCount %></h4>
@@ -38,6 +39,35 @@ function showWriteForm(){
 <table align="center" border="1" cellspacing="0" width="700">
 <tr><th>번호</th><th>제목</th><th>작성자</th><th>날짜</th>
 <th>조회수</th><th>첨부파일</th></tr>
+<% for(Board b : list){ %>
+<tr><td align="center"><%= b.getBoardNum() %></td>
+		<td>
+		<%-- 댓글일 때는 제목을 들여쓰기함 --%>
+		<% if(b.getBoardReplyLev() == 1){ //원글의 댓글일 때  %>
+				&nbsp; &nbsp; ▶
+		<% }else if(b.getBoardReplyLev() == 2){ //댓글의 댓글일 때 %>
+				&nbsp; &nbsp;  &nbsp; &nbsp; ▶▶			
+	    <% } %>	
+	    <%-- 로그인 상태일 때만 상세보기 링크 설정함 --%>
+	    <% if(loginUser != null){ %>
+	    		<a href="/first/bdetail?bnum=<%= b.getBoardNum() %>&page=<%= currentPage %>"><%= b.getBoardTitle() %></a>
+	    <% }else{ %>
+	    <%= b.getBoardTitle() %>
+	    <% } %>
+		</td>
+		<td align="center"><%= b.getBoardWriter() %></td>
+		<td align="center"><%= b.getBoardDate() %></td>
+		<td align="center"><%= b.getBoardReadcount() %></td>
+		<td align="center">
+		<% if(b.getBoardOriginalFilename() != null){ %>
+				♬
+		<%}else{ %>
+		        ♪
+		<%} %>
+		</td>
+</tr>
+<% } %>
+</table>
 <br>
 <%--페이징 처리--%>
 <div style="text-align:center;">
