@@ -1,107 +1,98 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
- <%@page import = "member.model.vo.Member, board.model.vo.Board, java.util.ArrayList"%>
- <%
- 		ArrayList<Board> list = (ArrayList<Board>)request.getAttribute("list");
- 		//getParameter = 뷰에서 서블릿 요청/getAttribute 포워드 요청 차이
- 		int listCount = ((Integer)request.getAttribute("listCount")).intValue();
- 		int startPage = ((Integer)request.getAttribute("startPage")).intValue();
- 		int maxPage = ((Integer)request.getAttribute("maxPage")).intValue();
- 		int endPage = ((Integer)request.getAttribute("endPage")).intValue();
- 		int currentPage = ((Integer)request.getAttribute("currentPage")).intValue();
- 		
- 		Member loginUser = (Member)session.getAttribute("loginUser");
- 		
- 		
- %>
+    pageEncoding="UTF-8" import="freeboard.model.vo.FreeBoard, java.util.ArrayList" %>
+   <%
+   ArrayList<FreeBoard> list = (ArrayList<FreeBoard>)request.getAttribute("list");
+   ArrayList<FreeBoard> slist = (ArrayList<FreeBoard>)request.getAttribute("slist"); 
+   
+//	int listCount = ((Integer)request.getAttribute("listCount")).intValue(); 
+//   FreeBoard fboard = (FreeBoard)(request.getAttribute("fboard"));
+/* 	int startPage = ((Integer)request.getAttribute("startPage")).intValue();
+	int endPage = ((Integer)request.getAttribute("endPage")).intValue();
+	int maxPage = ((Integer)request.getAttribute("maxPage")).intValue();
+	int currentPage = ((Integer)request.getAttribute("currentPage")).intValue(); */
+   
+   %>
+    
+
+
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>first</title>
-<script>
+<title></title>
+<script type="text/javascript" src="/doggybeta/resources/js/jquery-3.3.1.min.js"></script>
+<script type="text/javascript">
 function showWriteForm(){
-	location.href = "/first/views/board/boardWriteForm.jsp";
-}
+	location.href = "/doggybeta/views/freeBoard/freeBoardWriteForm.jsp";
+}	
+
 </script>
+<style>
+	th{ 
+	background-color : #D09E88;
+	}
+	#search{ 
+	text-align:center;	
+	}
+</style>
 </head>
 <body>
-<%@ include file="../common/header.jsp" %>
+<%@ include file="../common/menu.jsp" %>
 <hr style="clear:both;">
-<h2 align ="center" >게시글 목록</h2>
-<h4 align ="center">총 게시글 갯수 : <%=listCount %></h4>
-<% if(loginUser != null){ %>
-	<div style="align:center ; text-align: center";>
-	<button onclick="showWriteForm()">글쓰기</button>
-	</div>
-<% } %>
-<br>
-<table align="center" border="1" cellspacing="0" width="700">
-<tr><th>번호</th><th>제목</th><th>작성자</th><th>날짜</th>
-<th>조회수</th><th>첨부파일</th></tr>
-<% for(Board b : list){ %>
-<tr><td align="center"><%= b.getBoardNum() %></td>
-		<td>
-		<%-- 댓글일 때는 제목을 들여쓰기함 --%>
-		<% if(b.getBoardReplyLev() == 1){ //원글의 댓글일 때  %>
-				&nbsp; &nbsp; ▶
-		<% }else if(b.getBoardReplyLev() == 2){ //댓글의 댓글일 때 %>
-				&nbsp; &nbsp;  &nbsp; &nbsp; ▶▶			
-	    <% } %>	
-	    <%-- 로그인 상태일 때만 상세보기 링크 설정함 --%>
-	    <% if(loginUser != null){ %>
-	    		<a href="/first/bdetail?bnum=<%= b.getBoardNum() %>&page=<%= currentPage %>"><%= b.getBoardTitle() %></a>
-	    <% }else{ %>
-	    <%= b.getBoardTitle() %>
-	    <% } %>
-		</td>
-		<td align="center"><%= b.getBoardWriter() %></td>
-		<td align="center"><%= b.getBoardDate() %></td>
-		<td align="center"><%= b.getBoardReadcount() %></td>
-		<td align="center">
-		<% if(b.getBoardOriginalFilename() != null){ %>
-				♬
-		<%}else{ %>
-		        ♪
-		<%} %>
-		</td>
+<h2 align="center">자유게시판</h2>
+<%-- <h4 align="center">총 게시글 갯수 : <%= listCount %></h4> --%>
+
+<table align="center"  border="0"  width=800 >
+<%-- --%>
+<tr>
+	<th>번호</th><th>제목</th><th>작성자</th><th>날짜</th><th>조회수</th>
 </tr>
-<% } %>
-</table>
-<br>
-<%--페이징 처리--%>
-<div style="text-align:center;">
-      <%if(currentPage <= 1) { %>
-		[맨처음]&nbsp;
-		<% }else { %>
-		<a href="/first/blist?page=1">[맨처음]</a>&nbsp;
-	<% } %>
-	<%if((currentPage - 10) < startPage && (currentPage - 10) > 1){ %>
-	<a href="/first/blist?page=<%= startPage - 10 %>">[prev]</a>
+<% for(FreeBoard f : list){ %>
+	<tr>
+	<td align="center"><a href="/doggybeta/fdetail?bnum=<%= f.getFreeboardNo() %>"><%= f.getFreeboardTitle() %></a></td>
+	<%-- <td align="center"><%= f.getFreeboardNo() %></td> --%>
+	<td align="center"><a href="/doggybeta/fdetail?bnum=<%= f.getFreeboardNo() %>"><%= f.getFreeboardTitle() %></a></td>
+	<td align="center"><%= f.getUserId() %></td>
+	<td align="center"><%= f.getFreeboardDate() %></td>
+ 	<td align="center"><%= f.getFreeboardViews() %></td>
+	<td align="center">
+ 	<%-- <% if(f.getFreeboardOriginalFile() != null){ %>
+		◎
 	<% }else{ %>
-		[prev]
-	<% } %>
-	<%-- 현재 페이지가 포함된 페이지 그룹 숫자 출력 처리 --%>
-	<% for(int p = startPage; p <= endPage; p++){ 
-					if(p == currentPage){
-	  %>				
-	  	<font color="red" size="4"><b>[<%= p %>]</b></font>
-	  	<% }else{ %>
-	  	<a href="/first/blist?page=<%= p %>"><%= p %></a>
-	<% }} %> &nbsp;
+		&nbsp;
+	<% } %> --%>
+	</td> 
+</tr>
+<% }  //for each %> 
+</table>
+<div style="align:center; text-align:center;">
+	<button type="button" style="float:right;" onclick="showWriteForm()";>글쓰기</button></div>	
 	
-<% if((currentPage + 10) > endPage && (currentPage + 10) < maxPage){ %>
-	<a href="/first/blist?page=<%= endPage + 10 %>">[next]</a>&nbsp;
-<% }else{ %>
-	[next]&nbsp;
-<% } %>
-<% if(currentPage >= maxPage){ %>
-	[맨끝]
-<% }else{ %>
-	<a href="/first/blist?page=<%= maxPage %>">[맨끝]</a>
-<% } %>
-		</div>
-<hr>
-<%@ include file="../common/footer.jsp" %>
+	<%-- 페이지 --%>
+	  
+
+
+
+	
+	
+	
+	<%-- 검색기능 --%>
+<br>
+<div id="search">
+ <form name="form1" method="post" action="/doggybeta/flist">
+  <select name="opt">
+  <option value="0" >제목</option>
+  <option value="1" >작성자</option>
+  <option value="2" >제목+내용</option>
+   </select>
+ <input type="text" size="20" name="inputdata" />&nbsp;
+ <input type="submit" value ="검색"/>
+</form>
+
+</div>
+
+
+<br>
+
 </body>
 </html>

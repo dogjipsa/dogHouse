@@ -96,8 +96,8 @@ center{
 /* 글쓰기 버튼 아래로 위치 시킨 다음에 글이 늘어나도 버튼과 겹치지 않게  */
 #insert{
 	position: absolute;
-	top: 10px;
-	left: 500px;
+	top: 150px;
+	left: 700px;
 }
 </style>
 <body>
@@ -107,7 +107,7 @@ center{
 </div>
 
 <%-- 검색기능 --%>
-<center>
+<!-- <center>
 <div class="search">
 	<input type="radio" name="item" value="title" checked> 제목
 	&nbsp; &nbsp; &nbsp;
@@ -127,6 +127,19 @@ center{
 	<label>검색할 날짜를 를 선택하시오 :
 	<input type="date" name="begin"> ~ 
 	<input type="date" name="end"></label>
+	<input type="submit" value="검색">
+	</form>
+</div>
+</center> -->
+<center>
+<div class="searchform">
+	<form action="/doggybeta/nsearch" method="post">
+	<select name="opt"> <!-- 검색 컬럼 -->
+		<option value="0">제목</option>
+		<option value="1">내용</option>
+		<option value="2">제목+내용</option>
+	</select>
+	<input type="text" size="20" name="search"> 
 	<input type="submit" value="검색">
 	</form>
 </div>

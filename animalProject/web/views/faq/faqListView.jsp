@@ -94,14 +94,19 @@ $(function(){
 center{
 	position: absolute;
 	top: 150px;
-	left: 250px;
+	left: 350px;
 	
 	
 }
 #insert{
 	position: absolute;
-	top: 10px;
-	left: 500px;
+	top: 150px;
+	left: 700px;
+}
+#page{
+	position: fixed;
+	left: 300;
+	width: 60%;
 }
 
 </style>
@@ -116,9 +121,8 @@ center{
 <div id="titleDiv">
 	<form action="/doggybeta/faqsearch" method="post">
 	<input type="hidden" name="search" value="title">
-	<label style="background-color : ">검색할 제목을 입력하시오 : 
-	<input type="text" name="keyword"></label>
-	<input type="submit" value="검색">
+	<label style="background-color : "><input type="text" name="keyword"></label>
+	<input type="submit" value="제목 검색">
 	</form>
 </div>
 </center>
@@ -162,7 +166,7 @@ center{
 </div>
 <%-- 페이징 처리 --%>
 <br><br><br>
-<div style="text-align:center;">
+<div id="page" style="text-align:center;">
 <% if(currentPage <= 1){ %>
 	[맨처음]&nbsp;
 <% }else{ %>

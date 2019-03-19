@@ -184,16 +184,16 @@
 					<li><a href="/doggybeta/views/aboutus/location.jsp">오시는 길</a></li>
 				</ul></li>
 			<li><a href='#' id='icon3'> <span>&nbsp;&nbsp;&nbsp;펫시터	찾기</span></a> </li>
-			<li class="m1"><a href='#'  id='icon4'> <span>&nbsp;&nbsp;&nbsp;게시판</span>
+			<li class="m1"><a href='/doggybeta/nlist'  id='icon4'> <span>&nbsp;&nbsp;&nbsp;게시판</span>
 			</a>
 				<ul class="m2">
-					<li><a href='#'>공지사항</a></li>
+					<li><a href='/doggybeta/nlist'>공지사항</a></li>
 					<li><a href='#'>자유게시판</a></li>
 					<li><a href='#'>팁</a></li>
 				</ul></li>
-			<li class="m1"><a href="#" id='icon5'> <span>&nbsp;&nbsp;&nbsp;고객센터</span></a>
+			<li class="m1"><a href="/doggybeta/faqlist" id='icon5'> <span>&nbsp;&nbsp;&nbsp;고객센터</span></a>
 				<ul class="m2">
-					<li><a href='#'>FAQ</a></li>
+					<li><a href='/doggybeta/faqlist'>FAQ</a></li>
 					<li><a href='#'>이용방법</a></li>
 					<li><a href='#'>1:1문의</a></li>
 				</ul></li>

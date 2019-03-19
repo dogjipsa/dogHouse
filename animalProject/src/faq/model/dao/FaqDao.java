@@ -128,13 +128,14 @@ public class FaqDao {
 		int endRow = startRow + limit - 1;
 		
 		String query = "select * from (select rownum rnum, faq_no, faq_title, faq_content, faq_date, manager_id, faq_type "
-				+ "from (select * from faq where faq_title like? order by faq_type) order by faq_type asc) where rnum >= ? and rnum <= ?";
+				+ "from (select * from faq where faq_title like? or faq_content like ? order by faq_type) order by faq_type asc) where rnum >= ? and rnum <= ?";
 		
 		try {
 			pstmt = conn.prepareStatement(query);
 			pstmt.setString(1, "%" + title + "%");
-			pstmt.setInt(2, startRow);
-			pstmt.setInt(3, endRow);
+			pstmt.setString(2, "%" + title + "%");
+			pstmt.setInt(3, startRow);
+			pstmt.setInt(4, endRow);
 			
 			rset = pstmt.executeQuery();
 			
@@ -150,7 +151,7 @@ public class FaqDao {
 				
 				list.add(faq);
 			}
-			System.out.println("list");
+
 			
 		} catch (Exception e) {
 			e.printStackTrace();
