@@ -9,13 +9,10 @@
 	int endPage = ((Integer) request.getAttribute("endPage")).intValue();
 	int maxPage = ((Integer) request.getAttribute("maxPage")).intValue();
 	int currentPage = ((Integer) request.getAttribute("currentPage")).intValue();
-
 	String search = null, keyword = null;
 	java.sql.Date begin = null, end = null;
-
 	if (request.getAttribute("search") != null) {
 		search = request.getAttribute("search").toString();
-
 		if (search.equals("date")) {
 			begin = (java.sql.Date) request.getAttribute("begin");
 			end = (java.sql.Date) request.getAttribute("end");
@@ -23,11 +20,7 @@
 			keyword = request.getAttribute("keyword").toString();
 		}
 	}
-
-
 	/* Member loginUser = (Member) session.getAttribute("loginUser"); */
-
-
 %>
 <!DOCTYPE html>
 <html>
@@ -42,28 +35,23 @@
 	function showWriteForm() {
 		location.href = "/doggybeta/views/tipboard/tipBoardWriteForm.jsp";
 	}
-
 	$(function() {
 		showDiv();
-
 		$("input[name=item]").on("change", function() {
 			showDiv();
 		});
 	});
-
 	function showDiv() {
 		if ($("input[name=item]").eq(0).is(":checked")) {
 			$("#titleDiv").css("display", "block");
 			$("#writerDiv").css("display", "none");
 			$("#dateDiv").css("display", "none");
 		}
-
 		if ($("input[name=item]").eq(1).is(":checked")) {
 			$("#titleDiv").css("display", "none");
 			$("#writerDiv").css("display", "block");
 			$("#dateDiv").css("display", "none");
 		}
-
 		if ($("input[name=item]").eq(2).is(":checked")) {
 			$("#titleDiv").css("display", "none");
 			$("#writerDiv").css("display", "none");
@@ -74,7 +62,8 @@
 </head>
 <body>
 
-	<%@ include file="..//common/menu.jsp"%>
+<%@ include file="..//common/menu.jsp" %>
+
 
 	<div id="wrap">
 		<div id="content">
@@ -245,7 +234,6 @@
 		</div>
 </body>
 </html>
-
 
 
 
