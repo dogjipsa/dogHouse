@@ -58,6 +58,7 @@ public class MemberService {
 		return result;
 	}
 
+
 	public int updateHost(Member m) {
 		Connection conn = getConnection();
 		int result = mdao.updateHost(conn, m);

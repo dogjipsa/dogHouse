@@ -130,6 +130,7 @@ public class MemberDao {
 		return result;
 	}
 
+
 	public int updateHost(Connection conn, Member m) {
 		int result = 0;
 		PreparedStatement pstmt = null;
@@ -154,5 +155,6 @@ public class MemberDao {
 		
 		return result;
 	}
+
 	
 }

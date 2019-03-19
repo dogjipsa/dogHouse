@@ -3,6 +3,7 @@ package member.model.vo;
 import java.io.Serializable;
 import java.sql.Date;
 
+
 public class Member implements Serializable {
 	private static final long serialVersionUID = -5224047403963087858L;
 
@@ -157,3 +158,4 @@ public class Member implements Serializable {
 				+ userrefile;
 	}
 }
+
