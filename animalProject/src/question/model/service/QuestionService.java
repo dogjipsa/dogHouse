@@ -21,13 +21,13 @@ public class QuestionService {
 	public int insertQuestion(Question question){
 		Connection conn = getConnection();
 		int result = qdao.insertQuetion(conn, question);
-		return null;
+		return 0;
 	}
 
 	public int deleteQuestion(Question question) {
 		Connection conn = getConnection();
 		int result = qdao.deleteQuestion(conn, question);
-		return null;
+		return 0;
 	}
 	
 	public void updateQuestion(Question question) {

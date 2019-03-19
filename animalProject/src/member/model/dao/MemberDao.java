@@ -3,7 +3,6 @@ package member.model.dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.Statement;
 import java.util.ArrayList;
 
 import static common.JDBCTemplate.*;
@@ -120,6 +119,7 @@ public class MemberDao {
 			pstmt.setInt(4, m.getPrice());
 			pstmt.setString(5, m.getUseroriginfile());
 			pstmt.setString(6, m.getUserrefile());
+			pstmt.setString(7, m.getUserId());
 			
 			result = pstmt.executeUpdate();
 		} catch (Exception e) {

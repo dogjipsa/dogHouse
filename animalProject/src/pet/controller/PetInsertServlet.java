@@ -9,9 +9,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import booking.model.service.BookingService;
-import booking.model.vo.Booking;
-import payment.model.service.PaymentService;
 import pet.model.service.PetService;
 import pet.model.vo.Pet;
 

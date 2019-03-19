@@ -2,8 +2,6 @@ package freeboard.controller;
 
 import java.io.IOException;
 import java.sql.Date;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
@@ -56,7 +54,6 @@ public class freeBoardSearchDateServlet extends HttpServlet {
 				
 				//한 페이지에 출력할 목록 갯수 지정
 				int limit = 10;
-				String date = request.getParameter("keyword");
 				FreeBoardService bservice = new FreeBoardService();
 				
 				//테이블에 저장된 전체 목록 갯수 조회

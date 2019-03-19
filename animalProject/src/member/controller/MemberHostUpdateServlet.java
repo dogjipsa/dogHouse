@@ -63,7 +63,6 @@ public class MemberHostUpdateServlet extends HttpServlet {
 		m.setPhone(mrequest.getParameter("phone"));
 		m.setAddress(mrequest.getParameter("addr"));
 		m.setPrice(Integer.parseInt(mrequest.getParameter("price")));
-		
 		String originFileName = mrequest.getFilesystemName("pic");
 		if(originFileName != null) {
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
@@ -92,6 +91,7 @@ public class MemberHostUpdateServlet extends HttpServlet {
 			m.setUseroriginfile(originFileName);
 			m.setUserrefile(renameFileName);
 		}
+		System.out.println(m);
 		
 		
 		int result = new MemberService().updateHost(m);

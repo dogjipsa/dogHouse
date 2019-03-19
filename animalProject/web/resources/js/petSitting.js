@@ -50,6 +50,7 @@ function checkInputs(obj){
 		return true;
 }
 submitBtn.addEventListener('click', (e)=>{
+	e.preventDefault();
 		const toSend = {
 		userid : document.querySelector('.section1 .input_id'),
 		username : document.querySelector('.section1 .input_name'),
@@ -58,33 +59,30 @@ submitBtn.addEventListener('click', (e)=>{
 		email : document.querySelector('.section2 .input_email'),
 		address : document.querySelector('.section2 .input_addr'),
 		price : document.querySelector('.section2 .input_price'),
-		pic : document.querySelector('.section3 #real-file')
 	}
 	if(checkInputs(toSend) && toSend.agree.value === 'agree'){
 		// 모든 인풋 정보가 들어왔을경우
-		const values = {
-				userid : document.querySelector('.section1 .input_id').value,
-				username : document.querySelector('.section1 .input_name').value,
-				agree : handleRadio('agree').value,
-				phone : document.querySelector('.section2 .input_phone').value,
-				email : document.querySelector('.section2 .input_email').value,
-				address : document.querySelector('.section2 .input_addr').value,
-				price : document.querySelector('.section2 .input_price').value,
-				pic : document.querySelector('.section3 #real-file').value
-			}
-		const jsonString = JSON.stringify(values);
+		const formData = new FormData();
+		const file = document.getElementById('real-file');
 		const xhr = new XMLHttpRequest();
-		
+
+		formData.append('pic', file.files[0]);
+		formData.append('price', toSend.price.value);
+		formData.append('userid',toSend.userid.value);
+		formData.append('username',toSend.username.value);
+		formData.append('phone',toSend.phone.value);
+		formData.append('email',toSend.email.value);
+		formData.append('addr',toSend.address.value);
+		console.log(formData.values);
 		xhr.onload = function(){
-			
+			alert('good');
 		}
 		
 		xhr.open('POST','/doggybeta/hostup');
-		xhr.setRequestHeader("Content-Type","multipart/form-data");
-		xhr.send(jsonString);
+		xhr.send(formData);
 	} else {
 		// 필수 인풋 정보가 들어오지 않았을 경우
-		console.log('xxxxx');
+		alert('bad');
 	}
 })
 

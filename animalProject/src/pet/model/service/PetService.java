@@ -7,7 +7,6 @@ import static common.JDBCTemplate.*;
 import java.sql.Connection;
 import java.util.ArrayList;
 
-import payment.model.vo.Payment;
 public class PetService {
 	
 	private PetDao pdao = new PetDao(); 

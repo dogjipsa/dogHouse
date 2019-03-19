@@ -7,7 +7,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 
-import payment.model.vo.Payment;
 import pet.model.vo.Pet;
 
 public class PetDao {

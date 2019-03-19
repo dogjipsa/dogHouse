@@ -10,7 +10,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import pet.model.service.PetService;
-import pet.model.vo.Pet;
 
 /**
  * Servlet implementation class PetDeleteServlet
