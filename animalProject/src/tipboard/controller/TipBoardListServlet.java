@@ -36,8 +36,8 @@ public class TipBoardListServlet extends HttpServlet {
 				//출력될 페이지 기본값 지정
 				int currentPage = 1;
 				
-				if(request.getParameter("tpage") != null) {
-					currentPage = Integer.parseInt(request.getParameter("tpage"));
+				if(request.getParameter("page") != null) {
+					currentPage = Integer.parseInt(request.getParameter("page"));
 				}
 				
 				//한 페이지에 출력할 목록 갯수 지정

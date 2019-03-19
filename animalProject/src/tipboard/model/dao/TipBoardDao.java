@@ -41,7 +41,7 @@ public class TipBoardDao {
 
 	public ArrayList<TipBoard> selectList(Connection conn, int currentPage, int limit) {
 			ArrayList<TipBoard> list = new ArrayList<TipBoard>();
-			Statement stmt = null;
+			PreparedStatement pstmt = null;
 			ResultSet rset = null;
 			
 			//해당 페이지에 출력할 목록의 시작행과 끝행 계산
@@ -49,16 +49,15 @@ public class TipBoardDao {
 			int endRow = startRow + limit - 1;
 			
 			String query = "SELECT *  FROM (SELECT ROWNUM RNUM,  TIPBOARD_NO,TIPBOARD_TITLE,TIPBOARD_CONTENT,TIPBOARD_DATE,TIPBOARD_ORIGINFILE,TIPBOARD_VIEWS,TIPBOARD_RECOMMEND,USER_ID,TIPBOARD_DELETE,TIPBOARD_REFILE " + 
-					"				FROM (SELECT * FROM TIPBOARD )) " + 
-					"				WHERE RNUM >= ? AND RNUM <= ?";
+					"				FROM (SELECT * FROM TIPBOARD order by tipboard_no desc)) " + 
+					"				WHERE RNUM >= ? AND RNUM <= ? ";
 			
 			try {
-				stmt = conn.createStatement();
-				
-				rset = stmt.executeQuery(query);
-				System.out.println(2);
+				pstmt = conn.prepareStatement(query);
+				pstmt.setInt(1, startRow);
+				pstmt.setInt(2, endRow);
+				rset = pstmt.executeQuery();
 				while(rset.next()) {
-					System.out.println(1);
 					TipBoard tboard = new TipBoard();
 					tboard.setTipBoardNo(rset.getInt("tipboard_no"));
 					tboard.setTipBoardTitle(rset.getString("tipboard_title"));
@@ -78,7 +77,7 @@ public class TipBoardDao {
 				e.printStackTrace();
 			}finally {
 				close(rset);
-				close(stmt);
+				close(pstmt);
 			}
 			
 			return list;
