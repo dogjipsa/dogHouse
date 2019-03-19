@@ -128,7 +128,7 @@ public class MemberDao {
 			close(pstat);
 		}
 		return result;
-	}
+	} 
 
 
 	public int updateHost(Connection conn, Member m) {
