@@ -23,21 +23,18 @@ customBtn.addEventListener('click', () =>{
 });
 
 function readURL(input){
-	alert('running 0');
 	if(input.files && input.files[0]){
 		const reader = new FileReader();
-		alert('running1');
 		reader.onload = function(e){
-			alert('running2');
 			imageBox_pic.setAttribute('src', e.target.result);
 		}
 		reader.readAsDataURL(input.files[0]);
 	}
 }
 
-realFile.addEventListener('change', () =>{
+realFile.addEventListener('change', (e) =>{
 	// 업로드 하면 버튼 옆에 파일명(경로제외) 출력 됨.
-	readURL(this);
+	readURL(e.target);
 	 if(realFile.value)
 	 	customTxt.innerHTML = realFile.value.match(/[\/\\]([\w\d\s\.\-\(\)]+)$/)[1];
 });
@@ -90,7 +87,8 @@ submitBtn.addEventListener('click', (e)=>{
 		formData.append('addr',toSend.address.value);
 		console.log(formData.values);
 		xhr.onload = function(){
-			alert('good');
+			const alertBox = document.querySelector('.ps_reg_form_popup_box');
+			alertBox.style.display = "flex";
 		}
 		
 		xhr.open('POST','/doggybeta/hostup');
@@ -101,3 +99,8 @@ submitBtn.addEventListener('click', (e)=>{
 	}
 })
 
+const chkRegFormBtn = document.querySelector('.ps_reg_form_popup_box button');
+
+chkRegFormBtn.addEventListener('click', function(){
+	location.href = '/doggybeta/index.jsp';
+});

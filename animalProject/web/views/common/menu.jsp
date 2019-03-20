@@ -251,7 +251,12 @@
 					<div class="map_box"></div>
 					<span><button type="submit" id="submit-btn">펫시터 등록하기</button></span>
 				</div>
-			</div>
+		</div>
+		<div class="ps_reg_form_popup_box">
+			<p>펫시터 등록 신청이 완료되었습니다. </p>
+			<button>확인</button>
+		</div>
+
 		<script type="text/javascript"src="/doggybeta/resources/js/petSitting.js"></script>
 	
 	<script type="text/javascript">
