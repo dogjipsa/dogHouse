@@ -35,6 +35,7 @@ h2{
 <%@ include file="../common/menu.jsp"%>
 	<div id="wrap">
 		  <div id="content">
+
 	
 
 <h2 align="center">오시는 길</h2>

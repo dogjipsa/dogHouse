@@ -68,7 +68,6 @@ public class TipBoardListServlet extends HttpServlet {
 				
 				response.setContentType("text/html; charset=utf-8");
 				RequestDispatcher view = null;
-				System.out.println(list);
 				if(list.size() > 0) {
 					view = request.getRequestDispatcher(
 							"views/tipboard/tipBoardListView.jsp");
@@ -79,14 +78,7 @@ public class TipBoardListServlet extends HttpServlet {
 					request.setAttribute("startPage", startPage);
 					request.setAttribute("endPage", endPage);
 					request.setAttribute("listCount", listCount);
-					System.out.println("크기 : " + list.size());
-					System.out.println(currentPage);
-					System.out.println(maxPage);
-					System.out.println(startPage);
-					System.out.println(endPage);
-					System.out.println(listCount);
-		
-					
+										
 					view.forward(request, response);
 				}else {
 					view = request.getRequestDispatcher(

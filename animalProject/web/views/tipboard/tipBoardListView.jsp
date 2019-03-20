@@ -30,7 +30,7 @@
 <link href="/doggybeta/resources/css/footer.css" rel="stylesheet"
 	type="text/css">
 <script type="text/javascript"
-	src="/first/resources/js/jquery-3.3.1.min.js"></script>
+	src="/doggybeta/resources/js/jquery-3.3.1.min.js"></script>
 <script type="text/javascript">
 	function showWriteForm() {
 		location.href = "/doggybeta/views/tipboard/tipBoardWriteForm.jsp";
@@ -62,7 +62,7 @@
 </head>
 <body>
 
-<%@ include file="..//common/menu.jsp" %>
+	<%@ include file="..//common/menu.jsp"%>
 
 
 	<div id="wrap">
@@ -73,15 +73,15 @@
 			<h4 align="center">
 				총 게시글 갯수 :
 				<%=listCount%></h4>
-			<%
+			<%-- <%
 				if (loginUser != null) {
-			%>
+			%> --%>
 			<div style="align: center; text-align: center;">
 				<button onclick="showWriteForm();">글쓰기</button>
 			</div>
-			<%
+			<%-- <%
 				}
-			%>
+			%> --%>
 			<br>
 			<%-- 검색기능 --%>
 			<center>
@@ -127,14 +127,16 @@
 				%>
 				<tr>
 					<td align="center"><%=t.getTipBoardNo()%></td>
-					<td>
-						<%-- 로그인 상태일 때만 상세보기 링크 설정함 --%> <%-- <% if(loginUser != null){ %>
-		<a href="/first/tdetail?tnum=<%= t.getTipBoardNo() %>&tpage=<%= currentPage %>"><%= b.getBoardTitle() %></a>
-	<% }else{ %>
-		<%= t.getTipBoardTitle() %>
-	<% } %> --%> <%=t.getTipBoardTitle()%>
+					<td><!-- 로그인 상태일 때만 상세보기 링크 설정함 --> <%
+						/* if (loginUser != null) { */
+					%> <a
+						href="/doggybeta/tdetail?tnum=<%=t.getTipBoardNo()%>&page=<%=currentPage%>"><%=t.getTipBoardTitle()%></a>
+						<%-- <%
+							} else {
+						%> <%=t.getTipBoardTitle()%> <%
+ 					}%> <%=t.getTipBoardTitle()%> --%>
 					</td>
-					<td align="center"><%=t.getTipBoardTitle()%></td>
+					<td align="center"><%=t.getUserId()%></td>
 					<td align="center"><%=t.getTipBoardDate()%></td>
 					<td align="center"><%=t.getTipBoardViews()%></td>
 					<td align="center">
