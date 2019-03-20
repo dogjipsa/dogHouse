@@ -109,7 +109,7 @@
 					<li><a href='#'>자유게시판</a></li>
 					<li><a href='/doggybeta/tlist'>팁</a></li>
 				</ul></li>
-			<li class="m1"><a href="/doggybeta/faqlist" id='icon5'> <span>&nbsp;&nbsp;&nbsp;고객센터</span></a>
+			<li class="m1"><a href="#" id='icon5'> <span>&nbsp;&nbsp;&nbsp;고객센터</span></a>
 				<ul class="m2">
 					<li><a href='/doggybeta/faqlist'>FAQ</a></li>
 					<li><a href='#'>이용방법</a></li>

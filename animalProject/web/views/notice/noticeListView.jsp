@@ -1,8 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" import="notice.model.vo.Notice, java.util.*" %>
+    pageEncoding="UTF-8" import="notice.model.vo.Notice, java.util.*, member.model.vo.Member" %>
 <%
    ArrayList<Notice> list = (ArrayList<Notice>)request.getAttribute("list");
-   
+
 
 %>  
 <html>
@@ -37,11 +37,10 @@ function showDiv(){
 
 }
 </script>
-</head>
 <style type="text/css">
 
 /* 화면에 보여지는 글 목록 테이블 */
-.main{
+h2{
    position: relative;
    top: 20px;
    left : 200px;
@@ -49,7 +48,7 @@ function showDiv(){
 }
 .board { 
    position: relative;
-   left : 250px;
+   left : 150px;
    top: 100px;
    width: 60%;
    border-collapse: collapse;
@@ -92,7 +91,6 @@ center{
 	top: 130px;
 	left: 250px;
 	
-	
 }
 /* 글쓰기 버튼 아래로 위치 시킨 다음에 글이 늘어나도 버튼과 겹치지 않게  */
 #insert{
@@ -101,39 +99,15 @@ center{
 	left: 700px;
 }
 </style>
+</head>
+
 <body>
 <%@ include file="../common/menu.jsp"%>
 	<div id="wrap">
 		  <div id="content">
-<div class="main">
-<h2 align="center">공지사항 게시판</h2>
-</div>
 
-<%-- 검색기능 --%>
-<!-- <center>
-<div class="search">
-	<input type="radio" name="item" value="title" checked> 제목
-	&nbsp; &nbsp; &nbsp;
-	<input type="radio" name="item" value="date"> 날짜	
-</div>
-<div id="titleDiv">
-	<form action="/doggybeta/nsearch" method="post">
-	<input type="hidden" name="search" value="title">
-	<label style="background-color : ">검색할 제목을 입력하시오 : 
-	<input type="text" name="keyword"></label>
-	<input type="submit" value="검색">
-	</form>
-</div>
-<div id="dateDiv">
-	<form action="/doggybeta/nsearch" method="post">
-	<input type="hidden" name="search" value="date">
-	<label>검색할 날짜를 를 선택하시오 :
-	<input type="date" name="begin"> ~ 
-	<input type="date" name="end"></label>
-	<input type="submit" value="검색">
-	</form>
-</div>
-</center> -->
+<h2 align="center">공지사항 게시판</h2>
+
 <center>
 <div class="searchform">
 	<form action="/doggybeta/nsearch" method="post">
@@ -157,18 +131,31 @@ center{
             <th width="100">작성자</th>
             <th width="130">작성일</th>
             <th width="70">조회수</th>
+            <th width="100">첨부파일</th>
             
          </tr>   
       </thead>
       <tbody>      
        <%   for(Notice notice : list){ %>
    <tr>
-   <td class="row" ><%= notice.getNoticeNo() %></td>
-   <td class="row" ><a href="/doggybeta/ndetail?no=<%= notice.getNoticeNo()%>"><%= notice.getNoticeTitle() %></a></td>
-   <td class="row" ><%= notice.getManagerId() %></td>
-   <td class="row" ><%= notice.getNoticeDate() %></td>
-   <td class="row" ><%= notice.getNoticeViews() %></td>
-
+   <td><%= notice.getNoticeNo() %></td>
+   
+   <td>
+   <%if(loginUser != null){ %>
+   <a href="/doggybeta/ndetail?no=<%= notice.getNoticeNo()%>"><%= notice.getNoticeTitle() %></a>
+   <% }else{ %>
+   <%= notice.getNoticeTitle() %>
+   <% } %>
+   </td>
+   <td><%= notice.getManagerId() %></td>
+   <td><%= notice.getNoticeDate() %></td>
+   <td><%= notice.getNoticeViews() %></td>
+   <td>
+   <%if(notice.getNoticeOriginFile() != null) {%>
+   <img src="/doggybeta/resources/images/puppyborn.jpg" size="50">
+   <% }else{ %>
+   &nbsp;
+   <%} %>
    </td>
    </tr>   
    <% } %>     
@@ -176,13 +163,14 @@ center{
 </table>
 <br>         
 <!-- 테이블 종료 -->
+<% if(loginUser != null){ %>
 <div id="insert">
 	<input type="button" onclick="showWriteForm();" value="글쓰기">
 </div>
-
+<%} %>
 
 </div>
 		<div id="footer"><%@ include file="..//common/footer.jsp"%></div>
-	</div>
+</div>
 </body>
 </html>

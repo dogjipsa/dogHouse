@@ -8,6 +8,7 @@
 <head>
 <title>Dog House</title>
 <link rel="shortcut icon" href="/doggybeta/resources/images/favicon.ico">
+<link href="/doggybeta/resources/css/footer.css" rel="stylesheet" type="text/css">
 <script type="text/javascript" src="/doggybeta/resources/js/jquery-3.3.1.min.js"></script>
 <script type="text/javascript">
 function moveUpdatePage(){
@@ -52,7 +53,9 @@ table td {
 </style>
 </head>
 <body>
-<%@ include file="../common/menu.jsp" %>
+<%@ include file="../common/menu.jsp"%>
+	<div id="wrap">
+		  <div id="content">
 
 <br>
 <h2 align="center"><%= notice.getNoticeNo() %> 번 공지글 상세보기</h2>
@@ -91,11 +94,8 @@ table td {
 	<button id="button3" onclick="location.href='/doggybeta/nlist'; return false;">목록</button>
 	</th>
 </div>
-<a><%@ include file="../common/footer.jsp" %></a>
-</body>
-</html>
-</head>
-<body>
-
+</div>
+		<div id="footer"><%@ include file="..//common/footer.jsp"%></div>
+</div>
 </body>
 </html>

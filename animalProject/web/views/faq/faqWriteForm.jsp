@@ -6,6 +6,7 @@
 <meta charset="UTF-8">
 <title>Dog House</title>
 <link rel="shortcut icon" href="/doggybeta/resources/images/favicon.ico">
+<link href="/doggybeta/resources/css/footer.css" rel="stylesheet" type="text/css">
 <script type="text/javascript" src="/doggybeta/resources/js/jquery-3.3.1.min.js"></script>
 <script type="text/javascript">
 function moveList(){
@@ -20,7 +21,7 @@ function moveList(){
    top: 50px;
    width:100%;
 }
-.main{
+h2{
    position: relative;
    top: 20px;
    left : 100px;
@@ -50,10 +51,11 @@ function moveList(){
 </style>
 <body>
 <%@ include file="../common/menu.jsp"%>
+	<div id="wrap">
+		  <div id="content">
 
-<div class="main">
+
 <h2 align="center">FAQ 등록 페이지</h2>
-</div>
 
 <br>
 
@@ -85,6 +87,8 @@ function moveList(){
 </div>
 </form>
 
-<%@ include file="../common/footer.jsp"%>
+</div>
+		<div id="footer"><%@ include file="..//common/footer.jsp"%></div>
+</div>
 </body>
 </html>
