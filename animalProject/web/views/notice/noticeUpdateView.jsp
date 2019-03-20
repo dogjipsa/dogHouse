@@ -1,20 +1,22 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" import="notice.model.vo.Notice"%>
+    <%@ page import='member.model.vo.Member' %>
 <%
 	Notice notice = (Notice)request.getAttribute("notice");
-%>    
+	Member loginUser = (Member)session.getAttribute("loginUser");
+%> 
+
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Dog House</title>
 <link rel="shortcut icon" href="/doggybeta/resources/images/favicon.ico">
+<link href="/doggybeta/resources/css/footer.css" rel="stylesheet" type="text/css">
 <script type="text/javascript" src="/doggybeta/resources/js/jquery-3.3.1.min.js"></script>
 </head>
 <style type="text/css">
-.board{
-	
-}
+
 .title{
 	width: 70px;
 	padding: 7px 13px;
@@ -26,11 +28,11 @@
 </style>
 <body>
 <%@ include file="../common/menu.jsp"%>
-
-<div class="main">
+	<div id="wrap">
+		  <div id="content">
 
 <h2 align="center"><%= notice.getNoticeNo() %>번 글 수정 페이지</h2>
-</div>
+
 
 <br>
 
@@ -81,6 +83,8 @@
 </table>
 </form>
 
-<%@ include file="../common/footer.jsp"%>
+</div>
+		<div id="footer"><%@ include file="..//common/footer.jsp"%></div>
+</div>
 </body>
 </html>

@@ -1,3 +1,6 @@
+/answer/
+/booking/
+/common/
 /member/
 /tipboard/
 /common/
@@ -5,6 +8,8 @@
 /faq/
 /freeboard/
 /freeboardreply/
+/member/
+/message/
 /notice/
 /payment/
 /pet/
@@ -12,4 +17,7 @@
 /question/
 /report/
 /review/
+/tipboard/
 /tipboardreply/
+/com/
+
