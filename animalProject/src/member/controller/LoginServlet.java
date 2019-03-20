@@ -33,7 +33,6 @@ public class LoginServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// 로그인처리용 컨트롤러
 		System.out.println("멤버서블릿 호출");
-		
 		String userid = request.getParameter("userid");
 		String passwd = request.getParameter("userpwd");
 		Member loginUser = new MemberService().loginMember(userid, passwd);

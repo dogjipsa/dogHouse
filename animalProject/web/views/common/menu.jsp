@@ -138,7 +138,7 @@
   			<input type="password" name='userpwd' id='passwd' class="login-password" required required placeholder="Password" />
   			<a href='/doggybeta/jipsalogin'>
   			<input type="submit" name="Login" value="Login" class="login-submit" id='btnLogin'/></a>
-			<a href='/doggybeta/views/member/enroll.html'>
+			<a href='/doggybeta/views/member/checkAdmitNumber.jsp'>
 			<input type="button" name='enroll' value='회원가입' class='login-submit' id='btnEnroll'/>
 			</a>
   			
