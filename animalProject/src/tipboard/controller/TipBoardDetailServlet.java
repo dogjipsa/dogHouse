@@ -31,7 +31,7 @@ public class TipBoardDetailServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		int tipBoardNum = Integer.parseInt(request.getParameter("num"));
+		int tipBoardNum = Integer.parseInt(request.getParameter("tnum"));
 		int currentPage = Integer.parseInt(request.getParameter("page"));
 		TipBoardService tservice = new TipBoardService();
 		

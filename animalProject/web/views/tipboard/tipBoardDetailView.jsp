@@ -33,7 +33,7 @@
 	<th>첨부파일</th>
 	<td>
 		<% if(tboard.getTipBoardOriginFile() != null){ %>
-			<a href="/doggybeta/bfdown?ofile=<%= board.getBoardOriginalFileName()%>&rfile=<%= board.getBoardRenameFileName() %>"><%= board.getBoardOriginalFileName() %></a>
+			<a href="/doggybeta/bfdown?tofile=<%= tboard.getTipBoardOriginFile()%>&trfile=<%= tboard.getTipBoardReFile() %>"><%= tboard.getTipBoardOriginFile() %></a>
 		<% }else{ %>
 			첨부파일 없음
 		<% } %>
@@ -45,18 +45,18 @@
 </tr>
 <tr>
 	<th colspan="2">
-	<% if(loginUser != null && board.getBoardReplyLev() < 2){ %>
+	<%-- <% if(loginUser != null && board.getBoardReplyLev() < 2){ %>
 		<a href="/first/views/board/boardReplyForm.jsp?bnum=<%=board.getBoardNum()%>&page=<%=currentPage%>">[댓글달기]</a>
 		<!-- jsp파일에서 jsp파일로 전송할 수 있음 boardreplyform.jsp에서 getparameter로 값을 꺼냄 -->
-	<% } %>
+	<% } %> --%>
 	&nbsp; &nbsp;
-	<% if(loginUser.getUserId().equals(board.getBoardWriter())){ %>
-		<a href="/first/bupview?bnum=<%=board.getBoardNum()%>&page=<%=currentPage%>">[수정페이지로 이동]</a>
+	<%-- <% if(loginUser.getUserId().equals(board.getBoardWriter())){ %> --%>
+		<a href="/doggybeta/tupview?tnum=<%=tboard.getTipBoardNo()%>&page=<%=currentPage%>">[수정페이지로 이동]</a>
 		&nbsp; &nbsp;
-		<a href="/first/bdelete?bnum=<%=board.getBoardNum()%>">[글삭제]</a>
-	<% } %>
+		<a href="/doggybeta/tdelete?tnum=<%=tboard.getTipBoardNo()%>">[글삭제]</a>
+	<%-- <% } %> --%>
 	&nbsp; &nbsp;
-	<a href="/first/blist?page=<%= currentPage%>">[목록]</a>
+	<a href="/doggybeta/tlist?page=<%= currentPage%>">[목록]</a>
 	</th>
 </tr>
 </table>

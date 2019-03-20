@@ -84,18 +84,66 @@ public class TipBoardDao {
 	}
 
 	public int addReadCount(Connection conn, int tipBoardNum) {
-		// TODO Auto-generated method stub
-		return 0;
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String query = "update tipboard set tipboard_no = ? + 1";
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, tipBoardNum);
+			result = pstmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
 	}
 
 	public TipBoard selectBoard(Connection conn, int tipBoardNum) {
-		// TODO Auto-generated method stub
-		return null;
+		TipBoard tboard = new TipBoard();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String query = "select * from tipboard where tipboard_no = ?";
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, tipBoardNum);
+			rset = pstmt.executeQuery();
+			if(rset.next()) {
+				tboard.setTipBoardNo(rset.getInt("tipboard_no"));
+				tboard.setTipBoardTitle(rset.getString("tipboard_title"));
+				tboard.setTipBoardContent(rset.getString("tipboard_content"));
+				tboard.setTipBoardDate(rset.getDate("tipboard_date"));
+				tboard.setTipBoardOriginFile(rset.getString("tipboard_originfile"));
+				tboard.setTipBoardViews(rset.getInt("tipboard_views"));
+				tboard.setTipBoardRecommend(rset.getInt("tipboard_recommend"));
+				tboard.setUserId(rset.getString("user_id"));
+				tboard.setTipBoardDelete(rset.getString("tipboard_delete"));
+				tboard.setTipBoardReFile(rset.getString("tipboard_refile"));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return tboard;
 	}
 
 	public int insertBoard(Connection conn, TipBoard tboard) {
-		// TODO Auto-generated method stub
-		return 0;
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String query = "insert into tipboard values (seq_tipboardno.nextval,?,?,default,?,0,0,?,default,?)";
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, tboard.getTipBoardTitle());
+			pstmt.setString(2, tboard.getTipBoardContent());
+			pstmt.setString(3, tboard.getTipBoardOriginFile());
+			pstmt.setString(4, tboard.getUserId());
+			pstmt.setString(5, tboard.getTipBoardReFile());
+			result = pstmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
 	}
 
 	public int updateTipBoard(Connection conn, TipBoard tboard) {
