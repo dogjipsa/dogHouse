@@ -1,6 +1,10 @@
 /answer/
 /booking/
 /common/
+/member/
+/tipboard/
+/common/
+/booking/
 /faq/
 /freeboard/
 /freeboardreply/
@@ -16,3 +20,4 @@
 /tipboard/
 /tipboardreply/
 /com/
+

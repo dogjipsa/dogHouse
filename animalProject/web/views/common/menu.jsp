@@ -201,7 +201,7 @@
 			<li class="m1"><a href="#" id='icon6'><span>&nbsp;&nbsp;&nbsp;마이페이지</span></a>
 				<ul class="m2">
 					<li><a href='#'>정보수정</a></li>
-					<li><a href='#'>이용내역/예약확인</a></li>
+					<li><a href='/doggybeta/views/customerservice/checkMyLog.jsp'>이용내역/예약확인</a></li>
 					<li><a href='#' id="pet_reg__btn">펫시터신청</a></li>
 					<li><a href='#'>사전문의확인</a></li>
 				</ul></li>
