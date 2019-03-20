@@ -93,10 +93,7 @@ submitBtn.addEventListener('click', (e)=>{
 		
 		xhr.open('POST','/doggybeta/hostup');
 		xhr.send(formData);
-	} else {
-		// 필수 인풋 정보가 들어오지 않았을 경우
-		alert('bad');
-	}
+	} 
 })
 
 const chkRegFormBtn = document.querySelector('.ps_reg_form_popup_box button');

@@ -20,6 +20,7 @@
 <head>
 <title>Dog House</title>
 <link rel="shortcut icon" href="/doggybeta/resources/images/favicon.ico">
+<link href="/doggybeta/resources/css/footer.css" rel="stylesheet" type="text/css">
 <script type="text/javascript" src="/doggybeta/resources/js/jquery-3.3.1.min.js"></script>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
 <script type="text/javascript">
@@ -42,10 +43,9 @@ $(function(){
 });
 
 </script>
-</head>
 <style type="text/css">
 
-.main{
+h2{
    position: relative;
    top: 20px;
    left : 200px;
@@ -84,8 +84,7 @@ $(function(){
     padding: 10px;
     font-weight: bold;
     vertical-align: top;
-    border-bottom: 1px solid #ccc;
-    
+    border-bottom: 1px solid #ccc;  
 }
 
 .board tbody tr:hover{
@@ -94,27 +93,30 @@ $(function(){
 center{
 	position: absolute;
 	top: 150px;
-	left: 350px;
-	
-	
+	left: 350px;	
 }
 #insert{
 	position: absolute;
 	top: 150px;
 	left: 700px;
 }
-#page{
-	position: fixed;
-	left: 300;
-	width: 60%;
+#faqpage{
+	position: relative;
+	left: 500px;
+	
 }
 
 </style>
+</head>
+
 <body>
+
 <%@ include file="../common/menu.jsp"%>
-<div class="main">
+	<div id="wrap">
+		  <div id="content">
+
 <h2 align="center">FAQ</h2>
-</div>
+
 
 <%-- 검색기능 --%>
 <center>
@@ -122,7 +124,7 @@ center{
 	<form action="/doggybeta/faqsearch" method="post">
 	<input type="hidden" name="search" value="title">
 	<label style="background-color : "><input type="text" name="keyword"></label>
-	<input type="submit" value="제목 검색">
+	<input type="submit" value="검색">
 	</form>
 </div>
 </center>
@@ -140,11 +142,12 @@ center{
    <tr>
    <td><%= faq.getFaqType()%></td>
    <td>
+   <%if(loginUser != null){ %>
    <span class="glyphicon glyphicon-plus plusIcon"></span>
    <span class="glyphicon glyphicon-minus plusIcon" style="display:none"></span><%= faq.getFaqTitle() %></td>
    </tr>
    <tr style="display:none" >
-   <td colspan="2" align="left" style="word-break:break-all;">
+   <td colspan="2" align="left" style="word-break:break-all;">   
    <%= faq.getFaqContent() %>
    <br>
    <br>
@@ -152,6 +155,10 @@ center{
    <button onclick="location.href='/doggybeta/faqupview?fnum=<%= faq.getFaqNo()%>&page=<%= currentPage%>'">수정</button>
    &nbsp;
    <button onclick="location.href='/doggybeta/faqdel?fnum=<%= faq.getFaqNo()%>'">삭제</button>
+   <%}else{ %>
+   <%= faq.getFaqTitle() %>
+   <%} %>
+   
    </td>
    </tr>    
       
@@ -166,7 +173,9 @@ center{
 </div>
 <%-- 페이징 처리 --%>
 <br><br><br>
-<div id="page" style="text-align:center;">
+<br><br><br>
+
+<div id="faqPage" >
 <% if(currentPage <= 1){ %>
 	[맨처음]&nbsp;
 <% }else{ %>
@@ -199,6 +208,9 @@ center{
 	<a href="/doggybeta/faqlist?page=<%= maxPage %>">[맨끝]</a>
 <% } %>
 </div>
-<%@ include file="../common/footer.jsp"%>
+
+</div>
+		<div id="footer"><%@ include file="..//common/footer.jsp"%></div>
+</div>
 </body>
 </html>
