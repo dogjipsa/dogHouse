@@ -363,8 +363,8 @@ public class FreeBoardDao {
 					"FROM (SELECT ROWNUM RNUM, FREEBOARD_NO, " + 
 					"FREEBOARD_TITLE, FREEBOARD_CONTENT, " + 
 					"FREEBOARD_DATE, " + 
-					"FREEBOARD_ORIGINFILE, FREEBOARD_VIEWS " + 
-					"FREEBOARD_RECCONED, " + 
+					"FREEBOARD_ORIGINFILE, FREEBOARD_VIEWS, " + 
+					"FREEBOARD_RECOMMEND, " +
 					"USER_ID, " + 
 					"FREEBOARD_DELETE, FREEBOARD_REFILE " + 
 					"FROM (SELECT * FROM FREEBOARD " +
@@ -409,8 +409,8 @@ public class FreeBoardDao {
 					"FROM (SELECT ROWNUM RNUM, FREEBOARD_NO, " + 
 					"FREEBOARD_TITLE, FREEBOARD_CONTENT, " + 
 					"FREEBOARD_DATE, " + 
-					"FREEBOARD_ORIGINFILE, FREEBOARD_VIEWS " + 
-					"FREEBOARD_RECCONED, " + 
+					"FREEBOARD_ORIGINFILE, FREEBOARD_VIEWS, " + 
+					"FREEBOARD_RECOMMEND, " +
 					"USER_ID, " + 
 					"FREEBOARD_DELETE, FREEBOARD_REFILE " + 
 					"FROM (SELECT * FROM FREEBOARD " +
@@ -435,7 +435,6 @@ public class FreeBoardDao {
 						freeboard.setFreeboardDate(rset.getDate("FREEBOARD_DATE"));
 						freeboard.setFreeboardOriginalFile(rset.getString("FREEBOARD_ORIGINFILE"));
 						freeboard.setFreeboardViews(rset.getInt("FREEBOARD_VIEWS"));
-						freeboard.setFreeboardRecommend(rset.getInt("FREEBOARD_RECOMMEND"));
 						freeboard.setUserId(rset.getString("USER_ID"));
 						freeboard.setFreeboardDelete(rset.getString("FREEBOARD_DELETE"));
 						freeboard.setFreeboardRefile(rset.getString("FREEBOARD_REFILE"));
@@ -458,8 +457,8 @@ public class FreeBoardDao {
 					"FROM (SELECT ROWNUM RNUM, FREEBOARD_NO, " + 
 					"FREEBOARD_TITLE, FREEBOARD_CONTENT, " + 
 					"FREEBOARD_DATE, " + 
-					"FREEBOARD_ORIGINFILE, FREEBOARD_VIEWS " + 
-					"FREEBOARD_RECCONED, " + 
+					"FREEBOARD_ORIGINFILE, FREEBOARD_VIEWS, " + 
+					"FREEBOARD_RECOMMEND, " + 
 					"USER_ID, " + 
 					"FREEBOARD_DELETE, FREEBOARD_REFILE " + 
 					"FROM (SELECT * FROM FREEBOARD " +
@@ -485,7 +484,6 @@ public class FreeBoardDao {
 						freeboard.setFreeboardDate(rset.getDate("FREEBOARD_DATE"));
 						freeboard.setFreeboardOriginalFile(rset.getString("FREEBOARD_ORIGINFILE"));
 						freeboard.setFreeboardViews(rset.getInt("FREEBOARD_VIEWS"));
-						freeboard.setFreeboardRecommend(rset.getInt("FREEBOARD_RECOMMEND"));
 						freeboard.setUserId(rset.getString("USER_ID"));
 						freeboard.setFreeboardDelete(rset.getString("FREEBOARD_DELETE"));
 						freeboard.setFreeboardRefile(rset.getString("FREEBOARD_REFILE"));
@@ -507,8 +505,8 @@ public class FreeBoardDao {
 					"FROM (SELECT ROWNUM RNUM, FREEBOARD_NO, " + 
 					"FREEBOARD_TITLE, FREEBOARD_CONTENT, " + 
 					"FREEBOARD_DATE, " + 
-					"FREEBOARD_ORIGINFILE, FREEBOARD_VIEWS " + 
-					"FREEBOARD_RECCONED, " + 
+					"FREEBOARD_ORIGINFILE, FREEBOARD_VIEWS, " + 
+					"FREEBOARD_RECOMMEND, " + 
 					"USER_ID, " + 
 					"FREEBOARD_DELETE, FREEBOARD_REFILE " + 
 					"FROM (SELECT * FROM FREEBOARD " +
@@ -534,7 +532,6 @@ public class FreeBoardDao {
 						freeboard.setFreeboardDate(rset.getDate("FREEBOARD_DATE"));
 						freeboard.setFreeboardOriginalFile(rset.getString("FREEBOARD_ORIGINFILE"));
 						freeboard.setFreeboardViews(rset.getInt("FREEBOARD_VIEWS"));
-						freeboard.setFreeboardRecommend(rset.getInt("FREEBOARD_RECOMMEND"));
 						freeboard.setUserId(rset.getString("USER_ID"));
 						freeboard.setFreeboardDelete(rset.getString("FREEBOARD_DELETE"));
 						freeboard.setFreeboardRefile(rset.getString("FREEBOARD_REFILE"));
@@ -555,8 +552,8 @@ public class FreeBoardDao {
 					"FROM (SELECT ROWNUM RNUM, FREEBOARD_NO, " + 
 					"FREEBOARD_TITLE, FREEBOARD_CONTENT, " + 
 					"FREEBOARD_DATE, " + 
-					"FREEBOARD_ORIGINFILE, FREEBOARD_VIEWS " + 
-					"FREEBOARD_RECCONED, " + 
+					"FREEBOARD_ORIGINFILE, FREEBOARD_VIEWS, " + 
+					"FREEBOARD_RECOMMEND, " + 
 					"USER_ID, " + 
 					"FREEBOARD_DELETE, FREEBOARD_REFILE " + 
 					"FROM (SELECT * FROM FREEBOARD " +
@@ -582,7 +579,6 @@ public class FreeBoardDao {
 						freeboard.setFreeboardDate(rset.getDate("FREEBOARD_DATE"));
 						freeboard.setFreeboardOriginalFile(rset.getString("FREEBOARD_ORIGINFILE"));
 						freeboard.setFreeboardViews(rset.getInt("FREEBOARD_VIEWS"));
-						freeboard.setFreeboardRecommend(rset.getInt("FREEBOARD_RECOMMEND"));
 						freeboard.setUserId(rset.getString("USER_ID"));
 						freeboard.setFreeboardDelete(rset.getString("FREEBOARD_DELETE"));
 						freeboard.setFreeboardRefile(rset.getString("FREEBOARD_REFILE"));

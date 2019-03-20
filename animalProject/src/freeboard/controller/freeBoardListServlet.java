@@ -90,8 +90,7 @@ public class freeBoardListServlet extends HttpServlet {
 				RequestDispatcher view = null;
 				if(list.size() > 0) {
 					view = request.getRequestDispatcher("views/freeBoard/freeBoardListView.jsp");
-					
-					request.setAttribute("list", list);
+				
 					request.setAttribute("slist", slist);
 					request.setAttribute("listCount", listCount);
 					request.setAttribute("maxPage", maxPage);

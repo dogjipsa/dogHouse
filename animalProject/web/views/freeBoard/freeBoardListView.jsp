@@ -20,6 +20,7 @@
 <head>
 <meta charset="UTF-8">
 <title></title>
+<link href="/doggybeta/resources/css/footer.css" rel="stylesheet" type="text/css">
 <script type="text/javascript" src="/doggybeta/resources/js/jquery-3.3.1.min.js"></script>
 <script type="text/javascript">
 function showWriteForm(){
@@ -27,27 +28,29 @@ function showWriteForm(){
 }	
 
 </script>
-<style>
+<style type="text/css">
 	th{ 
 	background-color : #D09E88;
 	}
-	#search{ 
+	#searchT{ 
 	text-align:center;	
 	}
 </style>
+
 </head>
 <body>
 <%@ include file="../common/menu.jsp" %>
-<hr style="clear:both;">
+	<div id="wrap">
+		  <div id="content">
 <h2 align="center">자유게시판</h2>
 <%-- <h4 align="center">총 게시글 갯수 : <%= listCount %></h4> --%>
-
+<br><br><br>
 <table align="center"  border="0"  width=800 >
 <%-- --%>
 <tr>
 	<th>번호</th><th>제목</th><th>작성자</th><th>날짜</th><th>조회수</th>
 </tr>
-<% for(FreeBoard f : list){ %>
+<% for(FreeBoard f : slist){ %>
 	<tr>
 	<td align="center"><a href="/doggybeta/fdetail?bnum=<%= f.getFreeboardNo() %>"><%= f.getFreeboardTitle() %></a></td>
 	<%-- <td align="center"><%= f.getFreeboardNo() %></td> --%>
@@ -78,7 +81,7 @@ function showWriteForm(){
 	
 	<%-- 검색기능 --%>
 <br>
-<div id="search">
+<div id="searchT">
  <form name="form1" method="post" action="/doggybeta/flist">
   <select name="opt">
   <option value="0" >제목</option>
@@ -91,6 +94,9 @@ function showWriteForm(){
 
 </div>
 
+		</div>
+		<div id="footer"><%@ include file="..//common/footer.jsp"%></div>
+	</div>
 
 <br>
 

@@ -1,6 +1,7 @@
 package common;
 
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
@@ -10,14 +11,14 @@ import javax.sql.DataSource;
 
 //SingleTon Design Pattern
 public class JDBCTemplate {
-	/*public static Connection getConnection() {
+	public static Connection getConnection() {
 		Connection conn = null;
 		
 		try {
 			Class.forName("oracle.jdbc.driver.OracleDriver");
 			conn = DriverManager.getConnection(
 					"jdbc:oracle:thin:@127.0.0.1:1521:xe", 
-					"student", "student");
+					"dogjipsa", "dogjipsa");
 			conn.setAutoCommit(false);
 			
 		} catch (Exception e) {
@@ -25,13 +26,13 @@ public class JDBCTemplate {
 		}
 		
 		return conn;
-	}*/
+	}
 	
 	//톰켓(WAS: Web Application Server = 웹컨테이너)
 	//이 제공하는 DBCP(DataBase Connection Pool)를
 	//이용해서 데이터베이스 연결 처리
 	//web/META-INF/context.xml 파일에 설정됨
-	public static Connection getConnection() {
+/*	public static Connection getConnection() {
 		Connection conn = null;
 		
 		try {
@@ -47,7 +48,7 @@ public class JDBCTemplate {
 		}
 		
 		return conn;
-	}
+	}*/
 	
 	
 	public static void close(Connection conn) {
