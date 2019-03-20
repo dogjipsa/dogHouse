@@ -1,6 +1,8 @@
 package tipboard.controller;
 
 import java.io.IOException;
+
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -30,7 +32,22 @@ public class TipBoardUpdateViewServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int tipBoardNum = Integer.parseInt(request.getParameter("tnum"));
-		TipBoard board = new TipBoardService().selectTipBoard(tipBoardNum);
+		int currentPage = Integer.parseInt(request.getParameter("page"));
+		
+		TipBoard tboard = new TipBoardService().selectTipBoard(tipBoardNum);
+		
+		response.setContentType("text/html; charset=utf-8");
+		RequestDispatcher view = null;
+		if(tboard != null) {
+			view = request.getRequestDispatcher("views/tipboard/tipBoardUpdateView.jsp");
+			request.setAttribute("tboard", tboard);
+			request.setAttribute("page", currentPage);
+			view.forward(request, response);
+		}else {
+			view = request.getRequestDispatcher("views/tipboard/tipBoardError.jsp");
+			request.setAttribute("message", tipBoardNum + "번 게시글 수정페이지로 이동 실패!");
+			view.forward(request, response);
+		}
 	}
 
 	/**

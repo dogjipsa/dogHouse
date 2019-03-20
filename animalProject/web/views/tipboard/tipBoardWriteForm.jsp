@@ -8,7 +8,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>팁게시판</title>
 <link href="/doggybeta/resources/css/footer.css" rel="stylesheet" type="text/css">
 </head>
 <body>

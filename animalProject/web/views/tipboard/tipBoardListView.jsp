@@ -26,7 +26,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>first</title>
+<title>팁게시판</title>
 <link href="/doggybeta/resources/css/footer.css" rel="stylesheet"
 	type="text/css">
 <script type="text/javascript"
@@ -178,7 +178,7 @@
 				<%
 					}
 				%>
-				현재 페이지가 포함된 페이지 그룹 숫자 출력 처리
+				<!-- 현재 페이지가 포함된 페이지 그룹 숫자 출력 처리 -->
 				<%
 					for (int p = startPage; p <= endPage; p++) {
 						if (p == currentPage) {
