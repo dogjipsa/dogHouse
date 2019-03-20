@@ -8,6 +8,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import freeboard.model.vo.FreeBoard;
 
@@ -346,8 +347,262 @@ public class FreeBoardDao {
 		return result;
 	}
 
+
+	public ArrayList<FreeBoard> searchList(Connection conn, HashMap<String, Object> listOpt) {
+		ArrayList<FreeBoard> list = new ArrayList<FreeBoard>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String opt = (String)listOpt.get("opt");
+		String inputdata = (String)listOpt.get("inputdata");
+		int start = (Integer)listOpt.get("start");
+		
+		
+		if(opt == null){
+			
+			String query = "SELECT * " + 
+					"FROM (SELECT ROWNUM RNUM, FREEBOARD_NO, " + 
+					"FREEBOARD_TITLE, FREEBOARD_CONTENT, " + 
+					"FREEBOARD_DATE, " + 
+					"FREEBOARD_ORIGINFILE, FREEBOARD_VIEWS " + 
+					"FREEBOARD_RECCONED, " + 
+					"USER_ID, " + 
+					"FREEBOARD_DELETE, FREEBOARD_REFILE " + 
+					"FROM (SELECT * FROM FREEBOARD " +
+					"ORDER BY FREEBOARD_NO DESC)) " +  
+					"WHERE RNUM >= ? AND RNUM <= ?";
+			
+			try {
+				pstmt = conn.prepareStatement(query);
+				pstmt.setInt(1, start);
+				pstmt.setInt(2, start+9);
+				
+				rset = pstmt.executeQuery();
+				
+				
+				
+				while(rset.next()) {
+					
+					FreeBoard freeboard = new FreeBoard();
+					
+					freeboard.setFreeboardNo(rset.getInt("FREEBOARD_NO"));
+					freeboard.setFreeboardTitle(rset.getString("FREEBOARD_TITLE"));
+					freeboard.setFreeboardContent(rset.getString("FREEBOARD_CONTENT"));
+					freeboard.setFreeboardDate(rset.getDate("FREEBOARD_DATE"));
+					freeboard.setFreeboardOriginalFile(rset.getString("FREEBOARD_ORIGINFILE"));
+					freeboard.setFreeboardViews(rset.getInt("FREEBOARD_VIEWS"));
+					freeboard.setFreeboardRecommend(rset.getInt("FREEBOARD_RECOMMEND"));
+					freeboard.setUserId(rset.getString("USER_ID"));
+					freeboard.setFreeboardDelete(rset.getString("FREEBOARD_DELETE"));
+					freeboard.setFreeboardRefile(rset.getString("FREEBOARD_REFILE"));
+					
+					list.add(freeboard);
+					}
+		
+			} catch (Exception e) {
+				e.printStackTrace();
+			}	
+			
+			
+		}else if(opt.equals("0")) {
+			
+			String query = "SELECT * " + 
+					"FROM (SELECT ROWNUM RNUM, FREEBOARD_NO, " + 
+					"FREEBOARD_TITLE, FREEBOARD_CONTENT, " + 
+					"FREEBOARD_DATE, " + 
+					"FREEBOARD_ORIGINFILE, FREEBOARD_VIEWS " + 
+					"FREEBOARD_RECCONED, " + 
+					"USER_ID, " + 
+					"FREEBOARD_DELETE, FREEBOARD_REFILE " + 
+					"FROM (SELECT * FROM FREEBOARD " +
+					"WHERE FREEBOARD_TITLE LIKE ? " +
+					"ORDER BY FREEBOARD_NO DESC)) " +  
+					"WHERE RNUM >= ? AND RNUM <= ?";
+			
+			try {
+				pstmt = conn.prepareStatement(query);
+				pstmt.setString(1, "%" + inputdata + "%");
+				pstmt.setInt(2, start);
+				pstmt.setInt(3, start+9);
+								
+				rset = pstmt.executeQuery();
+				
+					while(rset.next()) {
+						FreeBoard freeboard = new FreeBoard();
+						
+						freeboard.setFreeboardNo(rset.getInt("FREEBOARD_NO"));
+						freeboard.setFreeboardTitle(rset.getString("FREEBOARD_TITLE"));
+						freeboard.setFreeboardContent(rset.getString("FREEBOARD_CONTENT"));
+						freeboard.setFreeboardDate(rset.getDate("FREEBOARD_DATE"));
+						freeboard.setFreeboardOriginalFile(rset.getString("FREEBOARD_ORIGINFILE"));
+						freeboard.setFreeboardViews(rset.getInt("FREEBOARD_VIEWS"));
+						freeboard.setFreeboardRecommend(rset.getInt("FREEBOARD_RECOMMEND"));
+						freeboard.setUserId(rset.getString("USER_ID"));
+						freeboard.setFreeboardDelete(rset.getString("FREEBOARD_DELETE"));
+						freeboard.setFreeboardRefile(rset.getString("FREEBOARD_REFILE"));
+						
+						list.add(freeboard);
+						}
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+			}finally {
+				close(rset);
+				close(pstmt);
+			}
+			
+			
+			
+		}else if(opt.equals("1")) {
+			
+			String query = "SELECT * " + 
+					"FROM (SELECT ROWNUM RNUM, FREEBOARD_NO, " + 
+					"FREEBOARD_TITLE, FREEBOARD_CONTENT, " + 
+					"FREEBOARD_DATE, " + 
+					"FREEBOARD_ORIGINFILE, FREEBOARD_VIEWS " + 
+					"FREEBOARD_RECCONED, " + 
+					"USER_ID, " + 
+					"FREEBOARD_DELETE, FREEBOARD_REFILE " + 
+					"FROM (SELECT * FROM FREEBOARD " +
+					"WHERE FREEBOARD_TITLE LIKE ? " +
+					"ORDER BY FREEBOARD_NO DESC)) " +  
+					"WHERE RNUM >= ? AND RNUM <= ?";
+			
+			try {
+				pstmt = conn.prepareStatement(query);
+				pstmt.setString(1, "%" + inputdata + "%");
+				pstmt.setInt(2, start);
+				pstmt.setInt(3, start+9);
+				
+				
+				rset = pstmt.executeQuery();
+				
+					while(rset.next()) {
+						FreeBoard freeboard = new FreeBoard();
+						
+						freeboard.setFreeboardNo(rset.getInt("FREEBOARD_NO"));
+						freeboard.setFreeboardTitle(rset.getString("FREEBOARD_TITLE"));
+						freeboard.setFreeboardContent(rset.getString("FREEBOARD_CONTENT"));
+						freeboard.setFreeboardDate(rset.getDate("FREEBOARD_DATE"));
+						freeboard.setFreeboardOriginalFile(rset.getString("FREEBOARD_ORIGINFILE"));
+						freeboard.setFreeboardViews(rset.getInt("FREEBOARD_VIEWS"));
+						freeboard.setFreeboardRecommend(rset.getInt("FREEBOARD_RECOMMEND"));
+						freeboard.setUserId(rset.getString("USER_ID"));
+						freeboard.setFreeboardDelete(rset.getString("FREEBOARD_DELETE"));
+						freeboard.setFreeboardRefile(rset.getString("FREEBOARD_REFILE"));
+						
+						list.add(freeboard);
+					}
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+			}finally {
+				close(rset);
+				close(pstmt);
+			}
+			
+					
+		}else if(opt.equals("2")) {
+			
+			String query = "SELECT * " + 
+					"FROM (SELECT ROWNUM RNUM, FREEBOARD_NO, " + 
+					"FREEBOARD_TITLE, FREEBOARD_CONTENT, " + 
+					"FREEBOARD_DATE, " + 
+					"FREEBOARD_ORIGINFILE, FREEBOARD_VIEWS " + 
+					"FREEBOARD_RECCONED, " + 
+					"USER_ID, " + 
+					"FREEBOARD_DELETE, FREEBOARD_REFILE " + 
+					"FROM (SELECT * FROM FREEBOARD " +
+					"WHERE USER_ID LIKE ? " +
+					"ORDER BY FREEBOARD_NO DESC)) " +  
+					"WHERE RNUM >= ? AND RNUM <= ?";
+			
+			try {
+				pstmt = conn.prepareStatement(query);
+				pstmt.setString(1, "%" + inputdata + "%");
+				pstmt.setInt(2, start);
+				pstmt.setInt(3, start+9);
+				
+				
+				rset = pstmt.executeQuery();
+				
+					while(rset.next()) {
+						FreeBoard freeboard = new FreeBoard();
+						
+						freeboard.setFreeboardNo(rset.getInt("FREEBOARD_NO"));
+						freeboard.setFreeboardTitle(rset.getString("FREEBOARD_TITLE"));
+						freeboard.setFreeboardContent(rset.getString("FREEBOARD_CONTENT"));
+						freeboard.setFreeboardDate(rset.getDate("FREEBOARD_DATE"));
+						freeboard.setFreeboardOriginalFile(rset.getString("FREEBOARD_ORIGINFILE"));
+						freeboard.setFreeboardViews(rset.getInt("FREEBOARD_VIEWS"));
+						freeboard.setFreeboardRecommend(rset.getInt("FREEBOARD_RECOMMEND"));
+						freeboard.setUserId(rset.getString("USER_ID"));
+						freeboard.setFreeboardDelete(rset.getString("FREEBOARD_DELETE"));
+						freeboard.setFreeboardRefile(rset.getString("FREEBOARD_REFILE"));
+						
+						list.add(freeboard);
+					}
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+			}finally {
+				close(rset);
+				close(pstmt);
+			}
+			
+		}else if(opt.equals("3")) {
+			
+			String query = "SELECT * " + 
+					"FROM (SELECT ROWNUM RNUM, FREEBOARD_NO, " + 
+					"FREEBOARD_TITLE, FREEBOARD_CONTENT, " + 
+					"FREEBOARD_DATE, " + 
+					"FREEBOARD_ORIGINFILE, FREEBOARD_VIEWS " + 
+					"FREEBOARD_RECCONED, " + 
+					"USER_ID, " + 
+					"FREEBOARD_DELETE, FREEBOARD_REFILE " + 
+					"FROM (SELECT * FROM FREEBOARD " +
+					"WHERE FREEBOARD_TITLE LIKE ? OR FREEBOARD_CONTENT LIKE ? " +
+					"ORDER BY FREEBOARD_NO DESC)) " +  
+					"WHERE RNUM >= ? AND RNUM <= ?";
+			
+			try {
+				pstmt = conn.prepareStatement(query);
+				pstmt.setString(1, "%" + inputdata + "%");
+				pstmt.setInt(2, start);
+				pstmt.setInt(3, start+9);
+				
+				
+				rset = pstmt.executeQuery();
+				
+					while(rset.next()) {
+						FreeBoard freeboard = new FreeBoard();
+						
+						freeboard.setFreeboardNo(rset.getInt("FREEBOARD_NO"));
+						freeboard.setFreeboardTitle(rset.getString("FREEBOARD_TITLE"));
+						freeboard.setFreeboardContent(rset.getString("FREEBOARD_CONTENT"));
+						freeboard.setFreeboardDate(rset.getDate("FREEBOARD_DATE"));
+						freeboard.setFreeboardOriginalFile(rset.getString("FREEBOARD_ORIGINFILE"));
+						freeboard.setFreeboardViews(rset.getInt("FREEBOARD_VIEWS"));
+						freeboard.setFreeboardRecommend(rset.getInt("FREEBOARD_RECOMMEND"));
+						freeboard.setUserId(rset.getString("USER_ID"));
+						freeboard.setFreeboardDelete(rset.getString("FREEBOARD_DELETE"));
+						freeboard.setFreeboardRefile(rset.getString("FREEBOARD_REFILE"));
+						
+						list.add(freeboard);
+					}
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+			}finally {
+				close(rset);
+				close(pstmt);
+			}
+			
+			
+		}
+		return list;
+
 }
-	
+}
 	
 	
 

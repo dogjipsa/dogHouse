@@ -1,8 +1,9 @@
 package notice.model.service;
 
 import java.sql.Connection;
-import java.sql.Date;
+
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import notice.model.dao.NoticeDao;
 import notice.model.vo.Notice;
@@ -16,7 +17,6 @@ public class NoticeService {
 	public ArrayList<Notice> selectList() {
 		Connection conn = getConnection();
 		ArrayList<Notice> list = ndao.selectList(conn);
-		System.out.println(list.size());
 		close(conn);
 		return list;
 	}
@@ -24,7 +24,6 @@ public class NoticeService {
 	public int insertNotice(Notice notice) {
 		Connection conn = getConnection();
 		int result = ndao.insertNotice(conn, notice);
-		System.out.println("서비스확인중1");
 		if(result > 0)
 			commit(conn);
 		else
@@ -36,7 +35,6 @@ public class NoticeService {
 	public Notice selectOne(int noticeNo) {
 		Connection conn = getConnection();
 		Notice notice = ndao.selectOne(conn, noticeNo);
-		System.out.println("서비스확인중1");
 		close(conn);
 		
 		return notice;
@@ -54,18 +52,14 @@ public class NoticeService {
 	}
 
 	public int updateNotice(Notice notice) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	public ArrayList<Notice> selectSearchTitle(String noticeTitle) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public ArrayList<Notice> selectSearchDate(Date valueOf, Date valueOf2) {
-		// TODO Auto-generated method stub
-		return null;
+		Connection conn = getConnection();
+		int result = ndao.updateNotice(conn, notice);
+		if(result > 0)
+			commit(conn);
+		else
+			rollback(conn);
+		close(conn);
+		return result;
 	}
 
 	public void addReadCount(int noticeNo) {
@@ -77,6 +71,27 @@ public class NoticeService {
 			rollback(conn);
 		close(conn);
 		
+	}
+
+/*	public ArrayList<Notice> selectSearchTitle(String noticeTitle) {
+		Connection conn = getConnection();
+		ArrayList<Notice> list = ndao.selectSearchTitle(conn, noticeTitle);
+		close(conn);
+		return list;
+	}
+
+	public ArrayList<Notice> selectSearchDate(Date beginDate, Date endDate) {
+		Connection conn = getConnection();
+		ArrayList<Notice> list = ndao.selectSearchDate(conn, beginDate, endDate);
+		close(conn);
+		return list;
+	}
+*/
+	public ArrayList<Notice> selectSearch(HashMap<String, Object> map) {
+		Connection conn = getConnection();
+		ArrayList<Notice> list = ndao.selectSearch(conn, map);
+		close(conn);
+		return list;
 	}
 
 }

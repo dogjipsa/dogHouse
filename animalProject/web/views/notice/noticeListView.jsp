@@ -9,6 +9,7 @@
 <head>
 <title>Dog House</title>
 <link rel="shortcut icon" href="/doggybeta/resources/images/favicon.ico">
+<link href="/doggybeta/resources/css/footer.css" rel="stylesheet" type="text/css">
 <script type="text/javascript" src="/doggybeta/resources/js/jquery-3.3.1.min.js"></script>
 <script type="text/javascript">
 function showWriteForm(){
@@ -96,18 +97,20 @@ center{
 /* 글쓰기 버튼 아래로 위치 시킨 다음에 글이 늘어나도 버튼과 겹치지 않게  */
 #insert{
 	position: absolute;
-	top: 10px;
-	left: 500px;
+	top: 150px;
+	left: 700px;
 }
 </style>
 <body>
 <%@ include file="../common/menu.jsp"%>
+	<div id="wrap">
+		  <div id="content">
 <div class="main">
 <h2 align="center">공지사항 게시판</h2>
 </div>
 
 <%-- 검색기능 --%>
-<center>
+<!-- <center>
 <div class="search">
 	<input type="radio" name="item" value="title" checked> 제목
 	&nbsp; &nbsp; &nbsp;
@@ -127,6 +130,19 @@ center{
 	<label>검색할 날짜를 를 선택하시오 :
 	<input type="date" name="begin"> ~ 
 	<input type="date" name="end"></label>
+	<input type="submit" value="검색">
+	</form>
+</div>
+</center> -->
+<center>
+<div class="searchform">
+	<form action="/doggybeta/nsearch" method="post">
+	<select name="opt"> <!-- 검색 컬럼 -->
+		<option value="0">제목</option>
+		<option value="1">내용</option>
+		<option value="2">제목+내용</option>
+	</select>
+	<input type="text" size="20" name="search"> 
 	<input type="submit" value="검색">
 	</form>
 </div>
@@ -165,6 +181,8 @@ center{
 </div>
 
 
-<%@ include file="../common/footer.jsp"%>
+</div>
+		<div id="footer"><%@ include file="..//common/footer.jsp"%></div>
+	</div>
 </body>
 </html>

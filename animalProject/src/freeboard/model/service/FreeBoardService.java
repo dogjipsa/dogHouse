@@ -8,6 +8,7 @@ import static common.JDBCTemplate.rollback;
 import java.sql.Connection;
 import java.sql.Date;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import freeboard.model.dao.FreeBoardDao;
 import freeboard.model.vo.FreeBoard;
@@ -33,9 +34,9 @@ public class FreeBoardService {
 	}
 
 	
-	public void addReadCount(int boardNum) {
+	public void addReadCount(int freeBoardNo) {
 		Connection conn = getConnection();
-		int result = fdao.addReadCount(conn, boardNum);
+		int result = fdao.addReadCount(conn, freeBoardNo);
 		if(result > 0)
 			commit(conn);
 		else
@@ -110,6 +111,13 @@ public class FreeBoardService {
 	public ArrayList<FreeBoard> boardSearchDate (Date begin, Date end, int currentPage, int limit){
 		Connection conn = getConnection();
 		ArrayList<FreeBoard> list = fdao.selectDateList(conn, begin, end, currentPage, limit);
+		close(conn);
+		return list;
+	}
+
+	public ArrayList<FreeBoard> searchList(HashMap<String, Object> listOpt) {
+		Connection conn = getConnection();
+		ArrayList<FreeBoard> list = fdao.searchList(conn, listOpt);
 		close(conn);
 		return list;
 	}

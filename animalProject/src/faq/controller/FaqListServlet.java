@@ -41,7 +41,7 @@ public class FaqListServlet extends HttpServlet {
 		}
 				
 		//한 페이지에 출력할 목록 갯수 지정
-		int limit = 10;
+		int limit = 5;
 		
 		
 		FaqService fservice = new FaqService();

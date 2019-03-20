@@ -105,7 +105,7 @@ public class NoticeUpdateServlet extends HttpServlet {
 		int result = new NoticeService().updateNotice(notice);
 		
 		if(result > 0) {
-			response.sendRedirect("/first/ndetail?no=" + notice.getNoticeNo());
+			response.sendRedirect("/doggybeta/ndetail?no=" + notice.getNoticeNo());
 		}else {
 			view = request.getRequestDispatcher("views/notice/noticeError.jsp");
 			view.forward(request, response);

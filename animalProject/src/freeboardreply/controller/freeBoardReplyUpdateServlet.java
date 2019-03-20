@@ -9,20 +9,20 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import freeboard.model.service.FreeBoardService;
-
+import board.model.service.BoardService;
+import board.model.vo.Board;
 
 /**
- * Servlet implementation class BoardDeleteServlet
+ * Servlet implementation class BoardReplyUpdateServlet
  */
-@WebServlet("/fdelete")
-public class freeBoardDeleteServlet extends HttpServlet {
+@WebServlet("/breplyup")
+public class freeBoardReplyUpdateServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public freeBoardDeleteServlet() {
+    public freeBoardReplyUpdateServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -31,16 +31,25 @@ public class freeBoardDeleteServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		//게시글 (원글, 댓글) 삭제 처리용 컨트롤러
-		int boardNum = Integer.parseInt(request.getParameter("bnum"));
+		// 댓글 수정 처리용 컨트롤러
+		request.setCharacterEncoding("utf-8");
 		
-		/*if(new FreeBoardService().deleteFreeBoard(boardNum) > 0) */
-			response.sendRedirect("/doggybeta/blist?");
-		/*}else {
-			RequestDispatcher view = request.getRequestDispatcher("views/freeboard/freeBoardError.jsp");
-			request.setAttribute("message", boardNum + "번 게시글 삭제 실패!");
+		Board board = new Board();
+		board.setBoardNum(Integer.parseInt(request.getParameter("bnum")));
+		board.setBoardTitle(request.getParameter("btitle"));
+		board.setBoardContent(request.getParameter("bcontent"));
+		
+		int result = new BoardService().updateReply(board);
+		
+		if(result > 0) {
+			response.sendRedirect("/first/blist?page=" 
+		         + Integer.parseInt(request.getParameter("page")));
+		}else {
+			RequestDispatcher view = request.getRequestDispatcher("views/board/boardError.jsp");
+			request.setAttribute("message", board.getBoardNum() + "번 댓글 수정 실패!");
 			view.forward(request, response);
-		}*/
+			
+		}
 	}
 
 	/**

@@ -42,7 +42,7 @@
 <table class="board" align="center"; width="1000">
 <tr>
 <th class="title">제목</th>
-<td><input type="text" name="title" value="<%= notice.getNoticeTitle() %>size="60"></td>
+<td><input type="text" name="title" value="<%= notice.getNoticeTitle() %>"></td>
 </tr>
 <tr>
 <th class="title">작성자</th>

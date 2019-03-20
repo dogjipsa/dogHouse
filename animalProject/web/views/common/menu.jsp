@@ -92,7 +92,7 @@
 			<li><a href='/doggybeta' id='icon1'> <span>&nbsp;&nbsp;&nbsp;홈</span>
 			</a></li>
 			<li class="m1"><a
-				href="/doggybeta/views/aboutus/companyintroduce.jsp" id='icon2'><span>&nbsp;&nbsp;&nbsp;About
+				href="#" id='icon2'><span>&nbsp;&nbsp;&nbsp;About
 						us</span></a>
 				<ul class="m2">
 					<li><a href="/doggybeta/views/aboutus/companyIntroduce.jsp">회사소개</a></li>
@@ -146,11 +146,11 @@
   			<a href="/doggybeta/views/member/findPassword.jsp" class="login-forgot-pass" id='tempPwd'>forgot password?</a>
 	</form>
 	<script type="text/javascript">
-	$('.m1').hover(function() {
+	$('.m1').click(function() {
 		if ($(this).children('.m2').is(':visible')) {
-			$(this).children('.m2').slideUp(800);
+			$(this).children('.m2').slideUp(200);
 		} else {
-			$(this).children('.m2').slideDown(800);
+			$(this).children('.m2').slideDown(200);
 		}
 	});
 	</script>
@@ -187,13 +187,13 @@
 			<li class="m1"><a href='#'  id='icon4'> <span>&nbsp;&nbsp;&nbsp;게시판</span>
 			</a>
 				<ul class="m2">
-					<li><a href='#'>공지사항</a></li>
+					<li><a href='/doggybeta/nlist'>공지사항</a></li>
 					<li><a href='#'>자유게시판</a></li>
 					<li><a href='#'>팁</a></li>
 				</ul></li>
 			<li class="m1"><a href="#" id='icon5'> <span>&nbsp;&nbsp;&nbsp;고객센터</span></a>
 				<ul class="m2">
-					<li><a href='#'>FAQ</a></li>
+					<li><a href='/doggybeta/faqlist'>FAQ</a></li>
 					<li><a href='#'>이용방법</a></li>
 					<li><a href='#'>1:1문의</a></li>
 				</ul></li>
@@ -255,11 +255,11 @@
 		<script type="text/javascript"src="/doggybeta/resources/js/petSitting.js"></script>
 	
 	<script type="text/javascript">
-	$('.m1').hover(function() {
+	$('.m1').click(function() {
 		if ($(this).children('.m2').is(':visible')) {
-			$(this).children('.m2').slideUp(800);
+			$(this).children('.m2').slideUp(200);
 		} else {
-			$(this).children('.m2').slideDown(800);
+			$(this).children('.m2').slideDown(200);
 		}
 	});
 	</script>
