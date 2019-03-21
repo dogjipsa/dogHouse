@@ -1,11 +1,22 @@
 package booking.controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.net.URLEncoder;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+
+import booking.model.service.BookingService;
+import booking.model.vo.BookingCheck;
 
 /**
  * Servlet implementation class BookingLogListServlet
@@ -27,6 +38,37 @@ public class BookingLogListServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String userid = request.getParameter("userid");
+		
+		ArrayList<BookingCheck> list = new BookingService().selectBkList(userid);
+		
+		if(list.size() > 0) {
+		JSONObject sendJSON = new JSONObject();
+		JSONArray ar = new JSONArray();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+		for(BookingCheck bc : list) {
+			JSONObject job = new JSONObject();
+			job.put("bno", bc.getBookingNo());
+			String indate = sdf.format(bc.getCheckInDate());
+			String outdate = sdf.format(bc.getCheckOutDate());
+			
+			job.put("indate", indate);
+			job.put("outdate", outdate);
+			job.put("progress", bc.getBookingProgress());
+			job.put("puserid", bc.getPuserId());
+			job.put("price", bc.getPrice());
+			job.put("addr", URLEncoder.encode(bc.getAddress(), "utf-8"));
+			job.put("pname", URLEncoder.encode(bc.getPetName(), "utf-8"));
+			
+			ar.add(job);
+		}
+			sendJSON.put("list", ar);
+			response.setContentType("application/json");
+			PrintWriter out = response.getWriter();
+			out.append(sendJSON.toJSONString());
+			out.flush();
+			out.close();
+		} else {
+		}
 	}
 
 	/**
