@@ -19,7 +19,7 @@
 		<div class="section3">section3 - 알람 정보</div>
 		<!-- section4 - 예약/결제내역/내정보 수정 등의 메인 섹션 -->
 		<div class="section4">
-			<table id="reserv_table" border="1">
+			<table id="reserv_table" >
 				<tr>
 					<th>번호</th>
 					<th>내용</th>
