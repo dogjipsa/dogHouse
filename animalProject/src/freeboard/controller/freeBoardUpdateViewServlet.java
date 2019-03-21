@@ -16,7 +16,7 @@ import freeboard.model.vo.FreeBoard;
 /**
  * Servlet implementation class BoardUpdateViewServlet
  */
-@WebServlet("/bupview")
+@WebServlet("/fupview")
 public class freeBoardUpdateViewServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        

@@ -13,6 +13,8 @@ import java.util.HashMap;
 import freeboard.model.vo.FreeBoard;
 
 public class FreeBoardDao {
+	
+	public FreeBoardDao() {}
 
 	public int getListCount(Connection conn) {
 		int listCount = 0;

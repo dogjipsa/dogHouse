@@ -42,11 +42,14 @@ public class freeBoardInsertServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// 게시글 원글 등록 처리용 컨트롤러
-		
+			
+				request.setCharacterEncoding("utf-8");
+
+	
 				//enctype="multipart/form-data" 로 전송되었는지 확인
 				RequestDispatcher view = null;
 				if(!ServletFileUpload.isMultipartContent(request)) {
-					view = request.getRequestDispatcher("views/freeBoard/boardError.jsp");
+					view = request.getRequestDispatcher("views/freeBoard/freeBoardError.jsp");
 					request.setAttribute("message", "form의 enctype 속성 사용 안 되었음.");
 					view.forward(request, response);
 				}
@@ -69,6 +72,8 @@ public class freeBoardInsertServlet extends HttpServlet {
 				
 				//전송 온 값 꺼내서 객체에 저장
 				FreeBoard freeboard = new FreeBoard();
+				
+				String title = request.getParameter("ir1");
 				
 				freeboard.setFreeboardTitle(mrequest.getParameter("ftitle"));
 				freeboard.setUserId(mrequest.getParameter("fwriter"));
@@ -122,7 +127,7 @@ public class freeBoardInsertServlet extends HttpServlet {
 				if(result > 0) {
 					//글 등록이 성공하면, 게시글 목록보기가 실행되게 함
 					//목록에 추가된 원글이 보여져야 됨
-					response.sendRedirect("/first/blist?page=1");
+					response.sendRedirect("/doggybeta/flist?page=1");
 				}else {
 					view = request.getRequestDispatcher("views/freeBoard/freeBoardError.jsp");
 					request.setAttribute("message", "게시글 원글 등록 실패!");

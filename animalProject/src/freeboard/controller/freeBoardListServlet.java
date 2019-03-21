@@ -42,7 +42,6 @@ public class freeBoardListServlet extends HttpServlet {
 				
 				
 				String opt = request.getParameter("opt");
-				System.out.println("opt : " + opt);
 				String inputdata = request.getParameter("inputdata");
 				
 				HashMap<String, Object> listOpt = new HashMap<>();
@@ -65,7 +64,7 @@ public class freeBoardListServlet extends HttpServlet {
 		
 				
 				//현재 페이지에 출력할 목록 조회
-				ArrayList<FreeBoard> list = fservice.selectList();
+				
 				int listCount = fservice.getListCount();
 				
 				// 한 화면에 10개의 게시글을 보여지게함
@@ -86,7 +85,7 @@ public class freeBoardListServlet extends HttpServlet {
 				
 				response.setContentType("text/html; charset=utf-8");
 				RequestDispatcher view = null;
-				if(list.size() > 0) {
+				if(slist.size() > 0) {
 					view = request.getRequestDispatcher("views/freeBoard/freeBoardListView.jsp");
 				
 					request.setAttribute("slist", slist);
@@ -99,7 +98,7 @@ public class freeBoardListServlet extends HttpServlet {
 					view.forward(request, response);
 				}else {
 					view = request.getRequestDispatcher(
-							"views/board/boardError.jsp");
+							"views/freeBoard/freeBoardError.jsp");
 					request.setAttribute("message", currentPage + "에 대한 목록 조회 실패!");
 					view.forward(request, response);
 				} 

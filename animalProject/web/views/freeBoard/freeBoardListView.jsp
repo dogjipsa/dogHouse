@@ -1,19 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" import="freeboard.model.vo.FreeBoard, java.util.ArrayList" %>
    <%
-   ArrayList<FreeBoard> list = (ArrayList<FreeBoard>)request.getAttribute("list");
    ArrayList<FreeBoard> slist = (ArrayList<FreeBoard>)request.getAttribute("slist"); 
    
-//	int listCount = ((Integer)request.getAttribute("listCount")).intValue(); 
-//   FreeBoard fboard = (FreeBoard)(request.getAttribute("fboard"));
-/* 	int startPage = ((Integer)request.getAttribute("startPage")).intValue();
+	int listCount = ((Integer)request.getAttribute("listCount")).intValue(); 
+     FreeBoard fboard = (FreeBoard)(request.getAttribute("fboard"));
+	int startPage = ((Integer)request.getAttribute("startPage")).intValue();
 	int endPage = ((Integer)request.getAttribute("endPage")).intValue();
 	int maxPage = ((Integer)request.getAttribute("maxPage")).intValue();
-	int currentPage = ((Integer)request.getAttribute("currentPage")).intValue(); */
+//	int currentPage = ((Integer)request.getAttribute("currentPage")).intValue(); 
    
    %>
-    
-
 
 <!DOCTYPE html>
 <html>
@@ -48,25 +45,29 @@ function showWriteForm(){
 <table align="center"  border="0"  width=800 >
 <%-- --%>
 <tr>
-	<th>번호</th><th>제목</th><th>작성자</th><th>날짜</th><th>조회수</th>
+	<th>글번호</th><th>제목</th><th>작성자</th><th>내 용</th><th>날짜</th><th>조회수</th><th>첨부파일</th>
 </tr>
 <% for(FreeBoard f : slist){ %>
-	<tr>
-	<td align="center"><a href="/doggybeta/fdetail?bnum=<%= f.getFreeboardNo() %>"><%= f.getFreeboardTitle() %></a></td>
-	<%-- <td align="center"><%= f.getFreeboardNo() %></td> --%>
-	<td align="center"><a href="/doggybeta/fdetail?bnum=<%= f.getFreeboardNo() %>"><%= f.getFreeboardTitle() %></a></td>
+<tr><td align="center"><%= f.getFreeboardNo() %></a></td>
+	<% if(loginUser != null){ %>
+	<td><a href="/doggybeta/fdetail?fnum=<%= f.getFreeboardNo() %>"><%= f.getFreeboardTitle() %></a></td>
+<%-- <a href="/doggybeta/fdetail?fnum=<%= f.getFreeboardNo() %>"><%= f.getFreeboardContent() %></a> --%>
+	<% }else{ %>
+		<%= f.getFreeboardTitle() %>
+	<% } %>	
 	<td align="center"><%= f.getUserId() %></td>
+	<td align="center"><a href="/doggybeta/fdetail?fnum=<%= f.getFreeboardNo() %>"><%= f.getFreeboardContent() %></a></td>
 	<td align="center"><%= f.getFreeboardDate() %></td>
  	<td align="center"><%= f.getFreeboardViews() %></td>
 	<td align="center">
- 	<%-- <% if(f.getFreeboardOriginalFile() != null){ %>
+	<% if(f.getFreeboardOriginalFile() != null){ %>
 		◎
 	<% }else{ %>
-		&nbsp;
-	<% } %> --%>
-	</td> 
-</tr>
-<% }  //for each %> 
+		
+	<% } %>
+	</td>
+	</tr>
+<% } %>
 </table>
 <div style="align:center; text-align:center;">
 	<button type="button" style="float:right;" onclick="showWriteForm()";>글쓰기</button></div>	
