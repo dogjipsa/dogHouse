@@ -50,13 +50,11 @@ public class freeBoardListServlet extends HttpServlet {
 				listOpt.put("inputdata", inputdata);
 				listOpt.put("start", currentPage*10-9);
 				
-				System.out.println("map : "  + listOpt);
 				
 				FreeBoardService fservice = new FreeBoardService();
 				
 				ArrayList<FreeBoard> slist = fservice.searchList(listOpt);
-				
-				System.out.println("slist : " + slist);
+							
 				
 				//한 페이지에 출력할 목록 갯수 지정
 				int limit = 10;
@@ -90,8 +88,7 @@ public class freeBoardListServlet extends HttpServlet {
 				RequestDispatcher view = null;
 				if(list.size() > 0) {
 					view = request.getRequestDispatcher("views/freeBoard/freeBoardListView.jsp");
-					
-					request.setAttribute("list", list);
+				
 					request.setAttribute("slist", slist);
 					request.setAttribute("listCount", listCount);
 					request.setAttribute("maxPage", maxPage);

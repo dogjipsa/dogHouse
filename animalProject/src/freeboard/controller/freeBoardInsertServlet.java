@@ -60,7 +60,7 @@ public class freeBoardInsertServlet extends HttpServlet {
 				//루트 폴더에 대한 경로 알아냄
 				String root = request.getSession().getServletContext().getRealPath("/");
 				//업로드되는 파일의 저장 폴더를 루트와 연결함
-				String savePath = root + "files/board";
+				String savePath = root + "files/freeBoard";
 				
 				//request 를 MultipartRequest 객체로 변환함
 				MultipartRequest mrequest = new MultipartRequest(
@@ -70,12 +70,13 @@ public class freeBoardInsertServlet extends HttpServlet {
 				//전송 온 값 꺼내서 객체에 저장
 				FreeBoard freeboard = new FreeBoard();
 				
-				freeboard.setFreeboardTitle(mrequest.getParameter("btitle"));
-				freeboard.setUserId(mrequest.getParameter("bwriter"));
-				freeboard.setFreeboardContent(mrequest.getParameter("bcontent"));
+				freeboard.setFreeboardTitle(mrequest.getParameter("ftitle"));
+				freeboard.setUserId(mrequest.getParameter("fwriter"));
+				freeboard.setFreeboardContent(mrequest.getParameter("ir1"));
 				
+				System.out.println(freeboard);
 				//전송온 파일의 파일명만 추출하고, 이름바꾸기 처리
-				String originalFileName = mrequest.getFilesystemName("bupfile");
+				String originalFileName = mrequest.getFilesystemName("fupfile");
 				
 				//전송온 파일이 있을 때만 이름바꾸기 진행함
 				if(originalFileName != null) {
@@ -123,8 +124,8 @@ public class freeBoardInsertServlet extends HttpServlet {
 					//목록에 추가된 원글이 보여져야 됨
 					response.sendRedirect("/first/blist?page=1");
 				}else {
-					view = request.getRequestDispatcher("views/board/boardError.jsp");
-					request.setAttribute("message", "개시글 원글 등록 실패!");
+					view = request.getRequestDispatcher("views/freeBoard/freeBoardError.jsp");
+					request.setAttribute("message", "게시글 원글 등록 실패!");
 					view.forward(request, response);
 				}
 				
