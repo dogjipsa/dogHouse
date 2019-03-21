@@ -168,9 +168,11 @@ center{
 <br>    
    
 <!-- 테이블 종료 -->
+<% if(loginUser != null){ %>
 <div id="insert">
 	<input type="button" onclick="showWriteForm();" value="글쓰기">
 </div>
+<%} %>
 <%-- 페이징 처리 --%>
 <br><br><br>
 <br><br><br>

@@ -152,7 +152,7 @@ center{
    <td><%= notice.getNoticeViews() %></td>
    <td>
    <%if(notice.getNoticeOriginFile() != null) {%>
-   <img src="/doggybeta/resources/images/puppyborn.jpg" size="50">
+   <img src="/doggybeta/resources/images/paw.png" width="20px;" align="center;">
    <% }else{ %>
    &nbsp;
    <%} %>
@@ -166,7 +166,6 @@ center{
 <% if(loginUser != null){ %>
 <div id="insert">
 	<input type="button" onclick="showWriteForm();" value="글쓰기">
-</div>
 <%} %>
 
 </div>
