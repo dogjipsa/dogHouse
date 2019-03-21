@@ -236,7 +236,7 @@
 					<input name="email" value="<%=loginUser.getEmail() %>" class="ps_input input_email" autocomplete="off" >
 					<p>펫시팅 장소</p>
 					<input name="addr" placeholder="장소/위치 입력" class="ps_input input_addr" autocomplete="off" >
-					<p>희망 시급(원)</p>
+					<p>희망 일급(원)</p>
 					<input type="number" name="price" placeholder="가격 입력" class="ps_input input_price" min="100" step="100">
 				</div>
 				<div class="section3">

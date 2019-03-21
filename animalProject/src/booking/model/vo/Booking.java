@@ -14,11 +14,12 @@ public class Booking implements Serializable {
 	private String bookingProgress;
 	private String bookingEtc;
 	private String serviceKind;
+	private String puserId;
 	
 	public Booking () {}
 
 	public Booking(int bookingNo, Date checkInDate, Date checkOutDate, int petNo, String userId, String bookingProgress,
-			String bookingEtc, String serviceKind) {
+			String bookingEtc, String serviceKind, String puserId) {
 		super();
 		this.bookingNo = bookingNo;
 		this.checkInDate = checkInDate;
@@ -28,7 +29,9 @@ public class Booking implements Serializable {
 		this.bookingProgress = bookingProgress;
 		this.bookingEtc = bookingEtc;
 		this.serviceKind = serviceKind;
+		this.puserId = puserId;
 	}
+
 
 	public int getBookingNo() {
 		return bookingNo;
@@ -94,15 +97,25 @@ public class Booking implements Serializable {
 		this.serviceKind = serviceKind;
 	}
 
+	
+	public String getPuserId() {
+		return puserId;
+	}
+
+	public void setPuserId(String puserId) {
+		this.puserId = puserId;
+	}
+
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
-	
+
 	@Override
-	public String toString () {
-		return
-				this.bookingNo + ", " + this.checkInDate + ", " + this.checkOutDate + ", " + this.petNo + ", "
-			  + this.userId + ", " + this.bookingProgress + ", " + this.bookingEtc + ", " + this.serviceKind;
+	public String toString() {
+		return bookingNo + ", " + checkInDate + ", " + checkOutDate + ", " + petNo + ", " + userId + ", "
+				+ bookingProgress + ", " + bookingEtc + ", " + serviceKind + ", " + puserId;
 	}
 
+	
+	
 }

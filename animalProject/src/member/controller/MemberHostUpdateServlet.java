@@ -92,7 +92,6 @@ public class MemberHostUpdateServlet extends HttpServlet {
 			m.setUseroriginfile(originFileName);
 			m.setUserrefile(renameFileName);
 		}
-		System.out.println(m);
 		
 		
 		int result = new MemberService().updateHost(m);
