@@ -68,7 +68,7 @@ public class TipBoardListServlet extends HttpServlet {
 				
 				response.setContentType("text/html; charset=utf-8");
 				RequestDispatcher view = null;
-				if(list.size() > 0) {
+				if(list.size() > 0) {//size가 0이어도 조회되어야한다고 생각함 else 삭제해야 할듯
 					view = request.getRequestDispatcher(
 							"views/tipboard/tipBoardListView.jsp");
 					

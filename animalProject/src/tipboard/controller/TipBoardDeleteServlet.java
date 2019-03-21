@@ -1,6 +1,8 @@
 package tipboard.controller;
 
 import java.io.IOException;
+
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -30,6 +32,13 @@ public class TipBoardDeleteServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int tipBoardNum = Integer.parseInt(request.getParameter("tnum"));
 		int result = new TipBoardService().deleteTipBoard(tipBoardNum);
+		if( result > 0) {
+			response.sendRedirect("/doggybeta/tlist?page=1");
+		}else {
+			RequestDispatcher view = request.getRequestDispatcher("views/tipboard/tipBoardError.jsp");
+			request.setAttribute("message", tipBoardNum + "번 게시글 삭제 실패!");
+			view.forward(request, response);
+		}
 	}
 
 	/**

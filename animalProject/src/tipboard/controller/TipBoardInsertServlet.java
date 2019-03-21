@@ -93,7 +93,7 @@ public class TipBoardInsertServlet extends HttpServlet {
 			//글 등록 성공시, 팁 게시판 목록보기로 이동
 			response.sendRedirect("/doggybeta/tlist?page=1");
 		}else {
-			view = request.getRequestDispatcher("views/tipBoard/tipBoardError.jsp");
+			view = request.getRequestDispatcher("views/tipboard/tipBoardError.jsp");
 			request.setAttribute("message", "게시글 등록 실패");
 			view.forward(request, response);
 		}

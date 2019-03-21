@@ -10,7 +10,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>팁게시판</title>
 <link href="/doggybeta/resources/css/footer.css" rel="stylesheet" type="text/css">
 </head>
 <body>
@@ -50,11 +50,11 @@
 		<!-- jsp파일에서 jsp파일로 전송할 수 있음 boardreplyform.jsp에서 getparameter로 값을 꺼냄 -->
 	<% } %> --%>
 	&nbsp; &nbsp;
-	<%-- <% if(loginUser.getUserId().equals(board.getBoardWriter())){ %> --%>
+	<% if(loginUser.getUserId().equals(tboard.getUserId())){ %>
 		<a href="/doggybeta/tupview?tnum=<%=tboard.getTipBoardNo()%>&page=<%=currentPage%>">[수정페이지로 이동]</a>
 		&nbsp; &nbsp;
-		<a href="/doggybeta/tdelete?tnum=<%=tboard.getTipBoardNo()%>">[글삭제]</a>
-	<%-- <% } %> --%>
+		<a onclick="return confirm('정말로 삭제하시겠습니까?')" href="/doggybeta/tdelete?tnum=<%=tboard.getTipBoardNo()%>">[글삭제]</a>
+	<% } %>
 	&nbsp; &nbsp;
 	<a href="/doggybeta/tlist?page=<%= currentPage%>">[목록]</a>
 	</th>

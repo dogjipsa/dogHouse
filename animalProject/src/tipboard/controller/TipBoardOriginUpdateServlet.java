@@ -15,6 +15,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;
 
+import com.oreilly.servlet.MultipartRequest;
+import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
+
 import tipboard.model.service.TipBoardService;
 import tipboard.model.vo.TipBoard;
 
@@ -64,10 +67,10 @@ public class TipBoardOriginUpdateServlet extends HttpServlet {
 
 				// 전송 온 값 꺼내서 객체에 저장
 				TipBoard tboard = new TipBoard();
-
-				tboard.setBoardNum(Integer.parseInt(mrequest.getParameter("tnum")));
-				tboard.setBoardTitle(mrequest.getParameter("ttitle"));		
-				tboard.setBoardContent(mrequest.getParameter("tcontent"));
+				
+				tboard.setTipBoardNo(Integer.parseInt(mrequest.getParameter("tnum")));
+				tboard.setTipBoardTitle(mrequest.getParameter("ttitle"));	
+				tboard.setTipBoardContent(mrequest.getParameter("tcontent"));
 				
 				//hidden 에 담겨서 전송온 원파일명과 바뀐파일명 꺼내서 저장
 				String toriginFileName = mrequest.getParameter("tofile");
@@ -125,7 +128,7 @@ public class TipBoardOriginUpdateServlet extends HttpServlet {
 
 				if (result > 0) {
 					// 원글 수정이 성공하면, 게시글 목록보기가 실행되게 함			
-					response.sendRedirect("/first/tlist?tpage=" + Integer.parseInt(mrequest.getParameter("tpage")));
+					response.sendRedirect("/doggybeta/tlist?page=" + Integer.parseInt(mrequest.getParameter("page")));
 				} else {
 					view = request.getRequestDispatcher("views/tipboard/tipBoardError.jsp");
 					request.setAttribute("message", tboard.getTipBoardNo() + "번 개시 원글 수정 실패!");
