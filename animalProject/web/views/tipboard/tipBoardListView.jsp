@@ -20,7 +20,7 @@
 			keyword = request.getAttribute("keyword").toString();
 		}
 	}
-	/* Member loginUser = (Member) session.getAttribute("loginUser"); */
+	/* Member loginUsers = (Member) session.getAttribute("loginUser"); */
 %>
 <!DOCTYPE html>
 <html>
@@ -61,7 +61,6 @@
 </script>
 </head>
 <body>
-
 	<%@ include file="..//common/menu.jsp"%>
 
 
@@ -73,15 +72,15 @@
 			<h4 align="center">
 				총 게시글 갯수 :
 				<%=listCount%></h4>
-			<%-- <%
+			<%
 				if (loginUser != null) {
-			%> --%>
+			%>
 			<div style="align: center; text-align: center;">
 				<button onclick="showWriteForm();">글쓰기</button>
 			</div>
-			<%-- <%
+			<%
 				}
-			%> --%>
+			%>
 			<br>
 			<%-- 검색기능 --%>
 			<center>
@@ -128,13 +127,13 @@
 				<tr>
 					<td align="center"><%=t.getTipBoardNo()%></td>
 					<td><!-- 로그인 상태일 때만 상세보기 링크 설정함 --> <%
-						/* if (loginUser != null) { */
+						if (loginUser != null) { 
 					%> <a
 						href="/doggybeta/tdetail?tnum=<%=t.getTipBoardNo()%>&page=<%=currentPage%>"><%=t.getTipBoardTitle()%></a>
-						<%-- <%
+						<%
 							} else {
 						%> <%=t.getTipBoardTitle()%> <%
- 					}%> <%=t.getTipBoardTitle()%> --%>
+ 					}%> 
 					</td>
 					<td align="center"><%=t.getUserId()%></td>
 					<td align="center"><%=t.getTipBoardDate()%></td>
@@ -145,8 +144,8 @@
 						%> ◎ <%
 							} else {
 						%> &nbsp; <%
- 	}
- %>
+							 }
+						 %>
 					</td>
 				</tr>
 				<%

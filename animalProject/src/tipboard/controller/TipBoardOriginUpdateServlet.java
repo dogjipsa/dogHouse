@@ -128,7 +128,7 @@ public class TipBoardOriginUpdateServlet extends HttpServlet {
 
 				if (result > 0) {
 					// 원글 수정이 성공하면, 게시글 목록보기가 실행되게 함			
-					response.sendRedirect("/doggybeta/tlist?page=" + Integer.parseInt(mrequest.getParameter("tpage")));
+					response.sendRedirect("/doggybeta/tlist?page=" + Integer.parseInt(mrequest.getParameter("page")));
 				} else {
 					view = request.getRequestDispatcher("views/tipboard/tipBoardError.jsp");
 					request.setAttribute("message", tboard.getTipBoardNo() + "번 개시 원글 수정 실패!");

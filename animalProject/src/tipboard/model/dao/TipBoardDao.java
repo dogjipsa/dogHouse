@@ -49,7 +49,7 @@ public class TipBoardDao {
 			int endRow = startRow + limit - 1;
 			
 			String query = "SELECT *  FROM (SELECT ROWNUM RNUM,  TIPBOARD_NO,TIPBOARD_TITLE,TIPBOARD_CONTENT,TIPBOARD_DATE,TIPBOARD_ORIGINFILE,TIPBOARD_VIEWS,TIPBOARD_RECOMMEND,USER_ID,TIPBOARD_DELETE,TIPBOARD_REFILE " + 
-					"				FROM (SELECT * FROM TIPBOARD order by tipboard_no desc)) " + 
+					"				FROM (SELECT * FROM TIPBOARD where tipboard_delete in('n','N',null) order by tipboard_no desc)) " + 
 					"				WHERE RNUM >= ? AND RNUM <= ? ";
 			/*String query = "select * from tipboard";*/
 			
@@ -147,8 +147,23 @@ public class TipBoardDao {
 	}
 
 	public int updateTipBoard(Connection conn, TipBoard tboard) {
-		// TODO Auto-generated method stub
-		return 0;
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String query = "update tipboard set tipboard_title = ?, tipboard_content = ?, TIPBOARD_ORIGINFILE = ?, TIPBOARD_REFILE = ? where tipboard_no = ?";
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, tboard.getTipBoardTitle());
+			pstmt.setString(2, tboard.getTipBoardContent());
+			pstmt.setString(3, tboard.getTipBoardOriginFile());
+			pstmt.setString(4, tboard.getTipBoardReFile());
+			pstmt.setInt(5, tboard.getTipBoardNo());
+			result = pstmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
 	}
 
 	public ArrayList<TipBoard> selectDateList(Connection conn, Date begin, Date end, int currentPage, int limit) {
@@ -169,7 +184,9 @@ public class TipBoardDao {
 	public int deleteTipBoard(Connection conn, int tipBoardNum) {
 		int result = 0;
 		PreparedStatement pstmt = null;
-		String query = "delete from tipboard where tipboard_no = ?";
+		/*String query = "delete from tipboard where tipboard_no = ?";*/
+		//업데이트로
+		String query  = "update tipboard set tipboard_delete = 'y' where tipboard_no = ?";
 		try {
 			pstmt = conn.prepareStatement(query);
 			pstmt.setInt(1, tipBoardNum);

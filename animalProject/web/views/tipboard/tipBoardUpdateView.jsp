@@ -19,7 +19,7 @@
 <h2 align="center"><%=tboard.getTipBoardNo() %>번 게시글 수정페이지</h2>
 <br>
 <%-- <% if(board.getBoardReplyLev() == 0){ //원글 수정 %> --%>
-<form action="/doggybeta/boriginup" method="post" enctype="multipart/form-data">
+<form action="/doggybeta/toriginup" method="post" enctype="multipart/form-data">
 <input type="hidden" name="page" value="<%= currentPage %>">
 <input type="hidden" name="tnum" value="<%= tboard.getTipBoardNo() %>">
 <input type="hidden" name="tofile" value="<%= tboard.getTipBoardOriginFile() %>">

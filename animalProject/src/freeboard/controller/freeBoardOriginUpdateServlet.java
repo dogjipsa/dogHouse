@@ -21,7 +21,7 @@ import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 /**
  * Servlet implementation class BoardOriginUpdateServlet
  */
-@WebServlet("/boriginup")
+@WebServlet("/foriginup")
 public class freeBoardOriginUpdateServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
