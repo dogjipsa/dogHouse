@@ -36,21 +36,28 @@
     z-index: 1000;
 }
 
-.section4 > #reserv_table tr th{
-    background: white;
+.section4 > #reserv_table, tr, th, td{
     margin : 30px;
     border : 1px solid black;
+    border-collapse: collapse;
 }
 #reserv_table tr:first-child {
-    height: 100px;
+    height: 80px;
+    font-size: 15px;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
-#reserv_table tr:first-child th{
-
-}
-
-#reserv_table tr:nth-child(2) {
+#reserv_table tr{
+    height: 50px;
     text-align: center;
+}
+
+#reserv_table tr th:nth-child(2) {
+    width: 60%;
+}
+
+#reserv_table tr:nth-child(odd) {
+    background-color: rgba(30,144,255,0.5);
 }
 
 .wrap_content .section5{
