@@ -38,7 +38,6 @@
 
 .section4 > #reserv_table, tr, th, td{
     margin : 30px;
-    border : 1px solid black;
     border-collapse: collapse;
 }
 #reserv_table thead{
@@ -47,7 +46,7 @@
     background-color: rgba(30,144,255,0.7);
 }
 #reserv_table thead tr{
-    height: 80px;
+    height: 70px;
 }
 
 #reserv_table tbody tr{

@@ -3,6 +3,8 @@ const bkTable = document.querySelector('#reserv_table');
 const userid = document.querySelector('input[name="userid"]');
 
 
+
+// 
 for(let i = 0; i < items.length; i++){
     items[i].addEventListener('change',function(){
         if(items[i].value === 'booking'){
@@ -12,6 +14,7 @@ for(let i = 0; i < items.length; i++){
     });
 }
 
+// 예약/결제 내역 Ajax
 function requestBkAjax(){
     const xhr = new XMLHttpRequest();
     const tbody = document.querySelector('#reserv_table > tbody'); 
@@ -42,8 +45,8 @@ function requestBkAjax(){
 
             const tableForm = {
                 'bookingNo' : json.list[i].bno,
-                'content' : kind+ "\t"+ decodeURIComponent(json.list[i].pname)
-                +"\t"+decodeURIComponent(json.list[i].addr)+"\t"+json.list[i].price+"원",
+                'content' : kind+ " / "+ decodeURIComponent(json.list[i].pname)
+                +" / "+decodeURIComponent(json.list[i].addr).replace(/\+/gi," ")+" / "+json.list[i].price+"원",
                 'hostId' : json.list[i].puserid,
                 'date' : json.list[i].indate +" ~ "+json.list[i].outdate,
                 'pg' : pg 
@@ -63,5 +66,7 @@ function requestBkAjax(){
     xhr.send(requestData);
 }
 
+
+// 페이지 로드시 예약/결제 내역 출력
 document.addEventListener('DOMContentLoaded', () =>{ requestBkAjax(); });
 
