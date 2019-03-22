@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ page import="java.net.URLEncoder" %>
+<%@ page import="java.security.SecureRandom" %>
+<%@ page import="java.math.BigInteger" %>
 <%@ page import='member.model.vo.Member' %>
 <%
 	Member loginUser = (Member)session.getAttribute("loginUser");
@@ -9,13 +12,13 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<!-- <script type="text/javascript" src='/doggybeta/resources/js/loginSource.js'></script> -->
 <link rel="stylesheet" href="/doggybeta/resources/css/psForm.css">
 <link href='/doggybeta/resources/css/login.css' rel='stylesheet' type='text/css'>
 <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet" />
 <link href="/doggybeta/resources/css/mainV2.css" rel="stylesheet" type="text/css">
+<script type="text/javascript"src="/doggybeta/resources/js/petSitting.js"></script>
 <script type="text/javascript" src="/doggybeta/resources/js/jquery-3.3.1.min.js"></script>
-
+<script type="text/javascript" src="https://static.nid.naver.com/js/naveridlogin_js_sdk_2.0.0.js" charset="utf-8"></script>
 <script type="text/javascript">
 	 $(function() {
  		$('.login-form').hide();
@@ -31,41 +34,7 @@
 		    });
 		    
 		});
-		
-		$('#btnLogin').click(function(){
-			var userid = $('#userid').val();
-			var passwd = $('#passwd').val();
-			
-			if(userid == "") {
-				$('#userid').focus();
-				return;
-			}
-			/* var exp = '/[a-z0-9]$/';
-			if(!exp.test(userid)) {
-				$('#userid').focus();
-				return;
-			} */
-			
-			if(passwd == "") {
-				$('#passwd').focus();
-				return;
-			}
-			
-			var data = "userid="+userid+"&passwd="+passwd;
-			alert(userid+passwd);
-			
-			$.ajax({
-				type: 'post',
-				data: {userid : $('#userid').val(), passwd : $('#passwd').val() },
-				url: '/doggybeta/jipsalogin',
-				success: function(value) {
-					alert('사용할 수 있는 아이디입니다.');
-				}//success
-			});//ajax
-		})//login btn
 	});
-	
-
 </script>
 <style>
 
@@ -81,14 +50,8 @@
 		</ul>
 		<span class='btn btn-1 btn-sign'>회원가입/로그인</span>
 		<!-- ---------------------------------------------------------------------------- -->
-<!-- 		<a href="#" class="login-forgot-pass">forgot password?</a>
-		<div class="underlay-photo"></div>
-		<div class="underlay-black"></div>  -->
-		<!-- -------------------------------------------------------------------------  -->
+		<!-- MENU -->
 		<ul class='icon' id='icon'>
-			<!-- <li><img id='logo' src='/doggybeta/resources/images/doglogo.png'
-				width='80%' /><a><span>doghouse</span> </a></li> -->
-
 			<li><a href='/doggybeta' id='icon1'> <span>&nbsp;&nbsp;&nbsp;홈</span>
 			</a></li>
 			<li class="m1"><a
@@ -126,23 +89,37 @@
 
 		</ul>
 	</nav>
-	<!-- ------------------------------------------------- -->
+	<!-- Login Form ---------------------------------------------------------------------------- -->
 	<form class="login-form" method='post' action='/doggybeta/jipsalogin'>
+    <!-- <img id='cancelBtn' src='/doggybeta/resources/images/cancel-button.jpg'> -->
   			<p class="login-text">
-    			<span class="fa-stack fa-lg">
+  				DOGHOUSE
+    			<!-- <span class="fa-stack fa-lg">
       				<i class="fa fa-circle fa-stack-2x"></i>
       				<i class="fa fa-lock fa-stack-1x"></i>
-    			</span>
+    			</span> -->
   			</p>
   			<input type="text" name='userid' id='userid' class="login-username" autofocus required placeholder="Email" />
   			<input type="password" name='userpwd' id='passwd' class="login-password" required required placeholder="Password" />
   			<a href='/doggybeta/jipsalogin'>
-  			<input type="submit" name="Login" value="Login" class="login-submit" id='btnLogin'/></a>
-			<a href='/doggybeta/views/member/enroll.html'>
-			<input type="button" name='enroll' value='회원가입' class='login-submit' id='btnEnroll'/>
-			</a>
-  			
-  			&nbsp;
+  			<input type="submit" name="Login" value="Login" class="login-submit" id='btnLogin'/></a><br>
+			<a href='/doggybeta/views/member/checkAdmitNumber.jsp'>
+			<input type="button" name='enroll' value='회원가입' class='login-submit' id='btnEnroll'/></a>
+			<p align='center' id='orid'>------- 또는 -------</p>
+			<%
+   				 String clientId = "obXTFPuiHDCuNQb5kAmx";//애플리케이션 클라이언트 아이디값";
+   				 String redirectURI = URLEncoder.encode("http://127.0.0.1:8888/doggybeta/index.jsp", "UTF-8");
+   				 SecureRandom random = new SecureRandom();
+   				 String state = new BigInteger(130, random).toString();
+   				 String apiURL = "https://nid.naver.com/oauth2.0/authorize?response_type=code";
+   				 apiURL += "&client_id=" + clientId;
+   				 apiURL += "&redirect_uri=" + redirectURI;
+   				 apiURL += "&state=" + state;
+   				 session.setAttribute("state", state);
+    		 %>
+			<a href="<%=apiURL%>"><img style='position:relative;' height="47" width='240' src="/doggybeta/resources/images/naverButton/네이버 아이디로 로그인_완성형_White.PNG"/></a>
+			<br>
+			<br>
   			<a href="/doggybeta/views/member/findPassword.jsp" class="login-forgot-pass" id='tempPwd'>forgot password?</a>
 	</form>
 	<script type="text/javascript">
@@ -154,7 +131,6 @@
 		}
 	});
 	</script>
-		
 	<% } else { %>
 		<%-- <%= loginUser.getUserId() %> 님 환영합니다
 		<a href='/doggybeta/jipsalogout'>로그아웃</a> --%>
@@ -256,10 +232,7 @@
 			<p>펫시터 등록 신청이 완료되었습니다. </p>
 			<button>확인</button>
 		</div>
-
-		<script type="text/javascript"src="/doggybeta/resources/js/petSitting.js"></script>
-	
-	<script type="text/javascript">
+		<script type="text/javascript">
 	$('.m1').click(function() {
 		if ($(this).children('.m2').is(':visible')) {
 			$(this).children('.m2').slideUp(200);
@@ -268,8 +241,6 @@
 		}
 	});
 	</script>
-	<% } %>
-
+		<% } %>
 </body>
-<!-- <script src="/doggybeta/resources/js/loginSource.js"></script> -->
 </html>

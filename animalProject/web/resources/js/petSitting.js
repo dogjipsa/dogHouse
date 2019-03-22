@@ -1,4 +1,4 @@
-// 펫시팅 신청 메뉴 클릭 시 발생 이벤트
+/*// 펫시팅 신청 메뉴 클릭 시 발생 이벤트
 const psBtn = document.getElementById('pet_reg__btn');
 const psRegBox = document.querySelector('.ps_reg_form');
 const xBtn = document.querySelector('.ps_reg_form .close');
@@ -101,3 +101,4 @@ const chkRegFormBtn = document.querySelector('.ps_reg_form_popup_box button');
 chkRegFormBtn.addEventListener('click', function(){
 	location.href = '/doggybeta/index.jsp';
 });
+*/

@@ -1,0 +1,15 @@
+@charset "UTF-8";
+body {
+	background-image: url('/doggybeta/resources/images/backdog1.jpg');
+	background-size: cover;
+}
+/* section form table th {
+	background: orange;
+	color: navy;
+	font-weight: bold;
+} */
+section form table {
+	position: relative;
+	left: 20px;
+	color: white;
+}
