@@ -40,17 +40,21 @@ public class TipBoardListServlet extends HttpServlet {
 					currentPage = Integer.parseInt(request.getParameter("page"));
 				}
 				
+				//검색조건과 검색내용을 가져온다.
+				String option = request.getParameter("option");
+				String word = request.getParameter("word");
+				
 				//한 페이지에 출력할 목록 갯수 지정
 				int limit = 10;
 				
 				TipBoardService bservice = new TipBoardService();
 				
 				//테이블에 저장된 전체 목록 갯수 조회
-				int listCount = bservice.getListCount();
+				int listCount = bservice.getListCount(option,word);
 				//System.out.println("총목록수 : " + listCount);
 				
 				//현재 페이지에 출력할 목록 조회
-				ArrayList<TipBoard> list = bservice.selectList(currentPage, limit);
+				ArrayList<TipBoard> list = bservice.selectList(currentPage, limit, option, word);
 				//System.out.println("list : " + list);
 				
 				//총 페이지수 계산 : 목록이 마지막 1개일 때 1페이지로 처리

@@ -83,34 +83,7 @@
 			%>
 			<br>
 			<%-- 검색기능 --%>
-			<center>
-				<div>
-					<h2>검색할 항목을 선택하시오.</h2>
-					<input type="radio" name="item" value="title" checked> 제목
-					&nbsp; &nbsp; &nbsp; <input type="radio" name="item" value="writer">
-					작성자 &nbsp; &nbsp; &nbsp; <input type="radio" name="item"
-						value="date"> 날짜
-				</div>
-				<div id="titleDiv">
-					<form action="/first/tsearcht" method="post">
-						<label>검색할 제목을 입력하시오 : <input type="text" name="keyword"></label>
-						<input type="submit" value="검색">
-					</form>
-				</div>
-				<div id="writerDiv">
-					<form action="/doggybeta/tsearchw" method="post">
-						<label>검색할 작성자 아이디를 입력하시오 : <input type="text"
-							name="keyword"></label> <input type="submit" value="검색">
-					</form>
-				</div>
-				<div id="dateDiv">
-					<form action="/doggybeta/tsearchd" method="post">
-						<label>검색할 날짜를 선택하시오 : <input type="date" name="begin">
-							~ <input type="date" name="end"></label> <input type="submit"
-							value="검색">
-					</form>
-				</div>
-			</center>
+			
 			<br>
 			<table align="center" border="1" cellspacing="0" width="700">
 				<tr>
@@ -231,6 +204,45 @@
 				%>
 
 			</div>
+			<br>
+			<div id="searchForm" style="text-align:center;">
+				<form method="post" action="/doggybeta/tlist">
+					<select name="option">
+						<option value="title">제목</option>
+						<option value="content">내용</option>
+						<option value="title_content">제목+내용</option>
+						<option value="writer">글쓴이</option>
+					</select>
+					<input type="text" size="20" name="word">
+					<input type="submit" value="검색">
+				</form>
+				<!-- <div>
+					<h2>검색할 항목을 선택하시오.</h2>
+					<input type="radio" name="item" value="title" checked> 제목
+					&nbsp; &nbsp; &nbsp; <input type="radio" name="item" value="writer">
+					작성자 &nbsp; &nbsp; &nbsp; <input type="radio" name="item"
+						value="date"> 날짜
+				</div>
+				<div id="titleDiv">
+					<form action="/first/tsearcht" method="post">
+						<label>검색할 제목을 입력하시오 : <input type="text" name="keyword"></label>
+						<input type="submit" value="검색">
+					</form>
+				</div>
+				<div id="writerDiv">
+					<form action="/doggybeta/tsearchw" method="post">
+						<label>검색할 작성자 아이디를 입력하시오 : <input type="text"
+							name="keyword"></label> <input type="submit" value="검색">
+					</form>
+				</div>
+				<div id="dateDiv">
+					<form action="/doggybeta/tsearchd" method="post">
+						<label>검색할 날짜를 선택하시오 : <input type="date" name="begin">
+							~ <input type="date" name="end"></label> <input type="submit"
+							value="검색">
+					</form>
+				</div> -->
+			</center>
 			<div id="footer"><%@ include file="..//common/footer.jsp"%></div>
 		</div>
 </body>
