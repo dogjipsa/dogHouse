@@ -4,7 +4,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import static common.JDBCTemplate.*;
 
@@ -19,7 +18,7 @@ public class BookingDao {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		
-		String query = "SELECT B.BOOKING_NO, B.CHECKIN_DATE, B.CHECKOUT_DATE, B.BOOKING_PROGRESS, B.PUSER_ID, M.PRICE, M.ADDRESS, P.PET_NAME FROM BOOKING B JOIN MEMBER M ON (B.PUSER_ID = M.USER_ID) JOIN PET P ON (B.PET_NO = P.PET_NO) WHERE B.USER_ID = ?";
+		String query = "SELECT B.BOOKING_NO, B.CHECKIN_DATE, B.CHECKOUT_DATE, B.BOOKING_PROGRESS, B.PUSER_ID, M.PRICE, M.ADDRESS, P.PET_NAME, B.SERVICE_KIND FROM BOOKING B JOIN MEMBER M ON (B.PUSER_ID = M.USER_ID) JOIN PET P ON (B.PET_NO = P.PET_NO) WHERE B.USER_ID = ?";
 		
 		
 		try {
@@ -36,6 +35,7 @@ public class BookingDao {
 				bc.setPrice(rset.getInt(6));
 				bc.setAddress(rset.getString(7));
 				bc.setPetName(rset.getString(8));
+				bc.setServiceKind(rset.getString(9));
 				
 				list.add(bc);
 			}

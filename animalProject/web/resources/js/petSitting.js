@@ -1,4 +1,4 @@
-/*// 펫시팅 신청 메뉴 클릭 시 발생 이벤트
+// 펫시팅 신청 메뉴 클릭 시 발생 이벤트
 const psBtn = document.getElementById('pet_reg__btn');
 const psRegBox = document.querySelector('.ps_reg_form');
 const xBtn = document.querySelector('.ps_reg_form .close');
@@ -55,7 +55,6 @@ function checkInputs(obj){
 		obj[i].style.borderBottom = "1px solid white";
 		if(obj[i].value === ""){
 			obj[i].style.borderBottom = "1px solid red";
-
 			return false;
 		} 
 	}
@@ -73,32 +72,9 @@ submitBtn.addEventListener('click', (e)=>{
 		price : document.querySelector('.section2 .input_price'),
 	}
 	if(checkInputs(toSend) && toSend.agree.value === 'agree'){
-		// 모든 인풋 정보가 들어왔을경우
-		const formData = new FormData();
-		const file = document.getElementById('real-file');
-		const xhr = new XMLHttpRequest();
-
-		formData.append('pic', file.files[0]);
-		formData.append('price', toSend.price.value);
-		formData.append('userid',toSend.userid.value);
-		formData.append('username',toSend.username.value);
-		formData.append('phone',toSend.phone.value);
-		formData.append('email',toSend.email.value);
-		formData.append('addr',toSend.address.value);
-		console.log(formData.values);
-		xhr.onload = function(){
-			const alertBox = document.querySelector('.ps_reg_form_popup_box');
-			alertBox.style.display = "flex";
-		}
-		
-		xhr.open('POST','/doggybeta/hostup');
-		xhr.send(formData);
+		// 모든 인풋 정보가 들어왔을경우		
+		const alertBox = document.querySelector('.ps_reg_form_popup_box');
+		alertBox.style.display = "flex";
 	} 
-})
-
-const chkRegFormBtn = document.querySelector('.ps_reg_form_popup_box button');
-
-chkRegFormBtn.addEventListener('click', function(){
-	location.href = '/doggybeta/index.jsp';
 });
-*/
+

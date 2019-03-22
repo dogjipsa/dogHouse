@@ -93,7 +93,6 @@ public class MemberHostUpdateServlet extends HttpServlet {
 			m.setUserrefile(renameFileName);
 		}
 		
-		
 		int result = new MemberService().updateHost(m);
 		if(result > 0) {
 			System.out.println("성공");
@@ -101,7 +100,7 @@ public class MemberHostUpdateServlet extends HttpServlet {
 			System.out.println("실패");
 		}
 		
-		
+		response.sendRedirect("/doggybeta/index.jsp");
 	}
 
 	/**
