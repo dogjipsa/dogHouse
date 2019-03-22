@@ -92,7 +92,7 @@ public class FreeBoardService {
 	
 	
 	
-	public ArrayList<FreeBoard> boardSearchTitle (String title, int currentPage, int limit){
+/*	public ArrayList<FreeBoard> boardSearchTitle (String title, int currentPage, int limit){
 		Connection conn = getConnection();
 		ArrayList<FreeBoard> list = fdao.selectTitleList(conn, title, currentPage, limit);
 		close(conn);
@@ -114,7 +114,7 @@ public class FreeBoardService {
 		close(conn);
 		return list;
 	}
-
+*/
 	public ArrayList<FreeBoard> searchList(HashMap<String, Object> listOpt) {
 		Connection conn = getConnection();
 		ArrayList<FreeBoard> list = fdao.searchList(conn, listOpt);

@@ -54,7 +54,7 @@ public class freeBoardDetailServlet extends HttpServlet {
 			view.forward(request, response);
 		}else {
 			view = request.getRequestDispatcher("views/freeBoard/freeBoardError.jsp");
-			request.setAttribute("message", freeBoardNo + "번 게시글 상세조회 실패!");
+			request.setAttribute("message", freeBoardNo + "번 게시글 상세조회 실패! 로그인하십시오.");
 			view.forward(request, response);
 		}
 		
