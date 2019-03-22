@@ -1,8 +1,14 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8" errorPage="memberError.jsp"%>
+<%
+	String keycode = (String)session.getAttribute("keycode");
+%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+</head>
 <style type="text/css">
 	section form table th {
 		background: orange;
@@ -20,7 +26,7 @@
 		
 		if(!id) {
 			alert('아이디를 입력해주세요.');
-			('#userid').focus();
+			$('#userid').focus();
 			return false;
 		}
 		else if(!getCheck.test($('#userid').val())){
@@ -52,40 +58,57 @@
 		
 		return false; //클릭 이벤트 전달받음
 	}
-	
-	
 	function admit() {
+/* 		location.href='/doggybeta/views/member/memberEnroll.jsp'; */
 		var e = $('#email').val();
 		if(!e) {
 			alert('이메일을 입력해주세요');
 		}
 		else {
-			//$('#sendbtn').click(function() {
-				alert('인증번호 전송이 완료되었습니다.');
-				$('#confirm-num').show();
-			//});
-			
+			alert('인증번호 전송이 완료되었습니다.')
+/* 				$('#sendbtn').hide(); */
+/* 				$('#btnok').show(); */
+				
+				var n = $('#number').val();
+				if(!n) {
+					alert('인증번호를 입력해주세요');
+				}
+				/* $("#di").reload('입력해주세요'); */
+			/* return false; */
 			$.ajax({
 				url: '/doggybeta/admitmember',
 				type: 'post',
-				data: {number: $('#number').val(), email: $('#email').val(), con: $('#con-number').val() },
+				data: {email: $('#email').val() },
 				succeess: function(data) {
-					console.log("success "+data);
-					
-					if(data == "ok") {
-						alert('인증이 완료되었습니다.');
-						$('#email').focus();
-					} else {
-						alert('인증번호를 잘못입력하셨습니다.');
-						$('#con-number').select();
-					}
+					console.log("sucess : " + data);
+					alert("성공!");
+				},
+				error: function(jqXHR, textStatus, errorThrown) {
+					console.log("error : "+jqXHR+","+textStatus+","+errorThrown);
 				}
 			});
-		
+			/* $("#toplist").html($("#toplist").html() + values); */
 			
+			return false;
 		}
-		
-		
+		return false;
+	}
+
+
+/* 	location.reload(); */
+    var code = '<%= keycode %>';
+    
+/* 	$('sendbtn').hide(); */
+	function confirmNum() {
+		var nn = $('#number').val();
+			if(code == nn) {
+				alert(code);
+				alert('성공!');
+			} else {
+				alert(code);
+				alert('실패!');
+				$('#signupbtn').hide();
+			}
 		return false;
 	}
 	
@@ -105,7 +128,7 @@
 	});
 	
 	$(function() {
-		$('#confirm-num').hide();
+/* 		$('#btnok').hide(); */
 	});
 </script>
 </head>
@@ -114,7 +137,7 @@
 <h2 align="center">회원가입페이지</h2><br>
 	<h5 align="center">* 표시 항목은 필수입력 항목입니다.</h5>
 	<form action="/doggybeta/resistenroll" method="post" >
-	<table width="650" align="center">
+	<table width="650" align="center" id='tb'>
 	<tr height="40">
 		<th width="150">*아이디</th>
 		<td><input type="text" name="userid" id="userid" required/>
@@ -143,8 +166,9 @@
 	</tr>
 	<tr height="40">
 		<th width="150">인증번호 입력</th>
-		<td><input type='text' name='number' id='number'/>
-		<button id='sendbtn' onclick='return admit();'>전송</button>
+		<td><div id='di'><input type='text' name='number' id='number'/></div>
+		<input type='submit' id='sendbtn' onclick='return admit();' value='전송'/>
+		<input type='button' id='btnok' onclick='return confirmNum();' value='확인'/>
 		</td>
 	</tr>
 	<tr height="40">
@@ -155,11 +179,12 @@
 		</th>
 	</tr>
 	</table>
-	<div id='confirm-num' >
+	<!-- <div id='confirm-num' >
 		<input type='text' id='con-number' name='connumber'/>&nbsp;
 		<input type='button' id='con-button' name='conbtn' value='확인'/>
-	</div>
+	</div> -->
 	</form>
+	<%= keycode %>
 </section>
 </body>
 </html>
