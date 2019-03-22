@@ -32,16 +32,17 @@ public class freeBoardDeleteServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		//게시글 (원글, 댓글) 삭제 처리용 컨트롤러
-		int boardNum = Integer.parseInt(request.getParameter("bnum"));
+		int freeBoardNo = Integer.parseInt(request.getParameter("fnum"));
 		
-		/*if(new FreeBoardService().deleteFreeBoard(boardNum) > 0) */
-			response.sendRedirect("/doggybeta/blist?");
-		/*}else {
-			RequestDispatcher view = request.getRequestDispatcher("views/freeboard/freeBoardError.jsp");
-			request.setAttribute("message", boardNum + "번 게시글 삭제 실패!");
+		if(new FreeBoardService().deleteFreeBoard(freeBoardNo) > 0) {
+			response.sendRedirect("/doggybeta/flist");
+		}else {
+			RequestDispatcher view = request.getRequestDispatcher("views/freeBoard/freeBoardError.jsp");
+			request.setAttribute("message", freeBoardNo + "번 게시글 삭제 실패!");
 			view.forward(request, response);
-		}*/
+		}
 	}
+
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)

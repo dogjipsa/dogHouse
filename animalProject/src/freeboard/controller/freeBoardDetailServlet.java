@@ -33,7 +33,7 @@ public class freeBoardDetailServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// 게시글 상세보기 처리용 컨트롤러
-		int freeBoardNo = Integer.parseInt(request.getParameter("bnum"));
+		int freeBoardNo = Integer.parseInt(request.getParameter("fnum"));
 		/*int currentPage = Integer.parseInt(request.getParameter("page"));*/
 		
 		
