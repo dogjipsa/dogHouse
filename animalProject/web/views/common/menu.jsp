@@ -106,7 +106,7 @@
 			</a>
 				<ul class="m2">
 					<li><a href='/doggybeta/nlist'>공지사항</a></li>
-					<li><a href='#'>자유게시판</a></li>
+					<li><a href='/doggybeta/flist'>자유게시판</a></li>
 					<li><a href='/doggybeta/tlist'>팁</a></li>
 				</ul></li>
 			<li class="m1"><a href="#" id='icon5'> <span>&nbsp;&nbsp;&nbsp;고객센터</span></a>
@@ -188,7 +188,7 @@
 			</a>
 				<ul class="m2">
 					<li><a href='/doggybeta/nlist'>공지사항</a></li>
-					<li><a href='#'>자유게시판</a></li>
+					<li><a href='/doggybeta/flist'>자유게시판</a></li>
 					<li><a href='/doggybeta/tlist'>팁</a></li>
 				</ul></li>
 			<li class="m1"><a href="#" id='icon5'> <span>&nbsp;&nbsp;&nbsp;고객센터</span></a>

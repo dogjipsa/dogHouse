@@ -18,6 +18,9 @@ import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 
+import freeboard.model.service.FreeBoardService;
+import freeboard.model.vo.FreeBoard;
+
 /**
  * Servlet implementation class BoardOriginUpdateServlet
  */
@@ -44,7 +47,7 @@ public class freeBoardOriginUpdateServlet extends HttpServlet {
 		// enctype="multipart/form-data" 로 전송되었는지 확인
 		RequestDispatcher view = null;
 		if (!ServletFileUpload.isMultipartContent(request)) {
-			view = request.getRequestDispatcher("views/board/boardError.jsp");
+			view = request.getRequestDispatcher("views/freeBoard/freeBoardError.jsp");
 			request.setAttribute("message", "form의 enctype 속성 사용 안 되었음.");
 			view.forward(request, response);
 		}
@@ -58,25 +61,25 @@ public class freeBoardOriginUpdateServlet extends HttpServlet {
 		// 루트 폴더에 대한 경로 알아냄
 		String root = request.getSession().getServletContext().getRealPath("/");
 		// 업로드되는 파일의 저장 폴더를 루트와 연결함
-		String savePath = root + "files/board";
+		String savePath = root + "files/freeBoard";
 
 		// request 를 MultipartRequest 객체로 변환함
 		MultipartRequest mrequest = new MultipartRequest(request, savePath, maxSize, "UTF-8",
 				new DefaultFileRenamePolicy());
 
 		// 전송 온 값 꺼내서 객체에 저장
-		Board board = new Board();
+		FreeBoard freeboard = new FreeBoard();
 
-		board.setBoardNum(Integer.parseInt(mrequest.getParameter("bnum")));
-		board.setBoardTitle(mrequest.getParameter("btitle"));		
-		board.setBoardContent(mrequest.getParameter("bcontent"));
+		freeboard.setFreeboardNo(Integer.parseInt(mrequest.getParameter("fnum")));
+		freeboard.setFreeboardTitle(mrequest.getParameter("ftitle"));		
+		freeboard.setFreeboardContent(mrequest.getParameter("fcontent"));
 		
 		//hidden 에 담겨서 전송온 원파일명과 바뀐파일명 꺼내서 저장
-		String boriginFileName = mrequest.getParameter("ofile");
-		String brenameFileName = mrequest.getParameter("rfile");
+		String foriginFileName = mrequest.getParameter("fofile");
+		String frenameFileName = mrequest.getParameter("frfile");
 
 		// 전송온 파일의 파일명만 추출하고, 이름바꾸기 처리
-		String originalFileName = mrequest.getFilesystemName("bupfile");
+		String originalFileName = mrequest.getFilesystemName("fupfile");
 
 		// 전송온 파일이 있을 때만 이름바꾸기 진행함
 		if (originalFileName != null) {
@@ -110,27 +113,28 @@ public class freeBoardOriginUpdateServlet extends HttpServlet {
 			} // renameTo
 			
 			//첨부파일이 변경되었으므로, 저장된 이전 파일을 삭제함
-			if(brenameFileName != null) {
-				(new File(savePath + "\\" + brenameFileName)).delete();
+			if(frenameFileName != null) {
+				(new File(savePath + "\\" + frenameFileName)).delete();
 			}
 			
-			board.setBoardOriginalFileName(originalFileName);
-			board.setBoardRenameFileName(renameFileName);
+			freeboard.setFreeboardOriginalFile(originalFileName);
+			freeboard.setFreeboardRefile(renameFileName);
 		}else {
 			//새로운 첨부파일이 없을 때
-			board.setBoardOriginalFileName(boriginFileName);
-			board.setBoardRenameFileName(brenameFileName);
+			freeboard.setFreeboardOriginalFile(foriginFileName);
+			freeboard.setFreeboardRefile(frenameFileName);
 		}
 
 		// 서비스모델로 객체 전달하고 결과받기
-		int result = new BoardService().updateBoard(board);
+		int result = new FreeBoardService().updateFreeBoard(freeboard);
 
 		if (result > 0) {
 			// 원글 수정이 성공하면, 게시글 목록보기가 실행되게 함			
-			response.sendRedirect("/first/blist?page=" + Integer.parseInt(mrequest.getParameter("page")));
+			/*response.sendRedirect("/doggybeta/blist?page=" + Integer.parseInt(mrequest.getParameter("page")));*/
+			response.sendRedirect("/doggybeta/flist");
 		} else {
 			view = request.getRequestDispatcher("views/board/boardError.jsp");
-			request.setAttribute("message", board.getBoardNum() + "번 개시 원글 수정 실패!");
+			request.setAttribute("message", freeboard.getFreeboardNo() + "번 개시 원글 수정 실패!");
 			view.forward(request, response);
 		}
 	}

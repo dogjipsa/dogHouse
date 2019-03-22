@@ -27,13 +27,12 @@
 <tr><td>제목</td><td><input type="text" name="ftitle" style="width:766px"></td></tr>
 <tr><td>작성자</td><td><input type="text" name="fwriter" style="width:766px" readonly></td></tr>
 <tr><td>첨부파일</td><td><input type="file" name="fupfile"></td></tr>
-	<tr>
-		<td></td>
-		<td><textarea name="ir1" id="ir1" rows="10" cols="100" style="width:766px; height:412px;"></textarea></td>
-		<td colspan="2" align="left">
-		<input type="button" onclick="submitContents(this);" value="서버로 내용 전송" />
-		
-		</td>
+		<tr><th>내용</th>
+		<td><textarea name="ir1" id="ir1" rows="10" cols="100" style="width:766px; height:412px;"></textarea></td></tr>
+		<tr><th colspan="2" align="center">
+		<input type="button" onclick="submitContents(this);" value="등록하기" />
+		<a href="/doggybeta/flist">[목록]</a>
+		</th>
 	</tr>
 </table>
 </form>
