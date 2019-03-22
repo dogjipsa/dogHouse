@@ -7,16 +7,19 @@
 <title>Dog House</title>
 <link rel="shortcut icon" href="/doggybeta/resources/images/favicon.ico">
 <link href="/doggybeta/resources/css/footer.css" rel="stylesheet" type="text/css">
-
 <script type="text/javascript" src="/doggybeta/resources/js/jquery-3.3.1.min.js"></script>
 <style type="text/css">
-#searchpet{
+
+.checked {
+  color: orange;
+}
+#searchpettable{
 	background-color: #f3f6f7;
-	padding: 20px 20px;
-	margin: 20px 20px;
+	padding: 30px 30px;
+	margin: 10px 10px;
 	height: auto;
-	width: 1000px;
-	
+	width: 1300px;
+	border: 5px solid white;			
 }
 input[type=button]{
 	background-color: #2ec4b6;
@@ -30,15 +33,19 @@ input[type=button]{
 table td{
 text-align: center;
 }
+ #detail table{
+	margin: 10px;
+} 
+
 </style>
 </head>
 <body>
 <%@ include file="..//common/menu.jsp" %>
-	<div id="wrap">
-		<div id="content">
+<div id="wrap" >
+<div id="content">
 			<!-- 조건 검색 테이블  -->	
-			<div id=searchpet>		
-			<table align="center">
+			<div align=center>		
+			<table id=searchpettable>
 				<tr>
 					<th width="100">서비스</th>
 					<th width="300">날짜</th>
@@ -70,7 +77,7 @@ text-align: center;
 				</tr>
 			</table>
 			</div> <br>
-			<!-- 지역 검색 -->
+<!-- 지역 검색 -->
 <div align="center">
  <form name="form1">
   <select name="h_area1" onChange="cat1_change(this.value,h_area2)" style="width:80px; height:30px;">
@@ -101,7 +108,7 @@ text-align: center;
 <option value='219'>전주시 덕진구</option>
 <option value='220'>전주시 완산구</option>
 <option value='221'>정읍시</option>
-<option value='222'>고창군</option>
+<option value='222'>고창군</option>         
 <option value='223'>무주군</option>
 <option value='224'>부안군</option>
 <option value='225'>순창군</option>
@@ -109,7 +116,7 @@ text-align: center;
 <option value='227'>임실군</option>
 <option value='228'>장수군</option>
 <option value='229'>진안군</option>
-  </select>
+</select>
 <script language=javascript>
 
  var cat1_num = new Array(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16);
@@ -198,79 +205,187 @@ function cat1_change(key,sel){
 }
 
 </script>
-<input type="button" value="검색하기" onclick="#">
+<script type="text/javascript">
+function function22(){
+	location.href="/doggybeta/views/notice/NewFile.html"
+}
+</script>
+<input type="button" value="검색하기" onclick="function22();">
 </form>
 
 </div>
-<br><br><br>
-			<!-- 조건에 대한 결과 -->
-		<div id="detail" style="float:left; width:60%;">
-			상단 : 검색 결과 건수 조회
-			<hr>
-			<br><br>
-			<div id="detailpet" style="float:left; width:50%; overflow-y:scroll; width:100%; height:400px; ">
-			<table style="float:left; border: 1px solid red; width: 300px;">
-			<tr>
-			<tr>사진자리</tr>
-			<tr>타이틀</tr>
-			<tr>설명</tr>
-			<tr>펫시터이미지</tr>
-			<tr>반려견 유뮤 및 마리수</tr>
-			<tr>가격</tr>
-			<tr>평점</tr>
-			</tr>
-			
-			</table>	
-			
-			<table style="float:left; border: 1px solid red; width: 300px;">
-			<tr>사진자리</tr>
-			<tr>타이틀</tr>
-			<tr>설명</tr>
-			<tr>펫시터이미지</tr>
-			<tr>반려견 유뮤 및 마리수</tr>
-			<tr>가격</tr>
-			<tr>평점</tr>			
-			</table>		
-			</div> 		
+<!-- 지역검색 닫기 -->
+<br><br>
+<!-- 조건에 대한 결과 -->
+<div id="detailmain">
+<div id="petinfo"  style="float: left; width: 50%">
+상단 : 검색 결과 건수 조회
+<hr>
+<br>
+	<div id="detail" style="overflow-x: hidden; overflow-y:scroll; height:550px;">
+		<div id="detailtable t1" style="float:left; width: 50%;">
+		<table style="border: 1px solid #d2dee1; width: 300px;">			
+		<tr>
+		<td>
+			<div style="position: relative;">
+			<img src="/doggybeta/resources/images/house.jpeg" height="150px;" width="100%;">
+			</div>
+			<div style="position: relative; top: -40px;">
+			<img src="/doggybeta/resources/images/dog1.jpg" style="height: 60px; width : 60px; border-radius: 50px; border: 3px solid white">
+			</div>		
+		</td>
+		</tr>
+		<tr>
+		<th>내 가족처럼 안전하게~</th>
+		</tr>
+		<tr>
+		<td>서울시 서초구</td>
+		</tr>
+		<tr>
+		<td>반려견 1마리</td>
+		<tr>
+		<td style="float:left;">가격 : 50000원/1일</td> 
+		<td style="float:right;">평점 : 
+		<span class="fa fa-star checked"></span>
+		<span class="fa fa-star checked"></span>
+		<span class="fa fa-star checked"></span>
+		<span class="fa fa-star"></span>
+		<span class="fa fa-star"></span>	
+		</td>
+		</tr>		
+		</table>
 		</div>
-			<!-- 지도 출력 -->
-		<div id="mapinfo" style="float:left; width:40%;">
-			지도 출력
-			<hr>
-			<button onclick="zoomIn()">-</button>
-    		<button onclick="zoomOut()">+</button>
-			<div id="map" style="width:500px;height:400px"></div>
-			<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=61e779cba5e3e9729c7fb3b2830dba72"></script>
-			<script>
-			var container = document.getElementById('map'), // 이미지 지도를 표시할 div  
-			option = { 
-		    center: new daum.maps.LatLng(37.499274, 127.032963), // 이미지 지도의 중심좌표
-		    level: 3, // 이미지 지도의 확대 레벨	 
-			};    
-
-			//이미지 지도를 생성합니다
-			var map = new daum.maps.StaticMap(container, option);
-			function zoomIn() {        
-			    // 현재 지도의 레벨을 얻어옵니다
-			    var level = map.getLevel();
-			    
-			    // 지도를 1레벨 내립니다 (지도가 확대됩니다)
-			    map.setLevel(level - 1);
-
-			}    
-
-			function zoomOut() {    
-			    // 현재 지도의 레벨을 얻어옵니다
-			    var level = map.getLevel(); 
-			    
-			    // 지도를 1레벨 올립니다 (지도가 축소됩니다)
-			    map.setLevel(level + 1);
- 
-			}    
-			</script>
-		</div>	
+		<div id="detailtable t2" style="float:left; width: 50%;">
+		<table style="border: 1px solid #d2dee1; width: 300px;">			
+		<tr>
+		<td>
+			<div style="position: relative;">
+			<img src="/doggybeta/resources/images/house.jpeg" height="150px;" width="100%;">
+			</div>
+			<div style="position: relative; top: -40px;">
+			<img src="/doggybeta/resources/images/dog1.jpg" style="height: 60px; width : 60px; border-radius: 50px; border: 3px solid white">
+			</div>	
+					
+		</td>
+		</tr>
+		<tr>
+		<th>내 가족처럼 안전하게~</th>
+		</tr>
+		<tr>
+		<td>서울시 서초구</td>
+		</tr>
+		<tr>
+		<td>반려견 1마리</td>
+		<tr>
+		<td style="float:left;">가격 : 50000원/1일</td> 
+		<td style="float:right;">평점 : 
+		<span class="fa fa-star checked"></span>
+		<span class="fa fa-star checked"></span>
+		<span class="fa fa-star checked"></span>
+		<span class="fa fa-star"></span>
+		<span class="fa fa-star"></span>	
+		</td>
+		</tr>		
+		</table>
 		</div>
-		<div id="footer"><%@ include file="..//common/footer.jsp"%></div>
+		<div id="detailtable t3" style="float:left; width: 50%;">
+		<table style="border: 1px solid #d2dee1; width: 300px;">			
+		<tr>
+		<td>
+			<div style="position: relative;">
+			<img src="/doggybeta/resources/images/house.jpeg" height="150px;" width="100%;">
+			</div>
+			<div style="position: relative; top: -40px;">
+			<img src="/doggybeta/resources/images/dog1.jpg" style="height: 60px; width : 60px; border-radius: 50px; border: 3px solid white">
+			</div>
+		
+		</td>
+		</tr>
+		<tr>
+		<th>내 가족처럼 안전하게~</th>
+		</tr>
+		<tr>
+		<td>서울시 서초구</td>
+		</tr>
+		<tr>
+		<td>반려견 1마리</td>
+		<tr>
+		<td style="float:left;">가격 : 50000원/1일</td> 
+		<td style="float:right;">평점 : 
+		<span class="fa fa-star checked"></span>
+		<span class="fa fa-star checked"></span>
+		<span class="fa fa-star checked"></span>
+		<span class="fa fa-star"></span>
+		<span class="fa fa-star"></span>	
+		</td>
+		</tr>		
+		</table>
+		</div>
+		<div id="detailtable t4" style="float:left; width: 50%;">
+		<table style="border: 1px solid #d2dee1; width: 300px;">			
+		<tr>
+		<td>
+			<div style="position: relative;">
+			<img src="/doggybeta/resources/images/house.jpeg" height="150px;" width="100%;">
+			</div>
+			<div style="position: relative; top: -40px;">
+			<img src="/doggybeta/resources/images/dog1.jpg" style="height: 60px; width : 60px; border-radius: 50px; border: 3px solid white">
+			</div>	
+					
+		</td>
+		</tr>
+		<tr>
+		<th>내 가족처럼 안전하게~</th>
+		</tr>
+		<tr>
+		<td>서울시 서초구</td>
+		</tr>
+		<tr>
+		<td>반려견 1마리</td>
+		<tr>
+		<td style="float:left;">가격 : 50000원/1일</td> 
+		<td style="float:right;">평점 : 
+		<span class="fa fa-star checked"></span>
+		<span class="fa fa-star checked"></span>
+		<span class="fa fa-star checked"></span>
+		<span class="fa fa-star"></span>
+		<span class="fa fa-star"></span>	
+		</td>
+		</tr>		
+		</table>
+		</div>
+		
 	</div>
+	<!-- detailinfo닫기 -->
+
+</div>
+</div>
+
+<div style="float:left; width:50%;">
+지도출력
+<hr>
+<br>
+<div id="map" style="width:100%;height:550px;"></div>
+
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=61e779cba5e3e9729c7fb3b2830dba72"></script>
+<script>
+	var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+    	mapOption = { 
+        center: new daum.maps.LatLng(37.499274, 127.032963), // 지도의 중심좌표
+        level: 3 // 지도의 확대 레벨
+    };
+
+	var map = new daum.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
+
+    // 마우스 드래그로 지도 이동 가능여부를 설정합니다
+    map.setDraggable(true);  
+
+</script>
+</div>
+</div> 
+</div>
+		
+<div id="footer"><%@ include file="..//common/footer.jsp"%></div>
+	
 </body>
 </html>
