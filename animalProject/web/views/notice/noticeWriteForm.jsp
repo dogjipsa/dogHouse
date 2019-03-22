@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -69,7 +70,7 @@ function moveList(){
 </tr>
 <tr>
 <th class="title">작성자</th>
-<td><input type="text" name="writer" value="adminmk" readonly></td>
+<td><input type="text" name="writer" value="<%= loginUser.getUserId() %>" readonly></td>
 </tr>
 <tr>
 <th class="title">첨부파일</th>

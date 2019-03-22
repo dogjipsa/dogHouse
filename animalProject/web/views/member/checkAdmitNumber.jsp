@@ -8,14 +8,8 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<link rel="stylesheet" href="/doggybeta/resources/css/enroll.css">
 </head>
-<style type="text/css">
-	section form table th {
-		background: orange;
-		color: navy;
-		font-weight: bold;
-	}
-</style>
 <script type="text/javascript" src="/doggybeta/resources/js/jquery-3.3.1.min.js"></script>
 <script type="text/javascript">
 	function checkid() {
@@ -59,22 +53,24 @@
 		return false; //클릭 이벤트 전달받음
 	}
 	function admit() {
-/* 		location.href='/doggybeta/views/member/memberEnroll.jsp'; */
+		var regExp = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
 		var e = $('#email').val();
-		if(!e) {
-			alert('이메일을 입력해주세요');
+		
+		if(!e || !regExp.test(e)) {
+			alert('올바른 형식의 이메일주소를 입력해주세요.');
+			$('#email').select();
 		}
+		/* if(!regExp.test(e)) {
+			alert('올바른 형식의 이메일주소를 입력해주세요.');
+		} */
 		else {
 			alert('인증번호 전송이 완료되었습니다.')
-/* 				$('#sendbtn').hide(); */
-/* 				$('#btnok').show(); */
-				
+
 				var n = $('#number').val();
 				if(!n) {
 					alert('인증번호를 입력해주세요');
 				}
-				/* $("#di").reload('입력해주세요'); */
-			/* return false; */
+				
 			$.ajax({
 				url: '/doggybeta/admitmember',
 				type: 'post',
@@ -87,26 +83,19 @@
 					console.log("error : "+jqXHR+","+textStatus+","+errorThrown);
 				}
 			});
-			/* $("#toplist").html($("#toplist").html() + values); */
-			
 			return false;
 		}
 		return false;
 	}
-
-
-/* 	location.reload(); */
+	
     var code = '<%= keycode %>';
     
-/* 	$('sendbtn').hide(); */
 	function confirmNum() {
 		var nn = $('#number').val();
 			if(code == nn) {
-				alert(code);
-				alert('성공!');
+				alert('인증에 성공하였습니다!');
 			} else {
-				alert(code);
-				alert('실패!');
+				alert('인증번호를 다시 입력해주세요!');
 				$('#signupbtn').hide();
 			}
 		return false;
@@ -125,19 +114,24 @@
 			}
 		});
 		
-	});
-	
-	$(function() {
-/* 		$('#btnok').hide(); */
+		$('#phone').blur(function() {
+			console.log('포커스사라짐2');
+			var regExp = /^\d{3}-\d{3,4}-\d{4}$/;
+			
+			if(!regExp.test($('#phone').val())){
+				alert("'-'을 포함하여 휴대폰번호를 입력해주세요.");
+				return false;
+			}
+		});
 	});
 </script>
 </head>
 <body>
 <section>
-<h2 align="center">회원가입페이지</h2><br>
-	<h5 align="center">* 표시 항목은 필수입력 항목입니다.</h5>
+<h2>회원가입페이지</h2><br>
+	<h5>* 표시 항목은 필수입력 항목입니다.</h5>
 	<form action="/doggybeta/resistenroll" method="post" >
-	<table width="650" align="center" id='tb'>
+	<table width="650" id='tb'>
 	<tr height="40">
 		<th width="150">*아이디</th>
 		<td><input type="text" name="userid" id="userid" required/>
@@ -148,8 +142,20 @@
 		<td><input type="text" name="username" required id='username'/></td>
 	</tr>
 	<tr height="40">
+		<th width="150">*이메일</th>
+		<td><input type='email' name='email' id='email' required/>
+		</td>
+	</tr>
+	<tr height="40">
+		<th width="150">*인증번호 입력</th>
+		<td><div id='di'><input type='text' name='number' id='number'/></div>
+		<input type='submit' id='sendbtn' onclick='return admit();' value='전송'/>
+		<input type='button' id='btnok' onclick='return confirmNum();' value='확인'/>
+		</td>
+	</tr>
+	<tr height="40">
 		<th width="150">*암호</th>
-		<td><input type="password" name="userpwd" id="userpwd1"/></td>
+		<td><input type="password" name="userpwd" id="userpwd1" required/></td>
 	</tr>
 	<tr height="40">
 		<th width="150">*암호확인</th>
@@ -157,19 +163,7 @@
 	</tr>
 	<tr height="40">
 		<th width="150">전화번호</th>
-		<td><input type='tel' name='phone'/></td>
-	</tr>
-	<tr height="40">
-		<th width="150">이메일</th>
-		<td><input type='email' name='email' id='email'/>
-		</td>
-	</tr>
-	<tr height="40">
-		<th width="150">인증번호 입력</th>
-		<td><div id='di'><input type='text' name='number' id='number'/></div>
-		<input type='submit' id='sendbtn' onclick='return admit();' value='전송'/>
-		<input type='button' id='btnok' onclick='return confirmNum();' value='확인'/>
-		</td>
+		<td><input type='tel' name='phone' id='phone'/></td>
 	</tr>
 	<tr height="40">
 		<th colspan="2">가입하기
@@ -179,10 +173,6 @@
 		</th>
 	</tr>
 	</table>
-	<!-- <div id='confirm-num' >
-		<input type='text' id='con-number' name='connumber'/>&nbsp;
-		<input type='button' id='con-button' name='conbtn' value='확인'/>
-	</div> -->
 	</form>
 	<%= keycode %>
 </section>

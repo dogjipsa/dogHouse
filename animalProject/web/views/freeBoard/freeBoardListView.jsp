@@ -4,11 +4,10 @@
    ArrayList<FreeBoard> slist = (ArrayList<FreeBoard>)request.getAttribute("slist"); 
    
 	int listCount = ((Integer)request.getAttribute("listCount")).intValue(); 
-     FreeBoard fboard = (FreeBoard)(request.getAttribute("fboard"));
 	int startPage = ((Integer)request.getAttribute("startPage")).intValue();
 	int endPage = ((Integer)request.getAttribute("endPage")).intValue();
 	int maxPage = ((Integer)request.getAttribute("maxPage")).intValue();
-//	int currentPage = ((Integer)request.getAttribute("currentPage")).intValue(); 
+	int currentPage = ((Integer)request.getAttribute("currentPage")).intValue(); 
    
    %>
 
@@ -42,26 +41,25 @@ function showWriteForm(){
 <h2 align="center">자유게시판</h2>
 <%-- <h4 align="center">총 게시글 갯수 : <%= listCount %></h4> --%>
 <br><br><br>
-<table align="center"  border="0"  width=800 >
+<table align="center"  border="0"  width="800">
 <%-- --%>
 <tr>
-	<th>글번호</th><th>제목</th><th>작성자</th><th>내 용</th><th>날짜</th><th>조회수</th><th>첨부파일</th>
+	<th>글번호</th><th>작성자</th><th>제목</th><th>내 용</th><th>날짜</th><th>조회수</th><th>첨부파일</th>
 </tr>
 <% for(FreeBoard f : slist){ %>
-<tr><td align="center"><%= f.getFreeboardNo() %></a></td>
+	<tr><td align="center"><%= f.getFreeboardNo() %></td>
+		<td align="center"><%= f.getUserId() %></td>
 	<% if(loginUser != null){ %>
-	<td><a href="/doggybeta/fdetail?fnum=<%= f.getFreeboardNo() %>"><%= f.getFreeboardTitle() %></a></td>
-<%-- <a href="/doggybeta/fdetail?fnum=<%= f.getFreeboardNo() %>"><%= f.getFreeboardContent() %></a> --%>
+	<td align="center"><a href="/doggybeta/fdetail?fnum=<%= f.getFreeboardNo() %>"><%= f.getFreeboardTitle() %></a></td>
 	<% }else{ %>
-		<%= f.getFreeboardTitle() %>
+	<td align="center"><%= f.getFreeboardTitle() %></td>
 	<% } %>	
-	<td align="center"><%= f.getUserId() %></td>
-	<td align="center"><a href="/doggybeta/fdetail?fnum=<%= f.getFreeboardNo() %>"><%= f.getFreeboardContent() %></a></td>
+	<td align="center"><%= f.getFreeboardContent() %></a></td>
 	<td align="center"><%= f.getFreeboardDate() %></td>
  	<td align="center"><%= f.getFreeboardViews() %></td>
 	<td align="center">
 	<% if(f.getFreeboardOriginalFile() != null){ %>
-		◎
+		有
 	<% }else{ %>
 		
 	<% } %>
@@ -72,13 +70,38 @@ function showWriteForm(){
 <div style="align:center; text-align:center;">
 	<button type="button" style="float:right;" onclick="showWriteForm()";>글쓰기</button></div>	
 	
-	<%-- 페이지 --%>
-	  
+	<%-- 페이지징 처리 --%>
+<div style="text-align:center;">
+<% if(currentPage <= 1){ %>
+	[맨처음]&nbsp;
+<% }else{ %>
+	<a href="/doggybeta/flist?page=1">[맨처음]</a>&nbsp;
+<% } %> 
+<!-- 이전 -->
+<% if((currentPage - 10) < startPage && (currentPage - 10) > 1){ %>
+	<a href="/doggybeta/flist?page=<%= startPage - 2 %>">[prev]</a>
+<% }else{ %>
+	[prev]
+<% } %>
 
+<!-- 현재 페이지가 포함된 페이지 그룹 숫자 출력 처리 -->
+<% for(int p = startPage; p <= endPage; p++){ %>
+	<a href="/doggybeta/flist?page=<%= p %>"><%= p %></a>
+<% } %> &nbsp;
 
+<!-- 다음 -->
+<% if((currentPage + 10) > endPage && (currentPage + 10) < maxPage){ %>
+	<a href="/doggybeta/flist?page=<%= endPage + 10 %>">[next]</a>&nbsp;
+<% }else{ %>
+	[next]&nbsp;
+<% } %>
 
-	
-	
+<% if(currentPage >= maxPage){ %>
+	[맨끝]
+<% }else{ %>
+	<a href="/doggybeta/flist?page=<%= maxPage %>">[맨끝]</a>
+<% } %>
+</div> 	  
 	
 	<%-- 검색기능 --%>
 <br>

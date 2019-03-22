@@ -275,7 +275,7 @@ public class FreeBoardDao {
 		int result = 0;
 		PreparedStatement pstmt = null;
 		
-		String query = "delete from board where freeboard_no = ?";
+		String query = "update freeboard set freeboard_delete = 'y' where freeboard_no = ?";
 		
 		try {
 			pstmt = conn.prepareStatement(query);				
@@ -355,7 +355,7 @@ public class FreeBoardDao {
 		ResultSet rset = null;
 		String opt = (String)listOpt.get("opt");
 		String inputdata = (String)listOpt.get("inputdata");
-		int start = (Integer)listOpt.get("start");
+		int startRow = (Integer)listOpt.get("startRow");
 		
 		
 		if(opt == null){
@@ -368,19 +368,17 @@ public class FreeBoardDao {
 					"FREEBOARD_RECOMMEND, " +
 					"USER_ID, " + 
 					"FREEBOARD_DELETE, FREEBOARD_REFILE " + 
-					"FROM (SELECT * FROM FREEBOARD " +
-					"ORDER BY FREEBOARD_NO DESC)) " +  
-					"WHERE RNUM >= ? AND RNUM <= ?";
+					"FROM (SELECT * FROM FREEBOARD WHERE FREEBOARD_DELETE IN('n', 'N', null) " +
+					"ORDER BY FREEBOARD_NO ASC)) " +  
+					"WHERE RNUM >= ? AND RNUM <= ? ";
 			
 			try {
 				pstmt = conn.prepareStatement(query);
-				pstmt.setInt(1, start);
-				pstmt.setInt(2, start+9);
+				pstmt.setInt(1, startRow);
+				pstmt.setInt(2, startRow+9);
 				
 				rset = pstmt.executeQuery();
-				
-				
-				
+							
 				while(rset.next()) {
 					
 					FreeBoard freeboard = new FreeBoard();
@@ -415,15 +413,15 @@ public class FreeBoardDao {
 					"USER_ID, " + 
 					"FREEBOARD_DELETE, FREEBOARD_REFILE " + 
 					"FROM (SELECT * FROM FREEBOARD " +
-					"WHERE FREEBOARD_TITLE LIKE ? " +
+					"WHERE FREEBOARD_TITLE LIKE ? AND FREEBOARD_DELETE IN('n', 'N', null) " +
 					"ORDER BY FREEBOARD_NO DESC)) " +  
-					"WHERE RNUM >= ? AND RNUM <= ?";
+					"WHERE RNUM >= ? AND RNUM <= ? ";
 			
 			try {
 				pstmt = conn.prepareStatement(query);
 				pstmt.setString(1, "%" + inputdata + "%");
-				pstmt.setInt(2, start);
-				pstmt.setInt(3, start+9);
+				pstmt.setInt(2, startRow);
+				pstmt.setInt(3, startRow+9);
 								
 				rset = pstmt.executeQuery();
 				
@@ -463,15 +461,15 @@ public class FreeBoardDao {
 					"USER_ID, " + 
 					"FREEBOARD_DELETE, FREEBOARD_REFILE " + 
 					"FROM (SELECT * FROM FREEBOARD " +
-					"WHERE FREEBOARD_TITLE LIKE ? " +
+					"WHERE FREEBOARD_TITLE LIKE ? AND FREEBOARD_DELETE IN('n', 'N', null) " +
 					"ORDER BY FREEBOARD_NO DESC)) " +  
-					"WHERE RNUM >= ? AND RNUM <= ?";
+					"WHERE RNUM >= ? AND RNUM <= ? ";
 			
 			try {
 				pstmt = conn.prepareStatement(query);
 				pstmt.setString(1, "%" + inputdata + "%");
-				pstmt.setInt(2, start);
-				pstmt.setInt(3, start+9);
+				pstmt.setInt(2, startRow);
+				pstmt.setInt(3, startRow+9);
 				
 				
 				rset = pstmt.executeQuery();
@@ -511,15 +509,15 @@ public class FreeBoardDao {
 					"USER_ID, " + 
 					"FREEBOARD_DELETE, FREEBOARD_REFILE " + 
 					"FROM (SELECT * FROM FREEBOARD " +
-					"WHERE USER_ID LIKE ? " +
+					"WHERE USER_ID LIKE ? AND FREEBOARD_DELETE IN('n', 'N', null) " +
 					"ORDER BY FREEBOARD_NO DESC)) " +  
-					"WHERE RNUM >= ? AND RNUM <= ?";
+					"WHERE RNUM >= ? AND RNUM <= ? ";
 			
 			try {
 				pstmt = conn.prepareStatement(query);
 				pstmt.setString(1, "%" + inputdata + "%");
-				pstmt.setInt(2, start);
-				pstmt.setInt(3, start+9);
+				pstmt.setInt(2, startRow);
+				pstmt.setInt(3, startRow+9);
 				
 				
 				rset = pstmt.executeQuery();
@@ -558,15 +556,15 @@ public class FreeBoardDao {
 					"USER_ID, " + 
 					"FREEBOARD_DELETE, FREEBOARD_REFILE " + 
 					"FROM (SELECT * FROM FREEBOARD " +
-					"WHERE FREEBOARD_TITLE LIKE ? OR FREEBOARD_CONTENT LIKE ? " +
+					"WHERE FREEBOARD_TITLE LIKE ? OR FREEBOARD_CONTENT LIKE ? AND FREEBOARD_DELETE IN('n', 'N', null) " +
 					"ORDER BY FREEBOARD_NO DESC)) " +  
-					"WHERE RNUM >= ? AND RNUM <= ?";
+					"WHERE RNUM >= ? AND RNUM <= ? ";
 			
 			try {
 				pstmt = conn.prepareStatement(query);
 				pstmt.setString(1, "%" + inputdata + "%");
-				pstmt.setInt(2, start);
-				pstmt.setInt(3, start+9);
+				pstmt.setInt(2, startRow);
+				pstmt.setInt(3, startRow+9);
 				
 				
 				rset = pstmt.executeQuery();
