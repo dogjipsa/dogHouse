@@ -103,7 +103,7 @@ public class MemberDao {
 		PreparedStatement pstat = null;
 		
 		query.append("insert into member values ( ");
-		query.append("?,?,?,?,?,?,?,?,sysdate,?,? )");
+		query.append("?,?,?,?,?,?,default,?,sysdate,?,default,?,? )");
 		
 		try {
 			
@@ -115,10 +115,10 @@ public class MemberDao {
 			pstat.setString(4, member.getAddress());
 			pstat.setString(5, member.getPhone());
 			pstat.setString(6, member.getJob());
-			pstat.setString(7, "n");
-			pstat.setInt(8, 0);
-			pstat.setString(9, member.getUserPwd());
-			pstat.setString(10, "n");
+			pstat.setInt(7, 0);
+			pstat.setString(8, member.getUserPwd());
+			pstat.setString(9, " ");
+			pstat.setString(10, " ");
 			
 			result = pstat.executeUpdate();
 			
@@ -128,33 +128,33 @@ public class MemberDao {
 			close(pstat);
 		}
 		return result;
-	} 
-
-
-	public int updateHost(Connection conn, Member m) {
+	}
+	
+	public int selectCheckId(Connection conn, String userId) {
 		int result = 0;
-		PreparedStatement pstmt = null;
-		String query = "update member set petsitter = '1', phone=? , email = ?, address = ? , price = ?, user_originfile = ?, user_refile =? where user_id = ?";
+		PreparedStatement pstat = null;
+		ResultSet rSet = null;
+		query.append("select count(user_id) from member where user_id = ?");
 		
 		try {
-			pstmt = conn.prepareStatement(query);
-			pstmt.setString(1, m.getPhone());
-			pstmt.setString(2, m.getEmail());
-			pstmt.setString(3, m.getAddress());
-			pstmt.setInt(4, m.getPrice());
-			pstmt.setString(5, m.getUseroriginfile());
-			pstmt.setString(6, m.getUserrefile());
-			pstmt.setString(7, m.getUserId());
+			pstat = conn.prepareStatement(query.toString());
+			pstat.setString(1, userId);
+			System.out.println(userId);
 			
-			result = pstmt.executeUpdate();
+			rSet = pstat.executeQuery();
+			
+			if(rSet.next()) {
+				result = rSet.getInt(1);
+			}
+			System.out.println(result);
 		} catch (Exception e) {
 			e.printStackTrace();
-		}finally {
-			close(pstmt);
+		} finally {
+			close(rSet);
+			close(pstat);
 		}
 		
 		return result;
 	}
-
 	
 }
