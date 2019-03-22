@@ -16,7 +16,7 @@ import freeboard.model.vo.FreeBoard;
 /**
  * Servlet implementation class BoardUpdateViewServlet
  */
-@WebServlet("/bupview")
+@WebServlet("/fupview")
 public class freeBoardUpdateViewServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -33,22 +33,22 @@ public class freeBoardUpdateViewServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// 게시글 수정페이지 출력 처리용 컨트롤러
-		int boardNum = Integer.parseInt(request.getParameter("bnum"));
+		int freeBoardNo = Integer.parseInt(request.getParameter("fnum"));
 		int currentPage = Integer.parseInt(request.getParameter("page"));
 		
-		FreeBoard board = new FreeBoardService().selectBoard(boardNum);
+		FreeBoard freeboard = new FreeBoardService().selectFreeBoard(freeBoardNo);
 		//System.out.println("b : " + board);
 		
 		response.setContentType("text/html; charset=utf-8");
 		RequestDispatcher view = null;
-		if(board != null) {
+		if(freeboard != null) {
 			view = request.getRequestDispatcher("views/freeboard/freeBoardUpdateView.jsp");
-			request.setAttribute("board", board);
+			request.setAttribute("freeboard", freeboard);
 			request.setAttribute("page", currentPage);
 			view.forward(request, response);
 		}else {
 			view = request.getRequestDispatcher("views/freeboard/freeBoardError.jsp");
-			request.setAttribute("message", boardNum + "번 게시글 수정페이지로 이동 실패!");
+			request.setAttribute("message", freeBoardNo + "번 게시글 수정페이지로 이동 실패!");
 			view.forward(request, response);
 		}
 	}
