@@ -12,16 +12,16 @@ import static common.JDBCTemplate.*;
 public class TipBoardService {
 	private TipBoardDao tdao = new TipBoardDao();
 	public TipBoardService() {}
-	public int getListCount() {
+	public int getListCount(String option, String word) {
 		Connection conn = getConnection();
-		int listCount = tdao.getListCount(conn);
+		int listCount = tdao.getListCount(conn, option, word);
 		close(conn);
 		return listCount;
 	}
 
-	public ArrayList<TipBoard> selectList(int currentPage, int limit) {
+	public ArrayList<TipBoard> selectList(int currentPage, int limit, String option, String word) {
 		Connection conn = getConnection();
-		ArrayList<TipBoard> list = tdao.selectList(conn, currentPage, limit);
+		ArrayList<TipBoard> list = tdao.selectList(conn, currentPage, limit, option, word);
 		close(conn);
 		return list;
 	}

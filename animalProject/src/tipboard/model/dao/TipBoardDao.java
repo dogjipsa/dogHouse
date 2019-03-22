@@ -15,16 +15,40 @@ import tipboard.model.vo.TipBoard;
 
 public class TipBoardDao {
 
-	public int getListCount(Connection conn) {
+	public int getListCount(Connection conn, String option, String word) {
 		int listCount = 0;
 		Statement stmt = null;
+		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		
 		String query = "select count(*) from tipboard";
 		
 		try {
-			stmt = conn.createStatement();
-			rset = stmt.executeQuery(query);
+			if(option == null) {
+				stmt = conn.createStatement();
+				rset = stmt.executeQuery(query);				
+			}else if(option.equals("title")) {
+				query = "select count(*) from tipboard where tipboard_title like ? ";
+				pstmt = conn.prepareStatement(query);
+				pstmt.setString(1, "%" + word + "%");
+				rset = pstmt.executeQuery();
+			}else if(option.equals("content")) {
+				query = "select count(*) from tipboard where tipboard_content like ? ";
+				pstmt = conn.prepareStatement(query);
+				pstmt.setString(1, "%" + word + "%");
+				rset = pstmt.executeQuery();
+			}else if(option.equals("title_content")) {
+				query = "select count(*) from tipboard where tipboard_title like ? or tipboard_content like ? ";
+				pstmt = conn.prepareStatement(query);
+				pstmt.setString(1, "%" + word + "%");
+				pstmt.setString(2, "%" + word + "%");
+				rset = pstmt.executeQuery();
+			}else if(option.equals("writer")) {
+				query = "select count(*) from tipboard where user_id like ? ";
+				pstmt = conn.prepareStatement(query);
+				pstmt.setString(1, "%" + word + "%");
+				rset = pstmt.executeQuery();
+			}			
 			
 			if(rset.next()) {
 				listCount = rset.getInt(1);
@@ -39,7 +63,7 @@ public class TipBoardDao {
 		return listCount;
 	}
 
-	public ArrayList<TipBoard> selectList(Connection conn, int currentPage, int limit) {
+	public ArrayList<TipBoard> selectList(Connection conn, int currentPage, int limit, String option, String word) {
 			ArrayList<TipBoard> list = new ArrayList<TipBoard>();
 			PreparedStatement pstmt = null;
 			ResultSet rset = null;
@@ -48,29 +72,131 @@ public class TipBoardDao {
 			int startRow = (currentPage -1) * limit + 1;
 			int endRow = startRow + limit - 1;
 			
-			String query = "SELECT *  FROM (SELECT ROWNUM RNUM,  TIPBOARD_NO,TIPBOARD_TITLE,TIPBOARD_CONTENT,TIPBOARD_DATE,TIPBOARD_ORIGINFILE,TIPBOARD_VIEWS,TIPBOARD_RECOMMEND,USER_ID,TIPBOARD_DELETE,TIPBOARD_REFILE " + 
+			/*String query = "SELECT *  FROM (SELECT ROWNUM RNUM,  TIPBOARD_NO,TIPBOARD_TITLE,TIPBOARD_CONTENT,TIPBOARD_DATE,TIPBOARD_ORIGINFILE,TIPBOARD_VIEWS,TIPBOARD_RECOMMEND,USER_ID,TIPBOARD_DELETE,TIPBOARD_REFILE " + 
 					"				FROM (SELECT * FROM TIPBOARD where tipboard_delete in('n','N',null) order by tipboard_no desc)) " + 
-					"				WHERE RNUM >= ? AND RNUM <= ? ";
+					"				WHERE RNUM >= ? AND RNUM <= ? ";*/
 			/*String query = "select * from tipboard";*/
 			
 			try {
-				pstmt = conn.prepareStatement(query);
-				pstmt.setInt(1, startRow);
-				pstmt.setInt(2, endRow);
-				rset = pstmt.executeQuery();
-				while(rset.next()) {
-					TipBoard tboard = new TipBoard();
-					tboard.setTipBoardNo(rset.getInt("tipboard_no"));
-					tboard.setTipBoardTitle(rset.getString("tipboard_title"));
-					tboard.setTipBoardContent(rset.getString("tipboard_content"));
-					tboard.setTipBoardDate(rset.getDate("tipboard_date"));
-					tboard.setTipBoardOriginFile(rset.getString("tipboard_originfile"));
-					tboard.setTipBoardViews(rset.getInt("tipboard_views"));
-					tboard.setTipBoardRecommend(rset.getInt("tipboard_recommend"));
-					tboard.setUserId(rset.getString("user_id"));
-					tboard.setTipBoardDelete(rset.getString("tipboard_delete"));
-					tboard.setTipBoardReFile(rset.getString("tipboard_refile"));
-					list.add(tboard);
+				if(option == null) {
+					String query = "SELECT *  FROM (SELECT ROWNUM RNUM,  TIPBOARD_NO,TIPBOARD_TITLE,TIPBOARD_CONTENT,TIPBOARD_DATE,TIPBOARD_ORIGINFILE,TIPBOARD_VIEWS,TIPBOARD_RECOMMEND,USER_ID,TIPBOARD_DELETE,TIPBOARD_REFILE " + 
+							"				FROM (SELECT * FROM TIPBOARD where tipboard_delete in('n','N',null) order by tipboard_no desc)) " + 
+							"				WHERE RNUM >= ? AND RNUM <= ? ";
+					pstmt = conn.prepareStatement(query);
+					pstmt.setInt(1, startRow);
+					pstmt.setInt(2, endRow);
+					rset = pstmt.executeQuery();
+					while(rset.next()) {
+						TipBoard tboard = new TipBoard();
+						tboard.setTipBoardNo(rset.getInt("tipboard_no"));
+						tboard.setTipBoardTitle(rset.getString("tipboard_title"));
+						tboard.setTipBoardContent(rset.getString("tipboard_content"));
+						tboard.setTipBoardDate(rset.getDate("tipboard_date"));
+						tboard.setTipBoardOriginFile(rset.getString("tipboard_originfile"));
+						tboard.setTipBoardViews(rset.getInt("tipboard_views"));
+						tboard.setTipBoardRecommend(rset.getInt("tipboard_recommend"));
+						tboard.setUserId(rset.getString("user_id"));
+						tboard.setTipBoardDelete(rset.getString("tipboard_delete"));
+						tboard.setTipBoardReFile(rset.getString("tipboard_refile"));
+						list.add(tboard);
+					}
+				}else if(option.equals("title")) {
+					String query = "SELECT *  FROM (SELECT ROWNUM RNUM,  TIPBOARD_NO,TIPBOARD_TITLE,TIPBOARD_CONTENT,TIPBOARD_DATE,TIPBOARD_ORIGINFILE,TIPBOARD_VIEWS,TIPBOARD_RECOMMEND,USER_ID,TIPBOARD_DELETE,TIPBOARD_REFILE " + 
+							"				FROM (SELECT * FROM TIPBOARD where tipboard_delete in('n','N',null) and tipboard_title like ? order by tipboard_no desc)) " + 
+							"				WHERE RNUM >= ? AND RNUM <= ? ";
+					pstmt = conn.prepareStatement(query);
+					pstmt.setString(1, "%" + word + "%");
+					pstmt.setInt(2, startRow);
+					pstmt.setInt(3, endRow);
+					
+					rset = pstmt.executeQuery();
+					while(rset.next()) {
+						TipBoard tboard = new TipBoard();
+						tboard.setTipBoardNo(rset.getInt("tipboard_no"));
+						tboard.setTipBoardTitle(rset.getString("tipboard_title"));
+						tboard.setTipBoardContent(rset.getString("tipboard_content"));
+						tboard.setTipBoardDate(rset.getDate("tipboard_date"));
+						tboard.setTipBoardOriginFile(rset.getString("tipboard_originfile"));
+						tboard.setTipBoardViews(rset.getInt("tipboard_views"));
+						tboard.setTipBoardRecommend(rset.getInt("tipboard_recommend"));
+						tboard.setUserId(rset.getString("user_id"));
+						tboard.setTipBoardDelete(rset.getString("tipboard_delete"));
+						tboard.setTipBoardReFile(rset.getString("tipboard_refile"));
+						list.add(tboard);
+					}
+				}else if(option.equals("content")) {
+					String query = "SELECT *  FROM (SELECT ROWNUM RNUM,  TIPBOARD_NO,TIPBOARD_TITLE,TIPBOARD_CONTENT,TIPBOARD_DATE,TIPBOARD_ORIGINFILE,TIPBOARD_VIEWS,TIPBOARD_RECOMMEND,USER_ID,TIPBOARD_DELETE,TIPBOARD_REFILE " + 
+							"				FROM (SELECT * FROM TIPBOARD where tipboard_delete in('n','N',null) and tipboard_content like ? order by tipboard_no desc)) " + 
+							"				WHERE RNUM >= ? AND RNUM <= ? ";
+					pstmt = conn.prepareStatement(query);
+					pstmt.setString(1, "%" + word + "%");
+					pstmt.setInt(2, startRow);
+					pstmt.setInt(3, endRow);
+					
+					rset = pstmt.executeQuery();
+					while(rset.next()) {
+						TipBoard tboard = new TipBoard();
+						tboard.setTipBoardNo(rset.getInt("tipboard_no"));
+						tboard.setTipBoardTitle(rset.getString("tipboard_title"));
+						tboard.setTipBoardContent(rset.getString("tipboard_content"));
+						tboard.setTipBoardDate(rset.getDate("tipboard_date"));
+						tboard.setTipBoardOriginFile(rset.getString("tipboard_originfile"));
+						tboard.setTipBoardViews(rset.getInt("tipboard_views"));
+						tboard.setTipBoardRecommend(rset.getInt("tipboard_recommend"));
+						tboard.setUserId(rset.getString("user_id"));
+						tboard.setTipBoardDelete(rset.getString("tipboard_delete"));
+						tboard.setTipBoardReFile(rset.getString("tipboard_refile"));
+						list.add(tboard);
+					}
+				}else if(option.equals("title_content")) {
+					String query = "SELECT *  FROM (SELECT ROWNUM RNUM,  TIPBOARD_NO,TIPBOARD_TITLE,TIPBOARD_CONTENT,TIPBOARD_DATE,TIPBOARD_ORIGINFILE,TIPBOARD_VIEWS,TIPBOARD_RECOMMEND,USER_ID,TIPBOARD_DELETE,TIPBOARD_REFILE " + 
+							"				FROM (SELECT * FROM TIPBOARD where tipboard_delete in('n','N',null) and (tipboard_content like ? or tipboard_title like ?) order by tipboard_no desc)) " + 
+							"				WHERE RNUM >= ? AND RNUM <= ? ";
+					pstmt = conn.prepareStatement(query);
+					pstmt.setString(1, "%" + word + "%");
+					pstmt.setString(2, "%" + word + "%");
+					pstmt.setInt(3, startRow);
+					pstmt.setInt(4, endRow);
+					
+					rset = pstmt.executeQuery();
+					while(rset.next()) {
+						TipBoard tboard = new TipBoard();
+						tboard.setTipBoardNo(rset.getInt("tipboard_no"));
+						tboard.setTipBoardTitle(rset.getString("tipboard_title"));
+						tboard.setTipBoardContent(rset.getString("tipboard_content"));
+						tboard.setTipBoardDate(rset.getDate("tipboard_date"));
+						tboard.setTipBoardOriginFile(rset.getString("tipboard_originfile"));
+						tboard.setTipBoardViews(rset.getInt("tipboard_views"));
+						tboard.setTipBoardRecommend(rset.getInt("tipboard_recommend"));
+						tboard.setUserId(rset.getString("user_id"));
+						tboard.setTipBoardDelete(rset.getString("tipboard_delete"));
+						tboard.setTipBoardReFile(rset.getString("tipboard_refile"));
+						list.add(tboard);
+					}
+				}else if(option.equals("writer")) {
+					String query = "SELECT *  FROM (SELECT ROWNUM RNUM,  TIPBOARD_NO,TIPBOARD_TITLE,TIPBOARD_CONTENT,TIPBOARD_DATE,TIPBOARD_ORIGINFILE,TIPBOARD_VIEWS,TIPBOARD_RECOMMEND,USER_ID,TIPBOARD_DELETE,TIPBOARD_REFILE " + 
+							"				FROM (SELECT * FROM TIPBOARD where tipboard_delete in('n','N',null) and user_id like ? order by tipboard_no desc)) " + 
+							"				WHERE RNUM >= ? AND RNUM <= ? ";
+					pstmt = conn.prepareStatement(query);
+					pstmt.setString(1, "%" + word + "%");
+					pstmt.setInt(2, startRow);
+					pstmt.setInt(3, endRow);
+					
+					rset = pstmt.executeQuery();
+					while(rset.next()) {
+						TipBoard tboard = new TipBoard();
+						tboard.setTipBoardNo(rset.getInt("tipboard_no"));
+						tboard.setTipBoardTitle(rset.getString("tipboard_title"));
+						tboard.setTipBoardContent(rset.getString("tipboard_content"));
+						tboard.setTipBoardDate(rset.getDate("tipboard_date"));
+						tboard.setTipBoardOriginFile(rset.getString("tipboard_originfile"));
+						tboard.setTipBoardViews(rset.getInt("tipboard_views"));
+						tboard.setTipBoardRecommend(rset.getInt("tipboard_recommend"));
+						tboard.setUserId(rset.getString("user_id"));
+						tboard.setTipBoardDelete(rset.getString("tipboard_delete"));
+						tboard.setTipBoardReFile(rset.getString("tipboard_refile"));
+						list.add(tboard);
+					}
 				}
 				
 			} catch (Exception e) {
