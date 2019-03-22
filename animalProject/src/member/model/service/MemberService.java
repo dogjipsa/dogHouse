@@ -57,11 +57,17 @@ public class MemberService {
 		close(conn);
 		return result;
 	}
-
-
-	public int updateHost(Member m) {
+	
+	public int selectCheckId(String userId) {
 		Connection conn = getConnection();
-		int result = mdao.updateHost(conn, m);
+		int result = mdao.selectCheckId(conn, userId);
+		close(conn);
+		return result;
+	}
+
+	public int updatePassword(Member member) {
+		Connection conn = getConnection();
+		int result = mdao.updateTempPassword(conn, member);
 		if(result > 0)
 			commit(conn);
 		else
@@ -69,6 +75,7 @@ public class MemberService {
 		close(conn);
 		return result;
 	}
+	
 
 	
 
