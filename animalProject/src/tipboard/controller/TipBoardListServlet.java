@@ -82,6 +82,10 @@ public class TipBoardListServlet extends HttpServlet {
 					request.setAttribute("startPage", startPage);
 					request.setAttribute("endPage", endPage);
 					request.setAttribute("listCount", listCount);
+					
+					//추가된거
+					request.setAttribute("search", option);
+					request.setAttribute("keyword", word);
 										
 					view.forward(request, response);
 				}else {
