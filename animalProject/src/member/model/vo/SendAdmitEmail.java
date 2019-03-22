@@ -34,6 +34,5 @@ public class SendAdmitEmail {
 		
 		return String.valueOf(result);
 	}
-	
 
 }

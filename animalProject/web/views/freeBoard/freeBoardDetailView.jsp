@@ -3,23 +3,44 @@
 <%@ page import="member.model.vo.Member, freeboard.model.vo.FreeBoard, java.sql.Date" %>
 <%
 	FreeBoard freeboard = (FreeBoard)request.getAttribute("freeboard");
-	/* int currentPage = ((Integer)request.getAttribute("currentPage")).intValue(); */
+//	int currentPage = ((Integer)request.getAttribute("currentPage")).intValue(); 
 	
-	Member loginUser = (Member)session.getAttribute("loginUser");
 %>    
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>doggybeta</title>
+<script type="text/javascript" src="/doggybeta/resources/js/jquery-3.3.1.min.js"></script>
+<script type="text/javascript"></script>
+<style type="text/css">
+table{
+	position: relative;
+	left: 400px;
+	border-collapse: separate;
+    border-spacing: 1px;
+    text-align: left;
+    line-height: 1.5;
+    margin: 20px 10px;
+}
+h2{
+	position: relative;
+	left: 530px;
+    text-align: left;
+    line-height: 1.5;
+    margin: 20px 10px;
+
+}
+</style> 
 </head>
 <body>
 <%@ include file="../common/menu.jsp" %>
-<hr style="clear:both;">
-<h2 align="center"><%= freeboard.getFreeboardNo() %>번 게시글 상세보기</h2>
+	<div id="wrap">
+		  <div id="content">
+		  
+<h2><%= freeboard.getFreeboardNo() %>번 게시글 상세보기</h2>
 <br>
-<table align="center" cellpadding="10" cellspacing="0" 
-border="1" width="500">
+<table id="t" align="right" cellpadding="10" cellspacing="0" border="1" width="500">
 <tr>
 	<th>제목</th>
 	<td><%= freeboard.getFreeboardTitle() %></td>
@@ -28,43 +49,42 @@ border="1" width="500">
 	<th>작성자</th>
 	<td><%= freeboard.getUserId() %></td>
 </tr>
-<%-- <tr>
+<tr>
 	<th>첨부파일</th>
 	<td>
-< 		<% if(board.getBoardOriginalFileName() != null){ %>
-			<a href="/first/bfdown?ofile=<%= board.getBoardOriginalFileName() %>&rfile=<%= board.getBoardRenameFileName() %>"><%= board.getBoardOriginalFileName() %></a>
+< 		<% if(freeboard.getFreeboardOriginalFile() != null){ %>
+			<a href="/doggybeta/ffdown?ofile=<%= freeboard.getFreeboardOriginalFile() %>&rfile=<%= freeboard.getFreeboardRefile() %>"><%= freeboard.getFreeboardOriginalFile()%></a>
 		<% }else{ %>
 			첨부파일없음
 		<% } %> 
 	</td>
-</tr> --%>
+</tr> 
 <tr>
 	<th>내용</th>
 	<td><%= freeboard.getFreeboardContent() %></td>
 </tr>
 <tr>
-	<%-- <th colspan="2">
-	<% if(loginUser != null && board.getBoardReplyLev() < 2){ %>
-		<a href="/first/views/board/boardReplyForm.jsp?bnum=<%= board.getBoardNum() %>&page=<%= currentPage %>">[댓글달기]</a>
+	 <th colspan="2">
+	<%-- <<% if(loginUser != null){ %>
+		<a href="/doggybeta/views/freeboard/freeBoardReplyForm.jsp?fnum=<%= freeboard.getFreeboardNo() %>">[댓글달기]</a>
 	<% } %>
-	&nbsp; &nbsp; --%>
-<%-- 	<% if(loginUser.getUserId().equals(freeboard.getBoardWriter())){ %> --%>
-		<a href="/doggybeta/bupview?bnum=<%= freeboard.getFreeboardNo() %>">[수정페이지로 이동]</a> 
+	&nbsp; &nbsp;  --%> 
+	<% if(loginUser.getUserId().equals(freeboard.getUserId())){ %> 
+		<a href="/doggybeta/fupview?fnum=<%= freeboard.getFreeboardNo() %>">[수정페이지로 이동]</a> 
 		&nbsp; &nbsp;
-		<a href="/doggybeta/bdelete?bnum=<%= freeboard.getFreeboardNo() %>">[글삭제]</a>
-	<%-- <% } %> --%>
+		<a href="/doggybeta/fdelete?fnum=<%= freeboard.getFreeboardNo() %>">[글삭제]</a>
+	 <% } %> 
 	&nbsp; &nbsp;
-	<%-- <a href="/doggybeta/blist?page=<%= currentPage %>">[목록]</a> --%>
+	 <a href="/doggybeta/flist">[목록]</a> 
 	</th>	
 </tr>
-
 </table>
 
-<%-- 
-<hr>
-<%@ include file="../common/footer.jsp" %> --%>
+</div>
+		<div id="footer"><%@ include file="..//common/footer.jsp"%></div>
+	</div>
 </body>
-</html>
+</html>	
 
 
 
