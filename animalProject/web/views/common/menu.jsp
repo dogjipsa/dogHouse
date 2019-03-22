@@ -64,12 +64,12 @@
 							도그집사</a></li>
 					<li><a href="/doggybeta/views/aboutus/location.jsp">오시는 길</a></li>
 				</ul></li>
-			<li><a href='#' id='icon3'> <span>&nbsp;&nbsp;&nbsp;펫시터	찾기</span></a> </li>
+			<li><a href='/doggybeta/views/findSitter/petSitterListView.jsp' id='icon3'> <span>&nbsp;&nbsp;&nbsp;펫시터	찾기</span></a> </li>
 			<li class="m1"><a href='#'  id='icon4'> <span>&nbsp;&nbsp;&nbsp;게시판</span>
 			</a>
 				<ul class="m2">
 					<li><a href='/doggybeta/nlist'>공지사항</a></li>
-					<li><a href='#'>자유게시판</a></li>
+					<li><a href='/doggybeta/flist'>자유게시판</a></li>
 					<li><a href='/doggybeta/tlist'>팁</a></li>
 				</ul></li>
 			<li class="m1"><a href="#" id='icon5'> <span>&nbsp;&nbsp;&nbsp;고객센터</span></a>
@@ -164,7 +164,7 @@
 			</a>
 				<ul class="m2">
 					<li><a href='/doggybeta/nlist'>공지사항</a></li>
-					<li><a href='#'>자유게시판</a></li>
+					<li><a href='/doggybeta/flist'>자유게시판</a></li>
 					<li><a href='/doggybeta/tlist'>팁</a></li>
 				</ul></li>
 			<li class="m1"><a href="#" id='icon5'> <span>&nbsp;&nbsp;&nbsp;고객센터</span></a>

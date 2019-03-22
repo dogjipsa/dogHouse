@@ -25,12 +25,13 @@ table{
 }
 h2{
 	position: relative;
-	left: 530px;
+	left: 700px;
     text-align: left;
     line-height: 1.5;
     margin: 20px 10px;
 
 }
+
 </style> 
 </head>
 <body>
@@ -40,19 +41,19 @@ h2{
 		  
 <h2><%= freeboard.getFreeboardNo() %>번 게시글 상세보기</h2>
 <br>
-<table id="t" align="right" cellpadding="10" cellspacing="0" border="1" width="500">
+<table id="t" align="right" cellpadding="10" cellspacing="0" border="1" width="800">
 <tr>
 	<th>제목</th>
-	<td><%= freeboard.getFreeboardTitle() %></td>
+	<td align="center"><%= freeboard.getFreeboardTitle() %></td>
 </tr>
 <tr>
 	<th>작성자</th>
-	<td><%= freeboard.getUserId() %></td>
+	<td align="center"><%= freeboard.getUserId() %></td>
 </tr>
 <tr>
 	<th>첨부파일</th>
-	<td>
-< 		<% if(freeboard.getFreeboardOriginalFile() != null){ %>
+	<td align="center">
+	 		<% if(freeboard.getFreeboardOriginalFile() != null){ %>
 			<a href="/doggybeta/ffdown?ofile=<%= freeboard.getFreeboardOriginalFile() %>&rfile=<%= freeboard.getFreeboardRefile() %>"><%= freeboard.getFreeboardOriginalFile()%></a>
 		<% }else{ %>
 			첨부파일없음
@@ -61,7 +62,7 @@ h2{
 </tr> 
 <tr>
 	<th>내용</th>
-	<td><%= freeboard.getFreeboardContent() %></td>
+	<td align="center"><%= freeboard.getFreeboardContent() %></td>
 </tr>
 <tr>
 	 <th colspan="2">

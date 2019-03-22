@@ -217,7 +217,7 @@ CREATE TABLE  FAQ  (
     FAQ_CONTENT    VARCHAR2(4000)      NOT NULL,
     FAQ_DATE    DATE  default sysdate    NOT NULL,
     MANAGER_ID    VARCHAR2(100)      NOT NULL,
-    FAQ_TYPE	VARCHAR2(100)		NOT NULL
+    FAQ_TYPE VARCHAR2(100) NOT NULL
 );
 
 drop sequence seq_faqno;
@@ -276,7 +276,8 @@ CREATE TABLE  BOOKING  (
     USER_ID    VARCHAR2(100)      NOT NULL,
     BOOKING_PROGRESS    VARCHAR2(100)      NOT NULL,
     BOOKING_ETC    VARCHAR2(100)      NULL,
-    SERVICE_KIND    VARCHAR2(100)      NOT NULL
+    SERVICE_KIND    VARCHAR2(100)      NOT NULL,
+    PUSER_ID	VARCHAR2(100)	NOT NULL
 );
 
 drop sequence seq_bookingno;
@@ -425,7 +426,7 @@ ALTER TABLE  PAYMENT  ADD CONSTRAINT  FK_BOOKING_TO_PAYMENT_1  FOREIGN KEY (
 )
 REFERENCES  BOOKING  (
     BOOKING_NO 
-);
+)  ON DELETE CASCADE;
 
 ALTER TABLE  PREBOOKING  ADD CONSTRAINT  FK_MEMBER_TO_PREBOOKING_1  FOREIGN KEY (
     USER_ID 
@@ -530,14 +531,21 @@ ALTER TABLE  BOOKING  ADD CONSTRAINT  FK_PET_TO_BOOKING_1  FOREIGN KEY (
 )
 REFERENCES  PET  (
     PET_NO 
-);
+) ON DELETE CASCADE;
 
 ALTER TABLE  BOOKING  ADD CONSTRAINT  FK_MEMBER_TO_BOOKING_1  FOREIGN KEY (
     USER_ID 
 )
 REFERENCES  MEMBER  (
     USER_ID 
-);
+) ON DELETE CASCADE;
+
+ALTER TABLE BOOKING ADD CONSTRAINT FK_MEMBER_TO_BOOKING_2 FOREIGN KEY (
+	PUSER_ID
+)
+REFERENCES MEMBER (
+	USER_ID
+) on delete cascade;
 
 ALTER TABLE  REVIEW  ADD CONSTRAINT  FK_MEMBER_TO_REVIEW_1  FOREIGN KEY (
     USER_ID 
@@ -554,21 +562,6 @@ REFERENCES  BOOKING  (
 );
 
 
-insert into manager values('매니저1','매니저이름1','123');
-insert into notice values(seq_noticeno.nextval,'1번글','1번내용',default,'0',0,'매니저1','n','0');
-
-insert into member values('user01','user1@naver.com','유저1','서울','010-1111-1111','직업1',default,0,'91/06/18','pass01',default, null, null);
-
-
-insert into tipboard values(seq_tipboardno.nextval,'팁1번글','1번글 내용',default,'0',0,0,'user01',default,'0' );
-insert into tipboard values(seq_tipboardno.nextval,'팁2번글','2번글 내용',default,'0',0,0,'user01',default,'0' );
-
-commit;
-
-select * from tipboard order by tipboard_no desc;
-
-
-
 insert into manager values('manager','매니저이름1','pass01');
 insert into notice values(seq_noticeno.nextval,'1번글','1번내용',default,'0',0,'manager','n','0');
 
@@ -582,7 +575,7 @@ insert into tipboard values(seq_tipboardno.nextval,'팁2번글','2번글 내용',defaul
 
 select * from tipboard order by tipboard_no desc;
 
+update tipboard set tipboard_delete = 'y' where tipboard_no = ;
 
-insert into faq values(seq_faqno.nextval, 'faq연습', 'faq내용', sysdate, '매니저1', '기타');
-
+insert into faq values(seq_faqno.nextval, 'faqtest', '내용', sysdate, 'manager', '기타');
 commit;

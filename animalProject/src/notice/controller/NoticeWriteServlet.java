@@ -52,9 +52,9 @@ public class NoticeWriteServlet extends HttpServlet {
 		int maxSize = 1024 * 1024 * 10;
 		
 		String root = request.getSession().getServletContext().getRealPath("/");
-		System.out.println("root : " + root);
+	
 		String savePath = root + "files/notice";
-		System.out.println("savepath : " + savePath);
+		
 		MultipartRequest mrequest = new MultipartRequest(
 				request, savePath, maxSize, "UTF-8", new DefaultFileRenamePolicy());
 		
@@ -63,11 +63,11 @@ public class NoticeWriteServlet extends HttpServlet {
 		notice.setNoticeTitle(request.getParameter("title"));
 		notice.setManagerId(request.getParameter("writer"));
 		notice.setNoticeContent(request.getParameter("content"));
-		System.out.println(notice);
+
 		
 		String originFile = mrequest.getFilesystemName("upfile");
 		notice.setNoticeOriginFile(originFile);
-		System.out.println(notice);
+	
 		
 		if(originFile != null) {
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
@@ -97,7 +97,7 @@ public class NoticeWriteServlet extends HttpServlet {
 			notice.setNoticeReFile(reFile);
 		}
 		int result = new NoticeService().insertNotice(notice);
-		System.out.println(result);
+		
 		if(result > 0){
 			response.sendRedirect("/doggybeta/nlist");
 		}else {

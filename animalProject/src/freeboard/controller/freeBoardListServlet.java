@@ -28,6 +28,7 @@ public class freeBoardListServlet extends HttpServlet {
         super();
         // TODO Auto-generated constructor stub
     }
+    
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
@@ -47,7 +48,7 @@ public class freeBoardListServlet extends HttpServlet {
 				HashMap<String, Object> listOpt = new HashMap<>();
 				listOpt.put("opt", opt);
 				listOpt.put("inputdata", inputdata);
-				listOpt.put("start", currentPage*10-9);
+				listOpt.put("startRow", currentPage*10-9);// 1, 11, 21, 31....
 				
 				
 				FreeBoardService fservice = new FreeBoardService();
@@ -58,26 +59,23 @@ public class freeBoardListServlet extends HttpServlet {
 				//한 페이지에 출력할 목록 갯수 지정
 				int limit = 10;
 				
-				
-				
-				//테이블에 저장된 W전체 목록 갯수 조회
-		
-				
 				//현재 페이지에 출력할 목록 조회
 				
-				int listCount = fservice.getListCount();
+				int listCount = slist.size(); //무적권 10임.
 				
-				// 한 화면에 10개의 게시글을 보여지게함
-		        // 페이지 번호는 총 5개, 이후로는 [다음]으로 표시
+				//행의 갯수가 101개일 때 다음 페이지로 넘어감.
 				
-				//총 페이지수 계산 : 목록이 마지막 1개일 때 1페이지로 처리
-				int maxPage = (int)((double)listCount / limit + 0.9);
-				//현재 페이지그룹(10개 페이지를 한 그룹으로 처리)에 
-				//보여줄 시작 페이지 수
-				//현재 페이지가 13이면 그룹은 11~20이 보여지게 함
-				int startPage = ((int)((double)currentPage / 5.0 + 0.8)) * 5 - 4;
-						
-				int endPage = startPage + 4;		
+				//총 페이지수 계산 : 1페이지부터 현재페이지까지 페이지 갯수
+				//예: 현재 행의갯수 23개면 페이지는 3페이지 = maxPage
+				int maxPage = (int)((double)listCount / limit + 0.9); // 1, 2, 3....
+				
+				//현재 페이지의 시작페이지 번호 1, 11, 21, 31....
+				//1페이지 때문에 + 0.9 했네..
+				int startPage = (((int)((double)currentPage / limit + 0.9)) - 1) * limit + 1;
+				
+				//현재 페이지의 끝페이지 번호 10, 20, 30....
+				int endPage = startPage + limit -1;		
+				
 				
 				if(maxPage < endPage) {
 				endPage = maxPage;
@@ -85,15 +83,15 @@ public class freeBoardListServlet extends HttpServlet {
 				
 				response.setContentType("text/html; charset=utf-8");
 				RequestDispatcher view = null;
-				if(slist.size() > 0) {
+				if(slist.size() >= 0) {
 					view = request.getRequestDispatcher("views/freeBoard/freeBoardListView.jsp");
 				
 					request.setAttribute("slist", slist);
+					request.setAttribute("currentPage", currentPage);
 					request.setAttribute("listCount", listCount);
 					request.setAttribute("maxPage", maxPage);
 					request.setAttribute("startPage", startPage);
 					request.setAttribute("endPage", endPage);
-					request.setAttribute("listCount", listCount);
 					
 					view.forward(request, response);
 				}else {
