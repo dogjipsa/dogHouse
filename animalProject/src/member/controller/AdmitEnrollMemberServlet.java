@@ -60,12 +60,6 @@ public class AdmitEnrollMemberServlet extends HttpServlet {
 
 		String number = request.getParameter("number");
 		String email = request.getParameter("email");
-		
-		request.setAttribute("num", "0010");
-		
-		ServletContext context = getServletContext();
-		RequestDispatcher view = context.getRequestDispatcher("views/member/checkAdmitNumber.jsp");
-		view.forward(request, response);
 
 		System.out.println(number + " !!! " + email);
 		int idx = email.indexOf("@");
