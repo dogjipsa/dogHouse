@@ -57,7 +57,7 @@ public class BookingLogListServlet extends HttpServlet {
 			job.put("puserid", bc.getPuserId());
 			job.put("price", bc.getPrice());
 			job.put("addr", URLEncoder.encode(bc.getAddress(), "utf-8"));
-			job.put("pname", URLEncoder.encode(bc.getPetName(), "utf-8").replaceAll("\\+", "%20"));
+			job.put("pname", URLEncoder.encode(bc.getPetName(), "utf-8"));
 			job.put("kind", bc.getServiceKind());
 			
 			ar.add(job);

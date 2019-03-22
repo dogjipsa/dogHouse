@@ -1,17 +1,34 @@
 const items = document.querySelectorAll('input[name="item"]');
 const bkTable = document.querySelector('#reserv_table');
 const userid = document.querySelector('input[name="userid"]');
+const hostMain = document.querySelector('.host_main');
 
-
-
-// 
+// section1 버튼 클릭 시 main 내용 변경 이벤트 처리
 for(let i = 0; i < items.length; i++){
     items[i].addEventListener('change',function(){
         if(items[i].value === 'booking'){
             bkTable.style.display = 'table';
+            hostMain.style.display = 'none';
             requestBkAjax();
         }
+        if(items[i].value === 'host'){
+            bkTable.style.display = 'none';
+            hostMain.style.display = 'grid';
+            requestHostAjax();
+        }
     });
+}
+// 호스트 서비스 버튼 클릭 시 Ajax
+function requestHostAjax(){
+    const xhr = new XMLHttpRequest();
+
+    xhr.onload = function(){
+
+    }
+    const requestData = 'userid='+encodeURIComponent(userid.value);
+    xhr.open("POST", "/doggybeta/hservice");
+    xhr.setRequestHeader('Content-Type','x-www-form-urlencoded');
+    xhr.send(requestData);
 }
 
 // 예약/결제 내역 Ajax
@@ -46,7 +63,7 @@ function requestBkAjax(){
             const tableForm = {
                 'bookingNo' : json.list[i].bno,
                 'content' : kind+ " / "+ decodeURIComponent(json.list[i].pname)
-                +" / "+decodeURIComponent(json.list[i].addr).replace(/\+/gi," ")+" / "+json.list[i].price+"원",
+                +" / "+decodeURIComponent(json.list[i].addr).replace(/\+/gi," ")+" / "+json.list[i].price+"원/일",
                 'hostId' : json.list[i].puserid,
                 'date' : json.list[i].indate +" ~ "+json.list[i].outdate,
                 'pg' : pg 
@@ -68,5 +85,5 @@ function requestBkAjax(){
 
 
 // 페이지 로드시 예약/결제 내역 출력
-document.addEventListener('DOMContentLoaded', () =>{ requestBkAjax(); });
+ document.addEventListener('DOMContentLoaded', () =>{ requestBkAjax(); });
 

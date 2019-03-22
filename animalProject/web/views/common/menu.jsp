@@ -209,7 +209,8 @@
 	</nav>
 	
 	<!-- 펫시터 신청 버튼 클릭시 생성 보여지는 HTML 부분. 로그인 부분 구현시 인풋에 세션으로 값 넣어놓고 readonly 처리할 것  -->
-		<div class="ps_reg_form" >
+		
+			<form class="ps_reg_form" action="/doggybeta/hostup" method="POST" enctype="multipart/form-data">
 			<span class="close">x</span>
 				<div class="section1">
 					<p>아이디</p>
@@ -224,9 +225,9 @@
 					<button class="normal_btn">내용보기</button>
 					<p>전체 동의 여부</p>
 					<span><label>
-					<input type="radio" name="agree" value="agree" checked> 동의
+						<input type="radio" name="agree" value="agree" checked> 동의
 					</label><label>
-					<input type="radio" name="agree" value="disagree"> 동의하지않음
+						<input type="radio" name="agree" value="disagree"> 동의하지않음
 					</label></span>
 				</div>
 				<div class="section2">
@@ -237,25 +238,26 @@
 					<p>펫시팅 장소</p>
 					<input name="addr" placeholder="장소/위치 입력" class="ps_input input_addr" autocomplete="off" >
 					<p>희망 일급(원)</p>
-					<input type="number" name="price" placeholder="가격 입력" class="ps_input input_price" min="100" step="100">
+					<input type="number" name="price" placeholder="가격 입력" class="ps_input input_price" min="100">
 				</div>
 				<div class="section3">
 					<div class="image_box">
 						<img class="image_box_pic" />				
-						<input type="file" id="real-file" hidden="hidden" />
+						<input type="file" id="real-file" name="pic" hidden="hidden" />
 						<span>
 							<button type="button" id="fake-file-btn" class="normal_btn">Choose a File</button>&nbsp;
 							<span id="file-text"></span>
 						</span>
 					</div>
 					<div class="map_box"></div>
-					<span><button type="submit" id="submit-btn">펫시터 등록하기</button></span>
+					<span><button id="submit-btn">펫시터 등록하기</button></span>
 				</div>
-		</div>
-		<div class="ps_reg_form_popup_box">
-			<p>펫시터 등록 신청이 완료되었습니다. </p>
-			<button>확인</button>
-		</div>
+				
+				<div class="ps_reg_form_popup_box">
+					<p>펫시터 등록 신청이 완료되었습니다. </p>
+					<button type="submit">확인</button>
+				</div>
+			</form>
 
 		<script type="text/javascript"src="/doggybeta/resources/js/petSitting.js"></script>
 	
