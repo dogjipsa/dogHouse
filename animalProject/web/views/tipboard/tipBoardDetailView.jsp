@@ -33,7 +33,7 @@
 	<th>첨부파일</th>
 	<td>
 		<% if(tboard.getTipBoardOriginFile() != null){ %>
-			<a href="/doggybeta/bfdown?tofile=<%= tboard.getTipBoardOriginFile()%>&trfile=<%= tboard.getTipBoardReFile() %>"><%= tboard.getTipBoardOriginFile() %></a>
+			<a href="/doggybeta/tfdown?tofile=<%= tboard.getTipBoardOriginFile()%>&trfile=<%= tboard.getTipBoardReFile() %>"><%= tboard.getTipBoardOriginFile() %></a>
 		<% }else{ %>
 			첨부파일 없음
 		<% } %>

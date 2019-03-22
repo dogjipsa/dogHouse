@@ -9,17 +9,21 @@
 	int endPage = ((Integer) request.getAttribute("endPage")).intValue();
 	int maxPage = ((Integer) request.getAttribute("maxPage")).intValue();
 	int currentPage = ((Integer) request.getAttribute("currentPage")).intValue();
-	String search = null, keyword = null;
-	java.sql.Date begin = null, end = null;
+	//String search = null, keyword = null;
+	//java.sql.Date begin = null, end = null;
+	String search = null;
 	if (request.getAttribute("search") != null) {
 		search = request.getAttribute("search").toString();
-		if (search.equals("date")) {
+		/* if (search.equals("date")) {
 			begin = (java.sql.Date) request.getAttribute("begin");
 			end = (java.sql.Date) request.getAttribute("end");
-		} else {
-			keyword = request.getAttribute("keyword").toString();
-		}
+		} else { */
+			String keyword = request.getAttribute("keyword").toString();
+		System.out.print(search);
+		System.out.print(keyword);
 	}
+	
+		//}
 	/* Member loginUsers = (Member) session.getAttribute("loginUser"); */
 %>
 <!DOCTYPE html>
@@ -83,34 +87,7 @@
 			%>
 			<br>
 			<%-- 검색기능 --%>
-			<center>
-				<div>
-					<h2>검색할 항목을 선택하시오.</h2>
-					<input type="radio" name="item" value="title" checked> 제목
-					&nbsp; &nbsp; &nbsp; <input type="radio" name="item" value="writer">
-					작성자 &nbsp; &nbsp; &nbsp; <input type="radio" name="item"
-						value="date"> 날짜
-				</div>
-				<div id="titleDiv">
-					<form action="/first/tsearcht" method="post">
-						<label>검색할 제목을 입력하시오 : <input type="text" name="keyword"></label>
-						<input type="submit" value="검색">
-					</form>
-				</div>
-				<div id="writerDiv">
-					<form action="/doggybeta/tsearchw" method="post">
-						<label>검색할 작성자 아이디를 입력하시오 : <input type="text"
-							name="keyword"></label> <input type="submit" value="검색">
-					</form>
-				</div>
-				<div id="dateDiv">
-					<form action="/doggybeta/tsearchd" method="post">
-						<label>검색할 날짜를 선택하시오 : <input type="date" name="begin">
-							~ <input type="date" name="end"></label> <input type="submit"
-							value="검색">
-					</form>
-				</div>
-			</center>
+			
 			<br>
 			<table align="center" border="1" cellspacing="0" width="700">
 				<tr>
@@ -128,12 +105,10 @@
 					<td align="center"><%=t.getTipBoardNo()%></td>
 					<td><!-- 로그인 상태일 때만 상세보기 링크 설정함 --> <%
 						if (loginUser != null) { 
-					%> <a
-						href="/doggybeta/tdetail?tnum=<%=t.getTipBoardNo()%>&page=<%=currentPage%>"><%=t.getTipBoardTitle()%></a>
-						<%
-							} else {
+					%> <a href="/doggybeta/tdetail?tnum=<%=t.getTipBoardNo()%>&page=<%=currentPage%>"><%=t.getTipBoardTitle()%></a>
+						<%	} else {
 						%> <%=t.getTipBoardTitle()%> <%
- 					}%> 
+ 						}%> 
 					</td>
 					<td align="center"><%=t.getUserId()%></td>
 					<td align="center"><%=t.getTipBoardDate()%></td>
@@ -178,32 +153,35 @@
 					}
 				%>
 				<!-- 현재 페이지가 포함된 페이지 그룹 숫자 출력 처리 -->
-				<%
+					<%
 					for (int p = startPage; p <= endPage; p++) {
-						if (p == currentPage) {
-				%>
-				<font color="red" size="4"><b>[<%=p%>]
-				</b></font>
-				<%
+						if (p == currentPage) {	%>
+							<font color="red" size="4"><b>[<%=p%>]
+							</b></font>
+							<%
 					} else {
 							if (search != null && search.equals("title")) {
-				%>
-				<a href="/doggybeta/tsearcht?keyword=<%=keyword%>&page=<%=p%>"><%=p%></a>
-				<%
-					} else if (search != null && search.equals("writer")) {
-				%>
-				<a href="/doggybeta/tsearchw?keyword=<%=keyword%>&page=<%=p%>"><%=p%></a>
-				<%
-					} else if (search != null && search.equals("date")) {
-				%>
-				<a
-					href="/doggybeta/tsearchd?begin=<%=begin%>&end=<%=end%>&page=<%=p%>"><%=p%></a>
-				<%
-					} else {
-				%>
-				<a href="/doggybeta/tlist?page=<%=p%>"><%=p%></a>
-				<%
-					}
+								%>
+								<a href="/doggybeta/tlist?keyword=<%=keyword%>&page=<%=p%>"><%=p%></a>
+								<%
+									} else if (search != null && search.equals("writer")) {
+								%>
+								<a href="/doggybeta/tlist?keyword=<%=keyword%>&page=<%=p%>"><%=p%></a>
+								<%
+									} else if (search != null && search.equals("content")) {
+								%>
+								<a href="/doggybeta/tlist?keyword=<%=keyword%>&page=<%=p%>"><%=p%></a>
+								<%	
+									}else if (search != null && search.equals("title_content")) {
+								%>
+									<a href="/doggybeta/tlist?keyword=<%=keyword%>&page=<%=p%>"><%=p%></a>
+								<%
+				
+							} else {
+								%>
+								<a href="/doggybeta/tlist?page=<%=p%>"><%=p%></a>
+								<%
+							}
 						}
 					}
 				%>&nbsp;
@@ -231,6 +209,45 @@
 				%>
 
 			</div>
+			<br>
+			<div id="searchForm" style="text-align:center;">
+				<form method="post" action="/doggybeta/tlist">
+					<select name="option">
+						<option value="title">제목</option>
+						<option value="content">내용</option>
+						<option value="title_content">제목+내용</option>
+						<option value="writer">글쓴이</option>
+					</select>
+					<input type="text" size="20" name="word">
+					<input type="submit" value="검색">
+				</form>
+				<!-- <div>
+					<h2>검색할 항목을 선택하시오.</h2>
+					<input type="radio" name="item" value="title" checked> 제목
+					&nbsp; &nbsp; &nbsp; <input type="radio" name="item" value="writer">
+					작성자 &nbsp; &nbsp; &nbsp; <input type="radio" name="item"
+						value="date"> 날짜
+				</div>
+				<div id="titleDiv">
+					<form action="/first/tsearcht" method="post">
+						<label>검색할 제목을 입력하시오 : <input type="text" name="keyword"></label>
+						<input type="submit" value="검색">
+					</form>
+				</div>
+				<div id="writerDiv">
+					<form action="/doggybeta/tsearchw" method="post">
+						<label>검색할 작성자 아이디를 입력하시오 : <input type="text"
+							name="keyword"></label> <input type="submit" value="검색">
+					</form>
+				</div>
+				<div id="dateDiv">
+					<form action="/doggybeta/tsearchd" method="post">
+						<label>검색할 날짜를 선택하시오 : <input type="date" name="begin">
+							~ <input type="date" name="end"></label> <input type="submit"
+							value="검색">
+					</form>
+				</div> -->
+			</center>
 			<div id="footer"><%@ include file="..//common/footer.jsp"%></div>
 		</div>
 </body>
