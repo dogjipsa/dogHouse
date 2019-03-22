@@ -93,8 +93,8 @@ public class FindPasswordServlet extends HttpServlet {
 		
 		try {
 			MimeMessage msg = new MimeMessage(session);
-			msg.setFrom(new InternetAddress(member.getEmail()));
-			msg.addRecipient(Message.RecipientType.TO, new InternetAddress(email));
+			msg.setFrom(new InternetAddress(email));
+			msg.addRecipient(Message.RecipientType.TO, new InternetAddress(member.getEmail()));
 			
 			msg.setSubject("[doghouse]임시 비밀번호 발송 메일입니다.");
 			
