@@ -16,13 +16,14 @@ public class BookingCheck implements Serializable {
 	private int price;
 	private String address;
 	private String petName;
+	private String serviceKind;
 	
 	public BookingCheck() {
 		// TODO Auto-generated constructor stub
 	}
 
 	public BookingCheck(int bookingNo, Date checkInDate, Date checkOutDate, String bookingProgress, String puserId,
-			int price, String address, String petName) {
+			int price, String address, String petName, String serviceKind) {
 		super();
 		this.bookingNo = bookingNo;
 		this.checkInDate = checkInDate;
@@ -32,6 +33,7 @@ public class BookingCheck implements Serializable {
 		this.price = price;
 		this.address = address;
 		this.petName = petName;
+		this.serviceKind = serviceKind;
 	}
 
 	public int getBookingNo() {
@@ -97,13 +99,25 @@ public class BookingCheck implements Serializable {
 	public void setPetName(String petName) {
 		this.petName = petName;
 	}
+	
+	public String getServiceKind() {
+		return serviceKind;
+	}
+
+	public void setServiceKind(String serviceKind) {
+		this.serviceKind = serviceKind;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
 
 	@Override
 	public String toString() {
 		return bookingNo + ", " + checkInDate + ", " + checkOutDate + ", " + bookingProgress + ", " + puserId + ", "
-				+ price + ", " + address + ", " + petName;
+				+ price + ", " + address + ", " + petName + ", " + serviceKind;
 	}
-	
+
 	
 	
 	

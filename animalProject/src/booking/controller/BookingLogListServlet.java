@@ -44,7 +44,7 @@ public class BookingLogListServlet extends HttpServlet {
 		if(list.size() > 0) {
 		JSONObject sendJSON = new JSONObject();
 		JSONArray ar = new JSONArray();
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy'년 'MM'월 'dd'일'");
 		for(BookingCheck bc : list) {
 			JSONObject job = new JSONObject();
 			job.put("bno", bc.getBookingNo());
@@ -58,11 +58,12 @@ public class BookingLogListServlet extends HttpServlet {
 			job.put("price", bc.getPrice());
 			job.put("addr", URLEncoder.encode(bc.getAddress(), "utf-8"));
 			job.put("pname", URLEncoder.encode(bc.getPetName(), "utf-8"));
+			job.put("kind", bc.getServiceKind());
 			
 			ar.add(job);
 		}
 			sendJSON.put("list", ar);
-			response.setContentType("application/json");
+			response.setContentType("application/json; charset=utf-8");
 			PrintWriter out = response.getWriter();
 			out.append(sendJSON.toJSONString());
 			out.flush();

@@ -41,14 +41,18 @@
     border : 1px solid black;
     border-collapse: collapse;
 }
-#reserv_table tr:first-child {
+#reserv_table thead{
+    font-size: 18px;
+    color: white;
+    background-color: rgba(30,144,255,0.7);
+}
+#reserv_table thead tr{
     height: 80px;
-    font-size: 15px;
-    font-family: Arial, Helvetica, sans-serif;
 }
 
-#reserv_table tr{
+#reserv_table tbody tr{
     height: 50px;
+    background-color: white;
     text-align: center;
 }
 
@@ -57,7 +61,7 @@
 }
 
 #reserv_table tr:nth-child(odd) {
-    background-color: rgba(30,144,255,0.5);
+    
 }
 
 .wrap_content .section5{
