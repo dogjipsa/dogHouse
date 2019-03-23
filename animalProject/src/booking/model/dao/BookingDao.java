@@ -54,8 +54,37 @@ public class BookingDao {
 		ArrayList<BookingForHost> list = new ArrayList<>();
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
+		BookingForHost b = null;
 		
-		String query = "";
+		String query = "SELECT B.BOOKING_NO, B.SERVICE_KIND, P.PET_NO, M.USER_NAME,M.ADDRESS, B.CHECKIN_DATE, B.CHECKOUT_DATE,B.BOOKING_PROGRESS, H.PRICE, B.BOOKING_ETC FROM BOOKING B JOIN MEMBER M ON (B.USER_ID = M.USER_ID) JOIN PET P ON (M.USER_ID = P.USER_ID) JOIN MEMBER H ON (B.PUSER_ID = H.USER_ID) WHERE PUSER_ID = ?";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, userid);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				b = new BookingForHost();
+				b.setBookingNo(rset.getInt(1));
+				b.setServiceKind(rset.getString(2));
+				b.setPetNo(rset.getInt(3));
+				b.setUserName(rset.getString(4));
+				b.setAddress(rset.getString(5));
+				b.setCheckInDate(rset.getDate(6));
+				b.setCheckOutDate(rset.getDate(7));
+				b.setProgress(rset.getString(8));
+				b.setPrice(rset.getInt(9));
+				b.setEtc(rset.getString(10));
+				
+				list.add(b);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
 		return list;
 	}
 	

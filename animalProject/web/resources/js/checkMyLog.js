@@ -26,8 +26,9 @@ function requestHostAjax(){
 
     }
     const requestData = 'userid='+encodeURIComponent(userid.value);
+
     xhr.open("POST", "/doggybeta/hservice");
-    xhr.setRequestHeader('Content-Type','x-www-form-urlencoded');
+    xhr.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
     xhr.send(requestData);
 }
 

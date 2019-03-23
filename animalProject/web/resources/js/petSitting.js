@@ -1,9 +1,9 @@
 // 펫시팅 신청 메뉴 클릭 시 발생 이벤트
-const psBtn = document.getElementById('pet_reg__btn');
+const psReglink = document.getElementById('pet_reg__btn');
 const psRegBox = document.querySelector('.ps_reg_form');
 const xBtn = document.querySelector('.ps_reg_form .close');
 
-psBtn.addEventListener('click', (e) => {
+psReglink.addEventListener('click', (e) => {
 	e.preventDefault();
 	psRegBox.style.display = 'grid';
 });

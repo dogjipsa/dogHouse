@@ -11,31 +11,31 @@ public class BookingForHost implements Serializable{
 	private static final long serialVersionUID = 4920180258796752908L;
 	private int bookingNo;
 	private String serviceKind;
-	private String breed;
-	private String size;
 	private String userName;
 	private Date checkInDate;
 	private Date checkOutDate;
 	private int price;
 	private String progress;
 	private String etc;
+	private int petNo;
+	private String address;
 	
 	public BookingForHost() {
 	}
-	
-	public BookingForHost(int bookingNo, String serviceKind, String breed, String size, String userName,
-			Date checkInDate, Date checkOutDate, int price, String progress, String etc) {
+
+	public BookingForHost(int bookingNo, String serviceKind, String userName, Date checkInDate, Date checkOutDate,
+			int price, String progress, String etc, int petNo, String address) {
 		super();
 		this.bookingNo = bookingNo;
 		this.serviceKind = serviceKind;
-		this.breed = breed;
-		this.size = size;
 		this.userName = userName;
 		this.checkInDate = checkInDate;
 		this.checkOutDate = checkOutDate;
 		this.price = price;
 		this.progress = progress;
 		this.etc = etc;
+		this.petNo = petNo;
+		this.address = address;
 	}
 
 	public int getBookingNo() {
@@ -52,22 +52,6 @@ public class BookingForHost implements Serializable{
 
 	public void setServiceKind(String serviceKind) {
 		this.serviceKind = serviceKind;
-	}
-
-	public String getBreed() {
-		return breed;
-	}
-
-	public void setBreed(String breed) {
-		this.breed = breed;
-	}
-
-	public String getSize() {
-		return size;
-	}
-
-	public void setSize(String size) {
-		this.size = size;
 	}
 
 	public String getUserName() {
@@ -109,7 +93,7 @@ public class BookingForHost implements Serializable{
 	public void setProgress(String progress) {
 		this.progress = progress;
 	}
-	
+
 	public String getEtc() {
 		return etc;
 	}
@@ -118,15 +102,31 @@ public class BookingForHost implements Serializable{
 		this.etc = etc;
 	}
 
+	public int getPetNo() {
+		return petNo;
+	}
+
+	public void setPetNo(int petNo) {
+		this.petNo = petNo;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
 
 	@Override
 	public String toString() {
-		return bookingNo + ", " + serviceKind + ", " + breed + ", " + size + ", " + userName + ", " + checkInDate + ", "
-				+ checkOutDate + ", " + price + ", " + progress + ", " + etc;
+		return bookingNo + ", " + serviceKind + ", " + userName + ", " + checkInDate + ", " + checkOutDate + ", "
+				+ price + ", " + progress + ", " + etc + ", " + petNo + ", " + address;
 	}
 
-	
 }
+	
