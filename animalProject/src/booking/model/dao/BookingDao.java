@@ -9,6 +9,7 @@ import static common.JDBCTemplate.*;
 
 
 import booking.model.vo.BookingCheck;
+import booking.model.vo.BookingForHost;
 
 public class BookingDao {
 
@@ -46,6 +47,15 @@ public class BookingDao {
 			close(rset);
 			close(pstmt);
 		}
+		return list;
+	}
+
+	public ArrayList<BookingForHost> selectBkForHostList(Connection conn, String userid) {
+		ArrayList<BookingForHost> list = new ArrayList<>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String query = "";
 		return list;
 	}
 	
