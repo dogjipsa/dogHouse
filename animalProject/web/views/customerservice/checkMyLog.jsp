@@ -55,11 +55,11 @@
 								<th>이름</th>
 								<th>요구사항/특징</th>
 								<th>이용날짜</th>
-								<th>가격</th>
+								<th>총 가격</th>
 								<th>진행 상황</th>
-								<th>수락하기</th>
 							</tr>
 						</thead>
+						<tbody></tbody>
 					</table>
 				</div>
 				<div class="host_side1">
