@@ -121,8 +121,10 @@ function requestBkAjax() {
 
                 const tableForm = {
                     'bookingNo': json.list[i].bno,
-                    'content': kind + " / " + decodeURIComponent(json.list[i].pname)
-                        + " / " + decodeURIComponent(json.list[i].addr).replace(/\+/gi, " ") + " / " + json.list[i].price + "원/일",
+                    'kind': kind,
+                    'pname': decodeURIComponent(json.list[i].pname),
+                    'addr': decodeURIComponent(json.list[i].addr).replace(/\+/gi, " "),
+                    'price': json.list[i].price + "원",
                     'hostId': json.list[i].puserid,
                     'date': json.list[i].indate + " ~ " + json.list[i].outdate,
                     'pg': pg
