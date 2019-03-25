@@ -9,7 +9,11 @@
 <link href="/doggybeta/resources/css/footer.css" rel="stylesheet" type="text/css">
 <script type="text/javascript" src="/doggybeta/resources/js/jquery-3.3.1.min.js"></script>
 <style type="text/css">
-
+body{
+	width: 1500px;
+	 margin: 0;
+    padding: 0;
+}
 .checked {
   color: orange;
 }
@@ -18,8 +22,8 @@
 	padding: 30px 30px;
 	margin: 10px 10px;
 	height: auto;
-	width: 1300px;
-	border: 5px solid white;			
+	width: 800px;
+				
 }
 input[type=button]{
 	background-color: #2ec4b6;
@@ -34,9 +38,12 @@ table td{
 text-align: center;
 }
  #detail table{
-	margin: 10px;
+	margin: 8px;
 } 
 
+#detailtable:hover{
+	background-color: rgba(210, 222, 225, 0.5);
+}
 </style>
 </head>
 <body>
@@ -217,13 +224,13 @@ function function22(){
 <!-- 지역검색 닫기 -->
 <br><br>
 <!-- 조건에 대한 결과 -->
-<div id="detailmain">
+<div id="detailmain" style="width:1400px" >
 <div id="petinfo"  style="float: left; width: 50%">
 상단 : 검색 결과 건수 조회
 <hr>
 <br>
 	<div id="detail" style="overflow-x: hidden; overflow-y:scroll; height:550px;">
-		<div id="detailtable t1" style="float:left; width: 50%;">
+		<div id="detailtable" style="float:left; width: 50%;">
 		<table style="border: 1px solid #d2dee1; width: 300px;">			
 		<tr>
 		<td>
@@ -255,7 +262,7 @@ function function22(){
 		</tr>		
 		</table>
 		</div>
-		<div id="detailtable t2" style="float:left; width: 50%;">
+		<div id="detailtable" style="float:left; width: 50%;">
 		<table style="border: 1px solid #d2dee1; width: 300px;">			
 		<tr>
 		<td>
@@ -288,7 +295,7 @@ function function22(){
 		</tr>		
 		</table>
 		</div>
-		<div id="detailtable t3" style="float:left; width: 50%;">
+		<div id="detailtable" style="float:left; width: 50%;">
 		<table style="border: 1px solid #d2dee1; width: 300px;">			
 		<tr>
 		<td>
@@ -321,7 +328,7 @@ function function22(){
 		</tr>		
 		</table>
 		</div>
-		<div id="detailtable t4" style="float:left; width: 50%;">
+		<div id="detailtable" style="float:left; width: 50%;">
 		<table style="border: 1px solid #d2dee1; width: 300px;">			
 		<tr>
 		<td>

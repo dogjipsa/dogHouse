@@ -49,7 +49,7 @@ h2{
    position: relative;
    top: 20px;
    left : 200px;
-   width: 70%
+   width: 70%;
 }
 .board { 
    position: relative;
@@ -59,15 +59,13 @@ h2{
    border-collapse: collapse;
    text-align: left;
    line-height: 1.5;
-   table-layout:fixed; 
-   
+   table-layout:fixed;    
 }
 
 .button{
    position: relative;
    left : 200px;
-   top: 50px;
-  
+   top: 50px;  
 }
 
 /* list_table 에서 사용되는 thead */
@@ -78,7 +76,7 @@ h2{
     color: #369;
     border-bottom: 3px solid #036;}
 
-/* list_table 에서 사용되는 tbody */
+/* list_table 에서 사용되는 tbody * /
 .board tbody td { 
 	width: 150px;
     padding: 10px;
@@ -90,22 +88,28 @@ h2{
 .board tbody tr:hover{
 	background-color : #f3f6f7;
 }
-center{
-	position: absolute;
-	top: 150px;
-	left: 350px;	
-}
-#insert{
-	position: absolute;
-	top: 150px;
-	left: 700px;
-}
+
 #faqpage{
 	position: relative;
 	left: 500px;
+}
+header{
+	text-align: center;
 	
 }
+.search{
+	display: flex;
+	justify-content: center;
 
+}
+.insert{
+	padding: 0 2rem;
+}
+#wrap{
+	left: 200px;
+	border: 1px solid red;
+	margin: 0 auto;
+}
 </style>
 </head>
 
@@ -119,15 +123,25 @@ center{
 
 
 <%-- 검색기능 --%>
-<center>
-<div id="titleDiv">
+<header>
+<div class="search">
 	<form action="/doggybeta/faqsearch" method="post">
 	<input type="hidden" name="search" value="title">
 	<label style="background-color : "><input type="text" name="keyword"></label>
 	<input type="submit" value="검색">
 	</form>
+	
+	<div class="insert">
+<% if(loginUser != null){ %>
+	<input type="button" onclick="showWriteForm();" value="글쓰기">
+<%} %>
+	</div>
 </div>
-</center>
+
+
+
+</header>
+
 <br>
 <!-- 테이블 시작 -->
    <table class="board">
@@ -168,11 +182,7 @@ center{
 <br>    
    
 <!-- 테이블 종료 -->
-<% if(loginUser != null){ %>
-<div id="insert">
-	<input type="button" onclick="showWriteForm();" value="글쓰기">
-</div>
-<%} %>
+
 <%-- 페이징 처리 --%>
 <br><br><br>
 <br><br><br>
