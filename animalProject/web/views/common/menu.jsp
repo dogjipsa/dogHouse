@@ -12,32 +12,33 @@
 <html>
 
 <head>
-	<meta charset="UTF-8">
-	<title>Insert title here</title>
-	<link rel="stylesheet" href="/doggybeta/resources/css/psForm.css">
-	<link href='/doggybeta/resources/css/login.css' rel='stylesheet' type='text/css'>
-	<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet" />
-	<link href="https://fonts.googleapis.com/css?family=Sunflower:300,500,700&amp;subset=korean" rel="stylesheet">
-	<link href="/doggybeta/resources/css/mainV2.css" rel="stylesheet" type="text/css">
-	<script type="text/javascript" src="/doggybeta/resources/js/jquery-3.3.1.min.js"></script>
-	<script type="text/javascript" src="https://static.nid.naver.com/js/naveridlogin_js_sdk_2.0.0.js"
-		charset="utf-8"></script>
-	<script type="text/javascript">
-		$(function () {
-			$('.login-form').hide();
 
-			$('.btn').click(function () {
-				$('body').append('<div id="mask"></div>');
-				$('#mask').fadeIn(300);
-				$('.login-form').fadeIn(300);
-				$('.login-form').show();
-
-				$('#mask').click(function () {
-					$('#mask, .login-form').fadeOut(300);
-				});
-
-			});
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" href="/doggybeta/resources/css/psForm.css">
+<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet" />
+<link href='/doggybeta/resources/css/login.css' rel='stylesheet' type='text/css'>
+<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css?family=Sunflower:300,500,700&amp;subset=korean" rel="stylesheet">
+<link href="/doggybeta/resources/css/mainV2.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="/doggybeta/resources/js/jquery-3.3.1.min.js"></script>
+<script type="text/javascript" src="https://static.nid.naver.com/js/naveridlogin_js_sdk_2.0.0.js" charset="utf-8"></script>
+<script type="text/javascript">
+	 $(function() {
+ 		$('.login-form').hide();
+		 
+		$('.btn').click(function() {
+			$('body').append('<div id="mask"></div>');
+		    $('#mask').fadeIn(300);
+		    $('.login-form').fadeIn(300);
+			$('.login-form').show();
+			
+		    $('#mask').click(function() {
+		    	$('#mask, .login-form').fadeOut(300);
+		    });
+		    
 		});
+	});
 
 
 	</script>
@@ -46,7 +47,8 @@
 </head>
 
 <body>
-	<% if(loginUser == null) { %>
+
+	<% if(loginUser == null ) { %>
 	<input type='checkbox' id='menu_state' checked />
 	<div id='mask'> </div>
 	<nav>
@@ -149,7 +151,7 @@
 	<input type='checkbox' id='menu_state' checked />
 	<nav>
 		<ul class='doghouse'>
-			<li><a><span>doghouse</span></a></li>
+			<li><a><span><img src="/doggybeta/resources/images/로고test2.png" style="margin-left: 50px; padding: 10px 10px;" width="80px"></span></a></li>
 		</ul>
 		<a href='/doggybeta/jipsalogout'><span class='btn btn-1 btn-sign'>로그아웃</span></a>
 		<%= loginUser.getUserId() %>
@@ -171,11 +173,10 @@
 					<li><a href="/doggybeta/views/aboutus/teamIntroduce.jsp">팀
 							도그집사</a></li>
 					<li><a href="/doggybeta/views/aboutus/location.jsp">오시는 길</a></li>
-				</ul>
-			</li>
-			<li><a href='#' id='icon3'> <span>&nbsp;&nbsp;&nbsp;펫시터 찾기</span></a> </li>
-			<li class="m1"><a href='#' id='icon4'> <span>&nbsp;&nbsp;&nbsp;게시판</span>
-				</a>
+				</ul></li>
+			<li><a href='/doggybeta/views/findSitter/petSitterListView.jsp' id='icon3'> <span>&nbsp;&nbsp;&nbsp;펫시터	찾기</span></a> </li>
+			<li class="m1"><a href='#'  id='icon4'> <span>&nbsp;&nbsp;&nbsp;게시판</span>
+			</a>
 				<ul class="m2">
 					<li><a href='/doggybeta/nlist'>공지사항</a></li>
 					<li><a href='/doggybeta/flist'>자유게시판</a></li>

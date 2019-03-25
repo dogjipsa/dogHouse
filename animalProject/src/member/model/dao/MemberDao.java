@@ -17,12 +17,12 @@ public class MemberDao {
 		Member member = null;
 		PreparedStatement pstat = null;
 		ResultSet rSet = null;
-		StringBuffer query = new StringBuffer();
-		query.append("select * from member where user_id = ? and password = ?");
-		/*String query = "select * from member where user_id = ? and password = ?";*/
+		/*StringBuffer query = new StringBuffer();
+		query.append("select * from member where user_id = ? and password = ?");*/
+		String query = "select * from member where user_id = ? and password = ?";
 		System.out.println(userid +", "+userpwd);
 		try {
-			pstat = conn.prepareStatement(query.toString());
+			pstat = conn.prepareStatement(query);
 			pstat.setString(1, userid);
 			pstat.setString(2, userpwd);
 			rSet = pstat.executeQuery();
@@ -40,7 +40,8 @@ public class MemberDao {
 				member.setUserDate(rSet.getDate("user_date"));
 				member.setUserPwd(userpwd);
 				member.setUserDelete(rSet.getString("user_delete"));
-				
+				member.setNaverCode(rSet.getString("NAVER_CODE"));
+				System.out.println(member + " <- dao member");
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

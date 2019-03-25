@@ -42,6 +42,7 @@ public class freeBoardReplyServlet extends HttpServlet {
 
 //		int currentPage = Integer.parseInt(request.getParameter("page"));
 		int freeBoardNo = Integer.parseInt(request.getParameter("fnum"));
+		int freeReplyNo = Integer.parseInt(request.getParameter("frnum"));
 //		String freeBoardTitle = request.getParameter("ftitle");
 		String freeBoardWriter = request.getParameter("fwriter");
 		String freeBoardContent = request.getParameter("fcontent");
@@ -70,9 +71,17 @@ public class freeBoardReplyServlet extends HttpServlet {
 
 		// 댓글 등록
 		int result = frservice.insertReply(replyBoard);		
-
+		
+		
+		//댓글 조회
+		FreeBoardReply reply = frservice.selectReply(freeReplyNo);
+		
+		
+		
 		if (result > 0) {
 			response.sendRedirect("/doggybeta/flist");
+			request.setAttribute("reply", reply);
+			
 		} else {
 			RequestDispatcher view = request.getRequestDispatcher("views/freeBoard/freeBoardError.jsp");
 			request.setAttribute("message", freeBoardNo + "번글에 대한 댓글 등록 실패!");
