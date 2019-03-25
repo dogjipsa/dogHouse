@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ page
 	import="member.model.vo.Member, tipboard.model.vo.TipBoard, java.util.ArrayList"%>
+
 <%
 	ArrayList<TipBoard> list = (ArrayList<TipBoard>) request.getAttribute("list");
 	int listCount = ((Integer) request.getAttribute("listCount")).intValue();
@@ -39,29 +40,6 @@
 <script type="text/javascript">
 	function showWriteForm() {
 		location.href = "/doggybeta/views/tipboard/tipBoardWriteForm.jsp";
-	}
-	$(function() {
-		showDiv();
-		$("input[name=item]").on("change", function() {
-			showDiv();
-		});
-	});
-	function showDiv() {
-		if ($("input[name=item]").eq(0).is(":checked")) {
-			$("#titleDiv").css("display", "block");
-			$("#writerDiv").css("display", "none");
-			$("#dateDiv").css("display", "none");
-		}
-		if ($("input[name=item]").eq(1).is(":checked")) {
-			$("#titleDiv").css("display", "none");
-			$("#writerDiv").css("display", "block");
-			$("#dateDiv").css("display", "none");
-		}
-		if ($("input[name=item]").eq(2).is(":checked")) {
-			$("#titleDiv").css("display", "none");
-			$("#writerDiv").css("display", "none");
-			$("#dateDiv").css("display", "block");
-		}
 	}
 </script>
 </head>
@@ -227,41 +205,39 @@
 			<br>
 			<div id="searchForm" style="text-align:center;">
 				<form method="post" action="/doggybeta/tlist">
-					<select name="option">
+					<select name="option" id="option">
+						<%--페이지 넘어갈 시 검색한 내용에 대한 option selected 처리
+						차후 c:if로 처리 가능 --%>
+						<%if(search.equals("content")){ %>
+						<option value="title" selected>제목</option>
+						<%}else{ %>
 						<option value="title">제목</option>
+						<%} %>
+						<%if(search.equals("content")){ %>
+						<option value="content" selected>내용</option>
+						<%}else{ %>
 						<option value="content">내용</option>
+						<%} %>
+						<%if(search.equals("title_content")){ %>
+						<option value="title_content" selected>제목+내용</option>
+						<%}else{ %>
 						<option value="title_content">제목+내용</option>
+						<%} %>
+						<%if(search.equals("writer")){ %>
+						<option value="writer" selected>글쓴이</option>
+						<%}else{ %>
 						<option value="writer">글쓴이</option>
+						<%} %>
 					</select>
-					<input type="text" size="20" name="word">
+					<%-- 검색한 keyword를 페이지 이동해도 input에 남김 --%>
+					<%if(keyword==null){ %>
+					<input type="text" size="20" name="word" value="">
+					<%} else{%>
+					<input type="text" size="20" name="word" value="<%=keyword%>">
+					<%} %>
 					<input type="submit" value="검색">
 				</form>
-				<!-- <div>
-					<h2>검색할 항목을 선택하시오.</h2>
-					<input type="radio" name="item" value="title" checked> 제목
-					&nbsp; &nbsp; &nbsp; <input type="radio" name="item" value="writer">
-					작성자 &nbsp; &nbsp; &nbsp; <input type="radio" name="item"
-						value="date"> 날짜
-				</div>
-				<div id="titleDiv">
-					<form action="/first/tsearcht" method="post">
-						<label>검색할 제목을 입력하시오 : <input type="text" name="keyword"></label>
-						<input type="submit" value="검색">
-					</form>
-				</div>
-				<div id="writerDiv">
-					<form action="/doggybeta/tsearchw" method="post">
-						<label>검색할 작성자 아이디를 입력하시오 : <input type="text"
-							name="keyword"></label> <input type="submit" value="검색">
-					</form>
-				</div>
-				<div id="dateDiv">
-					<form action="/doggybeta/tsearchd" method="post">
-						<label>검색할 날짜를 선택하시오 : <input type="date" name="begin">
-							~ <input type="date" name="end"></label> <input type="submit"
-							value="검색">
-					</form>
-				</div> -->
+				
 			</center>
 			<div id="footer"><%@ include file="..//common/footer.jsp"%></div>
 		</div>
