@@ -3,10 +3,9 @@
     height:100%;
     display: grid;
     grid-template-columns: 1fr 2fr 1fr;
-    grid-template-rows: 1fr 5fr 1fr;
-    margin-left: 200px;
+    grid-template-rows: 1fr 6fr 1fr;
     background-color: #fafafc;
-    grid-gap: 15px;
+    grid-gap: 10px;
 }
 
 .wrap_content .section1{
@@ -98,7 +97,7 @@
     margin : 30px;
 }
 .wrap_content .section4 #reserv_table tr:hover{
-    opacity: 0.8;
+    background-color: rgba(0, 0, 0, 0.05);
 }
 #reserv_table thead{
     font-size: 15px;
@@ -115,10 +114,6 @@
     background-color: white;
     text-align: center;
     font-size: 12px;
-}
-
-#reserv_table tr th:nth-child(2) {
-    width: 50%;
 }
 
 .wrap_content .section4 .host_main {
@@ -186,5 +181,4 @@
     grid-column: span 3;
     border: 1px solid rgba(0,0,0,0.7);
     z-index: 1000;
-    margin-bottom: 60px;
 }
