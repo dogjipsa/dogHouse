@@ -137,7 +137,7 @@
 		<input type='checkbox' id='menu_state' checked />
 	<nav>
 		<ul class='doghouse'>
-			<li><a><span>doghouse</span></a></li>
+			<li><a><span><img src="/doggybeta/resources/images/로고test2.png" style="margin-left: 50px; padding: 10px 10px;" width="80px"></span></a></li>
 		</ul>
 		<a  href='/doggybeta/jipsalogout'><span class='btn btn-1 btn-sign'>로그아웃</span></a>
 		<%= loginUser.getUserId() %>
@@ -159,7 +159,7 @@
 							도그집사</a></li>
 					<li><a href="/doggybeta/views/aboutus/location.jsp">오시는 길</a></li>
 				</ul></li>
-			<li><a href='#' id='icon3'> <span>&nbsp;&nbsp;&nbsp;펫시터	찾기</span></a> </li>
+			<li><a href='/doggybeta/views/findSitter/petSitterListView.jsp' id='icon3'> <span>&nbsp;&nbsp;&nbsp;펫시터	찾기</span></a> </li>
 			<li class="m1"><a href='#'  id='icon4'> <span>&nbsp;&nbsp;&nbsp;게시판</span>
 			</a>
 				<ul class="m2">
