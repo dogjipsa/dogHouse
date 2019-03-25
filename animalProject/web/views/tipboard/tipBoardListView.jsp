@@ -12,13 +12,14 @@
 	//String search = null, keyword = null;
 	//java.sql.Date begin = null, end = null;
 	String search = null;
+	String keyword = null;
 	if (request.getAttribute("search") != null) {
 		search = request.getAttribute("search").toString();
 		/* if (search.equals("date")) {
 			begin = (java.sql.Date) request.getAttribute("begin");
 			end = (java.sql.Date) request.getAttribute("end");
 		} else { */
-			String keyword = request.getAttribute("keyword").toString();
+			keyword = request.getAttribute("keyword").toString();
 		System.out.print(search);
 		System.out.print(keyword);
 	}
@@ -128,23 +129,37 @@
 				%>
 			</table>
 			<br>
-			<%-- 페이징 처리 --%>
+			<%-- 페이징 처리  search가 null일 때 처리를 잘 못해서 모든 a태그 링크에 search가 null일 때와 null이 아닐 때 조건이 들어감--%>
 			<div style="text-align: center;">
 				<%
 					if (currentPage <= 1) {
 				%>
 				[맨처음]&nbsp;
 				<%
-					} else {
-				%>
-				<a href="/doggybeta/tlist?page=1">[맨처음]</a>&nbsp;
+					} else {  
+						%>
+							<%-- <a href="/doggybeta/tlist?page=<%=1%>">[맨처음]</a>&nbsp; --%>
+						<%-- <a href="/doggybeta/tlist?word=<%=keyword%>&page=<%=1%>&option=<%=search%>">[prev]</a> --%>
+						<%		if(search == null){//검색 조건을 유지한 채 [맨처음] 페이징 처리
+								%>
+								<a href="/doggybeta/tlist?page=<%=1%>">[맨처음]</a>
+								<% }else{ %>
+								<a href="/doggybeta/tlist?word=<%=keyword%>&page=<%=1%>&option=<%=search%>">[맨처음]</a>
+								<%} %>
+				<%	}%>
+				
 				<%
-					}
-				%>
-				<%
-					if ((currentPage - 10) < startPage && (currentPage - 10) > 1) {
-				%>
-				<a href="/doggybeta/tlist?page=<%=startPage - 10%>">[prev]</a>
+					if ((currentPage - 10) <= startPage && (currentPage - 10) >= 1) {//조건식에 =을 붙여줘야 11,21,31....페이지 일 때 링크가 뜸
+						%>
+						<%-- <a href="/doggybeta/tlist?page=<%=startPage - 1%>">[prev]</a> --%>
+						<%-- <a href="/doggybeta/tlist?word=<%=keyword%>&page=<%=startPage - 10%>&option=<%=search%>">[prev]</a> --%>
+						<%		if(search == null){//이전 페이지는 1x페이지 일때 10페이지로 이동, 2x페이지일 때 20페이지로 이동
+								%>
+								<a href="/doggybeta/tlist?page=<%=startPage - 1%>">[prev]</a>
+								<% }else{ %>
+								<a href="/doggybeta/tlist?word=<%=keyword%>&page=<%=startPage - 1%>&option=<%=search%>">[prev]</a>
+								<%} %>
+					
 				<%
 					} else {
 				%>
@@ -159,36 +174,31 @@
 							<font color="red" size="4"><b>[<%=p%>]
 							</b></font>
 							<%
-					} else {
-							if (search != null && search.equals("title")) {
-								%>
-								<a href="/doggybeta/tlist?keyword=<%=keyword%>&page=<%=p%>"><%=p%></a>
-								<%
-									} else if (search != null && search.equals("writer")) {
-								%>
-								<a href="/doggybeta/tlist?keyword=<%=keyword%>&page=<%=p%>"><%=p%></a>
-								<%
-									} else if (search != null && search.equals("content")) {
-								%>
-								<a href="/doggybeta/tlist?keyword=<%=keyword%>&page=<%=p%>"><%=p%></a>
-								<%	
-									}else if (search != null && search.equals("title_content")) {
-								%>
-									<a href="/doggybeta/tlist?keyword=<%=keyword%>&page=<%=p%>"><%=p%></a>
-								<%
-				
-							} else {
+						} else {//페이지 이동 시 옵션과 키워드를 유지한 채 페이징 처리
+							/* if (search != null && search.equals("title")) { */
+								System.out.println("뷰에서 keyword확인 : " + keyword);
+								System.out.println("뷰에서 search 확인 : " + search);
+								if(search == null){
 								%>
 								<a href="/doggybeta/tlist?page=<%=p%>"><%=p%></a>
-								<%
-							}
-						}
+								<% }else{ %>
+								<a href="/doggybeta/tlist?word=<%=keyword%>&page=<%=p%>&option=<%=search%>"><%=p%></a>
+								<%} %>
+								
+						<%}
 					}
 				%>&nbsp;
 				<%
-					if ((currentPage + 10) > endPage && (currentPage + 10) < maxPage) {
+					if ((currentPage + 10) > endPage /* && (currentPage + 10) < maxPage */) {
 				%>
-				<a href="/doggybeta/tlist?page=<%=endPage + 10%>">[next]</a>&nbsp;
+				<%-- <a href="/doggybeta/tlist?page=<%=endPage + 1%>">[next]</a>&nbsp; --%>
+				<%		if(search == null){
+								%>
+								<a href="/doggybeta/tlist?page=<%=endPage + 1%>">[next]</a>
+								<% }else{ %>
+								<a href="/doggybeta/tlist?word=<%=keyword%>&page=<%=endPage + 1%>&option=<%=search%>">[next]</a>
+								<%} %>
+				
 				<%
 					} else {
 				%>
@@ -203,7 +213,12 @@
 				<%
 					} else {
 				%>
-				<a href="/doggybeta/tlist?page=<%=maxPage%>">[맨끝]</a>
+				<%-- <a href="/doggybeta/tlist?page=<%=maxPage%>">[맨끝]</a> --%>
+					<%if(search == null){ %>
+								<a href="/doggybeta/tlist?page=<%=maxPage%>">[맨끝]</a>
+								<% }else{ %>
+								<a href="/doggybeta/tlist?word=<%=keyword%>&page=<%=maxPage%>&option=<%=search%>">[맨끝]</a>
+								<%} %>
 				<%
 					}
 				%>

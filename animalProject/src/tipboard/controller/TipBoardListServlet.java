@@ -34,16 +34,18 @@ public class TipBoardListServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		//페이지별로 출력되는 게시글 전체 조회 처리용 컨트롤러
 				//출력될 페이지 기본값 지정
+			request.setCharacterEncoding("utf-8");
 				int currentPage = 1;
 				
 				if(request.getParameter("page") != null) {
 					currentPage = Integer.parseInt(request.getParameter("page"));
 				}
-				
+				System.out.println("현재 페이지 : "+currentPage);
 				//검색조건과 검색내용을 가져온다.
 				String option = request.getParameter("option");
 				String word = request.getParameter("word");
-				
+				System.out.println("옵션 확인 : " + option);
+				System.out.println("word확인 : " + word);
 				//한 페이지에 출력할 목록 갯수 지정
 				int limit = 10;
 				
@@ -65,12 +67,13 @@ public class TipBoardListServlet extends HttpServlet {
 				int startPage = (((int)((double)currentPage / limit + 0.9)) - 1)
 								* limit + 1;
 				int endPage = startPage + limit - 1;
-				
+				System.out.println("startPage 조회 : " + startPage);
 				if(maxPage < endPage) {
 					endPage = maxPage;
 				}
 				
 				response.setContentType("text/html; charset=utf-8");
+				
 				RequestDispatcher view = null;
 				if(list.size() > 0) {//size가 0이어도 조회되어야한다고 생각함 else 삭제해야 할듯
 					view = request.getRequestDispatcher(
