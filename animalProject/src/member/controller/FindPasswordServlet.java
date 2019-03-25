@@ -38,7 +38,6 @@ public class FindPasswordServlet extends HttpServlet {
         super();
         // TODO Auto-generated constructor stub
     }
-
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
@@ -107,16 +106,15 @@ public class FindPasswordServlet extends HttpServlet {
 			//insert update는 그 후에 해도 괜찮음.
 			int re = new MemberService().updateTempPassword(member); //비밀번호 업데이트
 			if(re > 0) {
-			
 				Transport.send(msg);
 				System.out.println("The message sent successfully...");
-				out.println("<script>alert('임시 비밀번호가 있는 이메일이 성공적으로 전송되었습니다. 로그인 후 비밀번호를 변경해주시기 바랍니다.'); location.href='/doggybeta';</script>");
+				out.println("임시 비밀번호가 있는 이메일이 성공적으로 전송되었습니다. 로그인 후 비밀번호를 변경해주시기 바랍니다.');");
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		} else {
-			out.println("<script>alert('아이디 또는 이메일을 잘못 입력하셨습니다'); location.href='/doggybeta/views/member/findPassword.jsp';</script>");
+			out.println("아이디 또는 이메일을 잘못 입력하셨습니다");
 			out.flush();
 			out.close();
 		}

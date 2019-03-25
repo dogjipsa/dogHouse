@@ -1,35 +1,34 @@
 @charset "UTF-8";
+/* 비밀번호 찾기 페이지 스타일시트 */
 html {
-	background-image: url('/doggybeta/resources/images/APDT-Hero-2.jpg');
-	background-size: cover;
+	background: url(../images/APDT-Hero-2.jpg) no-repeat center center fixed; 
+    -webkit-background-size: 100%;
+    -moz-background-size: 100%;
+    -o-background-size: 100%;
+    background-size: 100%;
 	font-family: 'Sunflower', 'sans-serif';
-}
-#tb {
-	width: 380px;
-	height: 550px;
-	background: rgba(0,0,0,0.5);
-	color: #fff;
-	top: 50%;
-	left: 20%;
-	position: absolute;
-	transform: translate(-50%, -50%);
-	box-sizing: border-box;
-	padding: 60px 35px;
-	border-radius: 20px;
 }
 #doglogo {
 	width: 70px;
 	height: 70px;
-	position: absolute;
-	top: -15px;
-	left: 0;
+	position: relative;
+	float: right;
+	top: -10px;
+	/* top: 5%;
+	left: 20%; */
 }
-h1 {
-	margin: 0; padding: 0 0 3px;
+#tb {
+	width: 450px;
+	height: 300px;
+	background: rgba(0,0,0,0.5);
+	color: #fff;
+	top: 50%;
+	left: 30%;
 	position: absolute;
-	top: 1%;
-	left: 60px;
-	font-size: 25px;
+	transform: translate(-50%, -50%);
+	box-sizing: border-box;
+	padding: 30px 35px;
+	border-radius: 20px;
 }
 .mainInputForm {
 	position: relative;
@@ -67,7 +66,6 @@ h1 {
 }
 .labelJeong {
 	position: relative;
-	padding: 0;
 	width: 100%;
 	/* #A4A4A4 */
 	/* #848484 */
@@ -131,7 +129,7 @@ h1 {
 	-webkit-transform: translate3d(0, -50%, 0);
 	transform: translate3d(0, -50%, 0);
 }
-#tb input[type='submit'], input[type='button'], button, input[type='reset'] {
+#tb input[type='submit'] {
 	border: none;
 	outline: none;
 	background: #58B19F;
@@ -139,8 +137,10 @@ h1 {
 	font-size: 14px;
 	border-radius: 20px;
 	height: 28px;
-	width: 45%;
-	margin: 5px;
+	width: 25%;
+	position: relative;
+	float: right;
+	bottom: -20px;
 	font-family: 'Sunflower', 'sans-serif';
 }
 #tb input::placeholder {
@@ -149,61 +149,13 @@ h1 {
 	font-style: italic;
 	font-family: 'Sunflower', 'sans-serif';
 }
-#tb #chkId {
-	z-index: 9999;
-	font-size: 8pt;
-	position: absolute;
-	top: 50px;
-	height: 40px;
-	border-radius: 50%;
-	width: 12%;
-	left: 300px;
-}
-#tb #btnok {
-	z-index: 9999;
-	position: absolute;
-	top: 230px;
-	left: 300px;
-	height: 40px;
-	border-radius: 50%;
-	width: 12%;
-}
-#tb #sendbtn {
-	z-index: 9999;
-	position: absolute;
-	top: 31%;
-	left: 300px;
-	height: 40px;
-	border-radius: 50%;
-	width: 12%;
-}
 #tb input[type='submit']:hover {
 	cursor: pointer;
 	background: #93F0DD;
 	color: #fff;
 }
-#tb input[type='reset']:hover {
-	cursor: pointer;
-	background: #93F0DD;
-	color: #fff;
-}
-#tb input[type='button']:hover {
-	cursor: pointer;
-	background:#93F0DD;
-	color: #ff;
-}
-#tb button:hover {
-	cursor: pointer;
-	background: #93F0DD;
-	color: #fff;
-}
-#tb a {
-	position: absolute;
-	color: #fff;
-	font-size: 9pt;
-	bottom: 10px;
-	left: 250px;
-}
-#tb #nes {
+#tb p {
 	font-size: 11px;
+	position: relative;
+	bottom: -30px;
 }

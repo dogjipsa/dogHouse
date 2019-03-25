@@ -6,6 +6,7 @@
 <%@ page import='member.model.vo.Member' %>
 <%
 	Member loginUser = (Member)session.getAttribute("loginUser");
+	String access_token = (String)session.getAttribute("access_token");
 %>
 <!DOCTYPE html>
 <html>
@@ -14,7 +15,7 @@
 <title>Insert title here</title>
 <link rel="stylesheet" href="/doggybeta/resources/css/psForm.css">
 <link href='/doggybeta/resources/css/login.css' rel='stylesheet' type='text/css'>
-<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css?family=Sunflower:300,500,700&amp;subset=korean" rel="stylesheet">
 <link href="/doggybeta/resources/css/mainV2.css" rel="stylesheet" type="text/css">
 <script type="text/javascript" src="/doggybeta/resources/js/jquery-3.3.1.min.js"></script>
 <script type="text/javascript" src="https://static.nid.naver.com/js/naveridlogin_js_sdk_2.0.0.js" charset="utf-8"></script>
@@ -34,13 +35,20 @@
 		    
 		});
 	});
+	
+	 $(function() {
+		if(access_token != null) {
+			$('.userid').val(loginUser.getUserId());
+			$('.passwd').val(loginUser.getUserpwd());
+			form.submit();
+		} 
+	 });
 </script>
 <style>
-
 </style>
 </head>
 <body>
-	<% if(loginUser == null) { %>
+	<% if(loginUser == null || access_token == null) { %>
 	<input type='checkbox' id='menu_state' checked />
 	<div id='mask'> </div>
 	<nav>
@@ -93,21 +101,18 @@
     <!-- <img id='cancelBtn' src='/doggybeta/resources/images/cancel-button.jpg'> -->
   			<p class="login-text">
   				DOGHOUSE
-    			<!-- <span class="fa-stack fa-lg">
-      				<i class="fa fa-circle fa-stack-2x"></i>
-      				<i class="fa fa-lock fa-stack-1x"></i>
-    			</span> -->
-  			</p>
+  			</p> 
   			<input type="text" name='userid' id='userid' class="login-username" autofocus required placeholder="Email" />
   			<input type="password" name='userpwd' id='passwd' class="login-password" required required placeholder="Password" />
   			<a href='/doggybeta/jipsalogin'>
   			<input type="submit" name="Login" value="Login" class="login-submit" id='btnLogin'/></a><br>
-			<a href='/doggybeta/views/member/checkAdmitNumber.jsp'>
+			<a href='/doggybeta/views/member/termsOfService.jsp'>
 			<input type="button" name='enroll' value='회원가입' class='login-submit' id='btnEnroll'/></a>
 			<p align='center' id='orid'>------- 또는 -------</p>
+			<!-- http://127.0.0.1:8888/doggybeta/views/member/callback.jsp -->
 			<%
    				 String clientId = "obXTFPuiHDCuNQb5kAmx";//애플리케이션 클라이언트 아이디값";
-   				 String redirectURI = URLEncoder.encode("http://127.0.0.1:8888/doggybeta/index.jsp", "UTF-8");
+   				 String redirectURI = URLEncoder.encode("http://127.0.0.1:8888/doggybeta/naverlogin", "UTF-8");
    				 SecureRandom random = new SecureRandom();
    				 String state = new BigInteger(130, random).toString();
    				 String apiURL = "https://nid.naver.com/oauth2.0/authorize?response_type=code";
@@ -116,10 +121,10 @@
    				 apiURL += "&state=" + state;
    				 session.setAttribute("state", state);
     		 %>
-			<a href="<%=apiURL%>"><img style='position:relative;' height="47" width='240' src="/doggybeta/resources/images/naverButton/네이버 아이디로 로그인_완성형_White.PNG"/></a>
+			<a href="<%=apiURL%>"><img style='position:relative;' height="47" width='240' src="/doggybeta/resources/images/naverButton/네이버 아이디로 로그인_완성형_White.PNG"/></a> 
 			<br>
 			<br>
-  			<a href="/doggybeta/views/member/findPassword.jsp" class="login-forgot-pass" id='tempPwd'>forgot password?</a>
+  			<a href="/doggybeta/views/member/findPassword.jsp" class="login-forgot-pass" id='tempPwd'>비밀번호를 잊으셨나요?</a>
 	</form>
 	<script type="text/javascript">
 	$('.m1').click(function() {
@@ -131,8 +136,12 @@
 	});
 	</script>
 	<% } else { %>
-		<%-- <%= loginUser.getUserId() %> 님 환영합니다
-		<a href='/doggybeta/jipsalogout'>로그아웃</a> --%>
+	
+	
+	
+	
+		<%= loginUser.getUserId() %> 님 환영합니다
+		<a href='/doggybeta/jipsalogout'>로그아웃</a>
 		<input type='checkbox' id='menu_state' checked />
 	<nav>
 		<ul class='doghouse'>
@@ -140,6 +149,7 @@
 		</ul>
 		<a  href='/doggybeta/jipsalogout'><span class='btn btn-1 btn-sign'>로그아웃</span></a>
 		<%= loginUser.getUserId() %>
+		<%= access_token %>님 환영해요!
 		<!-- ---------------------------------------------------------------------------- -->
 <!-- 		<a href="#" class="login-forgot-pass">forgot password?</a>
 		<div class="underlay-photo"></div>
