@@ -70,5 +70,14 @@ public class FreeBoardReplyService {
 		return freeboard;
 	}
 
+
+	public FreeBoardReply selectReply(int freeReplyNo) {
+		Connection conn = getConnection();
+		FreeBoardReply freeReply = fdao.selectReply(conn, freeReplyNo);
+		close(conn);
+		
+		return freeReply;
+	}
+
 	
 }

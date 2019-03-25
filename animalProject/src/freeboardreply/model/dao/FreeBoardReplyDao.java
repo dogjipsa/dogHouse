@@ -25,7 +25,7 @@ public class FreeBoardReplyDao {
 		int result = 0;
 		PreparedStatement pstmt = null;
 		
-		String query = "INSERT INTO FREEBOARD_REPLY VALUES(1, ?, SYSDATE, 'user01', ?, 'N')";
+		String query = "INSERT INTO FREEBOARD_REPLY VALUES(seq_freply.nextval, ?, SYSDATE, 'user01', ?, 'N')";
 		
 		try {
 			pstmt = conn.prepareStatement(query);
@@ -87,6 +87,42 @@ public class FreeBoardReplyDao {
 		}
 		
 		return freeboard;
+	}
+
+	
+	public FreeBoardReply selectReply(Connection conn, int freeReplyNo) {
+		FreeBoardReply freeReply = null;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String query = "select * from freeboard_reply where freereply_no = ? and freeboard_delete in('N', 'n')";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, freeReplyNo);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				freeReply = new FreeBoardReply();
+				
+				freeReply.setFreeboardno(rset.getInt("FREEREPLY_NO"));
+				freeReply.setFreereplycontent(rset.getString("FREEREPLY_CONTENT"));
+				freeReply.setFreereplydate(rset.getDate("FREEREPLY_DATE"));
+				freeReply.setUserid(rset.getString("USER_ID"));
+				freeReply.setFreeboardno(rset.getInt("FREEBOARD_NO"));
+				freeReply.setFreeboarddelete(rset.getString("FREE_BOARD_DELETE"));				
+				
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return freeReply;
 	}
 
 

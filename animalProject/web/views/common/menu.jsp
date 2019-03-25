@@ -43,7 +43,8 @@
 </style>
 </head>
 <body>
-	<% if(loginUser == null) { %>
+
+	<% if(loginUser == null ) { %>
 	<input type='checkbox' id='menu_state' checked />
 	<div id='mask'> </div>
 	<nav>
