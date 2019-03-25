@@ -14,6 +14,7 @@
 <script type="text/javascript" src="/doggybeta/resources/js/jquery-3.3.1.min.js"></script>
 <script type="text/javascript"></script>
 <style type="text/css">
+
 table{
 	position: relative;
 	left: 400px;
@@ -31,6 +32,8 @@ h2{
     margin: 20px 10px;
 
 }
+
+
 
 </style> 
 </head>
@@ -64,13 +67,10 @@ h2{
 	<th>내용</th>
 	<td align="center"><%= freeboard.getFreeboardContent() %></td>
 </tr>
+
 <tr>
-	 <th colspan="2">
-	<%-- <<% if(loginUser != null){ %>
-		<a href="/doggybeta/views/freeboard/freeBoardReplyForm.jsp?fnum=<%= freeboard.getFreeboardNo() %>">[댓글달기]</a>
-	<% } %>
-	&nbsp; &nbsp;  --%> 
-	<% if(loginUser.getUserId().equals(freeboard.getUserId())){ %> 
+	<th colspan="2" align="center">
+<% if(loginUser.getUserId().equals(freeboard.getUserId())){ %> 
 		<a href="/doggybeta/fupview?fnum=<%= freeboard.getFreeboardNo() %>">[수정페이지로 이동]</a> 
 		&nbsp; &nbsp;
 		<a href="/doggybeta/fdelete?fnum=<%= freeboard.getFreeboardNo() %>">[글삭제]</a>
@@ -79,10 +79,34 @@ h2{
 	 <a href="/doggybeta/flist">[목록]</a> 
 	</th>	
 </tr>
+
 </table>
 
+<table>
+<% if(loginUser != null){ %>
+	<hr>
+	<form action="/doggybeta/freply" method="post">		
+		<input type="hidden" name="fnum" value="<%= freeboard.getFreeboardNo() %>">
+		<input type="hidden" name="page" value="">
+		<table align="center">
+<!-- 	<tr><th>제목</th><td><input type="text" name="btitle" style="width:766px"></td></tr> -->
+	<tr><th>작성자</th><td><input type="text" name="bwriter" style="width:766px" readonly value="<%= loginUser.getUserId() %>"></td></tr>
+	<tr><th>내용</th><td><textarea cols="50" rows="5" name="bcontent" style="width:766px"></textarea></td></tr>
+	<tr><th colspan="2" align="center">
+	<input type="submit" value="댓글등록"> &nbsp; 
+	<a href="/doggybeta/flist">[목록]</a>
+	</th></tr>
+</table>
+</form>
+<% } %>
+	
+</table>
 </div>
-		<div id="footer"><%@ include file="..//common/footer.jsp"%></div>
+<hr>
+
+
+		<div id="footer" align="right">
+			<%@ include file="..//common/footer.jsp"%></div>
 	</div>
 </body>
 </html>	

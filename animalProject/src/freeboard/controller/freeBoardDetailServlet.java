@@ -33,8 +33,9 @@ public class freeBoardDetailServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// 게시글 상세보기 처리용 컨트롤러
+		
 		int freeBoardNo = Integer.parseInt(request.getParameter("fnum"));
-		/*int currentPage = Integer.parseInt(request.getParameter("page"));*/
+//		int currentPage = Integer.parseInt(request.getParameter("page"));
 		
 		
 		FreeBoardService fservice = new FreeBoardService();
@@ -50,7 +51,7 @@ public class freeBoardDetailServlet extends HttpServlet {
 		if(freeboard != null) {
 			view = request.getRequestDispatcher("views/freeBoard/freeBoardDetailView.jsp");
 			request.setAttribute("freeboard", freeboard);
-			/*request.setAttribute("currentPage", currentPage);*/
+//			request.setAttribute("currentPage", currentPage);
 			view.forward(request, response);
 		}else {
 			view = request.getRequestDispatcher("views/freeBoard/freeBoardError.jsp");

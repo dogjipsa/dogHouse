@@ -7,6 +7,7 @@ import static common.JDBCTemplate.rollback;
 
 import java.sql.Connection;
 
+import freeboard.model.vo.FreeBoard;
 import freeboardreply.model.dao.FreeBoardReplyDao;
 import freeboardreply.model.vo.FreeBoardReply;
 import freeboardreply.model.vo.FreeBoardReply;
@@ -59,5 +60,15 @@ public class FreeBoardReplyService {
 		close(conn);
 		return result;
 	}
+
+
+	public FreeBoard selectFreeBoard(int freeBoardNo) {
+		Connection conn = getConnection();
+		FreeBoard freeboard = fdao.selectFreeBoard(conn, freeBoardNo);
+
+		close(conn);
+		return freeboard;
+	}
+
 	
 }
