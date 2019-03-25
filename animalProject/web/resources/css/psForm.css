@@ -58,7 +58,7 @@
 	color : white;
 }
 
-.ps_reg_form .section3 .image_box{
+.ps_reg_form .section2 .image_box{
 	height: 250px;
 	display: flex;
 	flex-direction: column;
@@ -66,16 +66,12 @@
 	justify-content: space-between;
 }
 
-.ps_reg_form .section3 .image_box .image_box_pic {
-	background-color: rgba(255,255,255,0.5);
-	border-radius: 20px;
-	width: 200px;
+.ps_reg_form .section2 .image_box .image_box_pic {
+	width: 90%;
+	margin-left: 5%;
 	height: 180px;
-	-webkit-box-shadow: 8px 20px 52px 3px rgba(245,242,245,0.4);
-	-moz-box-shadow: 8px 20px 52px 3px rgba(245,242,245,0.4);
-	box-shadow: 8px 20px 52px 3px rgba(245,242,245,0.4);
 }
-.ps_reg_form .section3 .map_box{
+.ps_reg_form .section3 #reg_map_box{
 	border:1px solid rgba(255,255,255,0.2);
 	height: 300px;
 }
@@ -83,25 +79,53 @@
 	display:none;
 }
 
-.ps_reg_form #file_btn{
+.ps_reg_form #fake-file-btn, #post-search{
   display:block;
   border: none;
   outline: none;
-  width: 140px;
-  height: 25px;
-  background: #c0c0c0;
+  width: 100%;
+  height: 30px;
+  background: #58B19F;
   border-radius: 5px;
   color: #fff;
   font-size: 14px;
   text-align: center;
 }
-.ps_reg_form #file_btn:hover{
+#ppics_upload {
+	display:block;
+  border: none;
+  outline: none;
+  width: 80%;
+  height: 30px;
+  background: #58B19F;
+  border-radius: 5px;
+  color: #fff;
+  font-size: 14px;
+  text-align: center;
+}
+
+#ppics_upload:hover{
 	cursor: pointer;
 	opacity:0.8;
 }
 
-#file-text {
+.ps_reg_form #fake-file-btn:hover, #post-search:hover{
+	cursor: pointer;
+	opacity:0.8;
+}
+
+#file-text, #ppics-text {
 	color : white;
+}
+.section3 .ppics_list{
+	display: flex;
+	justify-content: space-around;
+	width: 100%;
+	height: 120px;
+}
+.ppics_list .pp1, .pp2, .pp3 {
+	border: 1px solid rgba(255,255,255,0.5);
+	width: 30%;
 }
 
 .ps_reg_form #submit-btn {
@@ -115,38 +139,8 @@
 	border-radius: 10px; 
 }
 
-.ps_reg_form_popup_box{
-	position: absolute;
-	z-index: 1600;
-	background-color: rgba(241, 242, 246,0.9);
-  	border: 3px solid #58B19F;
-  	padding: 10px 25px;
-  	max-width: 400px;
-	border-radius: 20px;
-	top: 180px;
-	right:38%;
-	display: none;
-	flex-direction: column;
-	align-items: center;
-}
-.ps_reg_form_popup_box p{
-	color: black;
-  	font-size: 12px;
-  	font-weight: bold;
-}
-
-.ps_reg_form_popup_box button{
-	border: none;
-	outline: none;
-	width: 200px;
-	height: 20px;
-	background: #58B19F;
-	color: #fff;
-	font-size: 12px;
-	border-radius: 10px;
-}
-
-.ps_reg_form_popup_box button:hover{
-	cursor: pointer;
+.ps_reg_form #submit-btn:hover{
 	opacity: 0.8;
 }
+
+
