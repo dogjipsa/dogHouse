@@ -77,7 +77,7 @@ public class BookingHostServiceServlet extends HttpServlet {
 			out.flush();
 			out.close();
 		} else {
-			System.out.println("접속실패");
+			System.out.println("예약 없음");
 		}
 	}
 

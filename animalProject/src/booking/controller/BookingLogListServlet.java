@@ -54,7 +54,14 @@ public class BookingLogListServlet extends HttpServlet {
 			job.put("outdate", outdate);
 			job.put("progress", bc.getBookingProgress());
 			job.put("puserid", bc.getPuserId());
-			job.put("price", bc.getPrice());
+			int price = bc.getPrice();
+			if(bc.getServiceKind().equals("0") || bc.getServiceKind().equals("2")) {
+				price *= 0.8; // 당일 상품 20% 낮은 가격
+				price = (int) Math.floor(price/1000) * 1000; // 천단위 절사
+			} else {
+				price = (int) ((bc.getCheckOutDate().getTime() - bc.getCheckInDate().getTime())/(1000*60*60*24)) * bc.getPrice();
+			}
+			job.put("price", price);
 			job.put("addr", URLEncoder.encode(bc.getAddress(), "utf-8"));
 			job.put("pname", URLEncoder.encode(bc.getPetName(), "utf-8"));
 			job.put("kind", bc.getServiceKind());
