@@ -16,7 +16,6 @@
 <link href='/doggybeta/resources/css/login.css' rel='stylesheet' type='text/css'>
 <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet" />
 <link href="/doggybeta/resources/css/mainV2.css" rel="stylesheet" type="text/css">
-<script type="text/javascript"src="/doggybeta/resources/js/petSitting.js"></script>
 <script type="text/javascript" src="/doggybeta/resources/js/jquery-3.3.1.min.js"></script>
 <script type="text/javascript" src="https://static.nid.naver.com/js/naveridlogin_js_sdk_2.0.0.js" charset="utf-8"></script>
 <script type="text/javascript">
