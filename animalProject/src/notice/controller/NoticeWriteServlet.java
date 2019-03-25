@@ -62,7 +62,7 @@ public class NoticeWriteServlet extends HttpServlet {
 		
 		notice.setNoticeTitle(request.getParameter("title"));
 		notice.setManagerId(request.getParameter("writer"));
-		notice.setNoticeContent(request.getParameter("content"));
+		notice.setNoticeContent(request.getParameter("ir1"));
 
 		
 		String originFile = mrequest.getFilesystemName("upfile");

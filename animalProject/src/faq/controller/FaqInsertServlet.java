@@ -42,7 +42,7 @@ public class FaqInsertServlet extends HttpServlet {
 		
 		faq.setFaqTitle(request.getParameter("title"));
 		faq.setFaqType(request.getParameter("type"));
-		faq.setFaqContent(request.getParameter("content"));
+		faq.setFaqContent(request.getParameter("ir1"));
 		
 		System.out.println(faq);
 		int result = new FaqService().insertFaq(faq);
