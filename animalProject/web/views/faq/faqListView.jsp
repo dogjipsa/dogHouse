@@ -85,13 +85,10 @@ h2{
     border-bottom: 1px solid #ccc;  
 }
 
-.board tbody tr:hover{
-	background-color : #f3f6f7;
-}
-
 #faqpage{
 	position: relative;
 	left: 500px;
+	text-align: center;
 }
 header{
 	text-align: center;
@@ -186,7 +183,6 @@ header{
 <%-- 페이징 처리 --%>
 <br><br><br>
 <br><br><br>
-
 <div id="faqPage" >
 <% if(currentPage <= 1){ %>
 	[맨처음]&nbsp;
