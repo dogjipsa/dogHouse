@@ -417,6 +417,45 @@ public class FreeBoardDao {
 		return list;
 
 }
+
+	public FreeBoard selectFreeBoard(Connection conn, int freeBoardNo) {
+		FreeBoard freeboard = null;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String query = "select * from freeboard where freeboard_no = ?";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, freeBoardNo);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				
+				freeboard = new FreeBoard();
+				
+				freeboard.setFreeboardNo(rset.getInt("FREEBOARD_NO"));
+				freeboard.setFreeboardTitle(rset.getString("FREEBOARD_TITLE"));
+				freeboard.setFreeboardContent(rset.getString("FREEBOARD_CONTENT"));
+				freeboard.setFreeboardDate(rset.getDate("FREEBOARD_DATE"));
+				freeboard.setFreeboardOriginalFile(rset.getString("FREEBOARD_ORIGINFILE"));
+				freeboard.setFreeboardViews(rset.getInt("FREEBOARD_VIEWS"));
+				freeboard.setFreeboardRecommend(rset.getInt("FREEBOARD_RECOMMEND"));
+				freeboard.setUserId(rset.getString("USER_ID"));
+				freeboard.setFreeboardDelete(rset.getString("FREEBOARD_DELETE"));
+				freeboard.setFreeboardRefile(rset.getString("FREEBOARD_REFILE"));
+				
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return freeboard;
+	}
 }
 	
 	

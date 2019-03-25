@@ -83,6 +83,14 @@ public class FreeBoardService {
 		return list;
 	}
 
+	public FreeBoard selectFreeBoard(int freeBoardNo) {
+		Connection conn = getConnection();
+		FreeBoard freeBoard = fdao.selectFreeBoard(conn, freeBoardNo);
+		close(conn);
+		
+		return freeBoard;
+	}
+
 	
 	
 }

@@ -18,7 +18,7 @@ import freeboardreply.model.vo.FreeBoardReply;
 /**
  * Servlet implementation class BoardReplyServlet
  */
-@WebServlet("/breply")
+@WebServlet("/freply")
 public class freeBoardReplyServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -40,7 +40,7 @@ public class freeBoardReplyServlet extends HttpServlet {
 
 		request.setCharacterEncoding("utf-8");
 
-		int currentPage = Integer.parseInt(request.getParameter("page"));
+//		int currentPage = Integer.parseInt(request.getParameter("page"));
 		int freeBoardNo = Integer.parseInt(request.getParameter("fnum"));
 //		String freeBoardTitle = request.getParameter("ftitle");
 		String freeBoardWriter = request.getParameter("fwriter");
@@ -72,7 +72,7 @@ public class freeBoardReplyServlet extends HttpServlet {
 		int result = frservice.insertReply(replyBoard);		
 
 		if (result > 0) {
-			response.sendRedirect("/doggybeta/flist?page=" + currentPage);
+			response.sendRedirect("/doggybeta/flist");
 		} else {
 			RequestDispatcher view = request.getRequestDispatcher("views/freeBoard/freeBoardError.jsp");
 			request.setAttribute("message", freeBoardNo + "번글에 대한 댓글 등록 실패!");
