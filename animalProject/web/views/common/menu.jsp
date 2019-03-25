@@ -14,6 +14,7 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <link rel="stylesheet" href="/doggybeta/resources/css/psForm.css">
+<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet" />
 <link href='/doggybeta/resources/css/login.css' rel='stylesheet' type='text/css'>
 <link href="https://fonts.googleapis.com/css?family=Sunflower:300,500,700&amp;subset=korean" rel="stylesheet">
 <link href="/doggybeta/resources/css/mainV2.css" rel="stylesheet" type="text/css">
@@ -35,20 +36,13 @@
 		    
 		});
 	});
-	
-	 $(function() {
-		if(access_token != null) {
-			$('.userid').val(loginUser.getUserId());
-			$('.passwd').val(loginUser.getUserpwd());
-			form.submit();
-		} 
-	 });
+
 </script>
 <style>
 </style>
 </head>
 <body>
-	<% if(loginUser == null || access_token == null) { %>
+	<% if(loginUser == null) { %>
 	<input type='checkbox' id='menu_state' checked />
 	<div id='mask'> </div>
 	<nav>

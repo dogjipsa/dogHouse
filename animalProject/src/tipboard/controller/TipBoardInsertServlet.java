@@ -57,7 +57,11 @@ public class TipBoardInsertServlet extends HttpServlet {
 		
 		tboard.setTipBoardTitle(mrequest.getParameter("ttitle"));
 		tboard.setUserId(mrequest.getParameter("twriter"));
-		tboard.setTipBoardContent(mrequest.getParameter("tcontent"));
+		
+		//스마트에디터
+		request.setCharacterEncoding("utf-8");
+		tboard.setTipBoardContent(mrequest.getParameter("smarteditor"));
+		/*tboard.setTipBoardContent(mrequest.getParameter("tcontent"));*/
 		
 		String originalFileName = mrequest.getFilesystemName("tupfile");
 		
