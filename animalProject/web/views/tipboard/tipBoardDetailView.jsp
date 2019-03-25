@@ -66,7 +66,7 @@
 </td>
 </tr>
 </table>
-		
+
 		</div>
 		<div id="footer"><%@ include file="..//common/footer.jsp"%></div>
 	</div>
