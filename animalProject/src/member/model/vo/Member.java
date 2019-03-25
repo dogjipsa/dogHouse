@@ -20,13 +20,14 @@ public class Member implements Serializable {
 	private String userDelete;
 	private String useroriginfile;
 	private String userrefile;
+	private String naverCode;
 
 	public Member() {
 	}
 	
 	public Member(String userId, String userPwd, String email, String userName, String phone, String address,
 			String job, String petSitter, int price, Date userDate, String userDelete, String useroriginfile,
-			String userrefile) {
+			String userrefile, String naverCode) {
 		super();
 		this.userId = userId;
 		this.userPwd = userPwd;
@@ -41,6 +42,13 @@ public class Member implements Serializable {
 		this.userDelete = userDelete;
 		this.useroriginfile = useroriginfile;
 		this.userrefile = userrefile;
+		this.naverCode = naverCode;
+	}
+	public String getNaverCode() {
+		return naverCode;
+	}
+	public void setNaverCode(String naverCode) {
+		this.naverCode = naverCode;
 	}
 
 	public String getUserId() {
@@ -129,7 +137,7 @@ public class Member implements Serializable {
 	public String toString() {
 		return userId + ", " + userPwd + ", " + email + ", " + userName + ", " + phone + ", " + address + ", " + job
 				+ ", " + petSitter + ", " + price + ", " + userDate + ", " + userDelete + ", " + useroriginfile + ", "
-				+ userrefile;
+				+ userrefile + ", " + naverCode;
 	}
 	
 }

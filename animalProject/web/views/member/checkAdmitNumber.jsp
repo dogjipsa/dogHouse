@@ -9,6 +9,7 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <link rel="stylesheet" href="/doggybeta/resources/css/enroll.css">
+<link href="https://fonts.googleapis.com/css?family=Sunflower:300,500,700&amp;subset=korean" rel="stylesheet"> 
 </head>
 <script type="text/javascript" src="/doggybeta/resources/js/jquery-3.3.1.min.js"></script>
 <script type="text/javascript">
@@ -48,10 +49,10 @@
 			error: function(jqXHR, textStatus, errorThrown) {
 				console.log("error : "+jqXHR+","+textStatus+","+errorThrown);
 			}
-		});
+		}); //ajax
 		
 		return false; //클릭 이벤트 전달받음
-	}
+	} //function close;
 	function admit() {
 		var regExp = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
 		var e = $('#email').val();
@@ -82,9 +83,9 @@
 				error: function(jqXHR, textStatus, errorThrown) {
 					console.log("error : "+jqXHR+","+textStatus+","+errorThrown);
 				}
-			});
+			}); //ajax
 			return false;
-		}
+		} //else
 		return false;
 	}
 	
@@ -94,12 +95,14 @@
 		var nn = $('#number').val();
 			if(code == nn) {
 				alert('인증에 성공하였습니다!');
+				$('#signupbtn').prop('disabled', false).css("background-color", "");
 			} else {
 				alert('인증번호를 다시 입력해주세요!');
-				$('#signupbtn').hide();
+				/* $('#signupbtn').hide(); */
+				$('#signupbtn').prop('disabled', true).css('background-color','gray');
 			}
 		return false;
-	}
+	};
 	
 	$(function() {
 		//암호 확인입력상자의 focus가 사라졌을 때
@@ -114,67 +117,127 @@
 			}
 		});
 		
-		$('#phone').blur(function() {
-			console.log('포커스사라짐2');
-			var regExp = /^\d{3}-\d{3,4}-\d{4}$/;
-			
-			if(!regExp.test($('#phone').val())){
-				alert("'-'을 포함하여 휴대폰번호를 입력해주세요.");
-				return false;
-			}
-		});
-	});
+		/* if(!regExp.test($('#phone').val())){
+			alert("'-'을 포함하여 휴대폰번호를 입력해주세요.");
+			$('#phone').select();
+		} */
+	}); //암호 함수
+	
+	$(function(){
+
+	    $("#phone").on('keydown', function(e){
+	       // 숫자만 입력받기
+	    var trans_num = $('#phone').val().replace(/-/gi,'');
+		var k = e.keyCode;
+					
+		if(trans_num.length >= 11 && ((k >= 48 && k <=126) || (k >= 12592 && k <= 12687) || k==32 || k==229 || (k>=45032 && k<=55203)))
+		{
+	  	    e.preventDefault();
+		}
+	    }).on('blur', function(){ // 포커스를 잃었을때 
+	        if($('#phone').val() == '') return;
+
+	        // 기존 번호에서 - 를 삭제
+	        var trans_num = $('#phone').val().replace(/-/gi,'');
+	      
+	        // 입력값이 있을때만 실행
+	        if(trans_num != null && trans_num != '')
+	        {
+	            // 총 핸드폰 자리수는 11글자이거나, 10자
+	            if(trans_num.length==11 || trans_num.length==10) 
+	            {   
+	                // 유효성 체크
+	                var regExp_ctn = /^(01[016789]{1}|02|0[3-9]{1}[0-9]{1})([0-9]{3,4})([0-9]{4})$/;
+	                if(regExp_ctn.test(trans_num))
+	                {
+	                    // 유효성 체크에 성공하면 하이픈을 넣고 값을 바꿈
+	                    trans_num = trans_num.replace(/^(01[016789]{1}|02|0[3-9]{1}[0-9]{1})-?([0-9]{3,4})-?([0-9]{4})$/, "$1-$2-$3");                  
+	                    $('#phone').val(trans_num);
+	                }
+	                else
+	                {
+	                    alert("유효하지 않은 전화번호 입니다.");
+	                    $('#phone').val("");
+	                    $('#phone').focus();
+	                }
+	            }
+	            else 
+	            {
+	                alert("유효하지 않은 전화번호 입니다.");
+	                $('#phone').val("");
+	                $('#phone').focus();
+	            }
+	      }
+	  });  
+	    return false;
+	}); //phone 유효성 함수 close
+	
+	function agreement() {
+
+	} //약관동의 함수 close
 </script>
 </head>
 <body>
 <section>
-<h2>회원가입페이지</h2><br>
-	<h5>* 표시 항목은 필수입력 항목입니다.</h5>
-	<form action="/doggybeta/resistenroll" method="post" >
-	<table width="650" id='tb'>
-	<tr height="40">
-		<th width="150">*아이디</th>
-		<td><input type="text" name="userid" id="userid" required/>
-		&nbsp; <button onclick="return checkid();">중복확인</button></td>
-	</tr>
-	<tr height="40">
-		<th width="150">*이름</th>
-		<td><input type="text" name="username" required id='username'/></td>
-	</tr>
-	<tr height="40">
-		<th width="150">*이메일</th>
-		<td><input type='email' name='email' id='email' required/>
-		</td>
-	</tr>
-	<tr height="40">
-		<th width="150">*인증번호 입력</th>
-		<td><div id='di'><input type='text' name='number' id='number'/></div>
+<!-- <h2>회원가입페이지</h2><br> -->
+	<div id='tb'>
+	<h1>Create a new Account!</h1>
+	<img id='doglogo' src='/doggybeta/resources/images/로고test2.png'>
+	<form action="/doggybeta/resistenroll" method="post">
+		<span class='first_span'>
+			<input type="text" name="userid" class='mainInputForm inputForm' id="userid" required  />
+				<label class='inputLabel labelJeong' for='userid' data-content='*아 이 디'>
+					<span class='input_span span_second_jeong'>*아 이 디</span>
+				</label>
+		</span>
+		<input type='button' id='chkId' onclick="return checkid();" value='중복&#x00A;확인'>
+		
+		<span class='first_span'>
+			<input type="text" name="username" class='mainInputForm inputForm' required id='username'/>
+				<label class='inputLabel labelJeong' for='username' data-content='*이 름'>
+					<span class='input_span span_second_jeong'>*이 름</span>
+				</label>
+		</span>
+		<span class='first_span'>
+			<input type='email' name='email' id='email' class='mainInputForm inputForm' required placeholder='이메일 입력후 전송버튼을 눌러주세요'/>
+				<label class='inputLabel labelJeong' for='email' data-content='*이 메 일'>
+					<span class='input_span span_second_jeong'>*이 메 일</span>
+				</label>
+		</span>
 		<input type='submit' id='sendbtn' onclick='return admit();' value='전송'/>
+		
+		<span class='first_span'>
+			<input type='text' name='number' id='number' class='mainInputForm inputForm' placeholder='인증번호를 입력해주세요'/>
+				<label class='inputLabel labelJeong' for='number' data-content='*인 증 번 호 입 력'>
+					<span class='input_span span_second_jeong'>* 인 증 번 호 입 력</span>
+				</label>
+		</span>
 		<input type='button' id='btnok' onclick='return confirmNum();' value='확인'/>
-		</td>
-	</tr>
-	<tr height="40">
-		<th width="150">*암호</th>
-		<td><input type="password" name="userpwd" id="userpwd1" required/></td>
-	</tr>
-	<tr height="40">
-		<th width="150">*암호확인</th>
-		<td><input type="password" id="userpwd2" required/></td>
-	</tr>
-	<tr height="40">
-		<th width="150">전화번호</th>
-		<td><input type='tel' name='phone' id='phone'/></td>
-	</tr>
-	<tr height="40">
-		<th colspan="2">가입하기
-		<input type="submit" value="가입하기" id='signupbtn'/>&nbsp;
-		<input type="reset" value="작성취소"/>&nbsp;
-		<a href="/doggybeta/index.jsp">시작페이지로 이동</a>
-		</th>
-	</tr>
-	</table>
+		
+		<span class='first_span'>
+			<input type="password" name="userpwd" id="userpwd1" class='mainInputForm inputForm' required placeholder='비밀번호를 입력해주세요'/>
+				<label class='inputLabel labelJeong' for='userpwd1' data-content='*비 밀 번 호'>
+					<span class='input_span span_second_jeong'>*비 밀 번 호</span>
+				</label>
+		</span>
+		<span class='first_span'>
+			<input type="password" name="userpwd" id="userpwd2" class='mainInputForm inputForm' required/>
+				<label class='inputLabel labelJeong' for='userpwd2' data-content='*비 밀 번 호 확 인'>
+					<span class='input_span span_second_jeong'>*비 밀 번 호 확 인</span>
+				</label>
+		</span>
+		<span class='first_span'>
+			<input type='tel' name='phone' id='phone' class='mainInputForm inputForm'/>
+				<label class='inputLabel labelJeong' for='phone' data-content='전 화 번 호'>
+					<span class='input_span span_second_jeong'>전 화 번 호</span>
+				</label>
+		</span>
+		<input type="submit" value="가입하기" id='signupbtn'/>
+		<input type="reset" value="작성취소"/><br>
+		<p id='nes'>* 표시 항목은 필수입력 항목입니다.</p>
+		<a href="/doggybeta/index.jsp">시작 페이지로</a>
 	</form>
-	<%= keycode %>
+	</div>
 </section>
 </body>
 </html>

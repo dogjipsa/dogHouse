@@ -57,11 +57,10 @@ public class AdmitEnrollMemberServlet extends HttpServlet {
 		int port = 587;
 
 		URLDecoder.decode("urlcontext", "UTF-8");
-
-		String number = request.getParameter("number");
+		
 		String email = request.getParameter("email");
 
-		System.out.println(number + " !!! " + email);
+		System.out.println(" !!! " + email);
 		int idx = email.indexOf("@");
 
 		Properties prop = new Properties();
@@ -76,7 +75,8 @@ public class AdmitEnrollMemberServlet extends HttpServlet {
 
 		Session session = Session.getDefaultInstance(prop, new javax.mail.Authenticator() {
 			protected PasswordAuthentication getPasswordAuthentication() {
-				return new PasswordAuthentication(email.substring(0, idx), password);
+				return new PasswordAuthentication("2u3u123", password);
+				/*email.substring(0, idx)*/
 			}
 		});
 		session.setDebug(true);
@@ -85,7 +85,7 @@ public class AdmitEnrollMemberServlet extends HttpServlet {
 			StringBuffer buffer = new StringBuffer();
 			MimeMessage msg = new MimeMessage(session);
 			msg.setFrom(new InternetAddress("2u3u123@naver.com"));
-			msg.addRecipient(Message.RecipientType.TO, new InternetAddress(email));
+			msg.addRecipient(Message.RecipientType.TO, new InternetAddress(email)); //email
 
 			msg.setSubject("[doghouse]회원가입 인증 메일입니다.");
 

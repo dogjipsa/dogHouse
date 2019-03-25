@@ -85,7 +85,13 @@ public class MemberService {
 	         rollback(conn);
 	      close(conn);
 	      return result;
-	   }
+	 }
+	public int selectCheckNaverCode(String naverCode) {
+		Connection conn = getConnection();
+		int result = mdao.selectCheckNaverCode(conn, naverCode);
+		close(conn);
+		return result;
+	}
 	
 
 }
