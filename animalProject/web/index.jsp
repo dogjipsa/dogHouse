@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%
+	
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,7 +11,7 @@
 
 <!-- css -->
 <!-- 변경확인용 주석2  -->
-
+<link rel="shortcut icon" href="/doggybeta/resources/images/favicon-32x32.png">
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <link href="/doggybeta/resources/css/footer.css" rel="stylesheet" type="text/css">
 <style>
@@ -35,7 +38,6 @@
 	<div id="wrap">
 		  <div id="content">
 			<!-- 내용작성  -->
-			
 			<div class="w3-container"></div>
 
 			<div class="w3-content w3-display-container" style="max-width: 100%;">

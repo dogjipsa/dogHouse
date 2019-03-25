@@ -16,16 +16,20 @@ public class FreeBoardDao {
 	
 	public FreeBoardDao() {}
 
-	public int getListCount(Connection conn) {
-		int listCount = 0;
-		Statement stmt = null;
+	public int getListCount(Connection conn, HashMap<String, Object> listOpt) {
+		PreparedStatement pstmt = null;
 		ResultSet rset = null;
+		String opt = (String)listOpt.get("opt");
+		String inputdata = (String)listOpt.get("inputdata");
+		int listCount = 1;
+		
+		if(opt == null) {
 		
 		String query = "select count(*) from freeboard";
 		
 		try {
-			stmt = conn.createStatement();
-			rset = stmt.executeQuery(query);
+			pstmt = conn.prepareStatement(query);
+			rset = pstmt.executeQuery();
 			
 			if(rset.next()) {
 				listCount = rset.getInt(1);
@@ -34,93 +38,77 @@ public class FreeBoardDao {
 			e.printStackTrace();
 		}finally {
 			close(rset);
-			close(stmt);
-		}
-		
-		return listCount;
-	}
-	
-	
-	public FreeBoard selectFreeBoard(Connection conn, int boardNum) {
-		FreeBoard freeboard = null;
-		PreparedStatement pstmt = null;
-		ResultSet rset = null;
-		
-		String query = "select * from freeboard "
-				+ "where freeboard_no = ?";
-		
-		try {
-			pstmt = conn.prepareStatement(query);
-			pstmt.setInt(1, boardNum);
-			
-			rset = pstmt.executeQuery();
-			
-			if(rset.next()) {
-				
-				freeboard = new FreeBoard();
-				
-				freeboard.setFreeboardNo(rset.getInt("FREEBOARD_NO"));
-				freeboard.setFreeboardTitle(rset.getString("FREEBOARD_TITLE"));
-				freeboard.setFreeboardContent(rset.getString("FREEBOARD_CONTENT"));
-				freeboard.setFreeboardDate(rset.getDate("FREEBOARD_DATE"));
-				freeboard.setFreeboardOriginalFile(rset.getString("FREEBOARD_ORIGINFILE"));
-				freeboard.setFreeboardViews(rset.getInt("FREEBOARD_VIEWS"));
-				freeboard.setFreeboardRecommend(rset.getInt("FREEBOARD_RECOMMEND"));
-				freeboard.setUserId(rset.getString("USER_ID"));
-				freeboard.setFreeboardDelete(rset.getString("FREEBOARD_DELETE"));
-				freeboard.setFreeboardRefile(rset.getString("FREEBOARD_REFILE"));
-				
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}finally {
-			close(rset);
 			close(pstmt);
 		}
 		
-		return freeboard;
-	}
-
-
-	public ArrayList<FreeBoard> selectList(Connection conn) {
-		ArrayList<FreeBoard> list = new ArrayList<>();
-		Statement stmt = null;
-		ResultSet rset = null;
-		
-		String query = "select * from freeboard";
-		
-		try {
-			stmt = conn.createStatement();
-			rset = stmt.executeQuery(query);
+		}else if(opt.equals("0")) {
 			
-			while(rset.next()) {
+			String query = "select count(*) from freeboard where freeboard_title like ?";
+			
+			try {
+				pstmt = conn.prepareStatement(query);
+				pstmt.setString(1, "%" + inputdata + "%");
 				
-				FreeBoard freeboard = new FreeBoard();
+				rset = pstmt.executeQuery();
 				
-				freeboard.setFreeboardNo(rset.getInt("FREEBOARD_NO"));
-				freeboard.setFreeboardTitle(rset.getString("FREEBOARD_TITLE"));
-				freeboard.setFreeboardContent(rset.getString("FREEBOARD_CONTENT"));
-				freeboard.setFreeboardDate(rset.getDate("FREEBOARD_DATE"));
-				freeboard.setFreeboardOriginalFile(rset.getString("FREEBOARD_ORIGINFILE"));
-				freeboard.setFreeboardViews(rset.getInt("FREEBOARD_VIEWS"));
-				freeboard.setFreeboardRecommend(rset.getInt("FREEBOARD_RECOMMEND"));
-				freeboard.setUserId(rset.getString("USER_ID"));
-				freeboard.setFreeboardDelete(rset.getString("FREEBOARD_DELETE"));
-				freeboard.setFreeboardRefile(rset.getString("FREEBOARD_REFILE"));
-				
-				list.add(freeboard);
+				if(rset.next()) {
+					listCount = rset.getInt(1);
 				}
-						
-		} catch (Exception e) {
-			e.printStackTrace();
-		}finally {
-			close(rset);
-			close(stmt);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}finally {
+				close(rset);
+				close(pstmt);
+			}
+			
+			
+		}else if(opt.equals("1")) {
+			
+			String query = "select count(*) from freeboard where user_id like ?";
+			
+			try {
+				pstmt = conn.prepareStatement(query);
+				pstmt.setString(1, "%" + inputdata + "%");
+				
+				rset = pstmt.executeQuery();
+				
+				if(rset.next()) {
+					listCount = rset.getInt(1);
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}finally {
+				close(rset);
+				close(pstmt);
+			}
+			
+		}else if(opt.equals("2")) {
+			
+			String query = "select count(*) from freeboard_title like ? or freeboard_content like ?";
+			
+			try {
+				pstmt = conn.prepareStatement(query);
+				pstmt.setString(1, "%" + inputdata + "%");
+				pstmt.setString(2, "%" + inputdata + "%");
+				
+				rset = pstmt.executeQuery();
+				
+				if(rset.next()) {
+					listCount = rset.getInt(1);
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}finally {
+				close(rset);
+				close(pstmt);
+			}
+			
+			
 		}
+		return listCount;
 		
-		return list;
 	}
-
+	
 
 	public int insertFreeBoard(Connection conn, FreeBoard freeboard) {
 		int result = 0;
@@ -147,127 +135,6 @@ public class FreeBoardDao {
 		}
 		
 		return result;
-	}
-
-
-	public ArrayList<FreeBoard> selectTitleList(Connection conn, String title, int currentPage, int limit) {
-		ArrayList<FreeBoard> list = new ArrayList<FreeBoard>();
-		PreparedStatement pstmt = null;
-		ResultSet rset = null;
-		
-		String query = "select * from freeboard where freeboard_title like ?";
-		
-		try {
-			pstmt = conn.prepareStatement(query);
-			pstmt.setString(1, "%" + title + "%");
-			
-			rset = pstmt.executeQuery();
-			
-				while(rset.next()) {
-					FreeBoard freeboard = new FreeBoard();
-					
-					freeboard.setFreeboardNo(rset.getInt("FREEBOARD_NO"));
-					freeboard.setFreeboardTitle(rset.getString("FREEBOARD_TITLE"));
-					freeboard.setFreeboardContent(rset.getString("FREEBOARD_CONTENT"));
-					freeboard.setFreeboardDate(rset.getDate("FREEBOARD_DATE"));
-					freeboard.setFreeboardOriginalFile(rset.getString("FREEBOARD_ORIGINFILE"));
-					freeboard.setFreeboardViews(rset.getInt("FREEBOARD_VIEWS"));
-					freeboard.setFreeboardRecommend(rset.getInt("FREEBOARD_RECOMMEND"));
-					freeboard.setUserId(rset.getString("USER_ID"));
-					freeboard.setFreeboardDelete(rset.getString("FREEBOARD_DELETE"));
-					freeboard.setFreeboardRefile(rset.getString("FREEBOARD_REFILE"));
-					
-					list.add(freeboard);
-				}
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-		}finally {
-			close(rset);
-			close(pstmt);
-		}
-		return list;
-	}
-
-
-	public ArrayList<FreeBoard> selectWriterList(Connection conn, String userid, int currentPage, int limit) {
-		ArrayList<FreeBoard> list = new ArrayList<FreeBoard>();
-		PreparedStatement pstmt = null;
-		ResultSet rset = null;
-		
-		String query = "select * from freeboard where user_id like ?";
-		
-		try {
-			pstmt = conn.prepareStatement(query);
-			pstmt.setString(1, "%" + userid + "%");
-			
-			rset = pstmt.executeQuery();
-			
-				while(rset.next()) {
-					FreeBoard freeboard = new FreeBoard();
-					
-					freeboard.setFreeboardNo(rset.getInt("FREEBOARD_NO"));
-					freeboard.setFreeboardTitle(rset.getString("FREEBOARD_TITLE"));
-					freeboard.setFreeboardContent(rset.getString("FREEBOARD_CONTENT"));
-					freeboard.setFreeboardDate(rset.getDate("FREEBOARD_DATE"));
-					freeboard.setFreeboardOriginalFile(rset.getString("FREEBOARD_ORIGINFILE"));
-					freeboard.setFreeboardViews(rset.getInt("FREEBOARD_VIEWS"));
-					freeboard.setFreeboardRecommend(rset.getInt("FREEBOARD_RECOMMEND"));
-					freeboard.setUserId(rset.getString("USER_ID"));
-					freeboard.setFreeboardDelete(rset.getString("FREEBOARD_DELETE"));
-					freeboard.setFreeboardRefile(rset.getString("FREEBOARD_REFILE"));
-					
-					list.add(freeboard);
-				}
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-		}finally {
-			close(rset);
-			close(pstmt);
-		}
-		return list;
-	}
-
-
-	public ArrayList<FreeBoard> selectDateList(Connection conn, Date begin, Date end, int currentPage, int limit) {
-		ArrayList<FreeBoard> list = new ArrayList<FreeBoard>();
-		PreparedStatement pstmt = null;
-		ResultSet rset = null;
-		
-		
-		String query = "select * from freeboard where board_date between ? and ?";
-		
-		try {
-			pstmt = conn.prepareStatement(query);
-			pstmt.setDate(1, begin);
-			pstmt.setDate(2, end);
-			rset = pstmt.executeQuery();
-			
-				while(rset.next()) {
-					FreeBoard freeboard = new FreeBoard();
-					
-					freeboard.setFreeboardNo(rset.getInt("FREEBOARD_NO"));
-					freeboard.setFreeboardTitle(rset.getString("FREEBOARD_TITLE"));
-					freeboard.setFreeboardContent(rset.getString("FREEBOARD_CONTENT"));
-					freeboard.setFreeboardDate(rset.getDate("FREEBOARD_DATE"));
-					freeboard.setFreeboardOriginalFile(rset.getString("FREEBOARD_ORIGINFILE"));
-					freeboard.setFreeboardViews(rset.getInt("FREEBOARD_VIEWS"));
-					freeboard.setFreeboardRecommend(rset.getInt("FREEBOARD_RECOMMEND"));
-					freeboard.setUserId(rset.getString("USER_ID"));
-					freeboard.setFreeboardDelete(rset.getString("FREEBOARD_DELETE"));
-					freeboard.setFreeboardRefile(rset.getString("FREEBOARD_REFILE"));
-					
-					list.add(freeboard);
-				}
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-		}finally {
-			close(rset);
-			close(pstmt);
-		}
-		return list;
 	}
 
 
@@ -370,7 +237,7 @@ public class FreeBoardDao {
 					"FREEBOARD_DELETE, FREEBOARD_REFILE " + 
 					"FROM (SELECT * FROM FREEBOARD WHERE FREEBOARD_DELETE IN('n', 'N', null) " +
 					"ORDER BY FREEBOARD_NO ASC)) " +  
-					"WHERE RNUM >= ? AND RNUM <= ? ";
+					"WHERE RNUM >= ? AND RNUM <= ?";
 			
 			try {
 				pstmt = conn.prepareStatement(query);
@@ -414,8 +281,8 @@ public class FreeBoardDao {
 					"FREEBOARD_DELETE, FREEBOARD_REFILE " + 
 					"FROM (SELECT * FROM FREEBOARD " +
 					"WHERE FREEBOARD_TITLE LIKE ? AND FREEBOARD_DELETE IN('n', 'N', null) " +
-					"ORDER BY FREEBOARD_NO DESC)) " +  
-					"WHERE RNUM >= ? AND RNUM <= ? ";
+					"ORDER BY FREEBOARD_NO ASC)) " +  
+					"WHERE RNUM >= ? AND RNUM <= ?";
 			
 			try {
 				pstmt = conn.prepareStatement(query);
@@ -461,9 +328,9 @@ public class FreeBoardDao {
 					"USER_ID, " + 
 					"FREEBOARD_DELETE, FREEBOARD_REFILE " + 
 					"FROM (SELECT * FROM FREEBOARD " +
-					"WHERE FREEBOARD_TITLE LIKE ? AND FREEBOARD_DELETE IN('n', 'N', null) " +
-					"ORDER BY FREEBOARD_NO DESC)) " +  
-					"WHERE RNUM >= ? AND RNUM <= ? ";
+					"WHERE USER_ID LIKE ? AND FREEBOARD_DELETE IN('n', 'N', null) " +
+					"ORDER BY FREEBOARD_NO ASC)) " +  
+					"WHERE RNUM >= ? AND RNUM <= ?";
 			
 			try {
 				pstmt = conn.prepareStatement(query);
@@ -509,62 +376,16 @@ public class FreeBoardDao {
 					"USER_ID, " + 
 					"FREEBOARD_DELETE, FREEBOARD_REFILE " + 
 					"FROM (SELECT * FROM FREEBOARD " +
-					"WHERE USER_ID LIKE ? AND FREEBOARD_DELETE IN('n', 'N', null) " +
-					"ORDER BY FREEBOARD_NO DESC)) " +  
-					"WHERE RNUM >= ? AND RNUM <= ? ";
-			
-			try {
-				pstmt = conn.prepareStatement(query);
-				pstmt.setString(1, "%" + inputdata + "%");
-				pstmt.setInt(2, startRow);
-				pstmt.setInt(3, startRow+9);
-				
-				
-				rset = pstmt.executeQuery();
-				
-					while(rset.next()) {
-						FreeBoard freeboard = new FreeBoard();
-						
-						freeboard.setFreeboardNo(rset.getInt("FREEBOARD_NO"));
-						freeboard.setFreeboardTitle(rset.getString("FREEBOARD_TITLE"));
-						freeboard.setFreeboardContent(rset.getString("FREEBOARD_CONTENT"));
-						freeboard.setFreeboardDate(rset.getDate("FREEBOARD_DATE"));
-						freeboard.setFreeboardOriginalFile(rset.getString("FREEBOARD_ORIGINFILE"));
-						freeboard.setFreeboardViews(rset.getInt("FREEBOARD_VIEWS"));
-						freeboard.setUserId(rset.getString("USER_ID"));
-						freeboard.setFreeboardDelete(rset.getString("FREEBOARD_DELETE"));
-						freeboard.setFreeboardRefile(rset.getString("FREEBOARD_REFILE"));
-						
-						list.add(freeboard);
-					}
-				
-			} catch (Exception e) {
-				e.printStackTrace();
-			}finally {
-				close(rset);
-				close(pstmt);
-			}
-			
-		}else if(opt.equals("3")) {
-			
-			String query = "SELECT * " + 
-					"FROM (SELECT ROWNUM RNUM, FREEBOARD_NO, " + 
-					"FREEBOARD_TITLE, FREEBOARD_CONTENT, " + 
-					"FREEBOARD_DATE, " + 
-					"FREEBOARD_ORIGINFILE, FREEBOARD_VIEWS, " + 
-					"FREEBOARD_RECOMMEND, " + 
-					"USER_ID, " + 
-					"FREEBOARD_DELETE, FREEBOARD_REFILE " + 
-					"FROM (SELECT * FROM FREEBOARD " +
 					"WHERE FREEBOARD_TITLE LIKE ? OR FREEBOARD_CONTENT LIKE ? AND FREEBOARD_DELETE IN('n', 'N', null) " +
-					"ORDER BY FREEBOARD_NO DESC)) " +  
-					"WHERE RNUM >= ? AND RNUM <= ? ";
+					"ORDER BY FREEBOARD_NO ASC)) " +  
+					"WHERE RNUM >= ? AND RNUM <= ?";
 			
 			try {
 				pstmt = conn.prepareStatement(query);
 				pstmt.setString(1, "%" + inputdata + "%");
-				pstmt.setInt(2, startRow);
-				pstmt.setInt(3, startRow+9);
+				pstmt.setString(2, "%" + inputdata + "%");
+				pstmt.setInt(3, startRow);
+				pstmt.setInt(4, startRow+9);
 				
 				
 				rset = pstmt.executeQuery();
@@ -591,12 +412,50 @@ public class FreeBoardDao {
 				close(rset);
 				close(pstmt);
 			}
-			
 			
 		}
 		return list;
 
 }
+
+	public FreeBoard selectFreeBoard(Connection conn, int freeBoardNo) {
+		FreeBoard freeboard = null;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String query = "select * from freeboard where freeboard_no = ?";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, freeBoardNo);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				
+				freeboard = new FreeBoard();
+				
+				freeboard.setFreeboardNo(rset.getInt("FREEBOARD_NO"));
+				freeboard.setFreeboardTitle(rset.getString("FREEBOARD_TITLE"));
+				freeboard.setFreeboardContent(rset.getString("FREEBOARD_CONTENT"));
+				freeboard.setFreeboardDate(rset.getDate("FREEBOARD_DATE"));
+				freeboard.setFreeboardOriginalFile(rset.getString("FREEBOARD_ORIGINFILE"));
+				freeboard.setFreeboardViews(rset.getInt("FREEBOARD_VIEWS"));
+				freeboard.setFreeboardRecommend(rset.getInt("FREEBOARD_RECOMMEND"));
+				freeboard.setUserId(rset.getString("USER_ID"));
+				freeboard.setFreeboardDelete(rset.getString("FREEBOARD_DELETE"));
+				freeboard.setFreeboardRefile(rset.getString("FREEBOARD_REFILE"));
+				
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return freeboard;
+	}
 }
 	
 	

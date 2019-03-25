@@ -144,9 +144,20 @@
     background-color: rgba(30,144,255,0.7);
     height: 50px;
 }
+.host_table tbody tr{
+    height: 50px;
+    text-align: center;
+    font-size: 12px;
+    cursor: pointer;
+    background-color: white;
+}
+.host_table tbody tr:hover{
+    background-color: rgba(0, 0, 0, 0.05);
+}
 
 .wrap_content .section4 .host_table table, tr, th, td{
     border-collapse: collapse;
+    margin : 30px;
 }
 
 .host_main .host_side1{

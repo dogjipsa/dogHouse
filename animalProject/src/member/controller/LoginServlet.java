@@ -34,25 +34,54 @@ public class LoginServlet extends HttpServlet {
 		// 로그인처리용 컨트롤러
 		System.out.println("멤버서블릿 호출");
 		
-		String userid = request.getParameter("userid");
-		String passwd = request.getParameter("userpwd");
-		Member loginUser = new MemberService().loginMember(userid, passwd);
-		System.out.println("전송값 : "+ userid + ", " + passwd);
+		String access_token = (String)request.getAttribute("access_token");
+		System.out.println(access_token + "<- 회원가입 후 즉시 로그인처리");
 		
-		response.setContentType("text/html; charset=utf-8");
-		
-		if(loginUser != null) {
-			HttpSession session = request.getSession();
-			//session.setMaxInactiveInterval(10*60);
-			System.out.println("세션아이디 : " + session.getId());
-			session.setAttribute("loginUser", loginUser);
-		
-			response.sendRedirect("/doggybeta/index.jsp");
+		if(access_token != null) {
+			String naverId = (String)request.getAttribute("naverId");
+			System.out.println("naverId : " + naverId);
+			String passwd = "";
+			Member loginUser = new MemberService().loginMember(naverId, passwd);
+			response.setContentType("text/html; charset=utf-8");
+			
+			if(loginUser != null) {
+				HttpSession session = request.getSession();
+				session.setAttribute("access_token", access_token);
+				//session.setMaxInactiveInterval(10*60);
+				System.out.println("세션아이디 : " + session.getId());
+				session.setAttribute("loginUser", loginUser);
+			
+				response.sendRedirect("/doggybeta/index.jsp");
+			} else {
+				RequestDispatcher view = request.getRequestDispatcher("views/member/memberError.jsp");
+				request.setAttribute("message", "로그인 실패함!!");
+				view.forward(request, response);
+			}
+			
 		} else {
-			RequestDispatcher view = request.getRequestDispatcher("views/member/memberError.jsp");
-			request.setAttribute("message", "로그인 실패!");
-			view.forward(request, response);
+			String userid = request.getParameter("userid");
+			String passwd = request.getParameter("userpwd");
+			Member loginUser = new MemberService().loginMember(userid, passwd);
+			System.out.println("전송값 : "+ userid + ", " + passwd);
+			
+			response.setContentType("text/html; charset=utf-8");
+			
+			if(loginUser != null) {
+				HttpSession session = request.getSession();
+				//session.setMaxInactiveInterval(10*60);
+				System.out.println("세션아이디 : " + session.getId());
+				
+				session.setAttribute("loginUser", loginUser);
+			
+				response.sendRedirect("/doggybeta/index.jsp");
+			} else {
+				RequestDispatcher view = request.getRequestDispatcher("views/member/memberError.jsp");
+				request.setAttribute("message", "로그인 실패!");
+				view.forward(request, response);
+			}
 		}
+		
+		
 		
 	}
 

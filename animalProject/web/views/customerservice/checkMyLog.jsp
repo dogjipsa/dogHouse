@@ -21,12 +21,15 @@
 			<input type="radio" name="item" id="cml_host" value="host">
 
 			<ul class="navigation__list">
-				<li class="navigation__item"><label for="cml_booking" class="item__icon"><span
-							class="icon__emoji"><img src="/doggybeta/resources/images/dog.png" alt=""></span></label><span class="item__text">예약/결제내역</span></li>
-				<li class="navigation__item"><label for="cml_host" class="item__icon"><span
-							class="icon__emoji"><img src="/doggybeta/resources/images/dog2.png" alt=""></span></label><span class="item__text">호스트 서비스</span></li>
-				<li class="navigation__item"><label class="item__icon"><span class="icon__emoji"><img src="/doggybeta/resources/images/dog3.png" alt=""></span></label><span
-						class="item__text">...</span></li>
+				<li class="navigation__item"><label for="cml_booking" class="item__icon"><span class="icon__emoji"><img
+								src="/doggybeta/resources/images/dog.png"></span></label><span
+						class="item__text">예약/결제내역</span></li>
+				<li class="navigation__item"><label for="cml_host" class="item__icon"><span class="icon__emoji"><img
+								src="/doggybeta/resources/images/dog2.png"></span></label><span class="item__text">
+									호스트 서비스</span></li>
+				<li class="navigation__item"><label class="item__icon"><span class="icon__emoji"><img
+								src="/doggybeta/resources/images/dog3.png"></span></label><span
+						class="item__text">마이펫 등록</span></li>
 			</ul><span class="icon__emoji">
 		</div>
 		<div class="section2">section2 - 페이지 내용 헤더</div>
@@ -52,19 +55,18 @@
 							<tr>
 								<th>예약번호</th>
 								<th>서비스 종류</th>
-								<th>견종</th>
-								<th>크기</th>
 								<th>이름</th>
+								<th>요구사항/특징</th>
 								<th>이용날짜</th>
-								<th>가격</th>
+								<th>총 가격</th>
 								<th>진행 상황</th>
-								<th>수락하기</th>
 							</tr>
 						</thead>
+						<tbody></tbody>
 					</table>
 				</div>
 				<div class="host_side1">
-					<div class="host_map"></div>
+					<div class="host_map" id="map"></div>
 					<p>주소 텍스트...</p>
 				</div>
 				<div class="host_side2">
@@ -90,9 +92,11 @@
 		</div>
 		<div class="section5">section5 - 페이징 변경 섹션</div>
 	</div>
-
 	<div id="footer"><%@ include file="..//common/footer.jsp"%></div>
 	<script src="/doggybeta/resources/js/checkMyLog.js"></script>
+	<script type="text/javascript"
+		src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=k4mpqvig7k&callback=initMap"></script>
+	<script src="/doggybeta/resources/js/hmap.js"></script>
 </body>
 
 </html>

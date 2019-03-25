@@ -1,4 +1,4 @@
-package freeboard.controller;
+package freeboardreply.controller;
 
 import java.io.IOException;
 
@@ -9,13 +9,16 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import board.model.service.BoardService;
-import board.model.vo.Board;
+
+
+import freeboard.model.vo.FreeBoard;
+import freeboardreply.model.service.FreeBoardReplyService;
+import freeboardreply.model.vo.FreeBoardReply;
 
 /**
  * Servlet implementation class BoardReplyServlet
  */
-@WebServlet("/breply")
+@WebServlet("/freply")
 public class freeBoardReplyServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -37,41 +40,42 @@ public class freeBoardReplyServlet extends HttpServlet {
 
 		request.setCharacterEncoding("utf-8");
 
-		int currentPage = Integer.parseInt(request.getParameter("page"));
-		int boardNum = Integer.parseInt(request.getParameter("bnum"));
-		String boardTitle = request.getParameter("btitle");
-		String boardWriter = request.getParameter("bwriter");
-		String boardContent = request.getParameter("bcontent");
+//		int currentPage = Integer.parseInt(request.getParameter("page"));
+		int freeBoardNo = Integer.parseInt(request.getParameter("fnum"));
+//		String freeBoardTitle = request.getParameter("ftitle");
+		String freeBoardWriter = request.getParameter("fwriter");
+		String freeBoardContent = request.getParameter("fcontent");
 
-		BoardService bservice = new BoardService();
+		FreeBoardReplyService frservice = new FreeBoardReplyService();
 
 		// 원글 조회
-		Board originBoard = bservice.selectBoard(boardNum);
+		FreeBoard originBoard = frservice.selectFreeBoard(freeBoardNo);
 
 		// 댓글 객체 생성
-		Board replyBoard = new Board();
-		replyBoard.setBoardContent(boardContent);
-		replyBoard.setBoardTitle(boardTitle);
-		replyBoard.setBoardWriter(boardWriter);
-		replyBoard.setBoardReplyLev(originBoard.getBoardReplyLev() + 1);
-		replyBoard.setBoardRef(originBoard.getBoardRef());
+		FreeBoardReply replyBoard = new FreeBoardReply();
+		replyBoard.setFreereplycontent(freeBoardContent);;
+	//	replyBoard.setBoardTitle(boardTitle);
+		replyBoard.setUserid(freeBoardWriter);
+		replyBoard.setFreeboardno(originBoard.getFreeboardNo());
+	//	replyBoard.setBoardReplyLev(originBoard.getBoardReplyLev() + 1);
+	//	replyBoard.setBoardRef(originBoard.getBoardRef());
 		
-		if (replyBoard.getBoardReplyLev() == 2) // 댓글의 댓글일 때
-			replyBoard.setBoardReplyRef(originBoard.getBoardNum());
+	//	if (replyBoard.getBoardReplyLev() == 2) // 댓글의 댓글일 때
+	//		replyBoard.setBoardReplyRef(originBoard.getBoardNum());
 		
-		replyBoard.setBoardReplySeq(1);
+	//	replyBoard.setBoardReplySeq(1);
 
 		// 같은 레벨의 기존 댓글의 seq 값 1증가 처리함
-		bservice.updateReplySeq(replyBoard);
+	//	bservice.updateReplySeq(replyBoard);
 
 		// 댓글 등록
-		int result = bservice.insertReply(replyBoard);		
+		int result = frservice.insertReply(replyBoard);		
 
 		if (result > 0) {
-			response.sendRedirect("/first/blist?page=" + currentPage);
+			response.sendRedirect("/doggybeta/flist");
 		} else {
-			RequestDispatcher view = request.getRequestDispatcher("views/board/boardError.jsp");
-			request.setAttribute("message", boardNum + "번글에 대한 댓글 등록 실패!");
+			RequestDispatcher view = request.getRequestDispatcher("views/freeBoard/freeBoardError.jsp");
+			request.setAttribute("message", freeBoardNo + "번글에 대한 댓글 등록 실패!");
 			view.forward(request, response);
 		}
 

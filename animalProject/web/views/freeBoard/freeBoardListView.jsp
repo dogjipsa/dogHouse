@@ -9,6 +9,15 @@
 	int maxPage = ((Integer)request.getAttribute("maxPage")).intValue();
 	int currentPage = ((Integer)request.getAttribute("currentPage")).intValue(); 
    
+	String opt = null;
+	String inputdata = null;
+	
+		if(request.getAttribute("opt") != null){
+			opt = request.getAttribute("opt").toString();
+			
+			if(request.getAttribute("inputdata") != null){
+				inputdata = request.getAttribute("inputdata").toString();	 
+			}}
    %>
 
 <!DOCTYPE html>
@@ -28,9 +37,15 @@ function showWriteForm(){
 	th{ 
 	background-color : #D09E88;
 	}
+	
 	#searchT{ 
 	text-align:center;	
 	}
+	
+	.icon-left-open 
+	{ *zoom: expression( this.runtimeStyle['zoom'] = '1',
+	 this.innerHTML = '&#xe800;&nbsp;'); }
+	
 </style>
 
 </head>
@@ -54,7 +69,7 @@ function showWriteForm(){
 	<% }else{ %>
 	<td align="center"><%= f.getFreeboardTitle() %></td>
 	<% } %>	
-	<td align="center"><%= f.getFreeboardContent() %></a></td>
+	<td align="center"><%= f.getFreeboardContent() %></td>
 	<td align="center"><%= f.getFreeboardDate() %></td>
  	<td align="center"><%= f.getFreeboardViews() %></td>
 	<td align="center">
@@ -67,43 +82,15 @@ function showWriteForm(){
 	</tr>
 <% } %>
 </table>
-<div style="align:center; text-align:center;">
-	<button type="button" style="float:right;" onclick="showWriteForm()";>글쓰기</button></div>	
-	
-	<%-- 페이지징 처리 --%>
-<div style="text-align:center;">
-<% if(currentPage <= 1){ %>
-	[맨처음]&nbsp;
-<% }else{ %>
-	<a href="/doggybeta/flist?page=1">[맨처음]</a>&nbsp;
+
+<%-- 글쓰기 --%>
+<% if(loginUser != null){ %>
+	<div style="align:center; text-align:center;">
+	<button type="button" style="float:right;" onclick="showWriteForm()";>글쓰기</button>
+	</div>
 <% } %> 
-<!-- 이전 -->
-<% if((currentPage - 10) < startPage && (currentPage - 10) > 1){ %>
-	<a href="/doggybeta/flist?page=<%= startPage - 2 %>">[prev]</a>
-<% }else{ %>
-	[prev]
-<% } %>
 
-<!-- 현재 페이지가 포함된 페이지 그룹 숫자 출력 처리 -->
-<% for(int p = startPage; p <= endPage; p++){ %>
-	<a href="/doggybeta/flist?page=<%= p %>"><%= p %></a>
-<% } %> &nbsp;
-
-<!-- 다음 -->
-<% if((currentPage + 10) > endPage && (currentPage + 10) < maxPage){ %>
-	<a href="/doggybeta/flist?page=<%= endPage + 10 %>">[next]</a>&nbsp;
-<% }else{ %>
-	[next]&nbsp;
-<% } %>
-
-<% if(currentPage >= maxPage){ %>
-	[맨끝]
-<% }else{ %>
-	<a href="/doggybeta/flist?page=<%= maxPage %>">[맨끝]</a>
-<% } %>
-</div> 	  
-	
-	<%-- 검색기능 --%>
+<%-- 검색기능 --%>
 <br>
 <div id="searchT">
  <form name="form1" method="post" action="/doggybeta/flist">
@@ -115,8 +102,44 @@ function showWriteForm(){
  <input type="text" size="20" name="inputdata" />&nbsp;
  <input type="submit" value ="검색"/>
 </form>
-
 </div>
+	
+	<%-- 페이지징 처리 --%>
+<div style="text-align:center;">
+<% if(currentPage <= 1){ %>
+	[맨처음]&nbsp;
+<% }else{ %>
+	<a href="/doggybeta/flist?page=1">[맨처음]</a>&nbsp;
+<% } %> 
+<!-- 이전 -->
+<% if((currentPage - 10) <= startPage && (currentPage - 10) >= 1){ %>
+	<a href="/doggybeta/flist?page=<%= startPage - 1 %>"></a>
+<% }else{ %>
+	<div class='icon-left-open'></div>
+<% } %>
+
+<!-- 현재 페이지가 포함된 페이지 그룹 숫자 출력 처리 -->
+<% for(int p = startPage; p <= endPage; p++){ %>
+	<% if(opt == null){ %>
+	<a href="/doggybeta/flist?page=<%= p %>"><%= p %></a>
+	<% }else{ %>
+	<a href="/doggybeta/flist?opt=<%= opt %>&inputdata=<%= inputdata %>&page=<%= p %>"><%= p %></a>
+<% }} %> &nbsp;
+
+<!-- 다음 -->
+<% if((currentPage + 10) > endPage){ %>
+	<a href="/doggybeta/flist?page=<%= endPage + 1 %>">[next]</a>&nbsp;
+<% }else{ %>
+	[next]&nbsp;
+<% } %>
+
+<% if(currentPage >= maxPage){ %>
+	[맨끝]
+<% }else{ %>
+	<a href="/doggybeta/flist?page=<%= maxPage %>">[맨끝]</a>
+<% } %>
+</div> 	  
+	
 
 		</div>
 		<div id="footer"><%@ include file="..//common/footer.jsp"%></div>

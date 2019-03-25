@@ -38,7 +38,6 @@ public class BookingLogListServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String userid = request.getParameter("userid");
-		
 		ArrayList<BookingCheck> list = new BookingService().selectBkList(userid);
 		
 		if(list.size() > 0) {

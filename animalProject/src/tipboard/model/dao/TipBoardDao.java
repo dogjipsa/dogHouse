@@ -24,9 +24,11 @@ public class TipBoardDao {
 		String query = "select count(*) from tipboard";
 		
 		try {
+			System.out.println("페이징 변경시 option이 뭐냐?" + option);
 			if(option == null) {
 				stmt = conn.createStatement();
-				rset = stmt.executeQuery(query);				
+				rset = stmt.executeQuery(query);	
+				System.out.println("여기로 가는지 확인");
 			}else if(option.equals("title")) {
 				query = "select count(*) from tipboard where tipboard_title like ? ";
 				pstmt = conn.prepareStatement(query);
@@ -48,7 +50,11 @@ public class TipBoardDao {
 				pstmt = conn.prepareStatement(query);
 				pstmt.setString(1, "%" + word + "%");
 				rset = pstmt.executeQuery();
-			}			
+			}else {
+				stmt = conn.createStatement();
+				rset = stmt.executeQuery(query);	
+				System.out.println("여기로 가는지 확인2");
+			}
 			
 			if(rset.next()) {
 				listCount = rset.getInt(1);
