@@ -12,6 +12,8 @@ public class FreeBoardReply {
 	private String freeboarddelete;
 	
 	
+	public FreeBoardReply() {}
+	
 	public FreeBoardReply(int freereply, String freereplycontent, Date freereplydate, String userid, int freeboardno,
 			String freeboarddelete) {
 		super();
@@ -22,6 +24,7 @@ public class FreeBoardReply {
 		this.freeboardno = freeboardno;
 		this.freeboarddelete = freeboarddelete;
 	}
+	
 
 	
 	public int getFreereply() {

@@ -12,25 +12,18 @@ import java.util.HashMap;
 
 import freeboard.model.dao.FreeBoardDao;
 import freeboard.model.vo.FreeBoard;
+import freeboardreply.model.vo.FreeBoardReply;
 
 public class FreeBoardService {
 	private FreeBoardDao fdao = new FreeBoardDao();
 	
 	public FreeBoardService() {}
 	
-	public int getListCount() {
+	public int getListCount(HashMap<String, Object> listOpt) {
 		Connection conn = getConnection();
-		int listCount = fdao.getListCount(conn);
+		int listCount = fdao.getListCount(conn, listOpt);
 		close(conn);
 		return listCount;
-	}
-
-	
-	public ArrayList<FreeBoard> selectList() {
-		Connection conn = getConnection();
-		ArrayList<FreeBoard> list = fdao.selectList(conn);
-		close(conn);
-		return list;
 	}
 
 	
@@ -45,15 +38,6 @@ public class FreeBoardService {
 	}
 
 	
-	public FreeBoard selectFreeBoard(int freeboardNo) {
-		Connection conn = getConnection();
-	//	ArrayList<FreeBoard> list = new ArrayList<>();
-		FreeBoard fboard = fdao.selectFreeBoard(conn, freeboardNo);
-		
-//		FreeBoard freeboard = fdao.selectBoard(conn, freeboardNo);
-		close(conn);
-		return fboard;
-	}
 
 	public int insertFreeBoard(FreeBoard freeBoard) {
 		Connection conn = getConnection();
@@ -92,29 +76,6 @@ public class FreeBoardService {
 	
 	
 	
-/*	public ArrayList<FreeBoard> boardSearchTitle (String title, int currentPage, int limit){
-		Connection conn = getConnection();
-		ArrayList<FreeBoard> list = fdao.selectTitleList(conn, title, currentPage, limit);
-		close(conn);
-		return list;
-	}
-	
-	
-	public ArrayList<FreeBoard> boardSearchWriter (String writer, int currentPage, int limit){
-		Connection conn = getConnection();
-		ArrayList<FreeBoard> list = fdao.selectWriterList(conn, writer, currentPage, limit);
-		close(conn);
-		return list;
-	}
-	
-	
-	public ArrayList<FreeBoard> boardSearchDate (Date begin, Date end, int currentPage, int limit){
-		Connection conn = getConnection();
-		ArrayList<FreeBoard> list = fdao.selectDateList(conn, begin, end, currentPage, limit);
-		close(conn);
-		return list;
-	}
-*/
 	public ArrayList<FreeBoard> searchList(HashMap<String, Object> listOpt) {
 		Connection conn = getConnection();
 		ArrayList<FreeBoard> list = fdao.searchList(conn, listOpt);
