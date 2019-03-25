@@ -1,9 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ page import="member.model.vo.Member, freeboard.model.vo.FreeBoard, java.sql.Date" %>
+<%@ page import="member.model.vo.Member, freeboard.model.vo.FreeBoard, java.sql.Date, freeboardreply.model.vo.FreeBoardReply" %>
 <%
 	FreeBoard freeboard = (FreeBoard)request.getAttribute("freeboard");
 //	int currentPage = ((Integer)request.getAttribute("currentPage")).intValue(); 
+	FreeBoardReply reply = (FreeBoardReply)request.getAttribute("reply");
 	
 %>    
 <!DOCTYPE html>
@@ -33,8 +34,6 @@ h2{
 
 }
 
-
-
 </style> 
 </head>
 <body>
@@ -42,6 +41,7 @@ h2{
 	<div id="wrap">
 		  <div id="content">
 		  
+<%-- 상세보기  --%>		  
 <h2><%= freeboard.getFreeboardNo() %>번 게시글 상세보기</h2>
 <br>
 <table id="t" align="right" cellpadding="10" cellspacing="0" border="1" width="800">
@@ -67,7 +67,6 @@ h2{
 	<th>내용</th>
 	<td align="center"><%= freeboard.getFreeboardContent() %></td>
 </tr>
-
 <tr>
 	<th colspan="2" align="center">
 <% if(loginUser.getUserId().equals(freeboard.getUserId())){ %> 
@@ -82,6 +81,16 @@ h2{
 
 </table>
 
+<%-- 댓글 보이기 --%>
+<table>
+<!-- 	<tr><th>댓글번호</th><td><textarea cols="3" rows="3" name="frnum" style="width:766px"></textarea></td></tr> -->
+	<% if(reply != null){ %>
+	<tr><th>작성자</th><td><input type="text" name="fwriter" style="width:100px" readonly value="<%= loginUser.getUserId() %>"></td></tr>
+	<tr><th>내용</th><td><textarea cols="50" rows="4" name="fcontent" style="width:766px"><%= reply.getFreereplycontent() %></textarea></td></tr>
+	<% } %>
+</table>
+
+<%-- 댓글등록 --%>
 <table>
 <% if(loginUser != null){ %>
 	<hr>
@@ -90,8 +99,8 @@ h2{
 		<input type="hidden" name="page" value="">
 		<table align="center">
 <!-- 	<tr><th>제목</th><td><input type="text" name="btitle" style="width:766px"></td></tr> -->
-	<tr><th>작성자</th><td><input type="text" name="bwriter" style="width:766px" readonly value="<%= loginUser.getUserId() %>"></td></tr>
-	<tr><th>내용</th><td><textarea cols="50" rows="5" name="bcontent" style="width:766px"></textarea></td></tr>
+	<tr><th>작성자</th><td><input type="text" name="fwriter" style="width:766px" readonly value="<%= loginUser.getUserId() %>"></td></tr>
+	<tr><th>내용</th><td><textarea cols="50" rows="4" name="fcontent" style="width:766px"></textarea></td></tr>
 	<tr><th colspan="2" align="center">
 	<input type="submit" value="댓글등록"> &nbsp; 
 	<a href="/doggybeta/flist">[목록]</a>

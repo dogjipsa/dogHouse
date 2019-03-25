@@ -36,19 +36,13 @@
 		});
 	});
 	
-	 $(function() {
-		if(access_token != null) {
-			$('.userid').val(loginUser.getUserId());
-			$('.passwd').val(loginUser.getUserpwd());
-			form.submit();
-		} 
-	 });
+	 
 </script>
 <style>
 </style>
 </head>
 <body>
-	<% if(loginUser == null || access_token == null) { %>
+	<% if(loginUser == null ) { %>
 	<input type='checkbox' id='menu_state' checked />
 	<div id='mask'> </div>
 	<nav>
