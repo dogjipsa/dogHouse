@@ -12,6 +12,7 @@
 <meta charset="UTF-8">
 <title>팁게시판</title>
 <link href="/doggybeta/resources/css/footer.css" rel="stylesheet" type="text/css">
+
 </head>
 <body>
 <%@ include file="..//common/menu.jsp" %>
@@ -58,6 +59,11 @@
 	&nbsp; &nbsp;
 	<a href="/doggybeta/tlist?page=<%= currentPage%>">[목록]</a>
 	</th>
+</tr>
+<tr>
+<td colspan="2">
+<hr>
+</td>
 </tr>
 </table>
 		

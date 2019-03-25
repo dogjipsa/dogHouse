@@ -44,8 +44,7 @@ public class TipBoardListServlet extends HttpServlet {
 				//검색조건과 검색내용을 가져온다.
 				String option = request.getParameter("option");
 				String word = request.getParameter("word");
-				System.out.println("옵션 확인 : " + option);
-				System.out.println("word확인 : " + word);
+				
 				//한 페이지에 출력할 목록 갯수 지정
 				int limit = 10;
 				
