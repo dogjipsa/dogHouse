@@ -42,13 +42,6 @@ realFile.addEventListener('change', (e) =>{
 // 펫시터 등록 버튼 클릭 시 발생 이벤트
 const submitBtn = document.getElementById('submit-btn'); 
 
-function handleRadio(name){
-	const radioBtns = document.getElementsByName(name);
-		for(let i = 0; i < radioBtns.length; i++){
-			if(radioBtns[i].checked)
-				return radioBtns[i]; // 체크된 라디오 버튼 리턴
-		}
-}
 // 필수 입력항목 체크
 function checkInputs(obj){
 	for(let i in obj){
@@ -65,10 +58,9 @@ submitBtn.addEventListener('click', (e)=>{
 		const toSend = {
 		userid : document.querySelector('.section1 .input_id'),
 		username : document.querySelector('.section1 .input_name'),
-		agree : handleRadio('agree'),
 		phone : document.querySelector('.section2 .input_phone'),
 		email : document.querySelector('.section2 .input_email'),
-		address : document.querySelector('.section2 .input_addr'),
+		address : document.querySelector('.input_addr'),
 		price : document.querySelector('.section2 .input_price'),
 	}
 	if(checkInputs(toSend) && toSend.agree.value === 'agree'){

@@ -10,7 +10,7 @@
 	border-radius: 20px;
 	display: none;
 	z-index: 1500;
-	grid-template-columns: 1fr 1fr 1fr;
+	grid-template-columns: 1fr 1fr 1.5fr;
 }
 .ps_reg_form .close {
   position: absolute;
@@ -104,21 +104,6 @@
 	color : white;
 }
 
-.ps_reg_form .normal_btn{
-  border: none;
-  outline: none;
-  width: 140px;
-  height: 25px;
-  background: #58B19F;
-  color: #fff;
-  font-size: 14px;
-  border-radius: 10px;
-  margin-bottom: 10px;
-}
-.ps_reg_form .normal_btn:hover{
-	cursor: pointer;
-	opacity: 0.8;
-}
 .ps_reg_form #submit-btn {
 	background: #747d8c;
 	color: white;
