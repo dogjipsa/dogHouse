@@ -49,7 +49,7 @@ function requestHostAjax() {
                     'bno': json.list[i].bno,
                     'kind': kind,
                     'name': decodeURIComponent(json.list[i].username),
-                    'etc': decodeURIComponent(json.list[i].etc),
+                    'etc': decodeURIComponent(json.list[i].etc).replace(/\+/gi," "),
                     'date': json.list[i].indate +' ~ '+ json.list[i].outdate,
                     'price': json.list[i].price+'원',
                     'progress': pg,
@@ -78,7 +78,7 @@ function requestHostAjax() {
                 }
 
                 tr.addEventListener('click', function(){
-                    console.log('yes');
+                    initMap();
                 });
             }
         }
@@ -89,7 +89,6 @@ function requestHostAjax() {
     xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
     xhr.send(requestData);
 }
-
 // 예약/결제 내역 Ajax
 function requestBkAjax() {
     const xhr = new XMLHttpRequest();
@@ -143,7 +142,6 @@ function requestBkAjax() {
     xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
     xhr.send(requestData);
 }
-
 
 // 페이지 로드시 예약/결제 내역 출력
 document.addEventListener('DOMContentLoaded', () => { requestBkAjax(); });

@@ -56,12 +56,14 @@ public class BookingHostServiceServlet extends HttpServlet {
 				if(b.getServiceKind().equals("0") || b.getServiceKind().equals("2")) {
 					price *= 0.8; // 당일 상품 20% 낮은 가격
 					price = (int) Math.floor(price/1000) * 1000; // 천단위 절사
-				}else {
+				} else {
 					price = (int) ((b.getCheckOutDate().getTime() - b.getCheckInDate().getTime())/(1000*60*60*24)) * b.getPrice();
 				}
 				job.put("price", price);
 				job.put("pg",b.getProgress());
-				job.put("etc", URLEncoder.encode(b.getEtc(), "utf-8"));
+				if(b.getEtc() != null) {
+					job.put("etc", URLEncoder.encode(b.getEtc(), "utf-8"));
+				}
 				job.put("pno", b.getPetNo());
 				job.put("addr", URLEncoder.encode(b.getAddress(),"utf-8"));
 				
