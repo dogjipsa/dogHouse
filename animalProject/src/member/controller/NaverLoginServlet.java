@@ -135,7 +135,7 @@ public class NaverLoginServlet extends HttpServlet {
 		    MemberService mService = new MemberService();
 		    Member member = new Member();
 		    /*member.setUserId(id); 고유식별자*/
-		    int re = mService.selectCheckNaverCode(access_token); //토큰으로 하면 안됨. 1시간마다 갱신되니까.
+		    int re = mService.selectCheckNaverCode(email); //토큰으로 하면 안됨. 1시간마다 갱신되니까.
 		    
 		    System.out.println("nls re : " + re);
 		    if(re <= 0) { // db에 값이 없다면 인서트
@@ -162,13 +162,15 @@ public class NaverLoginServlet extends HttpServlet {
 		    
 		    } else {
 		    	//db에 정보가 있다면
-		    	member.setUserId(naverCode);
-		    	member.setEmail(email);
-		    	member.setNaverCode(access_token);
-		    	member.setUserName(naverRanId);
-		    	System.out.println("member : " + member.toString());
-		    	int result = mService.updateNaverMember(member);
+		    	Member mb = new Member();
+		    	mb.setUserId(naverCode);
+		    	mb.setEmail(email);
+		    	mb.setNaverCode(access_token);
+		    	mb.setUserName(naverRanId);
+		    	System.out.println("mb : " + mb.toString());
+		    	int result = mService.updateNaverMember(mb);
 		    	
+		    	System.out.println("nsl update result : " + result);
 		    	if(result > 0) { //업데이트가 잘 되었다면
 		    		RequestDispatcher views = request.getRequestDispatcher("/jipsalogin");
 		    		if(name == null) {

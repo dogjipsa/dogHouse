@@ -222,17 +222,17 @@ public class MemberDao {
 	      
 	      return result;
 	   }
-	public int selectCheckNaverCode(Connection conn, String naverCode) {
+	public int selectCheckNaverCode(Connection conn, String email) {
 		int result = 0;
 		PreparedStatement pstat = null;
 		ResultSet rSet = null;
 		StringBuffer query = new StringBuffer();
-		query.append("select count(user_id) from member where naver_code = ?");
+		query.append("select count(user_id) from member where naver_code is not null and email = ?");
 		
 		try {
 			pstat = conn.prepareStatement(query.toString());
-			pstat.setString(1, naverCode);
-			System.out.println(naverCode);
+			pstat.setString(1, email);
+			System.out.println(email);
 			
 			rSet = pstat.executeQuery();
 			
@@ -257,16 +257,16 @@ public class MemberDao {
 		
 		StringBuffer query = new StringBuffer();
 		query.append("update member set ");
-		query.append("user_id = ?, naver_code = ?, user_name = ? ");
-		query.append("where email = ? and naver_code is not null");
+		query.append("naver_code = ?, user_name = ? ");
+		query.append("where user_id = ?");
 		try {
 			pstat = conn.prepareStatement(query.toString());
-			pstat.setString(1, member.getUserId());
-			pstat.setString(2, member.getNaverCode());
-			pstat.setString(3, member.getUserName());
-			pstat.setString(4, member.getEmail());
+			pstat.setString(1, member.getNaverCode());
+			pstat.setString(2, member.getUserName());
+			pstat.setString(3, member.getUserId());
 			
 			result = pstat.executeUpdate();
+			System.out.println("naver update dao : " + result);
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
