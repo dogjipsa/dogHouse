@@ -15,7 +15,6 @@ public class TipBoardService {
 	public int getListCount(String option, String word) {
 		Connection conn = getConnection();
 		int listCount = tdao.getListCount(conn, option, word);
-		System.out.println("listCount 체크 : " + listCount);
 		close(conn);
 		return listCount;
 	}
