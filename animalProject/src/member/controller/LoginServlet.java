@@ -36,13 +36,12 @@ public class LoginServlet extends HttpServlet {
 		
 		String access_token = (String)request.getAttribute("access_token");
 		String email = (String)request.getAttribute("email");
-		System.out.println(access_token + "<- 회원가입 후 즉시 로그인처리");
 		
 		if(access_token != null) {
 			String naverId = (String)request.getAttribute("naverId");
 			System.out.println("naverId : " + naverId);
-			
-			Member loginUser = new MemberService().loginNaverMember(email, access_token);
+			String splitToken = access_token.substring(2, 15) + access_token.substring(32, 43);
+			Member loginUser = new MemberService().loginNaverMember(email, splitToken);
 			
 			response.setContentType("text/html; charset=utf-8");
 			

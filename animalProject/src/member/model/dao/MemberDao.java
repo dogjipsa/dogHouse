@@ -26,7 +26,7 @@ public class MemberDao {
 		/*System.out.println(userid +", "+userpwd);*/ //값 잘 받는지 확인
 
 		try {
-			pstat = conn.prepareStatement(query);
+			pstat = conn.prepareStatement(query.toString());
 			pstat.setString(1, userid);
 			pstat.setString(2, userpwd);
 			rSet = pstat.executeQuery();
@@ -302,9 +302,9 @@ public class MemberDao {
 		ResultSet rset = null;
 		
 		String query = "";
+		
+		return list;
 	}
-
-	
 
 	public int updateNaverMember(Connection conn, Member member) {
 		//네이버 로그인시 이미 등록되어있는 계정이라면
@@ -329,6 +329,7 @@ public class MemberDao {
 			close(pstat);
 		}
 		return result;
+	}
 
 	public int insertSitterImages(Connection conn, ArrayList<SitterImage> list) {
 		int result = 0;

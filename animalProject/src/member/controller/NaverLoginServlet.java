@@ -128,7 +128,7 @@ public class NaverLoginServlet extends HttpServlet {
 		    String name = (String)resObj.get("name");
 		    String nickName = (String)resObj.get("nickname");
 		    
-		    System.out.println("*** email : " + email);
+		    /*System.out.println("*** email : " + email);*/
 		    
 		    String naverRanId = new MakeNaverId().toString(); //랜덤아이디 생성
 		    
@@ -136,12 +136,13 @@ public class NaverLoginServlet extends HttpServlet {
 		    Member member = new Member();
 		    /*member.setUserId(id); 고유식별자*/
 		    int re = mService.selectCheckNaverCode(email); //토큰으로 하면 안됨. 1시간마다 갱신되니까.
-		    
-		    System.out.println("nls re : " + re);
+		    /*System.out.println("nls re : " + re);*/ //조회제대로 됐는지 확인하는 코드
 		    if(re <= 0) { // db에 값이 없다면 인서트
+		    	String splitToken = access_token.substring(2, 15) + access_token.substring(32, 43);
+		    	/*System.out.println(splitToken + "<- 토큰나누기");*/ //제대로 섭스트링됐는지 확인용
 		    	member.setUserId(naverCode);
 		    	member.setEmail(email);
-		    	member.setNaverCode(access_token);
+		    	member.setNaverCode(splitToken);
 		    	member.setUserName(naverRanId);
 		    	System.out.println("member : " + member.toString());
 		    	int result = mService.insertMember(member);
@@ -163,9 +164,11 @@ public class NaverLoginServlet extends HttpServlet {
 		    } else {
 		    	//db에 정보가 있다면
 		    	Member mb = new Member();
+		    	String splitToken = access_token.substring(2, 15) + access_token.substring(32, 43);
+		    	/*System.out.println(splitToken + "<- 토큰나누기");*/ //제대로 섭스트링됐는지 확인용
 		    	mb.setUserId(naverCode);
 		    	mb.setEmail(email);
-		    	mb.setNaverCode(access_token);
+		    	mb.setNaverCode(splitToken);
 		    	mb.setUserName(naverRanId);
 		    	System.out.println("mb : " + mb.toString());
 		    	int result = mService.updateNaverMember(mb);
