@@ -12,6 +12,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import org.json.simple.JSONObject;
+
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.PasswordAuthentication;
@@ -52,12 +55,6 @@ public class FindPasswordServlet extends HttpServlet {
 		
 		String email = request.getParameter("email");
 		String userid = request.getParameter("userid");
-		
-		/*if(!userid.equals(member.getUserId())) {
-			RequestDispatcher view = request.getRequestDispatcher("views/member/findPassword.jsp");
-			request.setAttribute("value", "정보가 일치하지 않습니다.");
-			view.forward(request, response);
-		}*/
 		
 		response.setContentType("text/html; charset=utf-8");
 		
@@ -102,19 +99,33 @@ public class FindPasswordServlet extends HttpServlet {
 			msg.setText(tempNum); //잘 됨.
 			member.setUserId(userid);
 			member.setUserPwd(tempNum); //임시비밀번호 저장
-			//update를 어떻게 시킬 것인지 고민해봐야함.
-			//insert update는 그 후에 해도 괜찮음.
+
 			int re = new MemberService().updateTempPassword(member); //비밀번호 업데이트
+			response.setContentType("application/json; charset=utf-8");
+			JSONObject job = new JSONObject();
 			if(re > 0) {
 				Transport.send(msg);
 				System.out.println("The message sent successfully...");
-				out.println("임시 비밀번호가 있는 이메일이 성공적으로 전송되었습니다. 로그인 후 비밀번호를 변경해주시기 바랍니다.');");
+				String str = "임시 비밀번호가 있는 이메일이 성공적으로 전송되었습니다. 로그인 후 비밀번호를 변경해주시기 바랍니다.";
+				
+				job = new JSONObject();
+				job.put("str", str);
+				
+				out.println(job.toJSONString());
+				out.flush();
+				out.close();
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		} else {
-			out.println("아이디 또는 이메일을 잘못 입력하셨습니다");
+			response.setContentType("application/json; charset=utf-8");
+			JSONObject job = new JSONObject();
+			
+			String str = "아이디 또는 이메일을 잘못 입력하셨습니다";
+			job.put("str", str);
+			
+			out.println(job.toJSONString());
 			out.flush();
 			out.close();
 		}

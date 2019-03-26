@@ -1,6 +1,7 @@
 package member.controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.net.URLDecoder;
 import java.util.Properties;
 
@@ -10,14 +11,13 @@ import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+
+import org.json.simple.JSONObject;
 
 import member.model.vo.SendAdmitEmail;
 
@@ -72,15 +72,14 @@ public class AdmitEnrollMemberServlet extends HttpServlet {
 		prop.put("mail.mime.charset", "utf-8");
 		prop.put("mail.smpt.ssl.enable", "true");
 		prop.put("mail.smtp.ssl.trust", host);
-
+		
 		Session session = Session.getDefaultInstance(prop, new javax.mail.Authenticator() {
 			protected PasswordAuthentication getPasswordAuthentication() {
 				return new PasswordAuthentication("2u3u123", password);
-				/*email.substring(0, idx)*/
 			}
 		});
 		session.setDebug(true);
-
+		
 		try {
 			StringBuffer buffer = new StringBuffer();
 			MimeMessage msg = new MimeMessage(session);
@@ -88,29 +87,31 @@ public class AdmitEnrollMemberServlet extends HttpServlet {
 			msg.addRecipient(Message.RecipientType.TO, new InternetAddress(email)); //email
 
 			msg.setSubject("[doghouse]회원가입 인증 메일입니다.");
-
+			
 			String admitNum = new SendAdmitEmail().sendAdmitNumber();
 			System.out.println(admitNum + "== admitNum");
 
 			byte[] anon = "토론토에 갔다가 남극세종기지에도 갔다. 심해생물. welcome!".getBytes();
 			buffer.append(anon + "\n");
-			buffer.append("회원가입 인증메일입니다. 새로고침 후 " +"\n");
+			buffer.append("회원가입 인증메일입니다." +"\n");
 			buffer.append("회원가입 절차를 계속 진행해주시기 바랍니다");
 			buffer.append("인증번호 : [ " + admitNum + " ] ");
 			msg.setText(buffer.toString()); // 잘 됨.
-
+			
 			Transport.send(msg);
 			System.out.println("The admitNum sent successfully...");
-			//out.println(admitNum);
-
-			HttpSession ss = request.getSession();
-			ss.setAttribute("keycode", admitNum);
 			
-			System.out.println(ss + " <- session");
-//			System.out.println(conbtn + "<- conbtn");
-			System.out.println(admitNum + " <- admitNum");
-			/* out.print(admitNum); */
+			JSONObject job = new JSONObject();
+			if(admitNum != null && email != null) { //난수, 이메일 잘 받아오는지 확인
+				job.put("keycode", admitNum);
+			}
+			response.setContentType("application/json; charset=utf-8");
+			PrintWriter out = response.getWriter();
+			out.println(job.toJSONString());
+			out.flush();
+			out.close();
 			
+			//System.out.println(job.toJSONString() + " <- job"); 제대로 넘어오는지 확인
 			
 		} catch (Exception e) {
 			e.printStackTrace();
