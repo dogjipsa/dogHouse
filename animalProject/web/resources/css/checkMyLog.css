@@ -1,11 +1,12 @@
 .wrap_content{
-    width:100%;
+    width:100%-200px;
     height:100%;
     display: grid;
     grid-template-columns: 1fr 2fr 1fr;
     grid-template-rows: 1fr 6fr 1fr;
     background-color: #fafafc;
     grid-gap: 10px;
+    margin-left: 200px;
 }
 
 .wrap_content .section1{
