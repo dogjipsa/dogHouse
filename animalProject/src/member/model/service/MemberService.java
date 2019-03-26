@@ -6,6 +6,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import member.model.dao.MemberDao;
 import member.model.vo.Member;
@@ -100,6 +101,13 @@ public class MemberService {
 		Connection conn = getConnection();
 		System.out.println("서비스단 : " + userid);
 		ArrayList<SearchingInfo> list = mdao.searchPetSitter(conn, userid);
+		close(conn);
+		return list;
+	}
+
+	public ArrayList<SearchingInfo> insertCondition(HashMap<String, Object> map) {
+		Connection conn = getConnection();
+		ArrayList<SearchingInfo> list = mdao.insertCondition(conn, map);
 		close(conn);
 		return list;
 	}

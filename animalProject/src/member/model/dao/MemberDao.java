@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import static common.JDBCTemplate.*;
 import member.model.vo.Member;
@@ -250,6 +251,15 @@ public class MemberDao {
 		}
 		
 		return list;
+	}
+
+	public ArrayList<SearchingInfo> insertCondition(Connection conn, HashMap<String, Object> map) {
+		ArrayList<SearchingInfo> list = new ArrayList<SearchingInfo>();
+		
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String query = ""
 	}
 
 	

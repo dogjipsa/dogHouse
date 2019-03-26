@@ -17,14 +17,14 @@ import member.model.vo.SearchingInfo;
 /**
  * Servlet implementation class FindingPetSitterListServlet
  */
-@WebServlet("/fplist")
-public class FindingPetSitterListServlet extends HttpServlet {
+@WebServlet("/finding")
+public class FindingPetSitterServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public FindingPetSitterListServlet() {
+    public FindingPetSitterServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
