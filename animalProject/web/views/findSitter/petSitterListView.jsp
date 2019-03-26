@@ -1,7 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" import="booking.model.vo.Booking"%>
+    pageEncoding="UTF-8" import="member.model.vo.*, java.util.*"%>
 <%
-	Booking booking = (Booking)request.getAttribute("booking");
+	ArrayList<SearchingInfo> list = (ArrayList<SearchingInfo>)request.getAttribute("list");
+	
 %>   
 <!DOCTYPE html>
 <html>
@@ -11,8 +12,9 @@
 <link rel="shortcut icon" href="/doggybeta/resources/images/favicon.ico">
 <link href="/doggybeta/resources/css/footer.css" rel="stylesheet" type="text/css">
 <script type="text/javascript" src="/doggybeta/resources/js/jquery-3.3.1.min.js"></script>
+  	
 <script>
-$(document).ready(function(){
+/* $(document).ready(function(){
 	$("#begin").datepicker({
 		minDate:0,
 		onSelect: function(selected) {
@@ -24,9 +26,10 @@ $(document).ready(function(){
 		$("#begin").datepicker("option","maxDate", selected)
 	}
 	});
-});
+}); */
+
 					
-					</script>
+</script>
 <style type="text/css">
 body{
 	width: 1500px;
@@ -61,25 +64,38 @@ text-align: center;
 #detailtable:hover{
 	background-color: rgba(210, 222, 225, 0.5);
 }
+#bringpetinfo{
+	position: relative;
+	text-align: center;
+}
 </style>
 </head>
 <body>
 <%@ include file="..//common/menu.jsp" %>
+
 <div id="wrap" >
 <div id="content">
-			<!-- 조건 검색 테이블  -->	
-			<div align=center>		
+<form name="petinfo" method="post" action="/doggybeta/finding">
+	<!-- 조건 검색 테이블  -->	
+		<input type="hidden" name="userid" value="<%=loginUser.getUserId() %>">
+<div id="bringpetinfo">		
+		<%=loginUser.getUserName() %> 님 안녕하세요!
+<input type="submit" value="우리 강아지 정보 가져오기">
+
+</div>
+</form> 
 			<table id=searchpettable>
 				<tr>
 					<th width="100">서비스</th>
-					<th width="300">날짜</th>
+					<th width="200">날짜</th>
 					<th width="100">견종</th>
 					<th width="100">반려견크기</th>
 					<th width="100">반려견나이</th>
-				</tr>
+				</tr>		
 				<tr>
+<form name="conditioninfo" method="post" action="doggybeta/fplist">				
 					<td>  
-						<select style="width:180px; height:30px;">
+						<select name="opt" style="width:180px; height:30px;">
 						  <option value="0">[당일]우리집으로 부르기</option>
 						  <option value="1">우리집으로 부르기</option>
 						  <option value="2">[당일]펫시터 집에 맡기기</option>
@@ -87,32 +103,26 @@ text-align: center;
 						</select>
 					</td>
 					<td>
-					<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-					<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-					<script src="//code.jquery.com/ui/1.8.18/jquery-ui.min.js"></script>					
-
+				
+					<p style="width:180px; height:30px;">
 					
-					<p>조회기간:
-					    <input type="text" id="begin"> ~
-					    <input type="text" id="end">
+					<input type="date" id="begin">~
+					<input type="date" id="end"> 
 					</p>
 					</td>
-					<td>
-						견종정보				
-					</td>
-					<td>
-						사이즈정보
-					</td>
-					<td>
-						나이정보
-					</td>
+
+				  	    <% if(list != null){for(SearchingInfo SI : list){ %>
+				 	  
+					<td><%= SI.getPetBreads() %></td>
+					<td><%= SI.getPetSize() %></td>
+					<td><%= SI.getAge() %> 살</td>
+					<%} }%> 
 				</tr>
 			</table>
-			</div> <br>
+			<br>
 <!-- 지역 검색 -->
 <div align="center">
- <form name="form1">
-  <select name="h_area1" onChange="cat1_change(this.value,h_area2)" style="width:80px; height:30px;">
+  <select name="city" onChange="cat1_change(this.value,sido)" style="width:80px; height:30px;">
    <option selected>-선택-</option>
 <option value='1'>서울</option>
 <option value='2'>부산</option>
@@ -131,7 +141,7 @@ text-align: center;
 <option value='15'>충남</option>
 <option value='16'>충북</option>
   </select>
-  <select name="h_area2" style="width:80px; height:30px;">
+  <select name="sido" style="width:80px; height:30px;">
    <option selected>-선택-</option>
 <option value='215'>군산시</option>
 <option value='216'>김제시</option>
@@ -237,12 +247,7 @@ function cat1_change(key,sel){
 }
 
 </script>
-<script type="text/javascript">
-function function22(){
-	location.href="/doggybeta/views/notice/NewFile.html"
-}
-</script>
-<input type="button" value="검색하기" onclick="function22();">
+<input type="submit" value="펫시터 찾기">
 </form>
 
 </div>

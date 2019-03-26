@@ -9,6 +9,7 @@ import booking.model.dao.BookingDao;
 import booking.model.vo.BookingCheck;
 import booking.model.vo.BookingForHost;
 
+
 public class BookingService {
 	
 	private BookingDao bdao = new BookingDao(); 
