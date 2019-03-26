@@ -4,62 +4,182 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
-<body>
-<!-- 펫시터 신청 버튼 클릭시 생성 보여지는 HTML 부분. 로그인 부분 구현시 인풋에 세션으로 값 넣어놓고 readonly 처리할 것  -->
-		
-			<form class="ps_reg_form" action="/doggybeta/changeinfo" method="POST" enctype="multipart/form-data">
-			<span class="close">x</span>
-				<div class="section1">
-					<p>아이디</p>
-					<input name="userid" value="받아오는 값"  class="ps_input input_id" autocomplete="off" readonly>
-					<p>이름</p>
-					<input name="username" value="받아오는 값"  class="ps_input input_name" autocomplete="off" >
-					<p>연락처</p>
-					<input name="phone" value="<%=loginUser.getPhone() %>" class="ps_input input_phone" autocomplete="off" >
-					<p>이메일</p>
-					<input name="email" value="<%=loginUser.getEmail() %>" class="ps_input input_email" autocomplete="off" >
-				</div>
-				<div class="section2">
-					<p>주소</p>
-					<input name="addr" placeholder="장소/위치 입력" class="ps_input input_addr" autocomplete="off" >
-					<p>희망 일급(원)</p>
-					<input type="number" name="price" placeholder="가격 입력" class="ps_input input_price" min="100">
-				</div>
-				<div class="section2-1">
-					<p>반려견 이름</p>
-					<input name="addr" placeholder="장소/위치 입력" class="ps_input input_addr" autocomplete="off" >
-					<p>반려견 견종</p>
-					<input name="addr" placeholder="장소/위치 입력" class="ps_input input_addr" autocomplete="off" >
-					<p>반려견 생년월일</p>
-					<input name="addr" placeholder="장소/위치 입력" class="ps_input input_addr" autocomplete="off" >
-					<p>반려견 사이즈</p>
-					<input name="addr" placeholder="장소/위치 입력" class="ps_input input_addr" autocomplete="off" >
-					<p>중성화 여부</p>
-					<input name="addr" placeholder="장소/위치 입력" class="ps_input input_addr" autocomplete="off" >
-					<p>특이사항</p>
-					<input name="addr" placeholder="장소/위치 입력" class="ps_input input_addr" autocomplete="off" >
-				</div>
-				<div class="section3">
-					<div class="image_box">
-						<img class="image_box_pic" />				
-						<input type="file" id="real-file" name="pic" hidden="hidden" />
-						<span>
-							<button type="button" id="fake-file-btn" class="normal_btn">Choose a File</button>&nbsp;
-							<span id="file-text"></span>
-						</span>
-					</div>
-					<div class="map_box"></div>
-					<span><button id="submit-btn">정보 수정하기</button></span>
-				</div>
-				
-				<div class="ps_reg_form_popup_box">
-					<p>펫시터 등록 신청이 완료되었습니다. </p>
-					<button type="submit">확인</button>
-				</div>
-			</form>
+<title>Dog House</title>
+<link rel="shortcut icon" href="/doggybeta/resources/images/favicon.ico">
+<link href="/doggybeta/resources/css/footer.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="/doggybeta/resources/js/jquery-3.3.1.min.js"></script>
+<script type="text/javascript">
+function showWriteForm(){
+   location.href="/doggybeta/views/notice/noticeWriteForm.jsp"
+}
 
-		<script type="text/javascript"src="/doggybeta/resources/js/petSitting.js"></script>
+$(function(){
+	showDiv();
+	
+	$("input[name=item]").on("change", function(){
+		showDiv();
+	});
+});
+
+function showDiv(){
+	if($("input[name=item]").eq(0).is(":checked")){
+		$("#titleDiv").css("display", "block");
+		$("#dateDiv").css("display", "none");
+		
+	}
+	if($("input[name=item]").eq(1).is(":checked")){
+		$("#titleDiv").css("display", "none");
+		$("#dateDiv").css("display", "block");
+	}
+
+}
+</script>
+<style type="text/css">
+
+/* 화면에 보여지는 글 목록 테이블 */
+h2{
+   position: relative;
+   top: 20px;
+   left : 200px;
+   width: 70%;
+   padding: 2rem 0px;
+}
+.board { 
+   position: relative;
+   left : 150px;
+   top: 100px;
+   width: 60%;
+   border-collapse: collapse;
+   text-align: left;
+   line-height: 1.5;
+   table-layout:fixed; 
+   
+}
+.button{
+   position: relative;
+   left : 200px;
+   top: 50px;
+}
+
+/* list_table 에서 사용되는 thead */
+.board thead th{ 
+	padding: 10px;
+    font-weight: bold;
+    vertical-align: top;
+    color: #369;
+    border-bottom: 3px solid #036;}
+
+/* list_table 에서 사용되는 tbody */
+.board tbody td { 
+	width: 150px;
+    padding: 10px;
+    font-weight: bold;
+    vertical-align: top;
+    border-bottom: 1px solid #ccc;   
+    
+}
+
+.board tbody tr:hover{
+	background-color : #f3f6f7;
+}
+header{
+	text-align:center;	
+	padding: 2rem 0px;
+}
+
+.board tbody td a{
+	text-decoration: none;
+	color: black;
+}
+.search{
+	display: flex;
+	justify-content: center;
+}
+.insert{
+	padding: 0 2rem;
+}
+#wrap{
+	left: 200px;
+	border: 1px solid red;
+	margin: 0 auto;
+}
+</style>
+</head>
+
+<body>
+<%@ include file="../common/menu.jsp"%>
+	<div id="wrap">
+		  <div id="content">
+
+<h2 align="center">공지사항 게시판</h2>
+<header>
+<div class="search">
+	<form action="/doggybeta/nsearch" method="post">
+	<select name="opt"> <!-- 검색 컬럼 -->
+		<option value="0">제목</option>
+		<option value="1">내용</option>
+		<option value="2">제목+내용</option>
+	</select>
+	<input type="text" size="20" name="search"> 
+	<input type="submit" value="검색">
+	</form>
+	<div class="insert">
+<% if(loginUser != null){ %>
+	<input type="button" onclick="showWriteForm();" value="글쓰기">
+<%} %>
+	</div>
+</div>
+
+
+</header>
+
+<br>
+<!-- 테이블 시작 -->
+   <table class="board">
+      <thead>
+         <tr>
+            <th width="50">번호</th>
+            <th width="200">제목</th>
+            <th width="100">작성자</th>
+            <th width="130">작성일</th>
+            <th width="70">조회수</th>
+            <th width="100">첨부파일</th>
+            
+         </tr>   
+      </thead>
+      <tbody>      
+       <%   for(Notice notice : list){ %>
+   <tr>
+   <td><%= notice.getNoticeNo() %></td>
+   
+   <td>
+   <%if(loginUser != null){ %>
+   <a href="/doggybeta/ndetail?no=<%= notice.getNoticeNo()%>"><%= notice.getNoticeTitle() %></a>
+   <% }else{ %>
+   <%= notice.getNoticeTitle() %>
+   <% } %>
+   </td>
+   <td><%= notice.getManagerId() %></td>
+   <td><%= notice.getNoticeDate() %></td>
+   <td><%= notice.getNoticeViews() %></td>
+   <td>
+   <%if(notice.getNoticeOriginFile() != null) {%>
+   <img src="/doggybeta/resources/images/paw.png" width="20px;" align="center;">
+   <% }else{ %>
+   &nbsp;
+   <%} %>
+   </td>
+   </tr>   
+   <% } %>     
+   </tbody>   
+</table>
+<br>         
+<!-- 테이블 종료 -->
+
+
+</div>
+		<div id="footer"><%@ include file="..//common/footer.jsp"%></div>
+</div>
+
 </body>
 </html>

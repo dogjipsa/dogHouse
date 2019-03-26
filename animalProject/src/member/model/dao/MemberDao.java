@@ -259,7 +259,7 @@ public class MemberDao {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		
-		String query = ""
+		String query = "";
 	}
 
 	
