@@ -5,6 +5,8 @@ import static common.JDBCTemplate.close;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 import freeboard.model.vo.FreeBoard;
 import freeboardreply.model.vo.FreeBoardReply;
@@ -90,29 +92,42 @@ public class FreeBoardReplyDao {
 	}
 
 	
-	public FreeBoardReply selectReply(Connection conn, int freeReplyNo) {
-		FreeBoardReply freeReply = null;
+	public ArrayList<FreeBoardReply> selectReplyList(Connection conn, HashMap<String, Object> map) {
+		ArrayList<FreeBoardReply> flist = new ArrayList<>();
+		
+		int freeBoardNo = (Integer)map.get("freeBoardNo");
+		int startRow = (Integer)map.get("startRow");		
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		
-		String query = "select * from freeboard_reply where freereply_no = ? and freeboard_delete in('N', 'n')";
+		String query = "SELECT * " + 
+					   "FROM(SELECT ROWNUM RNUM, FREEREPLY_NO, FREEREPLY_CONTENT, " + 
+					   "FREEREPLY_DATE, USER_ID, FREEBOARD_DELETE, FREEBOARD_NO " + 
+					   "FROM (SELECT * " + 
+					   "FROM FREEBOARD_REPLY WHERE " + 
+					   "FREEBOARD_NO = (SELECT FREEBOARD_NO FROM FREEBOARD WHERE FREEBOARD_NO = ?) " + 
+					   "AND FREEBOARD_DELETE IN('N', 'n', null) ORDER BY FREEREPLY_NO ASC)) " + 
+					   "WHERE RNUM >= ? AND RNUM <= ?";	
 		
 		try {
 			pstmt = conn.prepareStatement(query);
-			pstmt.setInt(1, freeReplyNo);
+			pstmt.setInt(1, freeBoardNo);
+			pstmt.setInt(2, startRow);
+			pstmt.setInt(3, startRow+9);
 			
 			rset = pstmt.executeQuery();
 			
-			if(rset.next()) {
-				freeReply = new FreeBoardReply();
+			while(rset.next()) {
+				FreeBoardReply freeReply = new FreeBoardReply();
 				
 				freeReply.setFreeboardno(rset.getInt("FREEREPLY_NO"));
 				freeReply.setFreereplycontent(rset.getString("FREEREPLY_CONTENT"));
 				freeReply.setFreereplydate(rset.getDate("FREEREPLY_DATE"));
 				freeReply.setUserid(rset.getString("USER_ID"));
 				freeReply.setFreeboardno(rset.getInt("FREEBOARD_NO"));
-				freeReply.setFreeboarddelete(rset.getString("FREE_BOARD_DELETE"));				
+				freeReply.setFreeboarddelete(rset.getString("FREEBOARD_DELETE"));				
 				
+				flist.add(freeReply);
 			}
 			
 		} catch (Exception e) {
@@ -122,7 +137,7 @@ public class FreeBoardReplyDao {
 			close(pstmt);
 		}
 		
-		return freeReply;
+		return flist;
 	}
 
 
