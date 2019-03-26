@@ -150,6 +150,14 @@ public class SearchingInfo implements java.io.Serializable{
 		return serialVersionUID;
 	}
 
+	@Override
+	public String toString() {
+		return "SearchingInfo [bookingNo=" + bookingNo + ", serviceKind=" + serviceKind + ", userId=" + userId
+				+ ", puserId=" + puserId + ", checkInDate=" + checkInDate + ", checkOutDate=" + checkOutDate
+				+ ", petNo=" + petNo + ", petDate=" + petDate + ", petSize=" + petSize + ", petBreads=" + petBreads
+				+ ", address=" + address + ", price=" + price + ", age=" + age + "]";
+	}
+
 
 }
 
