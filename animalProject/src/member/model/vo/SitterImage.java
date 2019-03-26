@@ -7,7 +7,7 @@ public class SitterImage implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 1889779740217061957L;
-	private String imageNo;
+	private int imageNo;
 	private String userId;
 	private String originFile;
 	private String renameFile;
@@ -16,7 +16,7 @@ public class SitterImage implements Serializable {
 		// TODO Auto-generated constructor stub
 	}
 
-	public SitterImage(String imageNo, String userId, String originFile, String renameFile) {
+	public SitterImage(int imageNo, String userId, String originFile, String renameFile) {
 		super();
 		this.imageNo = imageNo;
 		this.userId = userId;
@@ -24,11 +24,11 @@ public class SitterImage implements Serializable {
 		this.renameFile = renameFile;
 	}
 
-	public String getImageNo() {
+	public int getImageNo() {
 		return imageNo;
 	}
 
-	public void setImageNo(String imageNo) {
+	public void setImageNo(int imageNo) {
 		this.imageNo = imageNo;
 	}
 

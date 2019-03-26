@@ -1,7 +1,7 @@
 function sample6_execDaumPostcode() {
     var mapContainer = document.getElementById('reg_map_box'), // 지도를 표시할 div
         mapOption = {
-            center: new daum.maps.LatLng(37.537187, 127.005476), // 지도의 중심좌표
+            center: new daum.maps.LatLng(37.4989567, 127.03283520000002), // 지도의 중심좌표
             level: 5 // 지도의 확대 레벨
         };
 
@@ -11,7 +11,7 @@ function sample6_execDaumPostcode() {
     var geocoder = new daum.maps.services.Geocoder();
     //마커를 미리 생성
     var marker = new daum.maps.Marker({
-        position: new daum.maps.LatLng(37.537187, 127.005476),
+        position: new daum.maps.LatLng(37.4989567, 127.03283520000002),
         map: map
     });
     new daum.Postcode({

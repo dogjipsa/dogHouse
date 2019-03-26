@@ -69,8 +69,8 @@
 					</table>
 				</div>
 				<div class="host_side1">
-					<div class="host_map" id="map"></div>
-					<p>주소 텍스트...</p>
+					<div class="host_map" id="host_map"></div>
+					<p id="addr_text"></p>
 				</div>
 				<div class="host_side2">
 					<%if(loginUser.getPetSitter().equals("1")){ // 승인 대기중인 회원 페이지 %>
@@ -97,8 +97,6 @@
 	</div>
 	<div id="footer"><%@ include file="..//common/footer.jsp"%></div>
 	<script src="/doggybeta/resources/js/checkMyLog.js"></script>
-	<script type="text/javascript"
-		src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=k4mpqvig7k&callback=initMap"></script>
 	<script src="/doggybeta/resources/js/hmap.js"></script>
 </body>
 

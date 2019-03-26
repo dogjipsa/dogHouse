@@ -7,6 +7,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Enumeration;
 
 import javax.servlet.RequestDispatcher;
@@ -23,6 +24,7 @@ import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 
 import member.model.service.MemberService;
 import member.model.vo.Member;
+import member.model.vo.SitterImage;
 
 /**
  * Servlet implementation class MemberHostUpdateServlet
@@ -63,7 +65,8 @@ public class MemberHostUpdateServlet extends HttpServlet {
 		MultipartRequest mrequest = new MultipartRequest(request, savePath, maxSize, "UTF-8",
 				new DefaultFileRenamePolicy());
 		Member m = new Member();
-		m.setUserId(mrequest.getParameter("userid"));
+		String userid = mrequest.getParameter("userid");
+		m.setUserId(userid);
 		m.setUserName(mrequest.getParameter("username"));
 		m.setPhone(mrequest.getParameter("phone"));
 		String fullAddr = mrequest.getParameter("addr") + ", " + mrequest.getParameter("extra") + " "
@@ -72,8 +75,41 @@ public class MemberHostUpdateServlet extends HttpServlet {
 		m.setPrice(Integer.parseInt(mrequest.getParameter("price")));
 		m.setEmail(mrequest.getParameter("email"));
 		String originFileName = mrequest.getFilesystemName("pic");
+		String renameFileName = renameFile(originFileName, savePath);
+		m.setUseroriginfile(originFileName);
+		m.setUserrefile(renameFileName);
+		
+		String fileList = mrequest.getParameter("fileList");
+		String[] listArr = fileList.split("/");
+		ArrayList<SitterImage> list = new ArrayList<>();
+		for(String e : listArr) {
+			String rname = renameFile(e, savePath);
+			SitterImage si = new SitterImage();
+			si.setOriginFile(e);
+			si.setRenameFile(rname);
+			si.setUserId(userid);
+			
+			list.add(si);
+		}
+		
+			int result = new MemberService().updateHost(m);
+			int result2 = new MemberService().insertSitterImages(list);
+			if(result2 > 0)
+				System.out.println("성공!!");
+			else
+				System.out.println("실패!!");
+			
+			if (result > 0)
+				System.out.println("성공");
+			else
+				System.out.println("실패");
+
+			response.sendRedirect("/doggybeta/index.jsp");
+
+	}
+	private String renameFile(String originFileName, String savePath) throws IOException {
 		if (originFileName != null) {
-			SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmssSSSSS");
 			String renameFileName = sdf.format(new Date(System.currentTimeMillis())) + "."
 					+ originFileName.substring(originFileName.lastIndexOf(".") + 1);
 			File originFile = new File(savePath + "\\" + originFileName);
@@ -92,50 +128,14 @@ public class MemberHostUpdateServlet extends HttpServlet {
 				while ((read = fin.read(buf, 0, buf.length)) != -1) {
 					fout.write(buf, 0, read);
 				}
-
 				fin.close();
 				fout.close();
 				originFile.delete();
-				m.setUseroriginfile(originFileName);
-				m.setUserrefile(renameFileName);
 			}
-			int result = new MemberService().updateHost(m);
-			if (result > 0) {
-				System.out.println("성공");
-				Enumeration forms = mrequest.getFileNames();
-				while (forms.hasMoreElements()) {
-					String fname = (String) forms.nextElement();
-					String poName = mrequest.getFilesystemName(fname);
-					if (poName != null && !poName.equals(originFileName)) {
-						String rName = sdf.format(new Date(System.currentTimeMillis())) + "."
-								+ poName.substring(poName.lastIndexOf(".") + 1);
-						File oFile = new File(savePath + "\\" + poName);
-						File rFile = new File(savePath + "\\" + rName);
-
-						if (!oFile.renameTo(rFile)) {
-							int read = -1;
-							byte[] buf = new byte[1024];
-
-							FileInputStream fin = new FileInputStream(oFile);
-							FileOutputStream fout = new FileOutputStream(rFile);
-
-							while ((read = fin.read(buf, 0, buf.length)) != -1) {
-								fout.write(buf, 0, read);
-							}
-							fin.close();
-							fout.close();
-							oFile.delete();
-						}
-					}
-				}
-			} else
-				System.out.println("실패");
-
-			response.sendRedirect("/doggybeta/index.jsp");
-
+			return renameFileName;
 		}
+		return "";
 	}
-
 	/**
 	 * 
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse

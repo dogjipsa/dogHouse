@@ -52,22 +52,25 @@ uploadBtn.addEventListener('click', function(e){
 ppicsFile.addEventListener('change', function(e){
 	showPPics(e.target);
 	if(ppicsFile.value){
-		ppicsText.innerHTML = ppicsFile.files.length+' files selected'
+		ppicsText.innerHTML = ppicsFile.files.length+' files selected';
+		
 	}
 });
-// 시설/장소 이미지 프리뷰
+// 시설/장소 이미지 프리뷰 + multiple 파일명 합쳐서 hidden input에 기록
 function showPPics(input){
 	const imgs = [document.querySelector('.pp1'),document.querySelector('.pp2'),document.querySelector('.pp3')];
-	
+	let fileList ="";
 	for(let i = 0; i < imgs.length; i++){
-		if(input.files[i]){
+		if(input.files[i] && (realFile.files[0].name !== input.files[i].name)){
 			const reader = new FileReader();
 			reader.onload =function(e){
 				imgs[i].setAttribute('src',e.target.result);
 			}
 			reader.readAsDataURL(input.files[i]);
+			fileList += input.files[i].name + "/";
 		}
 	}
+	document.querySelector('#fileList').setAttribute('value',fileList);
 }
 
 
