@@ -2,7 +2,7 @@ package member.model.vo;
 
 import java.sql.Date;
 
-public class SearchingInfo implements java.io.Serializable{
+public class SearchingInfo2 implements java.io.Serializable{
 	/**
 	 * 
 	 */
@@ -21,9 +21,9 @@ public class SearchingInfo implements java.io.Serializable{
 	private int price;
 	private int age;
 	
-	public SearchingInfo() {}
+	public SearchingInfo2() {}
 
-	public SearchingInfo(int bookingNo, String serviceKind, String userId, String puserId, Date checkInDate,
+	public SearchingInfo2(int bookingNo, String serviceKind, String userId, String puserId, Date checkInDate,
 			Date checkOutDate, int petNo, Date petDate, String petSize, String petBreads, String address, int price, int age) {
 		super();
 		this.bookingNo = bookingNo;

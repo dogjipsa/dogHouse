@@ -76,7 +76,7 @@ text-align: center;
 	<!-- 조건 검색 테이블  -->	
 		<input type="hidden" name="userid" value="<%=loginUser.getUserId() %>">
 		<%=loginUser.getUserId() %>
-</form> 
+
 			<table id=searchpettable>
 				<tr>
 					<th width="100">서비스</th>
@@ -241,8 +241,8 @@ function function22(){
 	location.href="/doggybeta/views/notice/NewFile.html"
 }
 </script>
-<input type="button" value="검색하기" onclick="function22();">
-
+<input type="submit" value="검색하기">
+</form> 
 
 </div>
 <!-- 지역검색 닫기 -->

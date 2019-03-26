@@ -37,10 +37,10 @@ public class FindingPetSitterListServlet extends HttpServlet {
 		String userid = request.getParameter("userid");
 		
 		ArrayList<SearchingInfo> list = new MemberService().searchPetSitter(userid);
-		
+		System.out.println("서블릿: " + userid);
 		response.setContentType("text/html; charset=utf-8");
 		RequestDispatcher view = null;
-		System.out.println("서블릿: " + userid);
+		
 		System.out.println("서블릿: " + list);
 		if(list.size() > 0) {
 			view = request.getRequestDispatcher("views/findSitter/petSitterListView.jsp");
