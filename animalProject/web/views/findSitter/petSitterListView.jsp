@@ -65,6 +65,10 @@ text-align: center;
 #detailtable:hover{
 	background-color: rgba(210, 222, 225, 0.5);
 }
+#bringpetinfo{
+	position: relative;
+	text-align: center;
+}
 </style>
 </head>
 <body>
@@ -72,11 +76,15 @@ text-align: center;
 
 <div id="wrap" >
 <div id="content">
-<form method="post" action="/doggybeta/fplist">
+<form name="petinfo" method="post" action="/doggybeta/fplist">
 	<!-- 조건 검색 테이블  -->	
 		<input type="hidden" name="userid" value="<%=loginUser.getUserId() %>">
-		<%=loginUser.getUserId() %>
+<div id="bringpetinfo">		
+		<%=loginUser.getUserName() %> 님 안녕하세요!
+<input type="submit" value="우리 강아지 정보 가져오기">
 
+</div>
+</form> 
 			<table id=searchpettable>
 				<tr>
 					<th width="100">서비스</th>
@@ -84,7 +92,7 @@ text-align: center;
 					<th width="100">견종</th>
 					<th width="100">반려견크기</th>
 					<th width="100">반려견나이</th>
-				</tr>
+				</tr>		
 				<tr>
 					<td>  
 						<select name="opt" style="width:180px; height:30px;">
@@ -101,11 +109,13 @@ text-align: center;
 					    <input type="text" id="end">
 					</p>
 					</td>
-				 	  <%-- <%= list.getPetBreads() %> --%>
-					<td>
-								
-					</td>
-					
+
+				  	    <% for(SearchingInfo SI : list){ %>
+				 	  
+					<td><%= SI.getPetBreads() %></td>
+					<td><%= SI.getPetSize() %></td>
+					<td><%= SI.getAge() %> 살</td>
+					<%} %> 
 				</tr>
 			</table>
 			<br>
@@ -241,8 +251,8 @@ function function22(){
 	location.href="/doggybeta/views/notice/NewFile.html"
 }
 </script>
-<input type="submit" value="검색하기">
-</form> 
+<input type="submit" value="펫시터 찾기">
+</form>
 
 </div>
 <!-- 지역검색 닫기 -->

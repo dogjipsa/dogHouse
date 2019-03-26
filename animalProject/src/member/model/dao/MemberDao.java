@@ -221,7 +221,7 @@ public class MemberDao {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		
-		String query = "SELECT P.PET_BREADS, P.PET_SIZE, P.PET_DATE FROM MEMBER M JOIN PET P ON(P.USER_ID = M.USER_ID) WHERE M.USER_ID = ?";
+		String query = "SELECT P.PET_BREADS, P.PET_SIZE, TRUNC(MONTHS_BETWEEN(sysdate, pet_date)/12) as AGE  FROM MEMBER M JOIN PET P ON(P.USER_ID = M.USER_ID) WHERE M.USER_ID = ?";
 		System.out.println("dao단 id조회 : " + userid);
 		
 		try {
@@ -236,11 +236,12 @@ public class MemberDao {
 				
 				petInfo.setPetBreads(rset.getString(1));
 				petInfo.setPetSize(rset.getString(2));
-				petInfo.setPetDate(rset.getDate(3));
+				petInfo.setAge(rset.getInt(3));
+				petInfo.setUserId(userid);
 				
 				list.add(petInfo);
 			}
-			System.out.println("dao단 : " + list);
+			System.out.println("dao단 : " + list.toString());
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
