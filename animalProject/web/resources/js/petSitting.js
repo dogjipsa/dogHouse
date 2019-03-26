@@ -16,7 +16,7 @@ xBtn.addEventListener('click', ()=>{
 const realFile = document.getElementById("real-file");
 const customBtn = document.getElementById("fake-file-btn");
 const customTxt = document.getElementById("file-text");
-const imageBox_pic = document.querySelector('.section3 .image_box .image_box_pic');
+const imageBox_pic = document.querySelector('.image_box .image_box_pic');
 
 customBtn.addEventListener('click', () =>{
 	realFile.click();
@@ -39,42 +39,38 @@ realFile.addEventListener('change', (e) =>{
 	 	customTxt.innerHTML = realFile.value.match(/[\/\\]([\w\d\s\.\-\(\)]+)$/)[1];
 });
 
-// 펫시터 등록 버튼 클릭 시 발생 이벤트
-const submitBtn = document.getElementById('submit-btn'); 
+// 시설/장소 사진 추가 multiple 파일 업로드
 
-function handleRadio(name){
-	const radioBtns = document.getElementsByName(name);
-		for(let i = 0; i < radioBtns.length; i++){
-			if(radioBtns[i].checked)
-				return radioBtns[i]; // 체크된 라디오 버튼 리턴
-		}
-}
-// 필수 입력항목 체크
-function checkInputs(obj){
-	for(let i in obj){
-		obj[i].style.borderBottom = "1px solid white";
-		if(obj[i].value === ""){
-			obj[i].style.borderBottom = "1px solid red";
-			return false;
-		} 
-	}
-		return true;
-}
-submitBtn.addEventListener('click', (e)=>{
+const ppicsFile = document.getElementById('place_pics');
+const uploadBtn = document.getElementById('ppics_upload');
+const ppicsText = document.getElementById('ppics-text');
+uploadBtn.addEventListener('click', function(e){
 	e.preventDefault();
-		const toSend = {
-		userid : document.querySelector('.section1 .input_id'),
-		username : document.querySelector('.section1 .input_name'),
-		agree : handleRadio('agree'),
-		phone : document.querySelector('.section2 .input_phone'),
-		email : document.querySelector('.section2 .input_email'),
-		address : document.querySelector('.section2 .input_addr'),
-		price : document.querySelector('.section2 .input_price'),
-	}
-	if(checkInputs(toSend) && toSend.agree.value === 'agree'){
-		// 모든 인풋 정보가 들어왔을경우		
-		const alertBox = document.querySelector('.ps_reg_form_popup_box');
-		alertBox.style.display = "flex";
-	} 
+	ppicsFile.click();
 });
+// 시설/장소 사진 추가 버튼 이벤트
+ppicsFile.addEventListener('change', function(e){
+	showPPics(e.target);
+	if(ppicsFile.value){
+		ppicsText.innerHTML = ppicsFile.files.length+' files selected';
+		
+	}
+});
+// 시설/장소 이미지 프리뷰 + multiple 파일명 합쳐서 hidden input에 기록
+function showPPics(input){
+	const imgs = [document.querySelector('.pp1'),document.querySelector('.pp2'),document.querySelector('.pp3')];
+	let fileList ="";
+	for(let i = 0; i < imgs.length; i++){
+		if(input.files[i] && (realFile.files[0].name !== input.files[i].name)){
+			const reader = new FileReader();
+			reader.onload =function(e){
+				imgs[i].setAttribute('src',e.target.result);
+			}
+			reader.readAsDataURL(input.files[i]);
+			fileList += input.files[i].name + "/";
+		}
+	}
+	document.querySelector('#fileList').setAttribute('value',fileList);
+}
+
 

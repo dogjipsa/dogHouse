@@ -3,9 +3,13 @@ package member.model.dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.ArrayList;
+
 
 import static common.JDBCTemplate.*;
 import member.model.vo.Member;
+import member.model.vo.SitterImage;
 
 public class MemberDao {
 	public MemberDao () {}
@@ -15,11 +19,13 @@ public class MemberDao {
 		Member member = null;
 		PreparedStatement pstat = null;
 		ResultSet rSet = null;
+
 		StringBuffer query = new StringBuffer();
 		query.append("select * from member where user_id = ? and password = ?");
 		/*System.out.println(userid +", "+userpwd);*/ //값 잘 받는지 확인
+
 		try {
-			pstat = conn.prepareStatement(query.toString());
+			pstat = conn.prepareStatement(query);
 			pstat.setString(1, userid);
 			pstat.setString(2, userpwd);
 			rSet = pstat.executeQuery();
@@ -37,7 +43,8 @@ public class MemberDao {
 				member.setUserDate(rSet.getDate("user_date"));
 				member.setUserPwd(userpwd);
 				member.setUserDelete(rSet.getString("user_delete"));
-				
+				member.setNaverCode(rSet.getString("NAVER_CODE"));
+				System.out.println(member + " <- dao member");
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -250,6 +257,7 @@ public class MemberDao {
 		return result;
 	}
 
+
 	public int updateNaverMember(Connection conn, Member member) {
 		//네이버 로그인시 이미 등록되어있는 계정이라면
 		int result = 0;
@@ -273,5 +281,55 @@ public class MemberDao {
 			close(pstat);
 		}
 		return result;
+
+	public int insertSitterImages(Connection conn, ArrayList<SitterImage> list) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		int num = getSitterImagesCount(conn);
+		String query = "INSERT ALL ";
+		for(int i = 0; i < list.size(); i++) {
+			query += "INTO SITTERIMG VALUES ( ?, ?, ?, ? ) ";
+		}
+		query += " SELECT * FROM DUAL";
+		try {
+			pstmt = conn.prepareStatement(query);
+			int count = 1;
+			for(int j = 0; j < list.size(); j++) {
+				pstmt.setInt(count++, num++);
+				pstmt.setString(count++, list.get(j).getUserId());
+				pstmt.setString(count++, list.get(j).getOriginFile());
+				pstmt.setString(count++, list.get(j).getRenameFile());
+			}
+			result = pstmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
+	private int getSitterImagesCount(Connection conn) {
+		int count = 0;
+		Statement stmt = null;
+		String query = "SELECT COUNT(*) FROM SITTERIMG";
+		ResultSet rset = null;
+		try {
+			stmt = conn.createStatement();
+			rset = stmt.executeQuery(query);
+			
+			if(rset.next()) {
+				count = rset.getInt(1);
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(stmt);
+		}
+		return count;
+
 	}
 }
