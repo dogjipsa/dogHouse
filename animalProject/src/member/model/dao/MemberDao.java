@@ -4,9 +4,11 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.ArrayList;
 
 import static common.JDBCTemplate.*;
 import member.model.vo.Member;
+import member.model.vo.SearchingInfo;
 
 public class MemberDao {
 	public MemberDao () {}
@@ -213,4 +215,40 @@ public class MemberDao {
 		
 		return result;
 	}
+
+	public ArrayList<SearchingInfo> searchPetSitter(Connection conn, String userid) {
+		ArrayList<SearchingInfo> list = new ArrayList<SearchingInfo>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String query = "SELECT P.PET_BREADS, P.PET_SIZE, P.PET_DATE FROM MEMBER M JOIN PET P ON(P.USER_ID = M.USER_ID) WHERE M.USER_ID = ?";
+		System.out.println("dao단 id조회 : " + userid);
+		try {
+			
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, userid);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				SearchingInfo petInfo = new SearchingInfo();
+				
+				petInfo.setPetBreads(rset.getString(1));
+				petInfo.setPetSize(rset.getString(2));
+				petInfo.setPetDate(rset.getDate(3));
+				
+				list.add(petInfo);
+			}
+			System.out.println("dao단 : " + list);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return list;
+	}
+
+	
 }

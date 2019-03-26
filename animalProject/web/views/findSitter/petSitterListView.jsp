@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" import="booking.model.vo.Booking"%>
+    pageEncoding="UTF-8" import="member.model.vo.*, java.util.*"%>
 <%
-	Booking booking = (Booking)request.getAttribute("booking");
+	/* ArrayList<SearchingInfo> list = (ArrayList<SearchingInfo>)request.getAttribute("list"); */
 %>   
 <!DOCTYPE html>
 <html>
@@ -11,6 +11,9 @@
 <link rel="shortcut icon" href="/doggybeta/resources/images/favicon.ico">
 <link href="/doggybeta/resources/css/footer.css" rel="stylesheet" type="text/css">
 <script type="text/javascript" src="/doggybeta/resources/js/jquery-3.3.1.min.js"></script>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+<script src="//code.jquery.com/ui/1.8.18/jquery-ui.min.js"></script>	
 <script>
 $(document).ready(function(){
 	$("#begin").datepicker({
@@ -26,7 +29,7 @@ $(document).ready(function(){
 	});
 });
 					
-					</script>
+</script>
 <style type="text/css">
 body{
 	width: 1500px;
@@ -68,7 +71,8 @@ text-align: center;
 <div id="wrap" >
 <div id="content">
 			<!-- 조건 검색 테이블  -->	
-			<div align=center>		
+			<div align=center>	
+			<%-- <input type="hidden" name="userid" id="userid" value="<%=loginUser.getUserId() %>"> --%>	
 			<table id=searchpettable>
 				<tr>
 					<th width="100">서비스</th>
@@ -79,7 +83,7 @@ text-align: center;
 				</tr>
 				<tr>
 					<td>  
-						<select style="width:180px; height:30px;">
+						<select name="opt" style="width:180px; height:30px;">
 						  <option value="0">[당일]우리집으로 부르기</option>
 						  <option value="1">우리집으로 부르기</option>
 						  <option value="2">[당일]펫시터 집에 맡기기</option>
@@ -87,25 +91,23 @@ text-align: center;
 						</select>
 					</td>
 					<td>
-					<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-					<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-					<script src="//code.jquery.com/ui/1.8.18/jquery-ui.min.js"></script>					
-
-					
+				
 					<p>조회기간:
 					    <input type="text" id="begin"> ~
 					    <input type="text" id="end">
 					</p>
 					</td>
+				<%-- 	 <% for(SearchingInfo petInfo : list) {%>
 					<td>
-						견종정보				
+						<%= petInfo.getPetBreads() %>				
 					</td>
 					<td>
-						사이즈정보
+						<%= petInfo.getPetSize() %>
 					</td>
 					<td>
-						나이정보
+						<%= petInfo.getAge() %>
 					</td>
+					<%} %>  --%> 
 				</tr>
 			</table>
 			</div> <br>

@@ -3,10 +3,13 @@ package member.model.service;
 import static common.JDBCTemplate.*;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.util.ArrayList;
 
 import member.model.dao.MemberDao;
 import member.model.vo.Member;
+import member.model.vo.SearchingInfo;
 
 public class MemberService {
 	private MemberDao mdao = new MemberDao();
@@ -92,6 +95,13 @@ public class MemberService {
 		close(conn);
 		return result;
 	}
-	
+
+	public ArrayList<SearchingInfo> searchPetSitter(String userid) {
+		Connection conn = getConnection();
+		System.out.println("서비스단 : " + userid);
+		ArrayList<SearchingInfo> list = mdao.searchPetSitter(conn, userid);
+		close(conn);
+		return list;
+	}
 
 }
