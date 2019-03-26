@@ -80,6 +80,11 @@ function requestHostAjax() {
                 tr.addEventListener('click', function(){
                     initMap(tableForm.address.split(",")[0], tableForm.name);
                     document.querySelector('#addr_text').textContent = tableForm.address;
+                    const miniInfo = document.querySelector('.host_side2');
+                    while(miniInfo.firstChild){
+                        miniInfo.removeChild(miniInfo.firstChild);
+                    }
+
                 });
             }
         }
