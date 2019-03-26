@@ -23,6 +23,16 @@ public class MemberService {
 		
 		return loginUser;
 	}
+	
+	public Member loginNaverMember(String userid, String token) {
+		Connection conn = getConnection();
+		System.out.println(userid +"=service="+token);
+		Member loginUser = mdao.loginNaverCheck(conn, userid, token);
+		System.out.println("loginUser : " + loginUser);
+		close(conn);
+		
+		return loginUser;
+	}
 
 	public int findPassword(Member member) {
 		Connection conn = getConnection();
@@ -94,6 +104,17 @@ public class MemberService {
 		return result;
 	}
 
+
+	public int updateNaverMember(Member member) {
+		Connection conn = getConnection();
+		int result = mdao.updateNaverMember(conn, member);
+		if(result > 0)
+			commit(conn);
+		else
+			rollback(conn);
+		close(conn);
+		return result;
+
 	public int insertSitterImages(ArrayList<SitterImage> list) {
 		Connection conn = getConnection();
 	      int result = mdao.insertSitterImages(conn, list);
@@ -103,6 +124,7 @@ public class MemberService {
 	         rollback(conn);
 	      close(conn);
 	      return result;
+
 	}
 	
 

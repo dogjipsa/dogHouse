@@ -35,13 +35,15 @@ public class LoginServlet extends HttpServlet {
 		System.out.println("멤버서블릿 호출");
 		
 		String access_token = (String)request.getAttribute("access_token");
+		String email = (String)request.getAttribute("email");
 		System.out.println(access_token + "<- 회원가입 후 즉시 로그인처리");
 		
 		if(access_token != null) {
 			String naverId = (String)request.getAttribute("naverId");
 			System.out.println("naverId : " + naverId);
-			String passwd = "";
-			Member loginUser = new MemberService().loginMember(naverId, passwd);
+			
+			Member loginUser = new MemberService().loginNaverMember(email, access_token);
+			
 			response.setContentType("text/html; charset=utf-8");
 			
 			if(loginUser != null) {
@@ -54,7 +56,7 @@ public class LoginServlet extends HttpServlet {
 				response.sendRedirect("/doggybeta/index.jsp");
 			} else {
 				RequestDispatcher view = request.getRequestDispatcher("views/member/memberError.jsp");
-				request.setAttribute("message", "로그인 실패함!!");
+				request.setAttribute("message", "네이버 회원 로그인에 실패하였습니다. 다시 시도해주세요.");
 				view.forward(request, response);
 			}
 			
@@ -68,15 +70,13 @@ public class LoginServlet extends HttpServlet {
 			
 			if(loginUser != null) {
 				HttpSession session = request.getSession();
-				//session.setMaxInactiveInterval(10*60);
 				System.out.println("세션아이디 : " + session.getId());
-				
 				session.setAttribute("loginUser", loginUser);
 			
 				response.sendRedirect("/doggybeta/index.jsp");
 			} else {
 				RequestDispatcher view = request.getRequestDispatcher("views/member/memberError.jsp");
-				request.setAttribute("message", "로그인 실패!");
+				request.setAttribute("message", "로그인에 실패하였습니다. 다시 시도해주세요.");
 				view.forward(request, response);
 			}
 		}

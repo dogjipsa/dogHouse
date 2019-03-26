@@ -16,10 +16,9 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <link rel="stylesheet" href="/doggybeta/resources/css/psForm.css">
+<link href='/doggybeta/resources/css/member/login.css' rel='stylesheet' type='text/css'>
 <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet" />
-<link href='/doggybeta/resources/css/login.css' rel='stylesheet' type='text/css'>
-<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet" />
-<link href="https://fonts.googleapis.com/css?family=Sunflower:300,500,700&amp;subset=korean" rel="stylesheet">
+
 <link href="/doggybeta/resources/css/mainV2.css" rel="stylesheet" type="text/css">
 <script type="text/javascript" src="/doggybeta/resources/js/jquery-3.3.1.min.js"></script>
 <script type="text/javascript" src="https://static.nid.naver.com/js/naveridlogin_js_sdk_2.0.0.js" charset="utf-8"></script>
@@ -40,15 +39,16 @@
 		});
 	});
 
+</script>
+<style>
+</style>
 
-	</script>
-	<style>
-	</style>
 </head>
 
 <body>
 
-	<% if(loginUser == null ) { %>
+	<% if(loginUser == null) { %>
+
 	<input type='checkbox' id='menu_state' checked />
 	<div id='mask'> </div>
 	<nav>
@@ -101,6 +101,7 @@
 		</ul>
 	</nav>
 	<!-- Login Form ---------------------------------------------------------------------------- -->
+	<div class='loginbody'>
 	<form class="login-form" method='post' action='/doggybeta/jipsalogin'>
 		<!-- <img id='cancelBtn' src='/doggybeta/resources/images/cancel-button.jpg'> -->
 		<p class="login-text">
@@ -126,12 +127,14 @@
    				 apiURL += "&state=" + state;
    				 session.setAttribute("state", state);
     		 %>
-		<a href="<%=apiURL%>"><img style='position:relative;' height="47" width='240'
-				src="/doggybeta/resources/images/naverButton/네이버 아이디로 로그인_완성형_White.PNG" /></a>
-		<br>
-		<br>
-		<a href="/doggybeta/views/member/findPassword.jsp" class="login-forgot-pass" id='tempPwd'>비밀번호를 잊으셨나요?</a>
+
+			<a href="<%=apiURL%>"><img id='naver_id_login' style='position:relative;' height="47" width='260'  src="/doggybeta/resources/images/naverButton/네이버 아이디로 로그인_완성형_White.PNG"/></a> 
+			<br>
+			<br>
+  			<a href="/doggybeta/views/member/findPassword.jsp" class="login-forgot-pass" id='tempPwd'>비밀번호를 잊으셨나요?</a>
+
 	</form>
+	</div>
 	<script type="text/javascript">
 		$('.m1').click(function () {
 			if ($(this).children('.m2').is(':visible')) {
@@ -142,24 +145,22 @@
 		});
 	</script>
 	<% } else { %>
+		<a href='/doggybeta/jipsalogout'>로그아웃</a>
+		<input type='checkbox' id='menu_state' checked />
 
-
-
-
-	<%= loginUser.getUserId() %> 님 환영합니다
-	<a href='/doggybeta/jipsalogout'>로그아웃</a>
-	<input type='checkbox' id='menu_state' checked />
 	<nav>
 		<ul class='doghouse'>
 			<li><a><span><img src="/doggybeta/resources/images/로고test2.png" style="margin-left: 50px; padding: 10px 10px;" width="80px"></span></a></li>
 		</ul>
-		<a href='/doggybeta/jipsalogout'><span class='btn btn-1 btn-sign'>로그아웃</span></a>
-		<%= loginUser.getUserId() %>
-		<%= access_token %>님 환영해요!
-		<!-- ---------------------------------------------------------------------------- -->
-		<!-- 		<a href="#" class="login-forgot-pass">forgot password?</a>
-		<div class="underlay-photo"></div>
-		<div class="underlay-black"></div>  -->
+
+		<a  href='/doggybeta/jipsalogout'><span class='btn btn-1 btn-sign'>로그아웃</span></a>
+		<% if(access_token != null) { %>
+		<!-- 네이버로그인이 제대로 되었음을 확인 -->
+			<%= loginUser.getUserName() %> 님 환영합니다
+		<% } else { %>
+			<%= loginUser.getUserName() %> 님 환영합니다
+		<% } %>
+
 		<!-- -------------------------------------------------------------------------  -->
 		<ul class='icon' id='icon'>
 			<li><a href='/doggybeta' id='icon1'> <span>&nbsp;&nbsp;&nbsp;홈</span>

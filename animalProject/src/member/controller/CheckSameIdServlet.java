@@ -32,7 +32,6 @@ public class CheckSameIdServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// 중복아이디 확인 컨트롤러
 		String userId = request.getParameter("userid");
-		/*System.out.println("id"+userId);*/
 		// 3. 서비스모델로 값 또는 객체 전달하기, 결과받기.
 		int result = new MemberService().selectCheckId(userId);
 		System.out.println(userId);
@@ -43,7 +42,6 @@ public class CheckSameIdServlet extends HttpServlet {
 		else if(result == 1)
 			returnValue = "dup";
 		
-		//ajax 통신 응답처리는 출력 스트림으로 값을 전송
 		PrintWriter out = response.getWriter();
 		out.append(returnValue);
 		out.flush();

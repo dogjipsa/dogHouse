@@ -6,12 +6,11 @@
 	String message = (String)request.getAttribute("message");
 %>
 <!DOCTYPE html>
-<html>
+<html id='findPinHtml'>
 <head>
 <meta charset="UTF-8">
 <title>도그하우스</title>
-<link rel="stylesheet" href="/doggybeta/resources/css/findPin.css">
-<link href="https://fonts.googleapis.com/css?family=Sunflower:300,500,700&amp;subset=korean" rel="stylesheet">
+<link rel="stylesheet" href="/doggybeta/resources/css/member/findPin.css">
 <script type="text/javascript" src="/doggybeta/resources/js/jquery-3.3.1.min.js"></script>
 <script type="text/javascript">
 	$(function () {
@@ -25,8 +24,10 @@
 				type: 'post',
 				data: {userid : userId, email : useremail },
 				url: '/doggybeta/jipsafindpwd',
-				success: function(data) {
-						alert(data);
+				success: function(result) {
+					var obj = decodeURIComponent(result.str);
+					
+					alert(obj);
 				}//success
 				,
 				error: function(jqXHR, textStatus, errorThrown) {
@@ -57,11 +58,6 @@
 	<input type='submit' value='전송' id='btnSend'/>
 	<p>※전송버튼을 누르면 임시비밀번호 발급메일이 발송됩니다.</p>
 </div>
-<!-- 아이디 : <input type='text' id='userid' name='userid'/>
-이메일 : <input type='email' id='email' name='email'/>
-<br>
-<input type='submit' value='sending email' id='btnSend'/> -->
-
 </form>
 </body>
 </html>

@@ -41,7 +41,7 @@ public class InsertMemberServlet extends HttpServlet {
 		member.setEmail(request.getParameter("email"));
 		member.setPhone(request.getParameter("phone"));
 		//확인
-		System.out.println(member);
+		/*System.out.println(member);*/ //멤버값 확인용
 		//3. 서비스모델로 객체 전달하고 결과받기.
 		int re = new MemberService().insertMember(member);
 		//4. 성공 실패해 따라 뷰를 선택해서 내보내기.

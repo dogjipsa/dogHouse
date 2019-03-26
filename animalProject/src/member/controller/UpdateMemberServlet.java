@@ -28,7 +28,7 @@ public class UpdateMemberServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		// 회원 정보 db 업데이트 처리용 컨트롤러 (19.03.26 아직 필요하지 않음)
 	}
 
 	/**
