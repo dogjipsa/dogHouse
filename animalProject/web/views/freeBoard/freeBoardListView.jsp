@@ -126,7 +126,7 @@ function showWriteForm(){
 <% }} %> &nbsp;
 
 <!-- 다음 -->
-<% if((currentPage + 10) > endPage){ %>
+<% if((currentPage + 10) > endPage && currentPage != 1){ %>
 	<a href="/doggybeta/flist?page=<%= endPage + 1 %>">[next]</a>&nbsp;
 <% }else{ %>
 	[next]&nbsp;

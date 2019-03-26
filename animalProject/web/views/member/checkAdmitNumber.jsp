@@ -4,17 +4,15 @@
 	String keycode = (String)session.getAttribute("keycode");
 %>
 <!DOCTYPE html>
-<html>
+<html id='admitbody'>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<link rel="stylesheet" href="/doggybeta/resources/css/enroll.css">
-<link href="https://fonts.googleapis.com/css?family=Sunflower:300,500,700&amp;subset=korean" rel="stylesheet"> 
+<link rel="stylesheet" href="/doggybeta/resources/css/member/enroll.css">
 </head>
 <script type="text/javascript" src="/doggybeta/resources/js/jquery-3.3.1.min.js"></script>
 <script type="text/javascript">
 	function checkid() {
-		//서버로 입력된 아이디값을 전송해서 이미 있는 아이디인지 확인 요청. 이후 결과를 받아 사용여부 처리함.
 		//jQuery.ajax() 사용
 		var id=$('#userid').val();
 		var getCheck= RegExp(/^[a-zA-Z0-9]{4,12}$/);
@@ -52,7 +50,7 @@
 		}); //ajax
 		
 		return false; //클릭 이벤트 전달받음
-	} //function close;
+	} // 아이디 중복 확인 함수 close;
 	function admit() {
 		var regExp = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
 		var e = $('#email').val();
@@ -61,48 +59,42 @@
 			alert('올바른 형식의 이메일주소를 입력해주세요.');
 			$('#email').select();
 		}
-		/* if(!regExp.test(e)) {
-			alert('올바른 형식의 이메일주소를 입력해주세요.');
-		} */
 		else {
-			alert('인증번호 전송이 완료되었습니다.')
-
-				var n = $('#number').val();
-				if(!n) {
-					alert('인증번호를 입력해주세요');
-				}
+			alert('인증번호 전송이 완료되었습니다.');
 				
 			$.ajax({
 				url: '/doggybeta/admitmember',
 				type: 'post',
-				data: {email: $('#email').val() },
-				succeess: function(data) {
-					console.log("sucess : " + data);
-					alert("성공!");
+				dataType: 'json',
+				data: {email: $('#email').val()},
+				success: function(data) {
+					var obj = JSON.parse(data.keycode);
+					$('#number2').val(obj);
+					/* console.log("data : " + obj); */ //데이터 잘 넘어오는지 확인
 				},
 				error: function(jqXHR, textStatus, errorThrown) {
 					console.log("error : "+jqXHR+","+textStatus+","+errorThrown);
 				}
 			}); //ajax
-			return false;
 		} //else
 		return false;
-	}
+	} // 인증번호 전송 클릭함수
 	
-    var code = '<%= keycode %>';
-    
 	function confirmNum() {
-		var nn = $('#number').val();
-			if(code == nn) {
+		var n2 = $('#number2').val();
+		var n1 = $('#number').val();
+			if(n1==n2 && n1!='' && n2!='') {
 				alert('인증에 성공하였습니다!');
 				$('#signupbtn').prop('disabled', false).css("background-color", "");
+			} else if(!n1) {
+				alert('인증번호를 입력해주세요');
+				$('#signupbtn').prop('disabled', true).css('background-color','gray');
 			} else {
 				alert('인증번호를 다시 입력해주세요!');
-				/* $('#signupbtn').hide(); */
 				$('#signupbtn').prop('disabled', true).css('background-color','gray');
-			}
-		return false;
-	};
+			 }
+			return false;
+	}; //인증번호 일치여부 확인하는 함수
 	
 	$(function() {
 		//암호 확인입력상자의 focus가 사라졌을 때
@@ -116,15 +108,10 @@
 				$('#userpwd1').select();
 			}
 		});
-		
-		/* if(!regExp.test($('#phone').val())){
-			alert("'-'을 포함하여 휴대폰번호를 입력해주세요.");
-			$('#phone').select();
-		} */
+
 	}); //암호 함수
 	
 	$(function(){
-
 	    $("#phone").on('keydown', function(e){
 	       // 숫자만 입력받기
 	    var trans_num = $('#phone').val().replace(/-/gi,'');
@@ -134,35 +121,28 @@
 		{
 	  	    e.preventDefault();
 		}
-	    }).on('blur', function(){ // 포커스를 잃었을때 
+		//function(e) 시작
+	    }).on('blur', function() { // 포커스를 잃었을때 
 	        if($('#phone').val() == '') return;
-
 	        // 기존 번호에서 - 를 삭제
 	        var trans_num = $('#phone').val().replace(/-/gi,'');
 	      
 	        // 입력값이 있을때만 실행
-	        if(trans_num != null && trans_num != '')
-	        {
+	        if(trans_num != null && trans_num != '') {
 	            // 총 핸드폰 자리수는 11글자이거나, 10자
-	            if(trans_num.length==11 || trans_num.length==10) 
-	            {   
+	            if(trans_num.length==11 || trans_num.length==10) {   
 	                // 유효성 체크
 	                var regExp_ctn = /^(01[016789]{1}|02|0[3-9]{1}[0-9]{1})([0-9]{3,4})([0-9]{4})$/;
-	                if(regExp_ctn.test(trans_num))
-	                {
+	                if(regExp_ctn.test(trans_num)) {
 	                    // 유효성 체크에 성공하면 하이픈을 넣고 값을 바꿈
 	                    trans_num = trans_num.replace(/^(01[016789]{1}|02|0[3-9]{1}[0-9]{1})-?([0-9]{3,4})-?([0-9]{4})$/, "$1-$2-$3");                  
 	                    $('#phone').val(trans_num);
-	                }
-	                else
-	                {
+	                } else {
 	                    alert("유효하지 않은 전화번호 입니다.");
 	                    $('#phone').val("");
 	                    $('#phone').focus();
-	                }
-	            }
-	            else 
-	            {
+	                    }
+	            } else {
 	                alert("유효하지 않은 전화번호 입니다.");
 	                $('#phone').val("");
 	                $('#phone').focus();
@@ -171,21 +151,17 @@
 	  });  
 	    return false;
 	}); //phone 유효성 함수 close
-	
-	function agreement() {
-
-	} //약관동의 함수 close
 </script>
 </head>
 <body>
-<section>
+<section id='bodystyle'>
 <!-- <h2>회원가입페이지</h2><br> -->
 	<div id='tb'>
-	<h1>Create a new Account!</h1>
+	<h1 id='maintitle'>Create a new Account!</h1>
 	<img id='doglogo' src='/doggybeta/resources/images/로고test2.png'>
 	<form action="/doggybeta/resistenroll" method="post">
 		<span class='first_span'>
-			<input type="text" name="userid" class='mainInputForm inputForm' id="userid" required  />
+			<input type="text" name="userid" class='mainInputForm inputForm' id="userid" required onclick='getValue();'/>
 				<label class='inputLabel labelJeong' for='userid' data-content='*아 이 디'>
 					<span class='input_span span_second_jeong'>*아 이 디</span>
 				</label>
@@ -200,6 +176,7 @@
 		</span>
 		<span class='first_span'>
 			<input type='email' name='email' id='email' class='mainInputForm inputForm' required placeholder='이메일 입력후 전송버튼을 눌러주세요'/>
+
 				<label class='inputLabel labelJeong' for='email' data-content='*이 메 일'>
 					<span class='input_span span_second_jeong'>*이 메 일</span>
 				</label>
@@ -208,6 +185,7 @@
 		
 		<span class='first_span'>
 			<input type='text' name='number' id='number' class='mainInputForm inputForm' placeholder='인증번호를 입력해주세요'/>
+			<input type='hidden' id='number2' class='mainInputForm inputForm'/>
 				<label class='inputLabel labelJeong' for='number' data-content='*인 증 번 호 입 력'>
 					<span class='input_span span_second_jeong'>* 인 증 번 호 입 력</span>
 				</label>

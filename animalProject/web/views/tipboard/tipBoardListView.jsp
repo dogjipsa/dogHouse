@@ -12,6 +12,8 @@
 	int currentPage = ((Integer) request.getAttribute("currentPage")).intValue();
 	//String search = null, keyword = null;
 	//java.sql.Date begin = null, end = null;
+	System.out.println("list에서 endPage : "+endPage);
+	System.out.println("list에서 currentPage : " + currentPage);
 	String search = null;
 	String keyword = null;
 	if (request.getAttribute("search") != null) {
@@ -152,8 +154,7 @@
 							<%
 						} else {//페이지 이동 시 옵션과 키워드를 유지한 채 페이징 처리
 							/* if (search != null && search.equals("title")) { */
-								System.out.println("뷰에서 keyword확인 : " + keyword);
-								System.out.println("뷰에서 search 확인 : " + search);
+								
 								if(search == null){
 								%>
 								<a href="/doggybeta/tlist?page=<%=p%>"><%=p%></a>
@@ -165,7 +166,7 @@
 					}
 				%>&nbsp;
 				<%
-					if ((currentPage + 10) > endPage /* && (currentPage + 10) < maxPage */) {
+					if ((currentPage + 10) > endPage /* && currentPage != 1 */ && (currentPage + 10) < maxPage ) {
 				%>
 				<%-- <a href="/doggybeta/tlist?page=<%=endPage + 1%>">[next]</a>&nbsp; --%>
 				<%		if(search == null){

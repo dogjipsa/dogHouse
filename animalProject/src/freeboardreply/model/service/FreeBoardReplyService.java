@@ -6,6 +6,8 @@ import static common.JDBCTemplate.getConnection;
 import static common.JDBCTemplate.rollback;
 
 import java.sql.Connection;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 import freeboard.model.vo.FreeBoard;
 import freeboardreply.model.dao.FreeBoardReplyDao;
@@ -65,18 +67,18 @@ public class FreeBoardReplyService {
 	public FreeBoard selectFreeBoard(int freeBoardNo) {
 		Connection conn = getConnection();
 		FreeBoard freeboard = fdao.selectFreeBoard(conn, freeBoardNo);
-
 		close(conn);
+		
 		return freeboard;
 	}
 
 
-	public FreeBoardReply selectReply(int freeReplyNo) {
+	public ArrayList<FreeBoardReply> selectReplyList(HashMap<String, Object> map) {
 		Connection conn = getConnection();
-		FreeBoardReply freeReply = fdao.selectReply(conn, freeReplyNo);
+		ArrayList<FreeBoardReply> flist = fdao.selectReplyList(conn, map);
 		close(conn);
 		
-		return freeReply;
+		return flist;
 	}
 
 	

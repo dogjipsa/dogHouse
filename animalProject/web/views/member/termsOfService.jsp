@@ -1,13 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html>
+<html id='termsHtml'>
 <head>
 <meta charset="UTF-8">
 <title>도그하우스</title>
-<link href="https://netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
-<link rel="stylesheet" href="/doggybeta/resources/css/terms.css">
-<link href="https://fonts.googleapis.com/css?family=Sunflower:300,500,700&amp;subset=korean" rel="stylesheet">
+<link rel="stylesheet" href="/doggybeta/resources/css/member/terms.css">
 <script type="text/javascript" src="/doggybeta/resources/js/jquery-3.3.1.min.js"></script>
 <script type="text/javascript">
         $(function(){
@@ -51,7 +49,7 @@
             <ul class='unstyled centered'>
             	<li>
             	<h4 class="scheme-g">●회원가입 및 서비스 이용 약관</h4>
-            	<textarea style="font-size: 1em;" readonly data-simplebar>
+            	<textarea class='termsText' style="font-size: 1em;" readonly >
 주민등록번호를 사용하지 않는 홈페이지 입니다.
 
 저희 홈페이지 약관은 다음과 같습니다.
@@ -224,7 +222,7 @@
             <ul class='unstyled centered'>
             	<li>
             	<h4 class="scheme-g">●전자상거래 약관</h4>
-            	<textarea style="font-size: 1em;" readonly>
+            	<textarea style="font-size: 1em;" readonly class='termsText'>
 제 1 장 총칙
  제 1 조 (목적)
 본 약관은 도그집사™에서 운영하는 웹 사이트 (http://www.dogjipsa.com)의 제반 서비스의 이용조건 및 절차에 관한 사항 및 기타 필요한 사항을 규정함을 목적으로 한다.
@@ -360,7 +358,7 @@
             <ul class='unstyled centered'>
             	<li>
             	<h4 class="scheme-g">●개인정보처리방침</h4>
-            	<textarea style="font-size: 1em;" readonly>
+            	<textarea style="font-size: 1em;" readonly class='termsText'>
 '도그하우스'의 개인정보취급방침은 다음과 같은 내용을 담고 있습니다. 
 가. 수집하는 개인정보 항목 및 수집방법
 나. 개인정보의 수집 및 이용목적

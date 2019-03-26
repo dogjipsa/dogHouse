@@ -6,24 +6,25 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
-
+import member.model.vo.SearchingInfo;
 import static common.JDBCTemplate.*;
 import member.model.vo.Member;
-import member.model.vo.SearchingInfo;
+import member.model.vo.SitterImage;
+
 
 public class MemberDao {
 	public MemberDao () {}
 
 	public Member loginCheck(Connection conn, String userid, String userpwd) {
-		// 로그인 확인
-		/*ArrayList<Member> loginUser = new ArrayList<> ();*/
+		// 일반 유저 로그인 확인
 		Member member = null;
 		PreparedStatement pstat = null;
 		ResultSet rSet = null;
-		/*StringBuffer query = new StringBuffer();
-		query.append("select * from member where user_id = ? and password = ?");*/
-		String query = "select * from member where user_id = ? and password = ?";
-		System.out.println(userid +", "+userpwd);
+
+		StringBuffer query = new StringBuffer();
+		query.append("select * from member where user_id = ? and password = ?");
+		/*System.out.println(userid +", "+userpwd);*/ //값 잘 받는지 확인
+
 		try {
 			pstat = conn.prepareStatement(query);
 			pstat.setString(1, userid);
@@ -55,8 +56,48 @@ public class MemberDao {
 		
 		return member;
 	}
+	public Member loginNaverCheck(Connection conn, String userid, String token) {
+		// 네이버으로 가입한 회원 로그인 확인
+		Member member = null;
+		PreparedStatement pstat = null;
+		ResultSet rSet = null;
+		StringBuffer query = new StringBuffer();
+		query.append("select * from member where email = ? and naver_code = ?");
+		/*System.out.println(userid +", token : "+token);*/ //값 잘 받는지 확인
+		try {
+			pstat = conn.prepareStatement(query.toString());
+			pstat.setString(1, userid);
+			pstat.setString(2, token);
+			rSet = pstat.executeQuery();
+			
+			if(rSet.next()) {
+				member = new Member();
+				member.setUserId(userid);
+				member.setEmail(rSet.getString("email"));
+				member.setUserName(rSet.getString("user_name"));
+				member.setAddress(rSet.getString("address"));
+				member.setPhone(rSet.getString("phone"));
+				member.setJob(rSet.getString("job"));
+				member.setPetSitter(rSet.getString("petsitter"));
+				member.setPrice(rSet.getInt("price"));
+				member.setUserDate(rSet.getDate("user_date"));
+				member.setUserPwd(rSet.getString("password"));
+				member.setUserDelete(rSet.getString("user_delete"));
+				member.setNaverCode(token);
+				
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(rSet);
+			close(pstat);
+		}
+		
+		return member;
+	}
 
 	public int findPassword(Connection conn, Member member) {
+		//비밀번호 찾기
 		int result = 0;
 		PreparedStatement pstat = null;
 		ResultSet rSet = null;
@@ -217,6 +258,7 @@ public class MemberDao {
 		return result;
 	}
 
+
 	public ArrayList<SearchingInfo> searchPetSitter(Connection conn, String userid) {
 		ArrayList<SearchingInfo> list = new ArrayList<SearchingInfo>();
 		PreparedStatement pstmt = null;
@@ -263,4 +305,80 @@ public class MemberDao {
 	}
 
 	
+
+	public int updateNaverMember(Connection conn, Member member) {
+		//네이버 로그인시 이미 등록되어있는 계정이라면
+		int result = 0;
+		PreparedStatement pstat = null;
+		
+		StringBuffer query = new StringBuffer();
+		query.append("update member set ");
+		query.append("user_id = ?, naver_code = ?, user_name = ? ");
+		query.append("where email = ? and naver_code is not null");
+		try {
+			pstat = conn.prepareStatement(query.toString());
+			pstat.setString(1, member.getUserId());
+			pstat.setString(2, member.getNaverCode());
+			pstat.setString(3, member.getUserName());
+			pstat.setString(4, member.getEmail());
+			
+			result = pstat.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(pstat);
+		}
+		return result;
+
+	public int insertSitterImages(Connection conn, ArrayList<SitterImage> list) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		int num = getSitterImagesCount(conn);
+		String query = "INSERT ALL ";
+		for(int i = 0; i < list.size(); i++) {
+			query += "INTO SITTERIMG VALUES ( ?, ?, ?, ? ) ";
+		}
+		query += " SELECT * FROM DUAL";
+		try {
+			pstmt = conn.prepareStatement(query);
+			int count = 1;
+			for(int j = 0; j < list.size(); j++) {
+				pstmt.setInt(count++, num++);
+				pstmt.setString(count++, list.get(j).getUserId());
+				pstmt.setString(count++, list.get(j).getOriginFile());
+				pstmt.setString(count++, list.get(j).getRenameFile());
+			}
+			result = pstmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
+	private int getSitterImagesCount(Connection conn) {
+		int count = 0;
+		Statement stmt = null;
+		String query = "SELECT COUNT(*) FROM SITTERIMG";
+		ResultSet rset = null;
+		try {
+			stmt = conn.createStatement();
+			rset = stmt.executeQuery(query);
+			
+			if(rset.next()) {
+				count = rset.getInt(1);
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(stmt);
+		}
+		return count;
+
+	}
+
 }
