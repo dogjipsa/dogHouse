@@ -165,7 +165,7 @@
 					}
 				%>&nbsp;
 				<%
-					if ((currentPage + 10) > endPage /* && (currentPage + 10) < maxPage */) {
+					if ((currentPage + 10) > endPage && currentPage != 1/* && (currentPage + 10) < maxPage */) {
 				%>
 				<%-- <a href="/doggybeta/tlist?page=<%=endPage + 1%>">[next]</a>&nbsp; --%>
 				<%		if(search == null){
