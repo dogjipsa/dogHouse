@@ -3,11 +3,16 @@ package member.model.service;
 import static common.JDBCTemplate.*;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import member.model.dao.MemberDao;
 import member.model.vo.Member;
+import member.model.vo.SearchingInfo;
 import member.model.vo.SitterImage;
+
 
 public class MemberService {
 	private MemberDao mdao = new MemberDao();
@@ -18,6 +23,16 @@ public class MemberService {
 		Connection conn = getConnection();
 		System.out.println(userid +"=service="+userpwd);
 		Member loginUser = mdao.loginCheck(conn, userid, userpwd);
+		System.out.println("loginUser : " + loginUser);
+		close(conn);
+		
+		return loginUser;
+	}
+	
+	public Member loginNaverMember(String userid, String token) {
+		Connection conn = getConnection();
+		System.out.println(userid +"=service="+token);
+		Member loginUser = mdao.loginNaverCheck(conn, userid, token);
 		System.out.println("loginUser : " + loginUser);
 		close(conn);
 		
@@ -94,6 +109,33 @@ public class MemberService {
 		return result;
 	}
 
+
+	public ArrayList<SearchingInfo> searchPetSitter(String userid) {
+		Connection conn = getConnection();
+		System.out.println("서비스단 : " + userid);
+		ArrayList<SearchingInfo> list = mdao.searchPetSitter(conn, userid);
+		close(conn);
+		return list;
+	}
+
+	public ArrayList<SearchingInfo> insertCondition(HashMap<String, Object> map) {
+		Connection conn = getConnection();
+		ArrayList<SearchingInfo> list = mdao.insertCondition(conn, map);
+		close(conn);
+		return list;
+	}
+
+
+	public int updateNaverMember(Member member) {
+		Connection conn = getConnection();
+		int result = mdao.updateNaverMember(conn, member);
+		if(result > 0)
+			commit(conn);
+		else
+			rollback(conn);
+		close(conn);
+		return result;
+
 	public int insertSitterImages(ArrayList<SitterImage> list) {
 		Connection conn = getConnection();
 	      int result = mdao.insertSitterImages(conn, list);
@@ -103,7 +145,9 @@ public class MemberService {
 	         rollback(conn);
 	      close(conn);
 	      return result;
+
 	}
 	
+
 
 }

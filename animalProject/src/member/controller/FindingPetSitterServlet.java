@@ -1,6 +1,8 @@
 package member.controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -10,19 +12,19 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import member.model.service.MemberService;
-import member.model.vo.Member;
+import member.model.vo.SearchingInfo;
 
 /**
- * Servlet implementation class InsertMemberServlet
+ * Servlet implementation class FindingPetSitterListServlet
  */
-@WebServlet("/resistenroll")
-public class InsertMemberServlet extends HttpServlet {
+@WebServlet("/finding")
+public class FindingPetSitterServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public InsertMemberServlet() {
+    public FindingPetSitterServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -31,28 +33,23 @@ public class InsertMemberServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// 회원가입 처리용 컨트롤러
-		request.setCharacterEncoding("utf-8");
-		//2. 전송값 변수 or 도메인객체에 담기
-		Member member = new Member();
-		member.setUserId(request.getParameter("userid"));
-		member.setUserName(request.getParameter("username"));
-		member.setUserPwd(request.getParameter("userpwd"));
-		member.setEmail(request.getParameter("email"));
-		member.setPhone(request.getParameter("phone"));
-		//확인
-		/*System.out.println(member);*/ //멤버값 확인용
-		//3. 서비스모델로 객체 전달하고 결과받기.
-		int re = new MemberService().insertMember(member);
-		//4. 성공 실패해 따라 뷰를 선택해서 내보내기.
+		// TODO Auto-generated method stub
+		String userid = request.getParameter("userid");
+		
+		ArrayList<SearchingInfo> list = new MemberService().searchPetSitter(userid);
+		System.out.println("서블릿: " + userid);
 		response.setContentType("text/html; charset=utf-8");
-		if(re > 0) {
-			response.sendRedirect("/doggybeta/index.jsp");
-		} else {
-			//절대경로 못씀
-			RequestDispatcher view = request.getRequestDispatcher("views/member/memberError.jsp");
-			request.setAttribute("message", "회원가입실패");
+		RequestDispatcher view = null;
+		
+		System.out.println("서블릿: " + list);
+		if(list.size() > 0) {
+			view = request.getRequestDispatcher("views/findSitter/petSitterListView.jsp");
+			request.setAttribute("list", list);
 			view.forward(request, response);
+		}else {
+			PrintWriter out = response.getWriter();
+			out.println("<script>alert('펫 정보를 반드시 등록해야 합니다.'); location.href='views/findSitter/petSitterListView.jsp';</script>");
+			out.flush();
 		}
 	}
 
