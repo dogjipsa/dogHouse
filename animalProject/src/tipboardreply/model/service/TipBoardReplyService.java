@@ -42,10 +42,17 @@ public class TipBoardReplyService {
 		return tboardRe;
 	}
 
-	public ArrayList<TipBoardReply> selectList() {
+	public ArrayList<TipBoardReply> selectList(int tipBoardNo, int trcurrentPage, int limit) {
 		Connection conn = getConnection();
-		ArrayList<TipBoardReply> list = trdao.selectList(conn);
+		ArrayList<TipBoardReply> list = trdao.selectList(conn, tipBoardNo, trcurrentPage, limit);
 		close(conn);
 		return list;
+	}
+
+	public int getListCount() {
+		Connection conn = getConnection();
+		int listCount = trdao.getListCount(conn);
+		close(conn);
+		return listCount;
 	}
 }
