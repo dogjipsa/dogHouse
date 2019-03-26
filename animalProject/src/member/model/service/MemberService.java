@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 import member.model.dao.MemberDao;
 import member.model.vo.Member;
+import member.model.vo.SitterImage;
 
 public class MemberService {
 	private MemberDao mdao = new MemberDao();
@@ -91,6 +92,17 @@ public class MemberService {
 		int result = mdao.selectCheckNaverCode(conn, naverCode);
 		close(conn);
 		return result;
+	}
+
+	public int insertSitterImages(ArrayList<SitterImage> list) {
+		Connection conn = getConnection();
+	      int result = mdao.insertSitterImages(conn, list);
+	      if(result > 0)
+	         commit(conn);
+	      else
+	         rollback(conn);
+	      close(conn);
+	      return result;
 	}
 	
 
