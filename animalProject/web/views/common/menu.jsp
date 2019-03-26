@@ -214,11 +214,11 @@
 			<input name="username" value="<%=loginUser.getUserName() %>" class="ps_input input_name" autocomplete="off"
 				readonly>
 			<p>연락처</p>
-			<input name="phone" value="<%=loginUser.getPhone() %>" class="ps_input input_phone" autocomplete="off"
-				readonly>
+			<input type="tel" name="phone" value="<%=loginUser.getPhone() %>" class="ps_input input_phone" autocomplete="off"
+				required>
 			<p>이메일</p>
-			<input name="email" value="<%=loginUser.getEmail() %>" class="ps_input input_email" autocomplete="off"
-				readonly>
+			<input type="email" name="email" value="<%=loginUser.getEmail() %>" class="ps_input input_email" autocomplete="off"
+				required>
 				<p>희망 일급(원)</p>
 				<input type="number" name="price" placeholder="가격 입력" class="ps_input input_price" required>
 		</div>
@@ -233,14 +233,14 @@
 				</span>
 			</div>
 			<p>펫시팅 장소</p>
-			<input type="text" id="sample6_postcode" class="ps_input" placeholder="우편번호" required>
+			<input name="postcode" id="sample6_postcode" class="ps_input" placeholder="우편번호" required>
 			<input type="button" onclick="sample6_execDaumPostcode()" id="post-search" value="우편번호 찾기">
-			<input type="text" id="sample6_address" class="ps_input input_addr" placeholder="주소" required>
-			<input type="text" id="sample6_detailAddress" class="ps_input" placeholder="상세주소" required>
-			<input type="text" id="sample6_extraAddress" class="ps_input" placeholder="참고항목" readonly>
+			<input name="addr" id="sample6_address" class="ps_input input_addr" placeholder="주소" required>
+			<input name="daddr" id="sample6_detailAddress" class="ps_input" placeholder="상세주소" required>
+			<input name="extra" id="sample6_extraAddress" class="ps_input" placeholder="참고항목" readonly>
 		</div>
 		<div class="section3">
-			<p>시설/장소 사진 추가 (최대 3개)</p>
+			<p>시설/장소 사진 추가 (최대 3개 / 10MB)</p>
 
 			<div class="ppics_list">
 				<img class="pp1" />
@@ -257,6 +257,7 @@
 
 	<script type="text/javascript" src="/doggybeta/resources/js/petSitting.js"></script>
 	<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
+	<script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=b9810167e43ee638a44b19264113db0d&libraries=services"></script>
 	<script src="/doggybeta/resources/js/addr.js"></script>
 	<script type="text/javascript">
 

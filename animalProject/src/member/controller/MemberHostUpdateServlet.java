@@ -2,10 +2,12 @@ package member.controller;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
+import java.util.Enumeration;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -61,10 +63,31 @@ public class MemberHostUpdateServlet extends HttpServlet {
 		m.setUserId(mrequest.getParameter("userid"));
 		m.setUserName(mrequest.getParameter("username"));
 		m.setPhone(mrequest.getParameter("phone"));
-		m.setAddress(mrequest.getParameter("addr"));
+		String fullAddr = mrequest.getParameter("addr")+", "+mrequest.getParameter("extra")+" "+mrequest.getParameter("daddr")+" ("+mrequest.getParameter("postcode")+")";
+		m.setAddress(fullAddr);
 		m.setPrice(Integer.parseInt(mrequest.getParameter("price")));
 		m.setEmail(mrequest.getParameter("email"));
 		String originFileName = mrequest.getFilesystemName("pic");
+		String renameFileName = renameFiles(savePath, originFileName);
+		Enumeration forms = mrequest.getFileNames();
+		String poName ="";
+		String prName ="";
+		while(forms.hasMoreElements()) {
+			poName = (String) forms.nextElement();
+			prName = renameFiles(savePath, poName);
+		}
+		m.setUseroriginfile(originFileName);
+		m.setUserrefile(renameFileName);
+		int result = new MemberService().updateHost(m);
+		if(result > 0) {
+			System.out.println("성공");
+		} else {
+			System.out.println("실패");
+		}
+		
+		response.sendRedirect("/doggybeta/index.jsp");
+	}
+	private String renameFiles(String savePath, String originFileName) throws IOException {
 		if(originFileName != null) {
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
 			String renameFileName = sdf.format(new Date(System.currentTimeMillis()))+"."+ originFileName.substring(originFileName.lastIndexOf(".")+1);
@@ -88,21 +111,13 @@ public class MemberHostUpdateServlet extends HttpServlet {
 				fin.close();
 				fout.close();
 				originFile.delete();
+				System.out.println("changed filename");
 			}
-			m.setUseroriginfile(originFileName);
-			m.setUserrefile(renameFileName);
+			return renameFileName;
 		}
-		
-		int result = new MemberService().updateHost(m);
-		if(result > 0) {
-			System.out.println("성공");
-		} else {
-			System.out.println("실패");
-		}
-		
-		response.sendRedirect("/doggybeta/index.jsp");
+		return "";
 	}
-
+	
 	/**
 	 * 
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)

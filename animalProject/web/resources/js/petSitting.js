@@ -47,14 +47,14 @@ const ppicsText = document.getElementById('ppics-text');
 uploadBtn.addEventListener('click', function(){
 	ppicsFile.click();
 });
-
+// 시설/장소 사진 추가 버튼 이벤트
 ppicsFile.addEventListener('change', function(e){
 	showPPics(e.target);
 	if(ppicsFile.value){
 		ppicsText.innerHTML = ppicsFile.files.length+' files selected'
 	}
 });
-
+// 시설/장소 이미지 프리뷰
 function showPPics(input){
 	const imgs = [document.querySelector('.pp1'),document.querySelector('.pp2'),document.querySelector('.pp3')];
 	
