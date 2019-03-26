@@ -5,11 +5,12 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
-
-
+import java.util.HashMap;
+import member.model.vo.SearchingInfo;
 import static common.JDBCTemplate.*;
 import member.model.vo.Member;
 import member.model.vo.SitterImage;
+
 
 public class MemberDao {
 	public MemberDao () {}
@@ -258,6 +259,53 @@ public class MemberDao {
 	}
 
 
+	public ArrayList<SearchingInfo> searchPetSitter(Connection conn, String userid) {
+		ArrayList<SearchingInfo> list = new ArrayList<SearchingInfo>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String query = "SELECT P.PET_BREADS, P.PET_SIZE, TRUNC(MONTHS_BETWEEN(sysdate, pet_date)/12) as AGE  FROM MEMBER M JOIN PET P ON(P.USER_ID = M.USER_ID) WHERE M.USER_ID = ?";
+		System.out.println("dao단 id조회 : " + userid);
+		
+		try {
+			
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, userid);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				SearchingInfo petInfo = new SearchingInfo();
+				
+				petInfo.setPetBreads(rset.getString(1));
+				petInfo.setPetSize(rset.getString(2));
+				petInfo.setAge(rset.getInt(3));
+				petInfo.setUserId(userid);
+				
+				list.add(petInfo);
+			}
+			System.out.println("dao단 : " + list.toString());
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return list;
+	}
+
+	public ArrayList<SearchingInfo> insertCondition(Connection conn, HashMap<String, Object> map) {
+		ArrayList<SearchingInfo> list = new ArrayList<SearchingInfo>();
+		
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String query = "";
+	}
+
+	
+
 	public int updateNaverMember(Connection conn, Member member) {
 		//네이버 로그인시 이미 등록되어있는 계정이라면
 		int result = 0;
@@ -332,4 +380,5 @@ public class MemberDao {
 		return count;
 
 	}
+
 }
