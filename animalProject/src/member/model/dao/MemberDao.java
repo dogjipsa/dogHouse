@@ -223,6 +223,7 @@ public class MemberDao {
 		
 		String query = "SELECT P.PET_BREADS, P.PET_SIZE, P.PET_DATE FROM MEMBER M JOIN PET P ON(P.USER_ID = M.USER_ID) WHERE M.USER_ID = ?";
 		System.out.println("dao단 id조회 : " + userid);
+		
 		try {
 			
 			pstmt = conn.prepareStatement(query);

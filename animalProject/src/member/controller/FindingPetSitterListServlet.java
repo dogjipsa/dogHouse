@@ -2,7 +2,6 @@ package member.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
@@ -12,7 +11,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import booking.model.service.BookingService;
 import member.model.service.MemberService;
 import member.model.vo.SearchingInfo;
 
@@ -37,7 +35,9 @@ public class FindingPetSitterListServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		String userid = request.getParameter("userid");
+		
 		ArrayList<SearchingInfo> list = new MemberService().searchPetSitter(userid);
+		
 		response.setContentType("text/html; charset=utf-8");
 		RequestDispatcher view = null;
 		System.out.println("서블릿: " + userid);

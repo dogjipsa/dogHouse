@@ -155,7 +155,7 @@
 			<li><a href='/doggybeta' id='icon1'> <span>&nbsp;&nbsp;&nbsp;홈</span>
 			</a></li>
 			<li class="m1"><a
-				href="/doggybeta/views/aboutus/companyintroduce.jsp" id='icon2'><span>&nbsp;&nbsp;&nbsp;About
+				href="#" id='icon2'><span>&nbsp;&nbsp;&nbsp;About
 						us</span></a>
 				<ul class="m2">
 					<li><a href="/doggybeta/views/aboutus/companyIntroduce.jsp">회사소개</a></li>

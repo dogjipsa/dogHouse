@@ -1,7 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" import="member.model.vo.*, java.util.*"%>
 <%
-	/* ArrayList<SearchingInfo> list = (ArrayList<SearchingInfo>)request.getAttribute("list"); */
+	ArrayList<SearchingInfo> list = (ArrayList<SearchingInfo>)request.getAttribute("list");
+	
 %>   
 <!DOCTYPE html>
 <html>
@@ -68,11 +69,14 @@ text-align: center;
 </head>
 <body>
 <%@ include file="..//common/menu.jsp" %>
+
 <div id="wrap" >
 <div id="content">
-			<!-- 조건 검색 테이블  -->	
-			<div align=center>	
-			<%-- <input type="hidden" name="userid" id="userid" value="<%=loginUser.getUserId() %>"> --%>	
+<form method="post" action="/doggybeta/fplist">
+	<!-- 조건 검색 테이블  -->	
+		<input type="hidden" name="userid" value="<%=loginUser.getUserId() %>">
+		<%=loginUser.getUserId() %>
+</form> 
 			<table id=searchpettable>
 				<tr>
 					<th width="100">서비스</th>
@@ -97,23 +101,16 @@ text-align: center;
 					    <input type="text" id="end">
 					</p>
 					</td>
-				<%-- 	 <% for(SearchingInfo petInfo : list) {%>
+				 	  <%-- <%= list.getPetBreads() %> --%>
 					<td>
-						<%= petInfo.getPetBreads() %>				
+								
 					</td>
-					<td>
-						<%= petInfo.getPetSize() %>
-					</td>
-					<td>
-						<%= petInfo.getAge() %>
-					</td>
-					<%} %>  --%> 
+					
 				</tr>
 			</table>
-			</div> <br>
+			<br>
 <!-- 지역 검색 -->
 <div align="center">
- <form name="form1">
   <select name="h_area1" onChange="cat1_change(this.value,h_area2)" style="width:80px; height:30px;">
    <option selected>-선택-</option>
 <option value='1'>서울</option>
@@ -245,7 +242,7 @@ function function22(){
 }
 </script>
 <input type="button" value="검색하기" onclick="function22();">
-</form>
+
 
 </div>
 <!-- 지역검색 닫기 -->
