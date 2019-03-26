@@ -55,10 +55,10 @@ public class BookingHostServiceServlet extends HttpServlet {
 				int price = b.getPrice();
 				if(b.getServiceKind().equals("0") || b.getServiceKind().equals("2")) {
 					price *= 0.8; // 당일 상품 20% 낮은 가격
-					price = (int) Math.floor(price/1000) * 1000; // 천단위 절사
 				} else {
 					price = (int) ((b.getCheckOutDate().getTime() - b.getCheckInDate().getTime())/(1000*60*60*24)) * b.getPrice();
 				}
+				price = (int) Math.floor(price/1000) * 1000; // 천단위 절사
 				job.put("price", price);
 				job.put("pg",b.getProgress());
 				if(b.getEtc() != null) {
@@ -77,7 +77,7 @@ public class BookingHostServiceServlet extends HttpServlet {
 			out.flush();
 			out.close();
 		} else {
-			System.out.println("접속실패");
+			System.out.println("예약 없음");
 		}
 	}
 

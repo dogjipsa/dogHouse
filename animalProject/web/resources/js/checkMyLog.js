@@ -18,7 +18,7 @@ for (let i = 0; i < items.length; i++) {
         }
     });
 }
-// 호스트 서비스 버튼 클릭 시 Ajax
+// 호스트 서비스 버튼 클릭 시 나에게 온 예약 출력 Ajax
 function requestHostAjax() {
     const xhr = new XMLHttpRequest();
     const tbody = document.querySelector('.host_table table tbody');
@@ -78,7 +78,8 @@ function requestHostAjax() {
                 }
 
                 tr.addEventListener('click', function(){
-                    initMap();
+                    initMap(tableForm.address.split(",")[0], tableForm.name);
+                    document.querySelector('#addr_text').textContent = tableForm.address;
                 });
             }
         }
@@ -121,8 +122,10 @@ function requestBkAjax() {
 
                 const tableForm = {
                     'bookingNo': json.list[i].bno,
-                    'content': kind + " / " + decodeURIComponent(json.list[i].pname)
-                        + " / " + decodeURIComponent(json.list[i].addr).replace(/\+/gi, " ") + " / " + json.list[i].price + "원/일",
+                    'kind': kind,
+                    'pname': decodeURIComponent(json.list[i].pname),
+                    'addr': decodeURIComponent(json.list[i].addr).replace(/\+/gi, " "),
+                    'price': json.list[i].price + "원",
                     'hostId': json.list[i].puserid,
                     'date': json.list[i].indate + " ~ " + json.list[i].outdate,
                     'pg': pg

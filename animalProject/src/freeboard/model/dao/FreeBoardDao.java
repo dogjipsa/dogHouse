@@ -236,7 +236,7 @@ public class FreeBoardDao {
 					"USER_ID, " + 
 					"FREEBOARD_DELETE, FREEBOARD_REFILE " + 
 					"FROM (SELECT * FROM FREEBOARD WHERE FREEBOARD_DELETE IN('n', 'N', null) " +
-					"ORDER BY FREEBOARD_NO ASC)) " +  
+					"ORDER BY FREEBOARD_NO DESC)) " +  
 					"WHERE RNUM >= ? AND RNUM <= ?";
 			
 			try {
@@ -281,7 +281,7 @@ public class FreeBoardDao {
 					"FREEBOARD_DELETE, FREEBOARD_REFILE " + 
 					"FROM (SELECT * FROM FREEBOARD " +
 					"WHERE FREEBOARD_TITLE LIKE ? AND FREEBOARD_DELETE IN('n', 'N', null) " +
-					"ORDER BY FREEBOARD_NO ASC)) " +  
+					"ORDER BY FREEBOARD_NO DESC)) " +  
 					"WHERE RNUM >= ? AND RNUM <= ?";
 			
 			try {
@@ -329,7 +329,7 @@ public class FreeBoardDao {
 					"FREEBOARD_DELETE, FREEBOARD_REFILE " + 
 					"FROM (SELECT * FROM FREEBOARD " +
 					"WHERE USER_ID LIKE ? AND FREEBOARD_DELETE IN('n', 'N', null) " +
-					"ORDER BY FREEBOARD_NO ASC)) " +  
+					"ORDER BY FREEBOARD_NO DESC)) " +  
 					"WHERE RNUM >= ? AND RNUM <= ?";
 			
 			try {
@@ -377,7 +377,7 @@ public class FreeBoardDao {
 					"FREEBOARD_DELETE, FREEBOARD_REFILE " + 
 					"FROM (SELECT * FROM FREEBOARD " +
 					"WHERE FREEBOARD_TITLE LIKE ? OR FREEBOARD_CONTENT LIKE ? AND FREEBOARD_DELETE IN('n', 'N', null) " +
-					"ORDER BY FREEBOARD_NO ASC)) " +  
+					"ORDER BY FREEBOARD_NO DESC)) " +  
 					"WHERE RNUM >= ? AND RNUM <= ?";
 			
 			try {

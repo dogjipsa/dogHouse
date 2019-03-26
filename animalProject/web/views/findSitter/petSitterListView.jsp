@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8" import="booking.model.vo.Booking"%>
+<%
+	Booking booking = (Booking)request.getAttribute("booking");
+%>   
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,11 +11,25 @@
 <link rel="shortcut icon" href="/doggybeta/resources/images/favicon.ico">
 <link href="/doggybeta/resources/css/footer.css" rel="stylesheet" type="text/css">
 <script type="text/javascript" src="/doggybeta/resources/js/jquery-3.3.1.min.js"></script>
+<script>
+$(document).ready(function(){
+	$("#begin").datepicker({
+		minDate:0,
+		onSelect: function(selected) {
+		$("#end").datepicker("option","minDate", selected)
+	}
+});
+		$("#end").datepicker({						
+		onSelect: function(selected) {
+		$("#begin").datepicker("option","maxDate", selected)
+	}
+	});
+});
+					
+					</script>
 <style type="text/css">
 body{
 	width: 1500px;
-	 margin: 0;
-    padding: 0;
 }
 .checked {
   color: orange;
@@ -62,15 +79,23 @@ text-align: center;
 				</tr>
 				<tr>
 					<td>  
-						<select style="width:100px; height:30px;">
-						  <option value="volvo">펫 맡기기</option>
-						  <option value="saab">펫시터 방문</option>
-						  <option value="opel">반나절 서비스</option>
+						<select style="width:180px; height:30px;">
+						  <option value="0">[당일]우리집으로 부르기</option>
+						  <option value="1">우리집으로 부르기</option>
+						  <option value="2">[당일]펫시터 집에 맡기기</option>
+						  <option value="3">펫시터 집에 맡기기</option>
 						</select>
 					</td>
 					<td>
-					<input type="date" name="begin" style="width:120px; height:30px;"> ~ 
-					<input type="date" name="end" style="width:120px; height:30px;">
+					<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+					<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+					<script src="//code.jquery.com/ui/1.8.18/jquery-ui.min.js"></script>					
+
+					
+					<p>조회기간:
+					    <input type="text" id="begin"> ~
+					    <input type="text" id="end">
+					</p>
 					</td>
 					<td>
 						견종정보				

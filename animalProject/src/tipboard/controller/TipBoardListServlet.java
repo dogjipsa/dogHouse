@@ -40,12 +40,10 @@ public class TipBoardListServlet extends HttpServlet {
 				if(request.getParameter("page") != null) {
 					currentPage = Integer.parseInt(request.getParameter("page"));
 				}
-				System.out.println("현재 페이지 : "+currentPage);
 				//검색조건과 검색내용을 가져온다.
 				String option = request.getParameter("option");
 				String word = request.getParameter("word");
-				System.out.println("옵션 확인 : " + option);
-				System.out.println("word확인 : " + word);
+				
 				//한 페이지에 출력할 목록 갯수 지정
 				int limit = 10;
 				
@@ -67,7 +65,6 @@ public class TipBoardListServlet extends HttpServlet {
 				int startPage = (((int)((double)currentPage / limit + 0.9)) - 1)
 								* limit + 1;
 				int endPage = startPage + limit - 1;
-				System.out.println("startPage 조회 : " + startPage);
 				if(maxPage < endPage) {
 					endPage = maxPage;
 				}

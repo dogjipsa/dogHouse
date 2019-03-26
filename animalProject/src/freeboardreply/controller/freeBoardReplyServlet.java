@@ -1,6 +1,12 @@
 package freeboardreply.controller;
 
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.net.URLEncoder;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -39,40 +45,75 @@ public class freeBoardReplyServlet extends HttpServlet {
 		// 댓글달기 처리용 컨트롤러
 
 		request.setCharacterEncoding("utf-8");
-
+		
+		int currentPage = 1;
+		
 //		int currentPage = Integer.parseInt(request.getParameter("page"));
-		int freeBoardNo = Integer.parseInt(request.getParameter("fnum"));
-//		String freeBoardTitle = request.getParameter("ftitle");
+	
+		int freeBoardNo = Integer.parseInt(request.getParameter("fnum"));	
 		String freeBoardWriter = request.getParameter("fwriter");
 		String freeBoardContent = request.getParameter("fcontent");
-
+		
+		
+		// 댓글 객체 생성 및 등록
 		FreeBoardReplyService frservice = new FreeBoardReplyService();
-
-		// 원글 조회
 		FreeBoard originBoard = frservice.selectFreeBoard(freeBoardNo);
-
-		// 댓글 객체 생성
 		FreeBoardReply replyBoard = new FreeBoardReply();
-		replyBoard.setFreereplycontent(freeBoardContent);;
-	//	replyBoard.setBoardTitle(boardTitle);
+		replyBoard.setFreereplycontent(freeBoardContent);
 		replyBoard.setUserid(freeBoardWriter);
 		replyBoard.setFreeboardno(originBoard.getFreeboardNo());
-	//	replyBoard.setBoardReplyLev(originBoard.getBoardReplyLev() + 1);
-	//	replyBoard.setBoardRef(originBoard.getBoardRef());
+
+		int result = frservice.insertReply(replyBoard);	
 		
-	//	if (replyBoard.getBoardReplyLev() == 2) // 댓글의 댓글일 때
-	//		replyBoard.setBoardReplyRef(originBoard.getBoardNum());
 		
-	//	replyBoard.setBoardReplySeq(1);
+		//댓글 가져오기
+		String searchFreeBoardNo = request.getParameter("frnum");
+		System.out.println("searchFreeBoardNo" + searchFreeBoardNo);
+		HashMap<String, Object> map = new HashMap<>();
+		map.put("searchFreeBoardNo : ", searchFreeBoardNo);
+		map.put("startRow", currentPage*10-9);// 1, 11, 21, 31....
+		
+		
+		
+		ArrayList<FreeBoardReply> flist = frservice.selectReplyList(map);
+		
+		for(FreeBoardReply f : flist) {
+		System.out.println("댓글List : " + f);
+		}
+		
+		//전송할 json 객체 준비
+		JSONObject sendjson = new JSONObject();
+		//리스트 객체들을 저장할 json 배열 객체 준비
+		JSONArray jsonArr = new JSONArray();
+		
+		for(FreeBoardReply freereply : flist) {
+			JSONObject replyJson = new JSONObject();
+			
+			replyJson.put("replyNo", freereply.getFreeboardno());
+			replyJson.put("replyContent", URLEncoder.encode(freereply.getFreereplycontent(), "UTF-8"));
+			replyJson.put("replyDate", freereply.getFreereplydate());
+			replyJson.put("replyBoardNo", freereply.getFreeboardno());
+			replyJson.put("replyDelete", freereply.getFreeboarddelete());
 
-		// 같은 레벨의 기존 댓글의 seq 값 1증가 처리함
-	//	bservice.updateReplySeq(replyBoard);
-
-		// 댓글 등록
-		int result = frservice.insertReply(replyBoard);		
-
+			jsonArr.add(replyJson);
+			
+		}
+		
+		sendjson.put("list", jsonArr);
+		System.out.println("sendjson : " + sendjson.toJSONString());
+		
+		response.setContentType("aplication/json; charset=utf-8");
+		PrintWriter out = response.getWriter();
+		out.println(sendjson.toJSONString());
+		out.flush();
+		out.close();
+		
+		
+		
 		if (result > 0) {
+			request.setAttribute("replyList", flist);
 			response.sendRedirect("/doggybeta/flist");
+			
 		} else {
 			RequestDispatcher view = request.getRequestDispatcher("views/freeBoard/freeBoardError.jsp");
 			request.setAttribute("message", freeBoardNo + "번글에 대한 댓글 등록 실패!");

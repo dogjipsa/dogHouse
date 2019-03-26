@@ -59,7 +59,7 @@ function showWriteForm(){
 <table align="center"  border="0"  width="800">
 <%-- --%>
 <tr>
-	<th>글번호</th><th>작성자</th><th>제목</th><th>내 용</th><th>날짜</th><th>조회수</th><th>첨부파일</th>
+	<th>글번호</th><th>작성자</th><th>제목</th><th>날짜</th><th>조회수</th><th>첨부파일</th>
 </tr>
 <% for(FreeBoard f : slist){ %>
 	<tr><td align="center"><%= f.getFreeboardNo() %></td>
@@ -69,7 +69,6 @@ function showWriteForm(){
 	<% }else{ %>
 	<td align="center"><%= f.getFreeboardTitle() %></td>
 	<% } %>	
-	<td align="center"><%= f.getFreeboardContent() %></td>
 	<td align="center"><%= f.getFreeboardDate() %></td>
  	<td align="center"><%= f.getFreeboardViews() %></td>
 	<td align="center">
@@ -115,7 +114,7 @@ function showWriteForm(){
 <% if((currentPage - 10) <= startPage && (currentPage - 10) >= 1){ %>
 	<a href="/doggybeta/flist?page=<%= startPage - 1 %>"></a>
 <% }else{ %>
-	<div class='icon-left-open'></div>
+	[prev]
 <% } %>
 
 <!-- 현재 페이지가 포함된 페이지 그룹 숫자 출력 처리 -->
@@ -127,7 +126,7 @@ function showWriteForm(){
 <% }} %> &nbsp;
 
 <!-- 다음 -->
-<% if((currentPage + 10) > endPage){ %>
+<% if((currentPage + 10) > endPage && currentPage != 1){ %>
 	<a href="/doggybeta/flist?page=<%= endPage + 1 %>">[next]</a>&nbsp;
 <% }else{ %>
 	[next]&nbsp;

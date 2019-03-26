@@ -40,7 +40,10 @@
 				<thead>
 					<tr>
 						<th>예약번호</th>
-						<th>내용</th>
+						<th>서비스 종류</th>
+						<th>강아지 이름</th>
+						<th>주소</th>
+						<th>가격</th>
 						<th>펫시터</th>
 						<th>이용날짜</th>
 						<th>진행상황</th>
@@ -66,8 +69,8 @@
 					</table>
 				</div>
 				<div class="host_side1">
-					<div class="host_map" id="map"></div>
-					<p>주소 텍스트...</p>
+					<div class="host_map" id="host_map"></div>
+					<p id="addr_text"></p>
 				</div>
 				<div class="host_side2">
 					<%if(loginUser.getPetSitter().equals("1")){ // 승인 대기중인 회원 페이지 %>
@@ -94,8 +97,6 @@
 	</div>
 	<div id="footer"><%@ include file="..//common/footer.jsp"%></div>
 	<script src="/doggybeta/resources/js/checkMyLog.js"></script>
-	<script type="text/javascript"
-		src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=k4mpqvig7k&callback=initMap"></script>
 	<script src="/doggybeta/resources/js/hmap.js"></script>
 </body>
 
