@@ -44,7 +44,8 @@ realFile.addEventListener('change', (e) =>{
 const ppicsFile = document.getElementById('place_pics');
 const uploadBtn = document.getElementById('ppics_upload');
 const ppicsText = document.getElementById('ppics-text');
-uploadBtn.addEventListener('click', function(){
+uploadBtn.addEventListener('click', function(e){
+	e.preventDefault();
 	ppicsFile.click();
 });
 // 시설/장소 사진 추가 버튼 이벤트

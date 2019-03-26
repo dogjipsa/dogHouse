@@ -30,100 +30,120 @@ import member.model.vo.Member;
 @WebServlet("/hostup")
 public class MemberHostUpdateServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public MemberHostUpdateServlet() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
 
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#HttpServlet()
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		if(!ServletFileUpload.isMultipartContent(request)) {
+	public MemberHostUpdateServlet() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+	 *      response)
+	 */
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		if (!ServletFileUpload.isMultipartContent(request)) {
 			// request에서 멀티파트 방식으로 전송이 안되었다면
 			System.out.println("not multipart");
 		}
-		
+
 		// 업로드할 파일의 용량 제한 : 10Mb로 제한한다면
-		int maxSize = 1024* 1024 * 10;
-		
+		int maxSize = 1024 * 1024 * 10;
+
 		// 파일이 저장될 폴더 지정 : content directory 안에 파일저장폴더를 정한 경우
 		// 현재 웹 컨테이너에서 구동중인 웹 어플리케이션의 루트폴더에 대한 경로 알아냄
 		String root = request.getSession().getServletContext().getRealPath("/");
 		// 업로드 되는 파일의 저장 폴더를 루트와 연결함
 		String savePath = root + "files/profile";
-		
+
 		// request를 MultipartRequest 객체로 변환함
-		MultipartRequest mrequest = new MultipartRequest(request, savePath, maxSize, "UTF-8", new DefaultFileRenamePolicy());
+		MultipartRequest mrequest = new MultipartRequest(request, savePath, maxSize, "UTF-8",
+				new DefaultFileRenamePolicy());
 		Member m = new Member();
 		m.setUserId(mrequest.getParameter("userid"));
 		m.setUserName(mrequest.getParameter("username"));
 		m.setPhone(mrequest.getParameter("phone"));
-		String fullAddr = mrequest.getParameter("addr")+", "+mrequest.getParameter("extra")+" "+mrequest.getParameter("daddr")+" ("+mrequest.getParameter("postcode")+")";
+		String fullAddr = mrequest.getParameter("addr") + ", " + mrequest.getParameter("extra") + " "
+				+ mrequest.getParameter("daddr") + " (" + mrequest.getParameter("postcode") + ")";
 		m.setAddress(fullAddr);
 		m.setPrice(Integer.parseInt(mrequest.getParameter("price")));
 		m.setEmail(mrequest.getParameter("email"));
 		String originFileName = mrequest.getFilesystemName("pic");
-		String renameFileName = renameFiles(savePath, originFileName);
-		Enumeration forms = mrequest.getFileNames();
-		String poName ="";
-		String prName ="";
-		while(forms.hasMoreElements()) {
-			poName = (String) forms.nextElement();
-			prName = renameFiles(savePath, poName);
-		}
-		m.setUseroriginfile(originFileName);
-		m.setUserrefile(renameFileName);
-		int result = new MemberService().updateHost(m);
-		if(result > 0) {
-			System.out.println("성공");
-		} else {
-			System.out.println("실패");
-		}
-		
-		response.sendRedirect("/doggybeta/index.jsp");
-	}
-	private String renameFiles(String savePath, String originFileName) throws IOException {
-		if(originFileName != null) {
+		if (originFileName != null) {
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
-			String renameFileName = sdf.format(new Date(System.currentTimeMillis()))+"."+ originFileName.substring(originFileName.lastIndexOf(".")+1);
-			File originFile = new File(savePath+"\\"+originFileName);
-			File renameFile = new File(savePath+"\\"+renameFileName);
-			
-			if(!originFile.renameTo(renameFile)) {
+			String renameFileName = sdf.format(new Date(System.currentTimeMillis())) + "."
+					+ originFileName.substring(originFileName.lastIndexOf(".") + 1);
+			File originFile = new File(savePath + "\\" + originFileName);
+			File renameFile = new File(savePath + "\\" + renameFileName);
+
+			if (!originFile.renameTo(renameFile)) {
 				// 파일명 직접 바꾸기
 				// 원본 파일이 내용 읽어서, 리네임 파일에 복사 기록하기
 				// 원본 파일 삭제
 				int read = -1;
 				byte[] buf = new byte[1024];
-				
+
 				FileInputStream fin = new FileInputStream(originFile);
 				FileOutputStream fout = new FileOutputStream(renameFile);
-				
-				while((read = fin.read(buf, 0 , buf.length)) != -1) {
+
+				while ((read = fin.read(buf, 0, buf.length)) != -1) {
 					fout.write(buf, 0, read);
 				}
-				
+
 				fin.close();
 				fout.close();
 				originFile.delete();
-				System.out.println("changed filename");
+				m.setUseroriginfile(originFileName);
+				m.setUserrefile(renameFileName);
 			}
-			return renameFileName;
+			int result = new MemberService().updateHost(m);
+			if (result > 0) {
+				System.out.println("성공");
+				Enumeration forms = mrequest.getFileNames();
+				while (forms.hasMoreElements()) {
+					String fname = (String) forms.nextElement();
+					String poName = mrequest.getFilesystemName(fname);
+					if (poName != null && !poName.equals(originFileName)) {
+						String rName = sdf.format(new Date(System.currentTimeMillis())) + "."
+								+ poName.substring(poName.lastIndexOf(".") + 1);
+						File oFile = new File(savePath + "\\" + poName);
+						File rFile = new File(savePath + "\\" + rName);
+
+						if (!oFile.renameTo(rFile)) {
+							int read = -1;
+							byte[] buf = new byte[1024];
+
+							FileInputStream fin = new FileInputStream(oFile);
+							FileOutputStream fout = new FileOutputStream(rFile);
+
+							while ((read = fin.read(buf, 0, buf.length)) != -1) {
+								fout.write(buf, 0, read);
+							}
+							fin.close();
+							fout.close();
+							oFile.delete();
+						}
+					}
+				}
+			} else
+				System.out.println("실패");
+
+			response.sendRedirect("/doggybeta/index.jsp");
+
 		}
-		return "";
 	}
-	
+
 	/**
 	 * 
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
-	
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
