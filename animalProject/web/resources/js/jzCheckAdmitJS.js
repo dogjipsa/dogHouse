@@ -1,5 +1,5 @@
-/**
- * 
+/*
+ 회원가입 처리용 .js
  */
 function checkid() {
 		//jQuery.ajax() 사용
@@ -50,7 +50,7 @@ function checkid() {
 		}
 		else {
 			alert('인증번호 전송이 완료되었습니다.');
-				
+			
 			$.ajax({
 				url: '/doggybeta/admitmember',
 				type: 'post',
@@ -94,7 +94,7 @@ function checkid() {
 				var userid=$('#userid').val();
 				
 				if(!pwd1) {
-					alert('비밀번호는 필수 입력사항입니다.')
+					alert('비밀번호는 필수 입력사항입니다.');
 					$('#signupbtn').prop('disabled', true).css('background-color','gray');
 					$('#userpwd1').select();
 				}

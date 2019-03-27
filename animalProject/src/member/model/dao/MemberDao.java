@@ -45,7 +45,7 @@ public class MemberDao {
 				member.setUserPwd(userpwd);
 				member.setUserDelete(rSet.getString("user_delete"));
 				member.setNaverCode(rSet.getString("NAVER_CODE"));
-				System.out.println(member + " <- dao member");
+				/*System.out.println(member + " <- dao member");*/ //객체 잘 불러오는지 확인용
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
