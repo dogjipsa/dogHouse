@@ -1,11 +1,11 @@
 .wrap_content{
-    width:100%;
     height:100%;
     display: grid;
     grid-template-columns: 1fr 2fr 1fr;
     grid-template-rows: 1fr 6fr 1fr;
     background-color: #fafafc;
     grid-gap: 10px;
+    margin-left: 200px;
 }
 
 .wrap_content .section1{
@@ -166,7 +166,7 @@
 
 .host_side1 .host_map {
     width: 85%;
-    height : 300px;
+    height : 340px;
     border: 1px solid rgba(0,0,0,0.7);
 }
 
@@ -175,10 +175,111 @@
     grid-column: span 1;
     border: 1px solid rgba(0,0,0,0.7);
 }
+.section4 #add_pet {
+    display: none;
+    padding: 30px;
+    grid-template-columns: 2fr 1fr 1fr;
+    grid-gap: 30px;
+    background: rgba(30, 144, 255, 0.3);
+}
+#add_pet .pet_insert {
+    grid-column: span 1;
+    border-radius: 30px;
+    background: #fafafc;
+    box-shadow: 0 10px 35px rgba(0, 0, 0, 0.05), 0 6px 6px rgba(0, 0, 0, 0.1);
+}
+.pet_insert #pet_reg_form {
+    width: 650px;
+	margin: 50px auto;
+	text-align: center;
+	position: relative;
+}
+#pet_reg_form fieldset {
+    background: white;
+	border: 0 none;
+	border-radius: 3px;
+	box-shadow: 0 0 15px 1px rgba(0, 0, 0, 0.4);
+	padding: 20px 30px;
+	box-sizing: border-box;
+	width: 80%;
+	margin: 0 10%;
+	position: relative;
+}
+#pet_reg_form fieldset:not(:first-of-type) {
+	display: none;
+} 
+#pet_reg_form input {
+    padding: 15px;
+	border: 1px solid #ccc;
+	border-radius: 3px;
+	margin-bottom: 10px;
+	width: 100%;
+	box-sizing: border-box;
+	font-family: montserrat;
+	color: #2C3E50;
+	font-size: 13px;
+}
+#pet_reg_form .action-button{
+    width: 150px;
+	background: #27AE60;
+	font-weight: bold;
+	color: white;
+	border: 0 none;
+	border-radius: 1px;
+	cursor: pointer;
+	padding: 10px 5px;
+	margin: 10px 5px;
+}
+
+#pet_reg_form .action-button:hover, #pet_reg_form .action-button:focus{
+    box-shadow: 0 0 0 2px white, 0 0 0 3px #27AE60;
+}
+#add_pet .pet_list{
+    grid-column: span 1;
+    
+    border-radius: 30px;
+    background-color: #fafafc;
+    box-shadow: 0 10px 35px rgba(0, 0, 0, 0.05), 0 6px 6px rgba(0, 0, 0, 0.1);
+}
+#add_pet .pet_update {
+    grid-column: span 1;
+    border-radius: 30px;
+    background-color: #fafafc;
+    box-shadow: 0 10px 35px rgba(0, 0, 0, 0.05), 0 6px 6px rgba(0, 0, 0, 0.1);
+}
+
+
 
 .wrap_content .section5{
-    display: grid;
-    grid-column: span 3;
+    /* display: grid; */
+    display: flex;
+    justify-content: center;
+    grid-column: span 3; 
     border: 1px solid rgba(0,0,0,0.7);
     z-index: 1000;
+}
+.section5 .pagination{
+    width: 800px;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.pagination .pagebox{
+    background-color: white;
+    box-shadow: 0 10px 35px rgba(0, 0, 0, 0.05), 0 6px 6px rgba(0, 0, 0, 0.1);
+    width: 40px;
+    height: 35px;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 15px;
+    cursor: pointer;
+    margin: 10px;
+    font-size: 17px;
+    padding: 10px;
+    text-align: center;
+}
+
+.pagination .pagebox:hover{
+    background-color: rgba(0, 0, 0, 0.1);
 }

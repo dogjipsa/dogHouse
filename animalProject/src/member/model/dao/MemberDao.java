@@ -302,7 +302,7 @@ public class MemberDao {
 		ResultSet rset = null;
 		
 		String query = "";
-		
+
 		return list;
 	}
 
