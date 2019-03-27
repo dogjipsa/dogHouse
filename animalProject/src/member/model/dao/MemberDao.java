@@ -302,6 +302,8 @@ public class MemberDao {
 		ResultSet rset = null;
 		
 		String query = "";
+		
+		return list;
 	}
 
 	
@@ -330,6 +332,7 @@ public class MemberDao {
 		}
 		return result;
 	}
+
 	public int insertSitterImages(Connection conn, ArrayList<SitterImage> list) {
 		int result = 0;
 		PreparedStatement pstmt = null;
@@ -379,6 +382,58 @@ public class MemberDao {
 		}
 		return count;
 
+	}
+
+	public Member reconfirmPassword(Connection conn, String userId) {
+		Member member = null;
+		PreparedStatement pstmt = null;
+		ResultSet rSet = null;
+		
+		String query ="SELECT PASSWORD FROM MEMBER WHERE USER_ID = ?";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, userId);
+			rSet = pstmt.executeQuery();
+			
+			while(rSet.next()) {				
+				member = new Member();
+				member.setUserId(userId);
+
+				member.setUserPwd(rSet.getString("password"));
+
+
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(rSet);
+			close(pstmt);
+		}
+		return member;
+	}
+
+	public int deleteMember(Connection conn, String userId, String deleteId) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		
+		String query = "UPDATE MEMBER SET USER_DELETE = 'Y', USER_ID = ? WHERE USER_ID = ?";
+		System.out.println("dao 전 result : " + result);
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, deleteId); 
+			pstmt.setString(2, userId);
+			
+			result = pstmt.executeUpdate();
+			System.out.println("Dao result : " + result);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
 	}
 
 }

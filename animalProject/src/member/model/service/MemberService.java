@@ -136,6 +136,7 @@ public class MemberService {
 		close(conn);
 		return result;
 	}
+
 	public int insertSitterImages(ArrayList<SitterImage> list) {
 		Connection conn = getConnection();
 	      int result = mdao.insertSitterImages(conn, list);
@@ -146,6 +147,25 @@ public class MemberService {
 	      close(conn);
 	      return result;
 
+	}
+
+	public Member reconfrimPassword(String userId) {
+		Connection conn = getConnection();
+		Member loginUser = mdao.reconfirmPassword(conn, userId);
+		close(conn);
+		return loginUser;
+	}
+
+	public int deleteMember(String userId, String deleteId) {
+		Connection conn = getConnection();
+		int result = mdao.deleteMember(conn, userId, deleteId);
+		System.out.println("service result : " + result);
+		if(result > 0)
+			commit(conn);
+		else
+			rollback(conn);
+		close(conn);
+		return result;
 	}
 	
 
