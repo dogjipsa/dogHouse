@@ -71,24 +71,7 @@ public class TipBoardService {
 		close(conn);
 		return result;
 	}
-	public ArrayList<TipBoard> tipBoardSearchDate(Date begin, Date end, int currentPage, int limit) {
-		Connection conn = getConnection();
-		ArrayList<TipBoard> list = tdao.selectDateList(conn, begin, end, currentPage, limit);
-		close(conn);
-		return list;
-	}
-	public ArrayList<TipBoard> tipBoardSearchTitle(String title, int currentPage, int limit) {
-		Connection conn = getConnection();
-		ArrayList<TipBoard> list = tdao.selectTitleList(conn, title, currentPage, limit);
-		close(conn);
-		return list;
-	}
-	public ArrayList<TipBoard> tipBoardSearchWriter(String writer, int currentPage, int limit) {
-		Connection conn = getConnection();
-		ArrayList<TipBoard> list = tdao.selectWriterList(conn, writer, currentPage, limit);
-		close(conn);
-		return list;
-	}
+	
 	public TipBoard selectTipBoard(int tipBoardNum) {
 		Connection conn = getConnection();
 		TipBoard tboard = tdao.selectBoard(conn, tipBoardNum);

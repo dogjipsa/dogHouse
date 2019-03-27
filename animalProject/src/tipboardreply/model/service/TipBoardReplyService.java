@@ -49,9 +49,9 @@ public class TipBoardReplyService {
 		return list;
 	}
 
-	public int getListCount() {
+	public int getListCount(int tipBoardNo) {
 		Connection conn = getConnection();
-		int listCount = trdao.getListCount(conn);
+		int listCount = trdao.getListCount(conn, tipBoardNo);
 		close(conn);
 		return listCount;
 	}

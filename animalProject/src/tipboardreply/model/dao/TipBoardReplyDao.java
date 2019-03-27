@@ -21,13 +21,12 @@ public class TipBoardReplyDao {
 	public int insertBoard(Connection conn, TipBoardReply trboard) {
 		int result = 0;
 		PreparedStatement pstmt = null;
-		String query = "insert into tipboard_reply values(seq_tipreplyno.nextval, ?, sysdate, ?, ?, ?)";
+		String query = "insert into tipboard_reply values(seq_tipreplyno.nextval, ?, sysdate, ?, ?, 'n')";
 		try {
 			pstmt = conn.prepareStatement(query);
 			pstmt.setString(1, trboard.getTipReplyContent());
 			pstmt.setInt(2, trboard.getTipNo());
 			pstmt.setString(3, trboard.getUserId());
-			pstmt.setString(4, "TIPREPLY_DELETE");
 			result = pstmt.executeUpdate();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -92,16 +91,17 @@ public class TipBoardReplyDao {
 		return list;
 	}
 
-	public int getListCount(Connection conn) {
+	public int getListCount(Connection conn, int tipBoardNo) {
 		int listCount = 0;
-		Statement stmt = null;
+		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		
-		String query = "select count(*) from tipboard_reply";
+		String query = "select count(*) from tipboard_reply where tip_no = ?";
 		
 		try {
-			stmt = conn.createStatement();
-			rset = stmt.executeQuery(query);	
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, tipBoardNo);
+			rset = pstmt.executeQuery();
 		
 			if(rset.next()) {
 				listCount = rset.getInt(1);
@@ -110,7 +110,7 @@ public class TipBoardReplyDao {
 			e.printStackTrace();
 		}finally {
 			close(rset);
-			close(stmt);
+			close(pstmt);
 		}
 		
 		return listCount;
