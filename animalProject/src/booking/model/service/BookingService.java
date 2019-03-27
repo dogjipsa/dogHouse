@@ -14,9 +14,9 @@ public class BookingService {
 	
 	private BookingDao bdao = new BookingDao(); 
 	
-	public ArrayList<BookingCheck> selectBkList(String userid) {
+	public ArrayList<BookingCheck> selectBkList(String userid, int currentPage, int limit) {
 		Connection conn = getConnection();
-		ArrayList<BookingCheck> list = bdao.selectBkList(conn, userid);
+		ArrayList<BookingCheck> list = bdao.selectBkList(conn, userid, currentPage, limit);
 		close(conn);
 		return list;
 	}
@@ -26,6 +26,13 @@ public class BookingService {
 		ArrayList<BookingForHost> list = bdao.selectBkForHostList(conn, userid);
 		close(conn);
 		return list;
+	}
+
+	public int getTotalListCount(String userid) {
+		Connection conn = getConnection();
+		int count = bdao.getTotalListCount(conn, userid);
+		close(conn);
+		return count;
 	}
 
 }

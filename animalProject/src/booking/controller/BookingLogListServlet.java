@@ -38,7 +38,37 @@ public class BookingLogListServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String userid = request.getParameter("userid");
-		ArrayList<BookingCheck> list = new BookingService().selectBkList(userid);
+		int currentPage = 1;
+		int limit = 2;
+		int countPage = 10;
+		if(request.getParameter("page") != null) {
+			currentPage = Integer.parseInt(request.getParameter("page"));
+		}
+		BookingService bs = new BookingService();
+		int totalCount = bs.getTotalListCount(userid);
+		int totalPage = totalCount/limit;
+		if(totalCount % limit > 0) {
+			totalPage++;
+		}
+		if(currentPage > totalPage) {
+			currentPage = totalPage;
+		}
+		
+		int startPage = ((currentPage -1 ) / 10) * countPage + 1;
+		int endPage = startPage + countPage -1;
+		
+		if(endPage > totalPage) {
+			endPage = totalPage;
+		}
+		System.out.println("현재 페이지: "+currentPage);
+		System.out.println("총 리스트 수: "+totalCount);
+		System.out.println("페이지 출력 수: "+countPage);
+		System.out.println("리스트 출력 수: "+limit);
+		System.out.println("시작 페이지 : "+startPage);
+		System.out.println("마지막 페이지: "+endPage);
+		System.out.println("총 페이지 : "+totalPage);
+		
+		ArrayList<BookingCheck> list = bs.selectBkList(userid, currentPage, limit);
 		
 		if(list.size() > 0) {
 		JSONObject sendJSON = new JSONObject();

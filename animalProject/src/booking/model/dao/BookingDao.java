@@ -13,7 +13,7 @@ import booking.model.vo.BookingForHost;
 
 public class BookingDao {
 
-	public ArrayList<BookingCheck> selectBkList(Connection conn, String userid) {
+	public ArrayList<BookingCheck> selectBkList(Connection conn, String userid, int currentPage, int limit) {
 		ArrayList<BookingCheck> list = new ArrayList<>();
 		BookingCheck bc = null;
 		PreparedStatement pstmt = null;
@@ -86,6 +86,30 @@ public class BookingDao {
 			close(pstmt);
 		}
 		return list;
+	}
+
+	public int getTotalListCount(Connection conn, String userid) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		int count = 0;
+		String query = "SELECT COUNT(*) FROM BOOKING WHERE USER_ID = ?";
+		
+		try {
+			
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, userid);
+			rset = pstmt.executeQuery();
+			if(rset.next()) {
+				count = rset.getInt(1);
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return count;
 	}
 	
 }

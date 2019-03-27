@@ -37,6 +37,12 @@ public class BookingHostServiceServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		int currentPage = 1;
+		if(request.getParameter("page") != null) {
+			currentPage = Integer.parseInt(request.getParameter("page"));
+		}
+		
+		
 		String userid = request.getParameter("userid");
 		ArrayList<BookingForHost> list = new BookingService().selectBkForHostList(userid);
 		if(list.size() > 0) {
