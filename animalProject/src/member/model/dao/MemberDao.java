@@ -45,7 +45,7 @@ public class MemberDao {
 				member.setUserPwd(userpwd);
 				member.setUserDelete(rSet.getString("user_delete"));
 				member.setNaverCode(rSet.getString("NAVER_CODE"));
-				System.out.println(member + " <- dao member");
+				/*System.out.println(member + " <- dao member");*/ //객체 잘 불러오는지 확인용
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -230,17 +230,17 @@ public class MemberDao {
 	      
 	      return result;
 	   }
-	public int selectCheckNaverCode(Connection conn, String naverCode) {
+	public int selectCheckNaverCode(Connection conn, String email) {
 		int result = 0;
 		PreparedStatement pstat = null;
 		ResultSet rSet = null;
 		StringBuffer query = new StringBuffer();
-		query.append("select count(user_id) from member where naver_code = ?");
+		query.append("select count(user_id) from member where naver_code is not null and email = ?");
 		
 		try {
 			pstat = conn.prepareStatement(query.toString());
-			pstat.setString(1, naverCode);
-			System.out.println(naverCode);
+			pstat.setString(1, email);
+			System.out.println(email);
 			
 			rSet = pstat.executeQuery();
 			
@@ -302,9 +302,9 @@ public class MemberDao {
 		ResultSet rset = null;
 		
 		String query = "";
-	}
 
-	
+		return list;
+	}
 
 	public int updateNaverMember(Connection conn, Member member) {
 		//네이버 로그인시 이미 등록되어있는 계정이라면
@@ -313,16 +313,16 @@ public class MemberDao {
 		
 		StringBuffer query = new StringBuffer();
 		query.append("update member set ");
-		query.append("user_id = ?, naver_code = ?, user_name = ? ");
-		query.append("where email = ? and naver_code is not null");
+		query.append("naver_code = ?, user_name = ? ");
+		query.append("where user_id = ?");
 		try {
 			pstat = conn.prepareStatement(query.toString());
-			pstat.setString(1, member.getUserId());
-			pstat.setString(2, member.getNaverCode());
-			pstat.setString(3, member.getUserName());
-			pstat.setString(4, member.getEmail());
+			pstat.setString(1, member.getNaverCode());
+			pstat.setString(2, member.getUserName());
+			pstat.setString(3, member.getUserId());
 			
 			result = pstat.executeUpdate();
+			System.out.println("naver update dao : " + result);
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -330,7 +330,7 @@ public class MemberDao {
 		}
 		return result;
 	}
-		
+
 	public int insertSitterImages(Connection conn, ArrayList<SitterImage> list) {
 		int result = 0;
 		PreparedStatement pstmt = null;
@@ -380,6 +380,58 @@ public class MemberDao {
 		}
 		return count;
 
+	}
+
+	public Member reconfirmPassword(Connection conn, String userId) {
+		Member member = null;
+		PreparedStatement pstmt = null;
+		ResultSet rSet = null;
+		
+		String query ="SELECT PASSWORD FROM MEMBER WHERE USER_ID = ?";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, userId);
+			rSet = pstmt.executeQuery();
+			
+			while(rSet.next()) {				
+				member = new Member();
+				member.setUserId(userId);
+
+				member.setUserPwd(rSet.getString("password"));
+
+
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(rSet);
+			close(pstmt);
+		}
+		return member;
+	}
+
+	public int deleteMember(Connection conn, String userId, String deleteId) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		
+		String query = "UPDATE MEMBER SET USER_DELETE = 'Y', USER_ID = ? WHERE USER_ID = ?";
+		System.out.println("dao 전 result : " + result);
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, deleteId); 
+			pstmt.setString(2, userId);
+			
+			result = pstmt.executeUpdate();
+			System.out.println("Dao result : " + result);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
 	}
 
 }

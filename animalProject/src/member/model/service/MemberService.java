@@ -29,10 +29,10 @@ public class MemberService {
 		return loginUser;
 	}
 	
-	public Member loginNaverMember(String userid, String token) {
+	public Member loginNaverMember(String userid, String email) {
 		Connection conn = getConnection();
-		System.out.println(userid +"=service="+token);
-		Member loginUser = mdao.loginNaverCheck(conn, userid, token);
+		System.out.println(userid +"=service="+email);
+		Member loginUser = mdao.loginNaverCheck(conn, userid, email);
 		System.out.println("loginUser : " + loginUser);
 		close(conn);
 		
@@ -129,6 +129,7 @@ public class MemberService {
 	public int updateNaverMember(Member member) {
 		Connection conn = getConnection();
 		int result = mdao.updateNaverMember(conn, member);
+		System.out.println("naver update sv : " + result);
 		if(result > 0)
 			commit(conn);
 		else
@@ -147,6 +148,25 @@ public class MemberService {
 	      close(conn);
 	      return result;
 
+	}
+
+	public Member reconfrimPassword(String userId) {
+		Connection conn = getConnection();
+		Member loginUser = mdao.reconfirmPassword(conn, userId);
+		close(conn);
+		return loginUser;
+	}
+
+	public int deleteMember(String userId, String deleteId) {
+		Connection conn = getConnection();
+		int result = mdao.deleteMember(conn, userId, deleteId);
+		System.out.println("service result : " + result);
+		if(result > 0)
+			commit(conn);
+		else
+			rollback(conn);
+		close(conn);
+		return result;
 	}
 	
 

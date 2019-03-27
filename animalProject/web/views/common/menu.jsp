@@ -107,7 +107,7 @@
 		<p class="login-text">
 			DOGHOUSE
 		</p>
-		<input type="text" name='userid' id='userid' class="login-username" autofocus required placeholder="Email" />
+		<input type="text" name='userid' id='userid' class="login-username" autofocus required placeholder="Id" />
 		<input type="password" name='userpwd' id='passwd' class="login-password" required required
 			placeholder="Password" />
 		<a href='/doggybeta/jipsalogin'>
@@ -115,8 +115,7 @@
 		<a href='/doggybeta/views/member/termsOfService.jsp'>
 			<input type="button" name='enroll' value='회원가입' class='login-submit' id='btnEnroll' /></a>
 		<p align='center' id='orid'>------- 또는 -------</p>
-		<!-- http://127.0.0.1:8888/doggybeta/views/member/callback.jsp -->
-		<%
+			<%
    				 String clientId = "obXTFPuiHDCuNQb5kAmx";//애플리케이션 클라이언트 아이디값";
    				 String redirectURI = URLEncoder.encode("http://127.0.0.1:8888/doggybeta/naverlogin", "UTF-8");
    				 SecureRandom random = new SecureRandom();
@@ -127,7 +126,6 @@
    				 apiURL += "&state=" + state;
    				 session.setAttribute("state", state);
     		 %>
-
 			<a href="<%=apiURL%>"><img id='naver_id_login' style='position:relative;' height="47" width='260'  src="/doggybeta/resources/images/naverButton/네이버 아이디로 로그인_완성형_White.PNG"/></a> 
 			<br>
 			<br>
@@ -196,7 +194,7 @@
 
 			<li class="m1"><a href="#" id='icon6'><span>&nbsp;&nbsp;&nbsp;마이페이지</span></a>
 				<ul class="m2">
-					<li><a href='#'>정보수정</a></li>
+					<li><a href='/doggybeta/views/member/reconfirmPassword.jsp'>정보수정</a></li>
 					<li><a href='/doggybeta/views/customerservice/checkMyLog.jsp'>이용내역/예약확인</a></li>
 					<li><a href='#' id="pet_reg__btn">펫시터신청</a></li>
 					<li><a href='#'>사전문의확인</a></li>
