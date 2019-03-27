@@ -140,5 +140,30 @@ public class FreeBoardReplyDao {
 		return flist;
 	}
 
+	public int getListCount(Connection conn, HashMap<String, Object> map) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		int freeBoardNo = (Integer)map.get("freeBoardNo");
+		int listCount = 1;
+	
+		String query = "select count(*) from freeboard_reply where freeboard_no = ?";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, freeBoardNo);
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				listCount = rset.getInt(1);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		return listCount;
+	}
+
 
 }
