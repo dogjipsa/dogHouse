@@ -32,6 +32,35 @@ for (let i = 0; i < items.length; i++) {
         }
     });
 }
+// 펫 추가 입력 폼 자바스크립트
+let current_fs, next_fs, previous_fs;
+// const left, opacity, scale;
+let animating;
+const nextBtns = document.querySelectorAll('.next');
+for(let i = 0; i < nextBtns.length; i++){
+    nextBtns[i].onclick = ()=>{
+        if(animating) return false;
+        animating = true;
+        current_fs = nextBtns[i].parentNode;
+        next_fs = nextBtns[i].parentNode.nextElementSibling;
+        console.log(next_fs);
+        
+        console.log(indexOf(next_fs));
+        
+        document.querySelectorAll('#progressbar li')[indexOf(next_fs)].setAttribute('class','active');
+    }
+}
+
+function indexOf(node){
+    const children = node.parentNode.childNodes;
+    let num = 0;
+    for(let i = 0; i < children.length; i++){
+        if(children[i] === node) return num;
+        if(children[i].nodeType === 1 && children[i].nodeName === node.nodeName) num++;
+    }
+    return -1;
+}
+
 // 호스트 서비스 버튼 클릭 시 나에게 온 예약 출력 Ajax
 function requestHostAjax() {
     const xhr = new XMLHttpRequest();

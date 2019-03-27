@@ -107,16 +107,20 @@
 							<input name="userid" value="<%= loginUser.getUserId()%>" readonly>
 							<input name="pname" placeholder="강아지 이름">
 							<input type="breeds" placeholder="견종 입력">
-							<input type="date" >
+							<input type="date">
 							<input type="button" name="next" class="next action-button" value="Next" />
 						</fieldset>
 						<fieldset>
-								<h2 class="pi-title">Create your account</h2>
-								<h3 class="pi-subtitle">This is step 2</h3>
+							<h2 class="pi-title">Create your account</h2>
+							<h3 class="pi-subtitle">This is step 2</h3>
+							<input type="button" name="previous" class="previous action-button" value="Previous" />
+							<input type="button" name="next" class="next action-button" value="Next" />
 						</fieldset>
 						<fieldset>
-								<h2 class="pi-title">Create your account</h2>
-								<h3 class="pi-subtitle">This is step 3</h3>
+							<h2 class="pi-title">Create your account</h2>
+							<h3 class="pi-subtitle">This is step 3</h3>
+							<input type="button" name="previous" class="previous action-button" value="Previous" />
+							<input type="submit" name="submit" class="submit action-button" value="Submit" />
 						</fieldset>
 					</div>
 				</div>
