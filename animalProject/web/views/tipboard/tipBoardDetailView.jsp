@@ -5,8 +5,10 @@
 <%@ page import="java.util.ArrayList" %>
 <%
 	TipBoard tboard = (TipBoard)request.getAttribute("tboard");
-	int currentPage = (Integer)request.getAttribute("currentPage");
-	/* Member loginUser = (Member)session.getAttribute("loginUser"); */
+
+	System.out.println((Integer)request.getAttribute("currentPage"));
+	int currentPage = (Integer)request.getAttribute("currentPage"); 
+	Member loginUser = (Member)session.getAttribute("loginUser");
 	TipBoardReply trboard = (TipBoardReply)request.getAttribute("trboard");
 	ArrayList<TipBoardReply> replyList = (ArrayList<TipBoardReply>)request.getAttribute("replyList");
 	int listCount = ((Integer) request.getAttribute("listCount")).intValue();
@@ -14,7 +16,7 @@
 	int endPage = ((Integer) request.getAttribute("endPage")).intValue();
 	int maxPage = ((Integer) request.getAttribute("maxPage")).intValue();
 	int trcurrentPage = ((Integer) request.getAttribute("trcurrentPage")).intValue();
-	System.out.println("리스트카운트 : "+listCount);
+ 	System.out.println("리스트카운트 : "+listCount);
 	System.out.println("스타트페이지 : "+startPage);
 	System.out.println("endPage : "+endPage);
 	System.out.println("maxPage : "+maxPage);
@@ -33,8 +35,8 @@
 <script type="text/javascript" src="/doggybeta/resources/js/jquery-3.3.1.min.js"></script>
 <script type="text/javascript">
 /* 댓글작성 ajax 부분   */
- /* 
-$(function(){
+ 
+/* $(function(){
 	$.ajax({
 		url: "/doggybeta/trinsert",
 		data: {no : $("#no").val() },
@@ -44,7 +46,7 @@ $(function(){
 			$("#p4").html($("#p4").text() + "<br>" +data.no + ", " + data.userid + ", " + data.userpwd + ", " + decodeURIComponent(data.username) + ", " + data.age + ", " + data.email + ", " + data.phone);
 		}
 	});
-});
+}); */
 
 			
  function writeCmt()
@@ -62,13 +64,27 @@ $(function(){
 	}
 	else
 	{	
-		var param="tipBoard_no="+board+"&tipReply_id="+id+"&tipReply_content="+content;
+		/* var param="tipBoard_no="+board+"&tipReply_id="+id+"&tipReply_content="+content;
 			
 		httpRequest = getXMLHttpRequest();
 		httpRequest.onreadystatechange = checkFunc;
-		httpRequest.open("POST", "/doggybeta/trinsert?" "CommentWriteAction.co" , true);	
+		httpRequest.open("POST", "/doggybeta/trinsert?" , true);	
 		httpRequest.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded;charset=EUC-KR'); 
-		httpRequest.send(param);
+		httpRequest.send(param); */
+		$(function(){
+			$.ajax({
+				url: "/doggybeta/trinsert",
+				data: {tipBoard_no : $("#tipBoard_no").val() ,
+					   tipReply_id : $("#tipReply_id").val(),
+					   tipReply_content : $("#tipReply_content").val()},
+				type: "post",
+				dataType: "json",
+				success: function(data){
+					/* $("#p4").html($("#p4").text() + "<br>" +data.no + ", " + data.userid + ", " + data.userpwd + ", " + decodeURIComponent(data.username) + ", " + data.age + ", " + data.email + ", " + data.phone); */
+					console.log(data);
+				}
+			});
+		});
 	}
 } 
 
@@ -80,7 +96,7 @@ $(function(){
 			document.location.reload(); // 상세보기 창 새로고침
 		}
 	}
-}   */
+}   
 </script>
 </head>
 <body>
@@ -121,12 +137,12 @@ $(function(){
 	<% } %> --%>
 	&nbsp; &nbsp;
 	<% if(loginUser.getUserId().equals(tboard.getUserId())){ %>
-		<a href="/doggybeta/tupview?tnum=<%=tboard.getTipBoardNo()%>&page=<%=currentPage%>">[수정페이지로 이동]</a>
+		<%-- <a href="/doggybeta/tupview?tnum=<%=tboard.getTipBoardNo()%>&page=<%=currentPage%>">[수정페이지로 이동]</a> --%>
 		&nbsp; &nbsp;
 		<a onclick="return confirm('정말로 삭제하시겠습니까?')" href="/doggybeta/tdelete?tnum=<%=tboard.getTipBoardNo()%>">[글삭제]</a>
 	<% } %>
 	&nbsp; &nbsp;
-	<a href="/doggybeta/tlist?page=<%= currentPage%>">[목록]</a>
+	<%-- <a href="/doggybeta/tlist?page=<%= currentPage%>">[목록]</a> --%>
 	</th>
 </tr>
 <tr>
@@ -187,9 +203,9 @@ $(function(){
 			<%-- <c:if test="${sessionScope.sessionID !=null}"> --%>
 			<% if(loginUser != null){ //로그인 시 댓글 작성 가능%>
 			<tr bgcolor="#F5F5F5">
-			
-				<%-- <input type="hidden" name="tipBoard_no" value="<%=tboard.getTipBoardNo() %>${board.board_num}"> --%>
-				<input type="hidden" name="tipReply_id" value="<%=loginUser.getUserId() %><%-- ${sessionScope.sessionID} --%>">
+			<form id="writeCommentForm">
+				<input type="hidden" name="tipBoard_no" id="tipBoard_no" value="<%=tboard.getTipBoardNo() %><%-- ${board.board_num} --%>">
+				<input type="hidden" name="tipReply_id" id="tipReply_id" value="<%=loginUser.getUserId() %><%-- ${sessionScope.sessionID} --%>">
 				<!-- 아이디-->
 				<td width="150">
 					<div>
@@ -200,17 +216,17 @@ $(function(){
 				<!-- 본문 작성-->
 				<td width="550">
 					<div>
-						<textarea name="tipReply_content" rows="4" cols="70" ></textarea>
+						<textarea name="tipReply_content" id="tipReply_content" rows="4" cols="70" ></textarea>
 					</div>
 				</td>
 				<!-- 댓글 등록 버튼 -->
 				<td width="100">
 					<div id="btn" style="text-align:center;">
-					<!--<p><a href="#" onclick="writeCmt()">[댓글등록]</a></p> -->	
-						<p><a href="#"">[댓글등록]</a></p>						
+						<p><a href="#" onclick="writeCmt()">[댓글등록]</a></p>	
+						<!-- <p><a href="#">[댓글등록]</a></p>	 -->					
 					</div>
 				</td>
-			
+			</form>
 			</tr>
 			<% } //로그인 여부 if 문 종료 %>
 			<!-- </c:if> -->
@@ -218,7 +234,7 @@ $(function(){
 		</table>
 		
 		<%--댓글 페이징 처리 --%>
-		<div style="text-align: center;">
+		<%-- <div style="text-align: center;">
 				<%
 					if (trcurrentPage <= 1) {
 				%>
@@ -226,8 +242,8 @@ $(function(){
 				<%
 					} else {  
 						%>
-							<%-- <a href="/doggybeta/tlist?page=<%=1%>">[맨처음]</a>&nbsp; --%>
-						<%-- <a href="/doggybeta/tlist?word=<%=keyword%>&page=<%=1%>&option=<%=search%>">[prev]</a> --%>
+							<a href="/doggybeta/tlist?page=<%=1%>">[맨처음]</a>&nbsp;
+						<a href="/doggybeta/tlist?word=<%=keyword%>&page=<%=1%>&option=<%=search%>">[prev]</a>
 								<a href="/doggybeta/tdetail?trpage=<%=1%>">[맨처음]</a>
 								
 				<%	}%>
@@ -263,7 +279,7 @@ $(function(){
 				<%
 					if ((trcurrentPage + 10) > endPage && trcurrentPage != 1/* && (currentPage + 10) < maxPage */) {
 				%>
-				<%-- <a href="/doggybeta/tlist?page=<%=endPage + 1%>">[next]</a>&nbsp; --%>
+				<a href="/doggybeta/tlist?page=<%=endPage + 1%>">[next]</a>&nbsp;
 								<a href="/doggybeta/tdetail?trpage=<%=endPage + 1%>">[next]</a>
 				<%
 					} else {
@@ -279,13 +295,13 @@ $(function(){
 				<%
 					} else {
 				%>
-				<%-- <a href="/doggybeta/tlist?page=<%=maxPage%>">[맨끝]</a> --%>
+				<a href="/doggybeta/tlist?page=<%=maxPage%>">[맨끝]</a>
 						<a href="/doggybeta/tdetail?trpage=<%=maxPage%>">[맨끝]</a>	
 				<%
 					}
 				%>
 
-			</div>
+			</div> --%>
 	</div>
 
 		</div>

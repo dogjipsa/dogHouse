@@ -69,6 +69,7 @@ public class TipBoardDetailServlet extends HttpServlet {
 		//게시판의 댓글
 		
 		int tipBoardNo = Integer.parseInt(request.getParameter("tnum"));
+		System.out.println("서블릿에서 currentPage 확인 : " + currentPage);
 		System.out.println("팁게시판 댓글의 글번호 : "+tipBoardNo);
 		System.out.println("서블릿에서 팁 보드넘버 확인 : " + tipBoardNo);
 		ArrayList<TipBoardReply> list = trservice.selectList(tipBoardNo,trcurrentPage, limit);
