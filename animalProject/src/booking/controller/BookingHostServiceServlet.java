@@ -37,14 +37,31 @@ public class BookingHostServiceServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String userid = request.getParameter("userid");
 		int currentPage = 1;
-		if(request.getParameter("page") != null) {
+		int limit = 2;
+		int countPage = 10;
+		if (request.getParameter("page") != null) {
 			currentPage = Integer.parseInt(request.getParameter("page"));
 		}
+		BookingService bs = new BookingService();
+		int totalCount = bs.getTotalHostServiceListCount(userid);
+		int totalPage = totalCount / limit;
+		if (totalCount % limit > 0) {
+			totalPage++;
+		}
+		if (currentPage > totalPage) {
+			currentPage = totalPage;
+		}
+
+		int startPage = ((currentPage - 1) / 10) * countPage + 1;
+		int endPage = startPage + countPage - 1;
+
+		if (endPage > totalPage) {
+			endPage = totalPage;
+		}
 		
-		
-		String userid = request.getParameter("userid");
-		ArrayList<BookingForHost> list = new BookingService().selectBkForHostList(userid);
+		ArrayList<BookingForHost> list = bs.selectBkForHostList(userid,(currentPage - 1) * limit + 1, currentPage * limit);
 		if(list.size() > 0) {
 			JSONObject sendJSON = new JSONObject();
 			JSONArray jar = new JSONArray();
@@ -74,9 +91,15 @@ public class BookingHostServiceServlet extends HttpServlet {
 				job.put("addr", URLEncoder.encode(b.getAddress(),"utf-8"));
 				
 				jar.add(job);
-				System.out.println(job);
 			}
+			JSONObject pageJson = new JSONObject();
+			pageJson.put("page", currentPage);
+			pageJson.put("start", startPage);
+			pageJson.put("end", endPage);
+			pageJson.put("totalpage", totalPage);
+			
 			sendJSON.put("list", jar);
+			sendJSON.put("plist", pageJson);
 			response.setContentType("application/json; charset=utf-8");
 			PrintWriter out = response.getWriter();
 			out.append(sendJSON.toJSONString());
