@@ -42,11 +42,8 @@ public class TipBoardReplyInsertServlet extends HttpServlet {
 		/* int tipBoardNum = Integer.parseInt(request.getParameter("tnum")); */
 
 		int tipBoardNo = Integer.parseInt(request.getParameter("tipBoard_no"));
-		System.out.println(tipBoardNo);
 		String tipReplyId = request.getParameter("tipReply_id");
-		System.out.println(tipReplyId);
 		String tipReplyContent = request.getParameter("tipReply_content");
-		System.out.println(tipReplyContent);
 
 		/* comment.setComment_num(dao.getSeq()); */ // 댓글 번호는 시퀀스값으로
 		trboard.setTipNo(tipBoardNo);
@@ -58,13 +55,13 @@ public class TipBoardReplyInsertServlet extends HttpServlet {
 		 * 
 		 * boolean result = dao.insertComment(comment);
 		 */
-		int currentPage = 1;
+		/*int currentPage = 1;
 		if ((request.getParameter("page")) != null) {
 			currentPage = Integer.parseInt(request.getParameter("page"));
-		}
+		}*/
 
 		TipBoardReplyService trservice = new TipBoardReplyService();
-		// 댓글 페이징 처리 위한 변수들
+		/*// 댓글 페이징 처리 위한 변수들
 		int trcurrentPage = 1;
 		if (request.getParameter("trpage") != null) {
 			trcurrentPage = Integer.parseInt(request.getParameter("trpage"));
@@ -80,27 +77,31 @@ public class TipBoardReplyInsertServlet extends HttpServlet {
 		int endPage = startPage + limit - 1;
 		if (maxPage < endPage) {
 			endPage = maxPage;
-		}
+		}*/
 
-		System.out.println("서블릿에서 currentPage 확인 : " + currentPage);
+		/*System.out.println("서블릿에서 currentPage 확인 : " + currentPage);
 		System.out.println("팁게시판 댓글의 글번호 : " + tipBoardNo);
-		System.out.println("서블릿에서 팁 보드넘버 확인 : " + tipBoardNo);
-		ArrayList<TipBoardReply> list = trservice.selectList(tipBoardNo, trcurrentPage, limit);
-
+		System.out.println("서블릿에서 팁 보드넘버 확인 : " + tipBoardNo);*/
+		/*ArrayList<TipBoardReply> list = trservice.selectList(tipBoardNo, trcurrentPage, limit);*/
+		/*int listCount = trservice.getListCount(tipBoardNo);
+		int maxPage = (int) ((double) listCount / 10.9);*/
 		response.setContentType("text/html; charset=utf-8");
 
-		RequestDispatcher view = null;
+		/*RequestDispatcher view = null;*/
+		int result = trservice.insertTipBoardReply(trboard);
+		if(result > 0) {
+		/*view = request.getRequestDispatcher("views/tipboard/tipBoardDetailView.jsp");*/
+		/*response.sendRedirect("/doggybeta/tdetail?tnum="+tipBoardNo+"&trpage"+maxPage);*/
+		/*request.setAttribute("currentPage", currentPage);*/
 
-		view = request.getRequestDispatcher("views/tipboard/tipBoardDetailView.jsp");
-		request.setAttribute("currentPage", currentPage);
-
-		request.setAttribute("replyList", list);// 댓글
-		request.setAttribute("trcurrentPage", trcurrentPage);
+		/*request.setAttribute("replyList", list);// 댓글
+*/		/*request.setAttribute("trcurrentPage", trcurrentPage);
 		request.setAttribute("maxPage", maxPage);
 		request.setAttribute("startPage", startPage);
 		request.setAttribute("endPage", endPage);
-		request.setAttribute("listCount", listCount);
-		view.forward(request, response);
+		request.setAttribute("listCount", listCount);*/
+		/*view.forward(request, response);*/
+		}
 
 		/*
 		 * if(result){ response.setContentType("text/html;charset=euc-kr"); PrintWriter
