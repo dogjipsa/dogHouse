@@ -135,7 +135,7 @@ public class MemberService {
 			rollback(conn);
 		close(conn);
 		return result;
-
+	}
 	public int insertSitterImages(ArrayList<SitterImage> list) {
 		Connection conn = getConnection();
 	      int result = mdao.insertSitterImages(conn, list);

@@ -62,7 +62,6 @@ public class freeBoardListServlet extends HttpServlet {
 				int limit = 10;
 				
 				//현재 페이지에 출력할 목록 조회
-				
 				int listCount =  fservice.getListCount(listOpt);
 				
 				//행의 갯수가 101개일 때 다음 페이지로 넘어감.
