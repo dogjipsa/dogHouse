@@ -5,72 +5,66 @@
 <head>
 <meta charset="UTF-8">
 <title>Dog House</title>
-<link rel="shortcut icon" href="/doggybeta/resources/images/favicon.ico">
+<link rel="shortcut icon" href="/doggybeta/resources/images/favicon-32x32.png">
 <link href="/doggybeta/resources/css/footer.css" rel="stylesheet" type="text/css">
 <script type="text/javascript" src="/doggybeta/resources/js/jquery-3.3.1.min.js"></script>
 <script type="text/javascript">
-function showWriteForm(){
-   location.href="/doggybeta/views/notice/noticeWriteForm.jsp"
+function deletebtn(){
+	alert("확인");
+	console.log("확인");
+	 if(confirm('정말로 탈퇴하시겠습니까?')) {
+	        $.ajax({
+	            url: '/doggybeta/delmember',
+	            type: "POST",
+	            data: {
+	                userid : $("#userid").val()
+	            },
+	            success: function (data) {
+	               if(data == "ok")
+	            	   alert("성공!");
+	               else alert("실패!");
+	            }
+	        });
+	    }
 }
 
-$(function(){
-	showDiv();
-	
-	$("input[name=item]").on("change", function(){
-		showDiv();
-	});
-});
-
-function showDiv(){
-	if($("input[name=item]").eq(0).is(":checked")){
-		$("#titleDiv").css("display", "block");
-		$("#dateDiv").css("display", "none");
-		
-	}
-	if($("input[name=item]").eq(1).is(":checked")){
-		$("#titleDiv").css("display", "none");
-		$("#dateDiv").css("display", "block");
-	}
-
-}
 </script>
 <style type="text/css">
 
 /* 화면에 보여지는 글 목록 테이블 */
-h2{
-   position: relative;
-   top: 20px;
-   left : 200px;
-   width: 70%;
-   padding: 2rem 0px;
-}
+
 .board { 
    position: relative;
    left : 150px;
    top: 100px;
-   width: 60%;
-   border-collapse: collapse;
-   text-align: left;
+   border-collapse: collapse;   
    line-height: 1.5;
    table-layout:fixed; 
    
 }
-.button{
+input[type="submit"]{
    position: relative;
    left : 200px;
-   top: 50px;
+   top: 150px;
+   width: 100px;
+   height: 40px
 }
 
-/* list_table 에서 사용되는 thead */
-.board thead th{ 
+#title{
+	text-align: left;
+	font-weight: bold;
+}
+
+.board tr{ 
 	padding: 10px;
     font-weight: bold;
     vertical-align: top;
     color: #369;
-    border-bottom: 3px solid #036;}
+    border-bottom: 3px solid #036;
+    }
 
 /* list_table 에서 사용되는 tbody */
-.board tbody td { 
+.board th{ 
 	width: 150px;
     padding: 10px;
     font-weight: bold;
@@ -78,31 +72,23 @@ h2{
     border-bottom: 1px solid #ccc;   
     
 }
-
-.board tbody tr:hover{
+#write input[type="text"], select{
+	border: none;
+	width: 150px;
+    padding: 10px;
+    text-align: left;
+    vertical-align: top;
+    border-bottom: 1px solid #ccc;
+}
+.board #write:hover{
 	background-color : #f3f6f7;
 }
 header{
-	text-align:center;	
+		
 	padding: 2rem 0px;
 }
 
-.board tbody td a{
-	text-decoration: none;
-	color: black;
-}
-.search{
-	display: flex;
-	justify-content: center;
-}
-.insert{
-	padding: 0 2rem;
-}
-#wrap{
-	left: 200px;
-	border: 1px solid red;
-	margin: 0 auto;
-}
+
 </style>
 </head>
 
@@ -111,71 +97,70 @@ header{
 	<div id="wrap">
 		  <div id="content">
 
-<h2 align="center">공지사항 게시판</h2>
+
 <header>
-<div class="search">
-	<form action="/doggybeta/nsearch" method="post">
-	<select name="opt"> <!-- 검색 컬럼 -->
-		<option value="0">제목</option>
-		<option value="1">내용</option>
-		<option value="2">제목+내용</option>
-	</select>
-	<input type="text" size="20" name="search"> 
-	<input type="submit" value="검색">
-	</form>
-	<div class="insert">
-<% if(loginUser != null){ %>
-	<input type="button" onclick="showWriteForm();" value="글쓰기">
-<%} %>
-	</div>
-</div>
-
-
+회원정보수정
 </header>
+
+<input type="hidden" name="userid" id="userid" value="<%=loginUser.getUserId() %>">
 
 <br>
 <!-- 테이블 시작 -->
    <table class="board">
-      <thead>
          <tr>
-            <th width="50">번호</th>
-            <th width="200">제목</th>
-            <th width="100">작성자</th>
-            <th width="130">작성일</th>
-            <th width="70">조회수</th>
-            <th width="100">첨부파일</th>
-            
+            <th id="title">ID</th>
+            <th id="write">
+            <% if(loginUser.getNaverCode() != null) { %>
+            <input type="text" readonly value="<%=loginUser.getEmail() %>">
+            <%}else{ %>
+            <input type="text"  readonly value="<%=loginUser.getUserId() %>">
+            <%} %>
+            </th>
          </tr>   
-      </thead>
-      <tbody>      
-       <%   for(Notice notice : list){ %>
-   <tr>
-   <td><%= notice.getNoticeNo() %></td>
-   
-   <td>
-   <%if(loginUser != null){ %>
-   <a href="/doggybeta/ndetail?no=<%= notice.getNoticeNo()%>"><%= notice.getNoticeTitle() %></a>
-   <% }else{ %>
-   <%= notice.getNoticeTitle() %>
-   <% } %>
-   </td>
-   <td><%= notice.getManagerId() %></td>
-   <td><%= notice.getNoticeDate() %></td>
-   <td><%= notice.getNoticeViews() %></td>
-   <td>
-   <%if(notice.getNoticeOriginFile() != null) {%>
-   <img src="/doggybeta/resources/images/paw.png" width="20px;" align="center;">
-   <% }else{ %>
-   &nbsp;
-   <%} %>
-   </td>
-   </tr>   
-   <% } %>     
-   </tbody>   
+         <tr>
+            <th id="title">이름</th>
+            <th id="write"><input type="text" readonly value="<%=loginUser.getUserName() %>"></th>
+         </tr> 
+         <tr>
+            <th id="title">휴대폰번호</th>
+            <th id="write"><input type="text" value="<%=loginUser.getPhone() %>"></th>
+         </tr> 
+         <tr>
+            <th id="title">이메일</th>
+            <th id="write">
+             <% if(loginUser.getNaverCode() != null) { %>          
+            <input type="text" readonly value="<%=loginUser.getEmail() %>">
+            <%}else{ %>
+            <input type="text" value="<%=loginUser.getEmail() %>">
+            <%} %>
+            </th>
+         </tr> 
+         <tr>
+            <th id="title">주소</th>
+            <th id="write">주소 api 활용</th>
+         </tr> 
+         <tr>
+            <th id="title">직업</th>
+            <th id="write">
+            <select name="opt">
+            	<OPTION VALUE=0 selected>선택하세요.</OPTION>
+            	<OPTION VALUE=1>직장인</OPTION>
+      			<OPTION VALUE=2>사업</OPTION>
+        		<OPTION VALUE=3>프리랜서</OPTION>
+        		<OPTION VALUE=5>학생</OPTION>
+        		<OPTION VALUE=6>주부</OPTION>
+        		<OPTION VALUE=7>기타</OPTION>
+        		<OPTION VALUE=8>무직</OPTION>
+            </select>
+            </th>
+         </tr> 
+     
 </table>
 <br>         
 <!-- 테이블 종료 -->
-
+<input type="submit" value="정보수정하기">
+<input type="button" id="deletebtn" value="탈퇴하기" onclick="deletebtn();">
+<input type="submit" value="메인으로">
 
 </div>
 		<div id="footer"><%@ include file="..//common/footer.jsp"%></div>
