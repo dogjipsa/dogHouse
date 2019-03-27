@@ -40,6 +40,7 @@ public class freeBoardReplyServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */
+	@SuppressWarnings("unchecked")
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// 댓글달기 처리용 컨트롤러
@@ -47,33 +48,36 @@ public class freeBoardReplyServlet extends HttpServlet {
 		request.setCharacterEncoding("utf-8");
 		
 		int currentPage = 1;
-		
+		int result = 1;
 //		int currentPage = Integer.parseInt(request.getParameter("page"));
-	
+		
 		int freeBoardNo = Integer.parseInt(request.getParameter("fnum"));	
 		String freeBoardWriter = request.getParameter("fwriter");
-		String freeBoardContent = request.getParameter("fcontent");
+		String freeBoardContent = request.getParameter("fcontent");	
 		
+		FreeBoardReplyService frservice = new FreeBoardReplyService();
+		System.out.println("fnum : " + freeBoardNo);
+		System.out.println("fwriter : " + freeBoardWriter);
+		System.out.println("fcontent : " + freeBoardContent);
 		
 		// 댓글 객체 생성 및 등록
-		FreeBoardReplyService frservice = new FreeBoardReplyService();
+		if(freeBoardContent != null) {
 		FreeBoard originBoard = frservice.selectFreeBoard(freeBoardNo);
 		FreeBoardReply replyBoard = new FreeBoardReply();
 		replyBoard.setFreereplycontent(freeBoardContent);
 		replyBoard.setUserid(freeBoardWriter);
 		replyBoard.setFreeboardno(originBoard.getFreeboardNo());
 
-		int result = frservice.insertReply(replyBoard);	
-		
+		result = frservice.insertReply(replyBoard);	
+		}
 		
 		//댓글 가져오기
-		String searchFreeBoardNo = request.getParameter("frnum");
-		System.out.println("searchFreeBoardNo" + searchFreeBoardNo);
+		System.out.println("fnum : " + freeBoardNo);
 		HashMap<String, Object> map = new HashMap<>();
-		map.put("searchFreeBoardNo : ", searchFreeBoardNo);
+		map.put("freeBoardNo", freeBoardNo);
 		map.put("startRow", currentPage*10-9);// 1, 11, 21, 31....
 		
-		
+		System.out.println("map : " + map.get("freeBoardNo") + ", " + map.get("startRow"));
 		
 		ArrayList<FreeBoardReply> flist = frservice.selectReplyList(map);
 		
@@ -81,41 +85,15 @@ public class freeBoardReplyServlet extends HttpServlet {
 		System.out.println("댓글List : " + f);
 		}
 		
-		//전송할 json 객체 준비
-		JSONObject sendjson = new JSONObject();
-		//리스트 객체들을 저장할 json 배열 객체 준비
-		JSONArray jsonArr = new JSONArray();
-		
-		for(FreeBoardReply freereply : flist) {
-			JSONObject replyJson = new JSONObject();
-			
-			replyJson.put("replyNo", freereply.getFreeboardno());
-			replyJson.put("replyContent", URLEncoder.encode(freereply.getFreereplycontent(), "UTF-8"));
-			replyJson.put("replyDate", freereply.getFreereplydate());
-			replyJson.put("replyBoardNo", freereply.getFreeboardno());
-			replyJson.put("replyDelete", freereply.getFreeboarddelete());
-
-			jsonArr.add(replyJson);
-			
-		}
-		
-		sendjson.put("list", jsonArr);
-		System.out.println("sendjson : " + sendjson.toJSONString());
-		
-		response.setContentType("aplication/json; charset=utf-8");
-		PrintWriter out = response.getWriter();
-		out.println(sendjson.toJSONString());
-		out.flush();
-		out.close();
-		
-		
-		
+		response.setContentType("text/html; charset=utf-8");
+		RequestDispatcher view = null;
 		if (result > 0) {
+			view = request.getRequestDispatcher("views/freeBoard/freeBoardDetailView.jsp");
 			request.setAttribute("replyList", flist);
-			response.sendRedirect("/doggybeta/flist");
+			view.forward(request, response);
 			
 		} else {
-			RequestDispatcher view = request.getRequestDispatcher("views/freeBoard/freeBoardError.jsp");
+			view = request.getRequestDispatcher("views/freeBoard/freeBoardError.jsp");
 			request.setAttribute("message", freeBoardNo + "번글에 대한 댓글 등록 실패!");
 			view.forward(request, response);
 		}

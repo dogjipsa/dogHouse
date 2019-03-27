@@ -18,6 +18,16 @@ public class FreeBoardReplyService {
 
 	private FreeBoardReplyDao fdao = new FreeBoardReplyDao();
 	
+	public int getListCount(HashMap<String, Object> map) {
+		Connection conn = getConnection();
+		int listCount = fdao.getListCount(conn, map);
+		close(conn);
+		return listCount;
+	}
+	
+	
+	
+	
 	public int updateReply(FreeBoardReply replyBoard) {
 		Connection conn = getConnection();
 		int result = fdao.updateReply(conn, replyBoard);
@@ -80,6 +90,9 @@ public class FreeBoardReplyService {
 		
 		return flist;
 	}
+
+
+	
 
 	
 }
