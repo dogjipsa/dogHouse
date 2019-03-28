@@ -169,6 +169,15 @@ public class MemberService {
 		return result;
 	}
 
+
+	public Member selectDetailPetSitter(String petSitterId) {
+		Connection conn = getConnection();
+		Member petSitter = mdao.selectDetailPetSitter(conn, petSitterId);
+		close(conn);
+		
+		return petSitter;
+}
+
 	public int updateMember(Member member) {
 		Connection conn = getConnection();
 		int result = mdao.updateMember(conn, member);

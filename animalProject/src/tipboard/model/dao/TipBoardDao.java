@@ -316,5 +316,7 @@ public class TipBoardDao {
 		}
 		return result;
 	}
+	
+	
 
 }

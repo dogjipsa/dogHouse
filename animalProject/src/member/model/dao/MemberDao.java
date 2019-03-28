@@ -462,4 +462,32 @@ public class MemberDao {
 		return result;
 	}
 
+	public Member selectDetailPetSitter(Connection conn, String petSitterId) {
+		Member petSitter = new Member();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String query = "select user_id, user_name, address, phone, price, user_date, user_originfile, user_refile  from member where user_id = ?";
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, petSitterId);
+			rset = pstmt.executeQuery();
+			if(rset.next()) {
+				petSitter.setUserId(rset.getString(1));
+				petSitter.setUserName(rset.getString(2));
+				petSitter.setAddress(rset.getString(3));
+				petSitter.setPhone(rset.getString(4));
+				petSitter.setPrice(rset.getInt(5));
+				petSitter.setUserDate(rset.getDate(6));
+				petSitter.setUseroriginfile(rset.getString(7));
+				petSitter.setUserrefile(rset.getString(8));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return petSitter;
+	}
+
 }
