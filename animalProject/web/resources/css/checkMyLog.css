@@ -206,8 +206,20 @@
 	position: relative;
 }
 #pet_reg_form fieldset:not(:first-of-type) {
-	display: none;
+    display: none;
+    animation-duration: 1s;
+    animation-name: slidein;
 } 
+@keyframes slidein {
+    from {
+      margin-left: 50%;
+      opacity: 0;
+    }
+  
+    to {
+      opacity: 1;
+    }
+  }
 #pet_reg_form input {
     padding: 15px;
 	border: 1px solid #ccc;

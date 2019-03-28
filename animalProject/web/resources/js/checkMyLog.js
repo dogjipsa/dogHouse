@@ -38,17 +38,26 @@ let current_fs, next_fs, previous_fs;
 let animating;
 const nextBtns = document.querySelectorAll('.next');
 for(let i = 0; i < nextBtns.length; i++){
-    nextBtns[i].onclick = ()=>{
-        if(animating) return false;
-        animating = true;
+    nextBtns[i].addEventListener('click',function(){
+        
         current_fs = nextBtns[i].parentNode;
         next_fs = nextBtns[i].parentNode.nextElementSibling;
-        console.log(next_fs);
-        
-        console.log(indexOf(next_fs));
         
         document.querySelectorAll('#progressbar li')[indexOf(next_fs)].setAttribute('class','active');
-    }
+        next_fs.style.display ='block';
+        current_fs.style.display = 'none';
+    });
+}
+const prevBtns = document.querySelectorAll('.previous');
+for(let i = 0; i < prevBtns.length; i++){
+    prevBtns[i].addEventListener('click', function(){
+        current_fs = prevBtns[i].parentNode;
+        previous_fs = current_fs.previousElementSibling;
+        document.querySelectorAll('#progressbar li')[indexOf(current_fs)].classList.remove('active');
+        current_fs.style.display = 'none';
+        previous_fs.style.display = 'block';
+
+    });
 }
 
 function indexOf(node){
