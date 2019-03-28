@@ -13,10 +13,6 @@ import freeboardreply.model.vo.FreeBoardReply;
 
 public class FreeBoardReplyDao {
 
-	public int updateReply(Connection conn, FreeBoardReply replyBoard) {
-		
-		return 0;
-	}
 
 	public int updateReplySeq(Connection conn, FreeBoardReply replyBoard) {
 		
@@ -120,7 +116,7 @@ public class FreeBoardReplyDao {
 			while(rset.next()) {
 				FreeBoardReply freeReply = new FreeBoardReply();
 				
-				freeReply.setFreeboardno(rset.getInt("FREEREPLY_NO"));
+				freeReply.setFreereply(rset.getInt("FREEREPLY_NO"));
 				freeReply.setFreereplycontent(rset.getString("FREEREPLY_CONTENT"));
 				freeReply.setFreereplydate(rset.getDate("FREEREPLY_DATE"));
 				freeReply.setUserid(rset.getString("USER_ID"));
@@ -163,6 +159,65 @@ public class FreeBoardReplyDao {
 			close(pstmt);
 		}
 		return listCount;
+	}
+
+	public int updateReply(Connection conn, String freeReplyContent, int freeReplyNo) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		
+		String query = "UPDATE FREEBOARD_REPLY "
+				+ "SET FREEREPLY_CONTENT = ? "
+				+ "WHERE FREEREPLY_NO = ?";
+		
+		try {
+			pstmt = conn.prepareStatement(query);			
+			pstmt.setString(1, freeReplyContent);
+			pstmt.setInt(2, freeReplyNo);
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		
+		return result;
+		
+	}
+
+	public FreeBoardReply selectReplyList(Connection conn, int freeReplyNo) {
+		FreeBoardReply freeReply = new FreeBoardReply();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String query = "select * from freeboard_reply where freereply_no = ?";
+		
+		try {
+		
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, freeReplyNo);
+			
+			rset = pstmt.executeQuery();
+			
+		while(rset.next()) {
+				
+			freeReply.setFreereply(rset.getInt("FREEREPLY_NO"));
+			freeReply.setFreereplycontent(rset.getString("FREEREPLY_CONTENT"));
+			freeReply.setFreereplydate(rset.getDate("FREEREPLY_DATE"));
+			freeReply.setUserid(rset.getString("USER_ID"));
+			freeReply.setFreeboardno(rset.getInt("FREEBOARD_NO"));
+			freeReply.setFreeboarddelete(rset.getString("FREEBOARD_DELETE"));	
+			
+			}
+		
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		
+		return freeReply;
 	}
 
 

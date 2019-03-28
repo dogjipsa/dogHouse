@@ -1,4 +1,4 @@
-package freeboard.controller;
+package freeboardreply.controller;
 
 import java.io.IOException;
 
@@ -9,13 +9,14 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import board.model.service.BoardService;
-import board.model.vo.Board;
+import freeboard.model.vo.FreeBoard;
+import freeboardreply.model.service.FreeBoardReplyService;
+import freeboardreply.model.vo.FreeBoardReply;
 
 /**
  * Servlet implementation class BoardReplyUpdateServlet
  */
-@WebServlet("/breplyup")
+@WebServlet("/freplyup")
 public class freeBoardReplyUpdateServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -31,26 +32,30 @@ public class freeBoardReplyUpdateServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// 댓글 수정 처리용 컨트롤러
 		request.setCharacterEncoding("utf-8");
 		
-		Board board = new Board();
-		board.setBoardNum(Integer.parseInt(request.getParameter("bnum")));
-		board.setBoardTitle(request.getParameter("btitle"));
-		board.setBoardContent(request.getParameter("bcontent"));
+		int freeReplyNo = Integer.parseInt(request.getParameter("frnum"));
+		String freeReplyContent = request.getParameter("frcontent");
+		int detailNo = Integer.parseInt(request.getParameter("fnum"));
 		
-		int result = new BoardService().updateReply(board);
+		FreeBoardReplyService frservice = new FreeBoardReplyService();
 		
+		int result = frservice.updateReply(freeReplyContent, freeReplyNo);
+	
+							
+		RequestDispatcher view = null;
 		if(result > 0) {
-			response.sendRedirect("/first/blist?page=" 
-		         + Integer.parseInt(request.getParameter("page")));
+			response.sendRedirect("/doggybeta/fdetail?fnum=" + detailNo);
+
 		}else {
-			RequestDispatcher view = request.getRequestDispatcher("views/board/boardError.jsp");
-			request.setAttribute("message", board.getBoardNum() + "번 댓글 수정 실패!");
+			view = request.getRequestDispatcher("views/freeBoard/freeBoardError.jsp");
+			request.setAttribute("message", "댓글 수정 실패!");
 			view.forward(request, response);
-			
-		}
-	}
+				}
+			}
+		
+		
+		
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)

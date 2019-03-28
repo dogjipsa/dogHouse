@@ -133,7 +133,7 @@ public class freeBoardOriginUpdateServlet extends HttpServlet {
 			/*response.sendRedirect("/doggybeta/blist?page=" + Integer.parseInt(mrequest.getParameter("page")));*/
 			response.sendRedirect("/doggybeta/flist");
 		} else {
-			view = request.getRequestDispatcher("views/board/boardError.jsp");
+			view = request.getRequestDispatcher("views/freeBoard/freeBoardError.jsp");
 			request.setAttribute("message", freeboard.getFreeboardNo() + "번 개시 원글 수정 실패!");
 			view.forward(request, response);
 		}
