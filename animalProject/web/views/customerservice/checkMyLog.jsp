@@ -19,6 +19,7 @@
 		<div class="section1">
 			<input type="radio" name="item" id="cml_booking" value="booking" checked>
 			<input type="radio" name="item" id="cml_host" value="host">
+			<input type="radio" name="item" id="cml_addpet" value="addpet">
 
 			<ul class="navigation__list">
 				<li class="navigation__item"><label for="cml_booking" class="item__icon"><span class="icon__emoji"><img
@@ -26,10 +27,10 @@
 						class="item__text">예약/결제내역</span></li>
 				<li class="navigation__item"><label for="cml_host" class="item__icon"><span class="icon__emoji"><img
 								src="/doggybeta/resources/images/dog2.png"></span></label><span class="item__text">
-									호스트 서비스</span></li>
-				<li class="navigation__item"><label class="item__icon"><span class="icon__emoji"><img
-								src="/doggybeta/resources/images/dog3.png"></span></label><span
-						class="item__text">마이펫 등록</span></li>
+						호스트 서비스</span></li>
+				<li class="navigation__item"><label for="cml_addpet" class="item__icon"><span class="icon__emoji"><img
+								src="/doggybeta/resources/images/dog3.png"></span></label><span class="item__text">펫
+						등록/수정</span></li>
 			</ul><span class="icon__emoji">
 		</div>
 		<div class="section2">section2 - 페이지 내용 헤더</div>
@@ -92,8 +93,40 @@
 					<%} %>
 				</div>
 			</div>
+			<div id="add_pet">
+				<div class="pet_insert">
+					<div id="pet_reg_form">
+						<ul id="progressbar">
+							<li class="active">Account Setup</li>
+							<li>Social Profiles</li>
+							<li>Personal Details</li>
+						</ul>
+						<fieldset>
+							<h2 class="pi-title">Create your account</h2>
+							<h3 class="pi-subtitle">This is step 1</h3>
+							<input name="userid" value="<%= loginUser.getUserId()%>" readonly>
+							<input name="pname" placeholder="강아지 이름">
+							<input type="breeds" placeholder="견종 입력">
+							<input type="date" >
+							<input type="button" name="next" class="next action-button" value="Next" />
+						</fieldset>
+						<fieldset>
+								<h2 class="pi-title">Create your account</h2>
+								<h3 class="pi-subtitle">This is step 2</h3>
+						</fieldset>
+						<fieldset>
+								<h2 class="pi-title">Create your account</h2>
+								<h3 class="pi-subtitle">This is step 3</h3>
+						</fieldset>
+					</div>
+				</div>
+				<div class="pet_list"></div>
+				<div class="pet_update"></div>
+			</div>
 		</div>
-		<div class="section5">section5 - 페이징 변경 섹션</div>
+		<div class="section5">
+			<div class="pagination"></div>
+		</div>
 	</div>
 	<div id="footer"><%@ include file="..//common/footer.jsp"%></div>
 	<script src="/doggybeta/resources/js/checkMyLog.js"></script>

@@ -298,20 +298,7 @@ public class TipBoardDao {
 		return result;
 	}
 
-	public ArrayList<TipBoard> selectDateList(Connection conn, Date begin, Date end, int currentPage, int limit) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public ArrayList<TipBoard> selectTitleList(Connection conn, String title, int currentPage, int limit) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public ArrayList<TipBoard> selectWriterList(Connection conn, String writer, int currentPage, int limit) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	
 
 	public int deleteTipBoard(Connection conn, int tipBoardNum) {
 		int result = 0;

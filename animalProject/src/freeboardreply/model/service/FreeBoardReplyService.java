@@ -25,12 +25,10 @@ public class FreeBoardReplyService {
 		return listCount;
 	}
 	
-	
-	
-	
-	public int updateReply(FreeBoardReply replyBoard) {
+
+	public int updateReply(String freeReplyContent, int freeReplyNo) {
 		Connection conn = getConnection();
-		int result = fdao.updateReply(conn, replyBoard);
+		int result = fdao.updateReply(conn, freeReplyContent, freeReplyNo);
 		if(result > 0)
 			commit(conn);
 		else
@@ -89,6 +87,15 @@ public class FreeBoardReplyService {
 		close(conn);
 		
 		return flist;
+	}
+
+
+	public FreeBoardReply selectReply(int freeReplyNo) {
+		Connection conn = getConnection();
+		FreeBoardReply freereply = fdao.selectReplyList(conn, freeReplyNo);
+		close(conn);
+		
+		return freereply;
 	}
 
 

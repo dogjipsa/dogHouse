@@ -1,20 +1,34 @@
 const items = document.querySelectorAll('input[name="item"]');
-const bkTable = document.querySelector('#reserv_table');
 const userid = document.querySelector('input[name="userid"]');
+const bkTable = document.querySelector('#reserv_table');
 const hostMain = document.querySelector('.host_main');
+const addPetMain = document.querySelector('#add_pet');
+const pagination = document.querySelector('.section5 .pagination');
+let chosenPage = 1;
 
 // section1 버튼 클릭 시 main 내용 변경 이벤트 처리
 for (let i = 0; i < items.length; i++) {
     items[i].addEventListener('change', function () {
+        while(pagination.firstChild){
+            pagination.removeChild(pagination.firstChild);
+        }
         if (items[i].value === 'booking') {
             bkTable.style.display = 'table';
             hostMain.style.display = 'none';
+            addPetMain.style.display = 'none';
             requestBkAjax();
         }
         if (items[i].value === 'host') {
             bkTable.style.display = 'none';
+            addPetMain.style.display = 'none';
             hostMain.style.display = 'grid';
             requestHostAjax();
+        }
+        if(items[i].value === 'addpet'){
+            bkTable.style.display = 'none';
+            hostMain.style.display = 'none';
+            addPetMain.style.display = 'grid';
+
         }
     });
 }
@@ -25,6 +39,7 @@ function requestHostAjax() {
     xhr.onload = function () {
         if (xhr.responseText) {
             const json = JSON.parse(xhr.responseText);
+            console.log(json);
             while (tbody.firstChild) {
                 tbody.removeChild(tbody.firstChild);
             }
@@ -80,11 +95,86 @@ function requestHostAjax() {
                 tr.addEventListener('click', function(){
                     initMap(tableForm.address.split(",")[0], tableForm.name);
                     document.querySelector('#addr_text').textContent = tableForm.address;
+                    const miniInfo = document.querySelector('.host_side2');
+                    while(miniInfo.firstChild){
+                        miniInfo.removeChild(miniInfo.firstChild);
+                    }
+
                 });
             }
+            const startPage = json.plist.start;
+            const endPage = json.plist.end;
+            const currentPage = json.plist.page;
+            const totalPage = json.plist.totalpage;
+
+            while(pagination.firstChild){
+                pagination.removeChild(pagination.firstChild);
+            }
+
+            const pageBox = document.createElement('div');
+            pageBox.setAttribute('class','pagebox');
+            
+            if(startPage > 1){
+                const pageBox = document.createElement('div');
+                pageBox.setAttribute('class','pagebox');
+                pageBox.textContent = '처음';
+                pagination.appendChild(pageBox);
+                page.onclick = () =>{
+                    chosenPage = 1;
+                    requestHostAjax();
+                }
+            }
+            if(currentPage > 1){
+                const pageBox = document.createElement('div');
+                pageBox.setAttribute('class','pagebox');
+                pageBox.textContent = '이전';
+                pagination.appendChild(pageBox);
+                pageBox.onclick = ()=>{
+                    chosenPage = currentPage -1;
+                    requestHostAjax();
+                }
+            }
+            for(let i = startPage; i <= endPage; i++){
+                const pageBox = document.createElement('div');
+                pageBox.setAttribute('class','pagebox');
+                if(i === currentPage){
+                    pageBox.textContent = i;
+                    pageBox.style.color = 'dodgerblue';
+                    pagination.appendChild(pageBox);
+                } else {
+                    pageBox.textContent = i;
+                    pagination.appendChild(pageBox);
+                }
+                pageBox.onclick = ()=>{
+                    chosenPage = i;
+                    requestHostAjax();
+                }
+            }
+
+            if(currentPage < totalPage){
+                const pageBox = document.createElement('div');
+                    pageBox.setAttribute('class','pagebox');
+                    pageBox.textContent = '다음';
+                    pagination.appendChild(pageBox);
+                    pageBox.onclick = () => {
+                        chosenPage = currentPage+1;
+                        requestHostAjax();
+                    }
+            }
+            if(endPage < totalPage){
+                const pageBox = document.createElement('div');
+                    pageBox.setAttribute('class','pagebox');
+                    pageBox.textContent = '끝';
+                    pagination.appendChild(pageBox);
+                    pageBox.onclick = () =>{
+                        chosenPage = endPage;
+                        requestHostAjax();
+                    }
+            }
+
         }
     }
-    const requestData = 'userid=' + encodeURIComponent(userid.value);
+    const requestData = 'userid=' + encodeURIComponent(userid.value)+'&page='+encodeURIComponent(chosenPage);
 
     xhr.open("POST", "/doggybeta/hservice");
     xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
@@ -136,10 +226,81 @@ function requestBkAjax() {
                     tr.appendChild(td);
                 }
             }
+            
+            const startPage = json.plist.start;
+            const endPage = json.plist.end;
+            const currentPage = json.plist.page;
+            const totalPage = json.plist.totalpage;
+
+            while(pagination.firstChild){
+                pagination.removeChild(pagination.firstChild);
+            }
+            
+            const pageBox = document.createElement('div');
+            pageBox.setAttribute('class','pagebox');
+            
+            if(startPage > 1){
+                const pageBox = document.createElement('div');
+                pageBox.setAttribute('class','pagebox');
+                pageBox.textContent = '처음';
+                pagination.appendChild(pageBox);
+                page.onclick = () =>{
+                    chosenPage = 1;
+                    requestBkAjax();
+                }
+            }
+            if(currentPage > 1){
+                const pageBox = document.createElement('div');
+                pageBox.setAttribute('class','pagebox');
+                pageBox.textContent = '이전';
+                pagination.appendChild(pageBox);
+                pageBox.onclick = ()=>{
+                    chosenPage = currentPage -1;
+                    requestBkAjax();
+                }
+
+            }
+            for(let i = startPage; i <= endPage; i++){
+                const pageBox = document.createElement('div');
+                pageBox.setAttribute('class','pagebox');
+                if(i === currentPage){
+                    pageBox.textContent = i;
+                    pageBox.style.color = 'dodgerblue';
+                    pagination.appendChild(pageBox);
+                } else {
+                    pageBox.textContent = i;
+                    pagination.appendChild(pageBox);
+                }
+                pageBox.onclick = ()=>{
+                    chosenPage = i;
+                    requestBkAjax();
+                }
+            }
+
+            if(currentPage < totalPage){
+                const pageBox = document.createElement('div');
+                    pageBox.setAttribute('class','pagebox');
+                    pageBox.textContent = '다음';
+                    pagination.appendChild(pageBox);
+                    pageBox.onclick = () => {
+                        chosenPage = currentPage+1;
+                        requestBkAjax();
+                    }
+            }
+            if(endPage < totalPage){
+                const pageBox = document.createElement('div');
+                    pageBox.setAttribute('class','pagebox');
+                    pageBox.textContent = '끝';
+                    pagination.appendChild(pageBox);
+                    pageBox.onclick = () =>{
+                        chosenPage = endPage;
+                        requestBkAjax();
+                    }
+            }
         }
     };
-
-    const requestData = 'userid=' + encodeURIComponent(userid.value);
+    
+    const requestData = 'userid=' + encodeURIComponent(userid.value)+'&page='+encodeURIComponent(chosenPage);
 
     xhr.open('POST', '/doggybeta/bklist');
     xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
