@@ -42,6 +42,15 @@
 		location.href = "/doggybeta/views/tipboard/tipBoardWriteForm.jsp";
 	}
 </script>
+<style>
+a {
+ text-decoration:none;
+ color: black;
+}
+a:hover{
+	color: red;
+}
+</style>
 </head>
 <body>
 	<%@ include file="..//common/menu.jsp"%>
@@ -112,7 +121,7 @@
 				<%
 					if (currentPage <= 1) {
 				%>
-				[맨처음]&nbsp;
+				◀◀&nbsp;
 				<%
 					} else {  
 						%>
@@ -120,7 +129,7 @@
 						<%-- <a href="/doggybeta/tlist?word=<%=keyword%>&page=<%=1%>&option=<%=search%>">[prev]</a> --%>
 						<%		if(search == null){//검색 조건을 유지한 채 [맨처음] 페이징 처리
 								%>
-								<a href="/doggybeta/tlist?page=<%=1%>">[맨처음]</a>
+								<a href="/doggybeta/tlist?page=<%=1%>">◀◀</a>
 								<% }else{ %>
 								<a href="/doggybeta/tlist?word=<%=keyword%>&page=<%=1%>&option=<%=search%>">[맨처음]</a>
 								<%} %>
@@ -133,15 +142,15 @@
 						<%-- <a href="/doggybeta/tlist?word=<%=keyword%>&page=<%=startPage - 10%>&option=<%=search%>">[prev]</a> --%>
 						<%		if(search == null){//이전 페이지는 1x페이지 일때 10페이지로 이동, 2x페이지일 때 20페이지로 이동
 								%>
-								<a href="/doggybeta/tlist?page=<%=startPage - 1%>">[prev]</a>
+								<a href="/doggybeta/tlist?page=<%=startPage - 1%>">◀</a>
 								<% }else{ %>
-								<a href="/doggybeta/tlist?word=<%=keyword%>&page=<%=startPage - 1%>&option=<%=search%>">[prev]</a>
+								<a href="/doggybeta/tlist?word=<%=keyword%>&page=<%=startPage - 1%>&option=<%=search%>">◀</a>
 								<%} %>
 					
 				<%
 					} else {
 				%>
-				[prev]
+				◀
 				<%
 					}
 				%>
@@ -166,35 +175,35 @@
 					}
 				%>&nbsp;
 				<%
-					if ((currentPage + 10) > endPage /* && currentPage != 1 */ && (currentPage + 10) < maxPage ) {
+					if (endPage < maxPage) {
 				%>
 				<%-- <a href="/doggybeta/tlist?page=<%=endPage + 1%>">[next]</a>&nbsp; --%>
 				<%		if(search == null){
 								%>
-								<a href="/doggybeta/tlist?page=<%=endPage + 1%>">[next]</a>
+								<a href="/doggybeta/tlist?page=<%=endPage + 1%>">▶</a>
 								<% }else{ %>
-								<a href="/doggybeta/tlist?word=<%=keyword%>&page=<%=endPage + 1%>&option=<%=search%>">[next]</a>
+								<a href="/doggybeta/tlist?word=<%=keyword%>&page=<%=endPage + 1%>&option=<%=search%>">▶</a>
 								<%} %>
 				
 				<%
 					} else {
 				%>
-				[next]&nbsp;
+				▶&nbsp;
 				<%
 					}
 				%>
 				<%
 					if (currentPage >= maxPage) {
 				%>
-				[맨끝]
+				▶▶
 				<%
 					} else {
 				%>
 				<%-- <a href="/doggybeta/tlist?page=<%=maxPage%>">[맨끝]</a> --%>
 					<%if(search == null){ %>
-								<a href="/doggybeta/tlist?page=<%=maxPage%>">[맨끝]</a>
+								<a href="/doggybeta/tlist?page=<%=maxPage%>">▶▶</a>
 								<% }else{ %>
-								<a href="/doggybeta/tlist?word=<%=keyword%>&page=<%=maxPage%>&option=<%=search%>">[맨끝]</a>
+								<a href="/doggybeta/tlist?word=<%=keyword%>&page=<%=maxPage%>&option=<%=search%>">▶▶</a>
 								<%} %>
 				<%
 					}
