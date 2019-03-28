@@ -41,7 +41,6 @@ $(function(){
 		  }
 		});
 });
-
 </script>
 <style type="text/css">
 
@@ -109,7 +108,6 @@ header{
 }
 </style>
 </head>
-
 <body>
 
 <%@ include file="../common/menu.jsp"%>

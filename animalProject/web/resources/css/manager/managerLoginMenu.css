@@ -7,6 +7,16 @@
 	background: url(../../images/agreeBg2.jpg) no-repeat center center fixed; 
 	background-size: 100%;
 }
+.mVertical-menu p {
+	position: relative;
+	text-align: center;
+	color: #fff;
+}
+.mVertical-menu a {
+	text-decoration: none;
+	color: #fff;
+	outline: none;
+}
 ul.mVertical-menu {
 	position: fixed;
   	z-index: 9;
@@ -22,8 +32,9 @@ ul.mVertical-menu {
 	box-shadow: 1px 1px 10px rgba(0,0,0,0.1);
 	float: left;
 }
-.mVertical-menu li a {
-	width: 225px;
+.mVertical-menu li span {
+	cursor: pointer;
+	width: 250px;
 	padding-left: 20px;
 	height: 50px;
 	line-height: 50px;
@@ -36,14 +47,14 @@ ul.mVertical-menu {
 	color: #fff;
 	transition: all 0.2s linear;
 }
-.mVertical-menu li a:hover {
+.mVertical-menu li span:hover {
 	border-left: 5px solid #58B19F;
 	background: #444;
 }
-.mVertical-menu li a {
+.mVertical-menu li span {
 	border-left: 5px solid #444;
 }
-.mVertical-menu li a:hover i {
+.mVertical-menu li span:hover i {
 	color: #58B19F;
 }
 .mVertical-menu i {
@@ -58,11 +69,46 @@ ul.mVertical-menu {
 	font-style: normal;
 	color: #fff;
 	margin-top: 17px;
-	margin-right: 15px;
+	margin-right: 40px;
 	line-height: 10px;
 	heignt: 10px;
 	float: right;
 }
-/* .mVertical-menu li.selected a {
-	background: #555;
-} */
+.submenu {
+	display: none;
+    font-size: 13px;
+    box-sizing: border-box;
+    content: " ";
+    color: #ae9f9f;
+    cursor: pointer;
+}
+
+.submenu li {
+    line-height: 20px;
+    height: 35px;
+    margin-left: -40px;
+    padding-top: 11px;
+    transition: all 0.2s linear;
+    border-left: solid 5px #484141;
+    background-color: #484141;
+    text-align: center;
+    list-style: none;
+}
+.submenu li a {
+	text-decoration: none;
+	color: #ae9f9f;
+}
+
+.submenu .chosen,
+.submenu .chosen:hover {
+    border-left: solid 5px #96d145;
+}
+
+.submenu li:hover {
+    border-left: solid 5px #58B19F;
+    background-color: #485050;
+}
+
+.submenu li span {
+    margin-left: 30px;
+}
