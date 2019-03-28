@@ -10,8 +10,9 @@
 <title>도그하우스</title>
 <link rel="stylesheet" href="/doggybeta/resources/css/member/enroll.css">
 <script type="text/javascript" src="/doggybeta/resources/js/jquery-3.3.1.min.js"></script>
+
 <script type='text/javascript' src='/doggybeta/resources/js/jzCheckAdmitJS.js'></script>
-</head>
+
 </head>
 <body>
 <section id='bodystyle'>

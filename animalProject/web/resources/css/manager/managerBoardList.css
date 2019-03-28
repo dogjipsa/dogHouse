@@ -1,0 +1,48 @@
+@charset "UTF-8";
+.mcontainer {
+	position: relative;
+    line-height: 1.5;
+    width: 80%;
+    left: 250px;
+}
+.mcontainer h3 {
+	text-align: center;
+}
+.mcontainer thead th {
+    padding: 10px;
+    font-weight: bold;
+    vertical-align: top;
+    color: #369;
+    border-bottom: 3px solid #036;
+}
+.mcontainer tbody th {
+    width: 150px;
+    padding: 10px;
+    font-weight: bold;
+    vertical-align: top;
+    background: #f3f6f7;
+}
+.mcontainer td {
+    width: 350px;
+    padding: 10px;
+    vertical-align: top;
+    border-bottom: 1px solid #ccc;
+}
+.mcontainer .fourthTd {
+	text-align: left;
+	width: 50%;
+}
+/* .mcontainer thead th{ 
+	padding: 10px;
+    font-weight: bold;
+    vertical-align: top;
+    color: #369;
+    border-bottom: 3px solid #036;
+}
+.mcontainer tbody td { 
+	width: 150px;
+    padding: 10px;
+    font-weight: bold;
+    vertical-align: top;
+    border-bottom: 1px solid #ccc;  
+} */

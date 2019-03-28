@@ -433,6 +433,34 @@ public class MemberDao {
 		
 		return result;
 	}
+	
+
+	public int updateMember(Connection conn, Member member) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		
+		String query = "UPDATE MEMBER SET EMAIL = ?, PHONE = ?, JOB = ?, PASSWORD = ? WHERE USER_ID = ?";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, member.getEmail());
+			pstmt.setString(2, member.getPhone());
+			pstmt.setString(3, member.getJob());
+			pstmt.setString(4, member.getUserPwd());
+			pstmt.setString(5, member.getUserId());
+			
+			result = pstmt.executeUpdate();
+			
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+
+			close(pstmt);
+		}
+		
+		return result;
+	}
 
 	public Member selectDetailPetSitter(Connection conn, String petSitterId) {
 		Member petSitter = new Member();

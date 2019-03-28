@@ -227,7 +227,7 @@
 			<p>프로필 사진 추가</p>
 			<div class="image_box">
 				<img class="image_box_pic" />
-				<input type="file" id="real-file" name="pic" hidden="hidden" / required>
+				<input type="file" id="real-file" name="pic" hidden="hidden" required />
 				<span>
 					<button id="fake-file-btn">Choose a File</button>&nbsp;
 					<span id="file-text"></span>

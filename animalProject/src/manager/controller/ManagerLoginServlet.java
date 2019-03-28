@@ -45,7 +45,7 @@ public class ManagerLoginServlet extends HttpServlet {
 			System.out.println("세션아이디 : " + session.getId());
 			session.setAttribute("loginmanager", loginManager);
 			
-			response.sendRedirect("/doggybeta/views/manager/managerLogin.jsp");
+			response.sendRedirect("/doggybeta/managerMainPage.jsp");
 		} else {
 			RequestDispatcher view = request.getRequestDispatcher("views/manager/managerError.jsp");
 			request.setAttribute("message", "로그인에 실패하였습니다. 다시 시도해주세요.");

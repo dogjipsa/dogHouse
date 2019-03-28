@@ -24,7 +24,6 @@ public class TipBoardDao {
 		String query = "select count(*) from tipboard";
 		
 		try {
-			System.out.println("페이징 변경시 option이 뭐냐?" + option);
 			if(option == null) {
 				stmt = conn.createStatement();
 				rset = stmt.executeQuery(query);	
