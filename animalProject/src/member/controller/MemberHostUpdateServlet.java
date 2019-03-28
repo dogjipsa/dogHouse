@@ -109,7 +109,7 @@ public class MemberHostUpdateServlet extends HttpServlet {
 	}
 	private String renameFile(String originFileName, String savePath) throws IOException {
 		if (originFileName != null) {
-			SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmssSSSSS");
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmssSSS");
 			String renameFileName = sdf.format(new Date(System.currentTimeMillis())) + "."
 					+ originFileName.substring(originFileName.lastIndexOf(".") + 1);
 			File originFile = new File(savePath + "\\" + originFileName);

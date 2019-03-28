@@ -95,34 +95,55 @@
 			</div>
 			<div id="add_pet">
 				<div class="pet_insert">
-					<div id="pet_reg_form">
+					<form id="pet_reg_form">
 						<ul id="progressbar">
 							<li class="active">Account Setup</li>
-							<li>Social Profiles</li>
-							<li>Personal Details</li>
+							<li>Add Profiles</li>
+							<li>Details</li>
 						</ul>
 						<fieldset>
-							<h2 class="pi-title">Create your account</h2>
+							<h2 class="pi-title">Account Setup</h2>
 							<h3 class="pi-subtitle">아이디 / 이름 / 견종 / 생년월일</h3>
 							<input name="userid" value="<%= loginUser.getUserId()%>" readonly>
-							<input name="pname" placeholder="강아지 이름">
-							<input type="breeds" placeholder="견종 입력">
+							<input name="pname" placeholder="강아지 이름" required>
+							<input type="breeds" placeholder="견종 입력" />
 							<input type="date" id="puppybirth">
 							<input type="button" name="next" class="next action-button" value="Next" />
 						</fieldset>
 						<fieldset>
-							<h2 class="pi-title">Create your account</h2>
-							<h3 class="pi-subtitle">This is step 2</h3>
+							<h2 class="pi-title">Add Profiles</h2>
+							<h3 class="pi-subtitle">강아지 프로필 사진 등록</h3>
+							<img id="pet-img-preview" />
+							<input type="file" name="petpic" id="petpic" hidden="hidden">
+							<button id="petpic-btn">Add a profile</button>
+							<hr>
 							<input type="button" name="previous" class="previous action-button" value="Previous" />
 							<input type="button" name="next" class="next action-button" value="Next" />
 						</fieldset>
 						<fieldset>
-							<h2 class="pi-title">Create your account</h2>
-							<h3 class="pi-subtitle">This is step 3</h3>
+							<h2 class="pi-title">Details</h2>
+							<h3 class="pi-subtitle">크기 / 성별 / 중성화여부 / 특이사항</h3>
+							<input type="radio" name="size" id="cml_small" value="소형" checked>
+							<input type="radio" name="size" id="cml_medium" value="중형" >
+							<input type="radio" name="size" id="cml_big" value="대형" >
+							<div class="radio-box">
+								<label for="cml_small"><div class="btn-radio size">소형</div></label>
+								<label for="cml_medium"><div class="btn-radio size">중형</div></label>
+								<label for="cml_big"><div class="btn-radio size">대형</div></label>
+							</div><hr>
+							<input type="radio" name="gender" id="cml_male" value="M" checked>
+							<input type="radio" name="gender" id="cml_female" value="F" >
+							<input type="radio" name="gender" id="cml_neutral" value="N" >
+							<div class="radio-box">
+								<label for="cml_male"><div class="btn-radio gender">수컷</div></label>
+								<label for="cml_female"><div class="btn-radio gender">암컷</div></label>
+								<label for="cml_neutral"><div class="btn-radio gender">중성화</div></label>
+							</div><hr>
+							<textarea name="etc" id="p_etc" cols="30" rows="10" placeholder="강아지의 특이사항을 입력해주세요"></textarea>
 							<input type="button" name="previous" class="previous action-button" value="Previous" />
-							<input type="submit" name="submit" class="submit action-button" value="Submit" />
+							<input type="submit" id="p-submit" class="submit action-button" value="Submit" />
 						</fieldset>
-					</div>
+					</form>
 				</div>
 				<div class="pet_list"></div>
 				<div class="pet_update"></div>

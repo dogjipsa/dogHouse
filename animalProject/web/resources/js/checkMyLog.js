@@ -32,6 +32,20 @@ for (let i = 0; i < items.length; i++) {
         }
     });
 }
+// 
+const pSubmitBtn = document.querySelector('#p-submit');
+const petRegForm = document.getElementById('pet_reg_form');
+pSubmitBtn.addEventListener('click', function(e){
+    e.preventDefault();
+    const petData = new FormData(petRegForm);
+
+    console.log(petData);
+    const xhr = new XMLHttpRequest();
+    xhr.open('POST','/doggybeta/addpet');
+    xhr.setRequestHeader('Content-Type', 'multipart/form-data');
+    xhr.send(petData);
+});
+
 // 펫 추가 입력 폼 자바스크립트
 let current_fs, next_fs, previous_fs;
 document.getElementById('puppybirth').valueAsDate = new Date();
@@ -58,7 +72,48 @@ for(let i = 0; i < prevBtns.length; i++){
 
     });
 }
+const realPetpic = document.querySelector('#petpic');
+const petpicBtn = document.getElementById('petpic-btn');
+const petImagePreview = document.getElementById('pet-img-preview');
+petpicBtn.addEventListener('click',()=>{
+    realPetpic.click();
+});
 
+realPetpic.addEventListener('change', (e)=>{
+    const petpicFile = e.target.files[0];
+    if(petpicFile){
+        const reader = new FileReader();
+        reader.onload = (r)=>{
+            petImagePreview.setAttribute('src',r.target.result);
+        }
+        reader.readAsDataURL(petpicFile);
+    }
+});
+
+// 성별 라디오 버튼 커스터 마이징
+const genderRadios = document.querySelectorAll('.radio-box .gender');
+genderRadios[0].style.boxShadow = '0 0 0 2px white, 0 0 0 3px dodgerblue'; // default checked
+for(let i = 0; i < genderRadios.length; i++){
+    genderRadios[i].addEventListener('click', function(e){
+        for(let j = 0; j < genderRadios.length; j++){
+            genderRadios[j].style.boxShadow = 'none';
+        }
+        e.target.style.boxShadow = '0 0 0 2px white, 0 0 0 3px dodgerblue';
+    });
+}
+// 애완견 크기 버튼 커스터 마이징
+const sizeRadios = document.querySelectorAll('.radio-box .size');
+sizeRadios[0].style.boxShadow = '0 0 0 2px white, 0 0 0 3px dodgerblue'; // default checked
+for(let i = 0; i < sizeRadios.length; i++){
+    sizeRadios[i].addEventListener('click', function(e){
+        for(let j = 0; j < sizeRadios.length; j++){
+            sizeRadios[j].style.boxShadow = 'none';
+        }
+        e.target.style.boxShadow = '0 0 0 2px white, 0 0 0 3px dodgerblue';
+    });
+}
+
+// 인덱스 리턴 메소드
 function indexOf(node){
     const children = node.parentNode.childNodes;
     let num = 0;
