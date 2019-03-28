@@ -189,6 +189,13 @@ public class MemberService {
 		close(conn);
 		return result;
 	}
+
+	public ArrayList<SitterImage> selectSitterFacilityImg(String petSitterId) {
+		Connection conn = getConnection();
+		ArrayList<SitterImage> list = mdao.selectSitterFacilityImg(conn, petSitterId);
+		close(conn);
+		return list;
+	}
 	
 
 

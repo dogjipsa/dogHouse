@@ -490,4 +490,30 @@ public class MemberDao {
 		return petSitter;
 	}
 
+	public ArrayList<SitterImage> selectSitterFacilityImg(Connection conn, String petSitterId) {
+		ArrayList<SitterImage> list = new ArrayList<>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String query = "select * from sitterimg where user_id = ?";
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, petSitterId);
+			rset = pstmt.executeQuery();
+			while(rset.next()) {
+				SitterImage sitterImage = new SitterImage();
+				sitterImage.setImageNo(rset.getInt("IMG_NO"));
+				sitterImage.setUserId(petSitterId);
+				sitterImage.setOriginFile(rset.getString("IMG_ORIGINFILE"));
+				sitterImage.setRenameFile(rset.getString("IMG_REFILE"));
+				list.add(sitterImage);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return list;
+	}
+
 }
