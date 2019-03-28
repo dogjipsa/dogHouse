@@ -103,11 +103,11 @@
 						</ul>
 						<fieldset>
 							<h2 class="pi-title">Create your account</h2>
-							<h3 class="pi-subtitle">This is step 1</h3>
+							<h3 class="pi-subtitle">아이디 / 이름 / 견종 / 생년월일</h3>
 							<input name="userid" value="<%= loginUser.getUserId()%>" readonly>
 							<input name="pname" placeholder="강아지 이름">
 							<input type="breeds" placeholder="견종 입력">
-							<input type="date">
+							<input type="date" id="puppybirth">
 							<input type="button" name="next" class="next action-button" value="Next" />
 						</fieldset>
 						<fieldset>

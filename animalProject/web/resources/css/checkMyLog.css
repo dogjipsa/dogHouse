@@ -188,7 +188,7 @@
     background: #fafafc;
     box-shadow: 0 10px 35px rgba(0, 0, 0, 0.05), 0 6px 6px rgba(0, 0, 0, 0.1);
 }
-.pet_insert #pet_reg_form {
+.pet_insert #pet_reg_form{
     width: 650px;
 	margin: 50px auto;
 	text-align: center;
@@ -203,12 +203,12 @@
 	box-sizing: border-box;
 	width: 80%;
 	margin: 0 10%;
-	position: relative;
+    position: relative;
+    animation-duration: 1s;
+    animation-name: slidein;
 }
 #pet_reg_form fieldset:not(:first-of-type) {
     display: none;
-    animation-duration: 1s;
-    animation-name: slidein;
 } 
 @keyframes slidein {
     from {
@@ -250,7 +250,7 @@
 }
 .pi-subtitle{
     font-weight: normal;
-	font-size: 13px;
+	font-size: 11px;
 	color: #666;
 	margin-bottom: 20px;
 }

@@ -34,8 +34,7 @@ for (let i = 0; i < items.length; i++) {
 }
 // 펫 추가 입력 폼 자바스크립트
 let current_fs, next_fs, previous_fs;
-// const left, opacity, scale;
-let animating;
+document.getElementById('puppybirth').valueAsDate = new Date();
 const nextBtns = document.querySelectorAll('.next');
 for(let i = 0; i < nextBtns.length; i++){
     nextBtns[i].addEventListener('click',function(){
