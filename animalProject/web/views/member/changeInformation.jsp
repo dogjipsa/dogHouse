@@ -9,6 +9,9 @@
 <link href="/doggybeta/resources/css/footer.css" rel="stylesheet" type="text/css">
 <script type="text/javascript" src="/doggybeta/resources/js/jquery-3.3.1.min.js"></script>
 <script type="text/javascript">
+function okbtn(){
+	alert("확인");
+}
 function deletebtn(){
 	alert("확인");
 	console.log("확인");
@@ -20,8 +23,10 @@ function deletebtn(){
 	                userid : $("#userid").val()
 	            },
 	            success: function (data) {
-	               if(data == "ok")
+	               if(data == "ok"){
 	            	   alert("성공!");
+	               location.href='/doggybeta/jipsalogout';
+	               }
 	               else alert("실패!");
 	            }
 	        });
@@ -158,9 +163,9 @@ header{
 </table>
 <br>         
 <!-- 테이블 종료 -->
-<input type="submit" value="정보수정하기">
+<input type="submit" value="정보수정하기" onclick="okbtn();">
 <input type="button" id="deletebtn" value="탈퇴하기" onclick="deletebtn();">
-<input type="submit" value="메인으로">
+<input type="submit" value="메인으로" onclick="location.href='/doggybeta'">
 
 </div>
 		<div id="footer"><%@ include file="..//common/footer.jsp"%></div>
