@@ -26,32 +26,33 @@ $(function(){
 	$("#save").click(function(){
 		$.ajax({
 			url: "/doggybeta/freply",
-			data: {fnum : $("#fnum").val(), fwriter : $("#fwriter").val(), fcontent : $("#fcontent").val()},
+			data: {fnum : $("#fnum").val(), fwriter : $("#fwriter").val(), fcontent : $("#fcontent").val(), frnum : $("frnum").val()},
 			type: "post",
 			dataType: "json",
 			success: function(data){
-				/* console.log("성공!");
-				var jsonStr = JSON.stringify(data);
-				console.log("성공2");
-				var json = JSON.parse(jsonStr);
-				console.log(jsonStr);
-				console.log(json);
-				var values = $("#p5").html() + "<br>";
-				for(var i in json.list){
-					values += json.list[i].replyDate + ", " 
-						+ json.list[i].replyNo + ", " 
-						+ json.list[i].replyUser + ", "
-						+ json.list[i].replyBoardNo + ", "
-						+ json.list[i].replyDelete + ", "
-						+ decodeURIComponent(json.list[i].replyContent) + ", "
-						+ json.list[i].replyUser + "<br>"; 
-				} //for in	*/
+				
 			}
 		});  //ajax
 		document.location.reload();
 	});  //click
 
 }); //ready
+
+$(function(){
+	$("#replyUpdate").click(function(){
+		$.ajax({
+			url: "/doggybeta/freplyup",
+			data: {fnum : $("fnum").val(), frnum : $("frnum").val()},
+			type: "post",
+			dataType: "json",
+			success: function(data){
+				
+			}
+		});  //ajax
+	});  //click
+
+});
+
 
 </script>
 
@@ -153,8 +154,12 @@ p{
 					<div>
 						<%=f.getUserid() %><br>					
 						<font size="2" color="lightgray"><%= f.getFreereplydate() %></font>
+						<br>
+					<div id="frnum">				
+						<font size="2" color="lightgray"><%= f.getFreereply() %></font>
 					</div>
-				</td>
+					</div>
+				</td>			
 				<!-- 본문내용 -->
 				<td width="550">
 					<div class="text_wrapper">
@@ -163,12 +168,12 @@ p{
 				</td>
 				<!-- 버튼 -->
 				<td width="100">
-					<div id="btn" style="text-align:center;">
-						<a href="#">[답변]</a><br>
+					<!-- <div id="btn" style="text-align:center;">
+						<a href="#">[답변]</a><br> -->
 					<!-- 댓글 작성자만 수정, 삭제 가능하도록 -->	
 					<%if(loginUser.getUserId().equals(f.getUserid())){ %>
-						<a href="#">[수정]</a><br>	
-						<a href="#">[삭제]</a>	
+					<a href="/doggybeta/frsearch?frnum=<%= f.getFreereply()%>">[수정]</a>
+					<a href="#">[삭제]</a>	
 					<%} %>
 					
 					</div>
