@@ -121,9 +121,7 @@ public class BookingDao {
 		ResultSet rset = null;
 		int count = 0;
 		String query = "SELECT COUNT(*) FROM BOOKING WHERE PUSER_ID = ?";
-		
 		try {
-			
 			pstmt = conn.prepareStatement(query);
 			pstmt.setString(1, userid);
 			rset = pstmt.executeQuery();
