@@ -54,7 +54,7 @@
 	var tnum = '<%=((TipBoard)request.getAttribute("tboard")).getTipBoardNo()%>';
 	var trpage = '<%=request.getAttribute("endPage")%>';
 		
-	if(!content)
+	if(!#tipReply_content)
 	{
 		alert("내용을 입력하세요.");
 		return false;

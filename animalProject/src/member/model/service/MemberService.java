@@ -168,6 +168,14 @@ public class MemberService {
 		close(conn);
 		return result;
 	}
+
+	public Member selectDetailPetSitter(String petSitterId) {
+		Connection conn = getConnection();
+		Member petSitter = mdao.selectDetailPetSitter(conn, petSitterId);
+		close(conn);
+		
+		return petSitter;
+	}
 	
 
 
