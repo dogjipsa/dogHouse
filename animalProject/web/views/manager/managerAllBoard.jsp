@@ -139,7 +139,7 @@ $(function() {
 			for(int i = Integer.parseInt(pageNumber) + 1; i <= targetPage + Integer.parseInt(pageNumber); i ++) {
 				if(i < startPage + 10) {
 		%>
-			<li><a href='managerAllBoard.jsp?pageNumber=<%= i %>'><%= i %></a></li>
+			<li><a href='managerAllBoard.jsp?pageNumber=<%= i %>'>&nbsp;<%= i %></a></li>
 		<%
 				}
 			}
