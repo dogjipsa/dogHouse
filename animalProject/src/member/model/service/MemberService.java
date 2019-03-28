@@ -168,6 +168,18 @@ public class MemberService {
 		close(conn);
 		return result;
 	}
+
+	public int updateMember(Member member) {
+		Connection conn = getConnection();
+		int result = mdao.updateMember(conn, member);
+		System.out.println("서비스 : " + result);
+		if(result > 0) 
+			commit(conn);
+		else
+			rollback(conn);
+		close(conn);
+		return result;
+	}
 	
 
 

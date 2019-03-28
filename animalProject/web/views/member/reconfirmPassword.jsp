@@ -64,7 +64,7 @@ function clickbtn(){
 
 <div class="bottom">
 
-<button onclick="location.href='/doggybeta/'">메인으로</button>
+<button onclick="location.href='/doggybeta/index.jsp'">메인으로</button>
 
 </div>
 
