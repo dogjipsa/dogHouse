@@ -41,7 +41,7 @@ $(function() {
 			<span class="boardManage"><i class="icon-cog"></i>게시판관리</span>
 			<ul class='submenu'>
 				<li>게시판 공지사항</li>
-				<li><a href='/doggybeta/views/manager/managerAllBoard.jsp'>전체 게시판 조회 및 관리</a></li>
+				<li><a href='/doggybeta/manboard'>전체 게시판 조회 및 관리</a></li>
 				<li>신고 게시물 관리</li>
 			</ul>
 		</li>
