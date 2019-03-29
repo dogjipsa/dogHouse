@@ -490,4 +490,35 @@ public class MemberDao {
 		return petSitter;
 	}
 
+	public SearchingInfo findPetSitterList(Connection conn, String jido) {
+		SearchingInfo SI = new SearchingInfo();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String query = "SELECT DISTINCT P.USER_ID, P.USER_NAME, P.PRICE, Z.PET_NAME FROM MEMBER U, MEMBER P LEFT OUTER JOIN PET Z ON (P.USER_ID = Z.USER_ID) WHERE P.PETSITTER = '2' AND P.ADDRESS LIKE ?";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, "%" + jido + "%");
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				SI.setPuserId(rset.getString(1));
+				SI.setPuserName(rset.getString(2));
+				SI.setPrice(rset.getInt(3));
+				SI.setPuserPetName(rset.getString(4));
+				
+				System.out.println("dao에서 펫시터 정보 출력 : " + SI.toString());
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return SI;
+	}
+
 }

@@ -12,6 +12,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.json.simple.JSONObject;
+
 import member.model.service.MemberService;
 import member.model.vo.SearchingInfo;
 
@@ -36,8 +38,26 @@ public class PetSitterListServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
 		
-		String serviceKind = request.getParameter("opt");
-		String beginDate = request.getParameter("begin");
+		String userId = request.getParameter("userid");
+		String serviceKind = request.getParameter("service");
+		String jido = request.getParameter("jido");
+		System.out.println("서비스 정류 : " + serviceKind); //넘어가는 거 확인
+		
+		SearchingInfo SI = new MemberService().findPetsitterList(jido);
+		System.out.println("펫시터 리스트 서블릿 : " + SI.toString());
+		
+		JSONObject obj = new JSONObject();
+		
+		obj.put("jido", jido);
+		System.out.println("지도 : " + obj.toJSONString());
+		response.setContentType("application/json; charset=utf-8");
+		PrintWriter out = response.getWriter();
+		out.println(obj.toJSONString());
+		out.flush();
+		out.close();
+		
+		
+		/*String beginDate = request.getParameter("begin");
 		String endDate = request.getParameter("end");
 		String city = request.getParameter("city");
 		String sido = request.getParameter("sido");
@@ -65,7 +85,7 @@ public class PetSitterListServlet extends HttpServlet {
 			out.println("<script>alert('조건에 맞는 펫시터가 없습니다.'); location.href='/doggybeta/finding';</script>");
 			out.flush();		
 		}
-		
+		*/
 		
 	}
 

@@ -17,14 +17,18 @@ public class SearchingInfo implements java.io.Serializable{
 	private Date petDate;
 	private String petSize;
 	private String petBreads;
-	private String address;
+	private String userAddress;
+	private String puserAddress;
 	private int price;
 	private int age;
+	private String puserName;
+	private String puserPetName;
 	
-	public SearchingInfo() {}
+	public SearchingInfo(){}
 
 	public SearchingInfo(int bookingNo, String serviceKind, String userId, String puserId, Date checkInDate,
-			Date checkOutDate, int petNo, Date petDate, String petSize, String petBreads, String address, int price, int age) {
+			Date checkOutDate, int petNo, Date petDate, String petSize, String petBreads, String userAddress,
+			String puserAddress, int price, int age, String puserName, String puserPetName) {
 		super();
 		this.bookingNo = bookingNo;
 		this.serviceKind = serviceKind;
@@ -36,18 +40,12 @@ public class SearchingInfo implements java.io.Serializable{
 		this.petDate = petDate;
 		this.petSize = petSize;
 		this.petBreads = petBreads;
-		this.address = address;
+		this.userAddress = userAddress;
+		this.puserAddress = puserAddress;
 		this.price = price;
 		this.age = age;
-	}
-
-	
-	public int getAge() {
-		return age;
-	}
-
-	public void setAge(int age) {
-		this.age = age;
+		this.puserName = puserName;
+		this.puserPetName = puserPetName;
 	}
 
 	public int getBookingNo() {
@@ -130,12 +128,20 @@ public class SearchingInfo implements java.io.Serializable{
 		this.petBreads = petBreads;
 	}
 
-	public String getAddress() {
-		return address;
+	public String getUserAddress() {
+		return userAddress;
 	}
 
-	public void setAddress(String address) {
-		this.address = address;
+	public void setUserAddress(String userAddress) {
+		this.userAddress = userAddress;
+	}
+
+	public String getPuserAddress() {
+		return puserAddress;
+	}
+
+	public void setPuserAddress(String puserAddress) {
+		this.puserAddress = puserAddress;
 	}
 
 	public int getPrice() {
@@ -145,7 +151,31 @@ public class SearchingInfo implements java.io.Serializable{
 	public void setPrice(int price) {
 		this.price = price;
 	}
-	
+
+	public int getAge() {
+		return age;
+	}
+
+	public void setAge(int age) {
+		this.age = age;
+	}
+
+	public String getPuserName() {
+		return puserName;
+	}
+
+	public void setPuserName(String puserName) {
+		this.puserName = puserName;
+	}
+
+	public String getPuserPetName() {
+		return puserPetName;
+	}
+
+	public void setPuserPetName(String puserPetName) {
+		this.puserPetName = puserPetName;
+	}
+
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
@@ -155,9 +185,12 @@ public class SearchingInfo implements java.io.Serializable{
 		return "SearchingInfo [bookingNo=" + bookingNo + ", serviceKind=" + serviceKind + ", userId=" + userId
 				+ ", puserId=" + puserId + ", checkInDate=" + checkInDate + ", checkOutDate=" + checkOutDate
 				+ ", petNo=" + petNo + ", petDate=" + petDate + ", petSize=" + petSize + ", petBreads=" + petBreads
-				+ ", address=" + address + ", price=" + price + ", age=" + age + "]";
+				+ ", userAddress=" + userAddress + ", puserAddress=" + puserAddress + ", price=" + price + ", age="
+				+ age + ", puserName=" + puserName + ", puserPetName=" + puserPetName + "]";
 	}
 
+	
+	
 
 }
 

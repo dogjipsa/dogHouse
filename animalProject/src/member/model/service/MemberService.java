@@ -189,6 +189,14 @@ public class MemberService {
 		close(conn);
 		return result;
 	}
+
+	public SearchingInfo findPetsitterList(String jido) {
+		Connection conn = getConnection();
+		SearchingInfo SI = mdao.findPetSitterList(conn, jido);
+		System.out.println("서비스단 펫시터 리스트 : " + SI);
+		close(conn);
+		return SI;
+	}
 	
 
 
