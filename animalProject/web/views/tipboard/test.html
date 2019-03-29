@@ -1,25 +1,25 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <title>bootstrap4</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css">
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.11/summernote-bs4.css" rel="stylesheet">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.11/summernote-bs4.js"></script>
-  </head>
-  <body>
-    <form method="post">
-  		<textarea id="summernote" name="editordata"></textarea>
-	</form>
-		Run summer
-    <script>
-		$(document).ready(function() {
-			  $('#summernote').summernote();
-			});
-    </script>
-  </body>
+<head>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+</head>
+<body>
+<input type="text" name="datetimes" />
+
+<script>
+$(function() {
+  $('input[name="datetimes"]').daterangepicker({
+    timePicker: true,
+    startDate: moment().startOf('hour'),
+    endDate: moment().startOf('hour').add(32, 'hour'),
+    locale: {
+      format: 'M/DD hh:mm A'
+    }
+  });
+});
+</script>
+</body>
 </html>
-Without Boots

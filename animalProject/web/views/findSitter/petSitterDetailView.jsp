@@ -4,6 +4,8 @@
 <%
 	Member petSitter = (Member)request.getAttribute("petSitter");
 	ArrayList<SitterImage> sitterFacilityImg = (ArrayList<SitterImage>)request.getAttribute("sitterFacilityImg");
+	String service = (String)request.getAttribute("service");
+	System.out.println("view에서 service 확인 : "+service);
 %>
 <!DOCTYPE html>
 <html>
@@ -12,10 +14,8 @@
 <title>Dog House</title>
 <link rel="shortcut icon" href="/doggybeta/resources/images/favicon.ico">
 <link href="/doggybeta/resources/css/footer.css" rel="stylesheet" type="text/css">
-<script type="text/javascript" src="/doggybeta/resources/js/jquery-3.3.1.min.js"></script>
-<!-- 시간(DateTimePicker) 위젯  -->
-<link rel="stylesheet" href="//mugifly.github.io/jquery-simple-datetimepicker/jquery.simple-dtpicker.css">
-<!-- <link href="/doggybeta/resources/css/findingpetsitter.css" rel="stylesheet" type="text/css"> -->
+
+<!-- 시간(DateTimePicker) 위젯 링크들은 menu.jsp에 추가  -->
 
 <style type="text/css">
 
@@ -388,21 +388,29 @@ geocoder.addressSearch('<%=petSitter.getAddress()%>', function(result, status) {
 </div><!-- 가운데 영역  끝-->
 <div style="float:left;"><!-- 오른쪽 영역  --> 
 <div><!-- 날짜 입력  -->
+<form action="/doggybeta/bkinsert" type="post">
+<input type="text" name="datetimes" />
+<textarea name="etc"></textarea>
+<input type="hidden" name="service" value="<%=service%>">
+<input type="hidden" name="petSitterId" value="<%=petSitter.getUserId()%>">
+<input type="hidden" name="userId" value="<%=loginUser.getUserId()%>">
+<input type="submit" value="예약하기">
 
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
-<script src="//mugifly.github.io/jquery-simple-datetimepicker/jquery.simple-dtpicker.js"></script>
 <script>
-$(function(){
-    $('.datetimepicker').appendDtpicker({'locale':'ko'});
-    
-  
+$(function() {
+  $('input[name="datetimes"]').daterangepicker({
+    timePicker: true,
+    startDate: moment().startOf('hour'),
+    endDate: moment().startOf('hour').add(32, 'hour'),
+    locale: {
+      format: 'YYYY/MM/DD HH:mm'
+    }
 
-
+  });
+  console.log($('input[name="datetimes"]').val());
 });
 </script>
-<input type="text" name="checkin" id="checkin" value="" class="datetimepicker" />
-
-<input type="text" name="checkout" id="checkout" value="" class="datetimepicker" />
+</form>
 </div>
 </div>
 </div><!-- content 끝  -->

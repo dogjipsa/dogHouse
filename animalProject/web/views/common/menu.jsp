@@ -21,6 +21,10 @@
 
 <link href="/doggybeta/resources/css/mainV2.css" rel="stylesheet" type="text/css">
 <script type="text/javascript" src="/doggybeta/resources/js/jquery-3.3.1.min.js"></script>
+
+<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
 <script type="text/javascript" src="https://static.nid.naver.com/js/naveridlogin_js_sdk_2.0.0.js" charset="utf-8"></script>
 <script type="text/javascript">
 	 $(function() {
