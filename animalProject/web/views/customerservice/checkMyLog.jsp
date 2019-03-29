@@ -106,8 +106,8 @@
 							<h3 class="pi-subtitle">아이디 / 이름 / 견종 / 생년월일</h3>
 							<input name="userid" value="<%= loginUser.getUserId()%>" readonly>
 							<input name="pname" placeholder="강아지 이름" required>
-							<input type="breeds" placeholder="견종 입력" />
-							<input type="date" id="puppybirth">
+							<input name="breeds" placeholder="견종 입력" />
+							<input type="date" name="birth" id="puppybirth">
 							<input type="button" name="next" class="next action-button" value="Next" />
 						</fieldset>
 						<fieldset>

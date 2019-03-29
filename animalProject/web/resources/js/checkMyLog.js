@@ -38,11 +38,15 @@ const petRegForm = document.getElementById('pet_reg_form');
 pSubmitBtn.addEventListener('click', function(e){
     e.preventDefault();
     const petData = new FormData(petRegForm);
-
-    console.log(petData);
     const xhr = new XMLHttpRequest();
+    
+    xhr.onload = ()=>{
+        console.log('good!');
+    }
+    
+    console.log(petData);
     xhr.open('POST','/doggybeta/addpet');
-    xhr.setRequestHeader('Content-Type', 'multipart/form-data');
+    
     xhr.send(petData);
 });
 
@@ -52,10 +56,19 @@ document.getElementById('puppybirth').valueAsDate = new Date();
 const nextBtns = document.querySelectorAll('.next');
 for(let i = 0; i < nextBtns.length; i++){
     nextBtns[i].addEventListener('click',function(){
-        
         current_fs = nextBtns[i].parentNode;
         next_fs = nextBtns[i].parentNode.nextElementSibling;
-        
+        const currentInputs = current_fs.querySelectorAll('input');
+        for(let i = 0; i < currentInputs.length; i++){
+            if(currentInputs[i].value === ""){
+                currentInputs[i].style.boxShadow = '0 0 0 2px white, 0 0 0 3px red';
+                currentInputs[i].addEventListener('click', function(){
+                    currentInputs[i].style.boxShadow = 'none';
+                })
+                return false;
+            }
+            currentInputs[i].style.boxShadow = 'none';
+        }
         document.querySelectorAll('#progressbar li')[indexOf(next_fs)].setAttribute('class','active');
         next_fs.style.display ='block';
         current_fs.style.display = 'none';
@@ -75,7 +88,8 @@ for(let i = 0; i < prevBtns.length; i++){
 const realPetpic = document.querySelector('#petpic');
 const petpicBtn = document.getElementById('petpic-btn');
 const petImagePreview = document.getElementById('pet-img-preview');
-petpicBtn.addEventListener('click',()=>{
+petpicBtn.addEventListener('click',(e)=>{
+    e.preventDefault();
     realPetpic.click();
 });
 
@@ -209,7 +223,7 @@ function requestHostAjax() {
             if(startPage > 1){
                 const pageBox = document.createElement('div');
                 pageBox.setAttribute('class','pagebox');
-                pageBox.textContent = '처음';
+                pageBox.textContent = 'first';
                 pagination.appendChild(pageBox);
                 page.onclick = () =>{
                     chosenPage = 1;
@@ -219,7 +233,7 @@ function requestHostAjax() {
             if(currentPage > 1){
                 const pageBox = document.createElement('div');
                 pageBox.setAttribute('class','pagebox');
-                pageBox.textContent = '이전';
+                pageBox.textContent = 'prev';
                 pagination.appendChild(pageBox);
                 pageBox.onclick = ()=>{
                     chosenPage = currentPage -1;
@@ -246,7 +260,7 @@ function requestHostAjax() {
             if(currentPage < totalPage){
                 const pageBox = document.createElement('div');
                     pageBox.setAttribute('class','pagebox');
-                    pageBox.textContent = '다음';
+                    pageBox.textContent = 'next';
                     pagination.appendChild(pageBox);
                     pageBox.onclick = () => {
                         chosenPage = currentPage+1;
@@ -256,7 +270,7 @@ function requestHostAjax() {
             if(endPage < totalPage){
                 const pageBox = document.createElement('div');
                     pageBox.setAttribute('class','pagebox');
-                    pageBox.textContent = '끝';
+                    pageBox.textContent = 'end';
                     pagination.appendChild(pageBox);
                     pageBox.onclick = () =>{
                         chosenPage = endPage;
@@ -334,7 +348,7 @@ function requestBkAjax() {
             if(startPage > 1){
                 const pageBox = document.createElement('div');
                 pageBox.setAttribute('class','pagebox');
-                pageBox.textContent = '처음';
+                pageBox.textContent = 'first';
                 pagination.appendChild(pageBox);
                 page.onclick = () =>{
                     chosenPage = 1;
@@ -344,7 +358,7 @@ function requestBkAjax() {
             if(currentPage > 1){
                 const pageBox = document.createElement('div');
                 pageBox.setAttribute('class','pagebox');
-                pageBox.textContent = '이전';
+                pageBox.textContent = 'prev';
                 pagination.appendChild(pageBox);
                 pageBox.onclick = ()=>{
                     chosenPage = currentPage -1;
@@ -372,7 +386,7 @@ function requestBkAjax() {
             if(currentPage < totalPage){
                 const pageBox = document.createElement('div');
                     pageBox.setAttribute('class','pagebox');
-                    pageBox.textContent = '다음';
+                    pageBox.textContent = 'next';
                     pagination.appendChild(pageBox);
                     pageBox.onclick = () => {
                         chosenPage = currentPage+1;
@@ -382,7 +396,7 @@ function requestBkAjax() {
             if(endPage < totalPage){
                 const pageBox = document.createElement('div');
                     pageBox.setAttribute('class','pagebox');
-                    pageBox.textContent = '끝';
+                    pageBox.textContent = 'end';
                     pagination.appendChild(pageBox);
                     pageBox.onclick = () =>{
                         chosenPage = endPage;
