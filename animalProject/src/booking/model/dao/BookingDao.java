@@ -137,5 +137,30 @@ public class BookingDao {
 		}
 		return count;
 	}
+
+	public int insertBooking(Connection conn, String checkin, String checkout, String petSitterId, String userId,
+			String etc, String service) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String query = "insert into booking values(seq_bookingno.nextval, to_date(?, 'YYYY/MM/DD HH24:MI'), to_date(?, 'YYYY/MM/DD HH24:MI'), (select pet_no from pet where user_id = ?), ?,0,?,?,?)";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, checkin);
+			pstmt.setString(2, checkout);
+			pstmt.setString(3, userId);
+			pstmt.setString(4, userId);
+			pstmt.setString(5, etc);
+			pstmt.setString(6, service);//serviceKind 입력 받아야 함.
+			pstmt.setString(7, petSitterId);
+			result = pstmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
 	
 }

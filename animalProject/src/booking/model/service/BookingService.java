@@ -42,4 +42,15 @@ public class BookingService {
 		return count;
 	}
 
+	public int insertBooking(String checkin, String checkout, String petSitterId, String userId, String etc, String service) {
+		Connection conn = getConnection();
+		int result = bdao.insertBooking(conn, checkin, checkout, petSitterId, userId, etc, service);
+		if(result > 0)
+			commit(conn);
+		else
+			rollback(conn);
+		close(conn);
+		return result;
+	}
+
 }

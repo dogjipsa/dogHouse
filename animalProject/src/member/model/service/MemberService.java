@@ -190,6 +190,14 @@ public class MemberService {
 		return result;
 	}
 
+
+	public ArrayList<SitterImage> selectSitterFacilityImg(String petSitterId) {
+		Connection conn = getConnection();
+		ArrayList<SitterImage> list = mdao.selectSitterFacilityImg(conn, petSitterId);
+		close(conn);
+		return list;
+  }
+
 	/*public SearchingInfo findPetsitterList(String jido) {
 		Connection conn = getConnection();
 		SearchingInfo SI = mdao.findPetSitterList(conn, jido);
@@ -205,8 +213,6 @@ public class MemberService {
 		close(conn);
 		return list;
 		
+
 	}
-	
-
-
 }

@@ -1,6 +1,7 @@
 package member.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -11,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import member.model.service.MemberService;
 import member.model.vo.Member;
+import member.model.vo.SitterImage;
 
 /**
  * Servlet implementation class PetSitterDetailServlet
@@ -35,12 +37,17 @@ public class PetSitterDetailServlet extends HttpServlet {
 		String petSitterId = "user01";//예를 들어 user01
 		//request.getParameter("");//list에서 클릭시 parameter값으로 넘겨 받아야 함.
 		Member petSitter = new MemberService().selectDetailPetSitter(petSitterId);
+		ArrayList<SitterImage> sitterFacilityImg = new MemberService().selectSitterFacilityImg(petSitterId);
 		response.setContentType("text/html; charset=utf-8");
 		
+		String service = "0";//request.getParameter("service");//petsitterlistview.jsp에서 넘겨받은 서비스
+		System.out.println("detail서블릿에서 서비스 : "  + service);
 		RequestDispatcher view = null;
 		view = request.getRequestDispatcher("views/findSitter/petSitterDetailView.jsp");
 		System.out.println(petSitter);
 		request.setAttribute("petSitter", petSitter);
+		request.setAttribute("sitterFacilityImg", sitterFacilityImg);
+		request.setAttribute("service", service);//petsitterdetail.jsp로 넘긴 후 
 		view.forward(request, response);
 		
 	}

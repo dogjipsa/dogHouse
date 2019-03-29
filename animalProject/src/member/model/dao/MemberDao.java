@@ -490,6 +490,26 @@ public class MemberDao {
 		return petSitter;
 	}
 
+
+	public ArrayList<SitterImage> selectSitterFacilityImg(Connection conn, String petSitterId) {
+		ArrayList<SitterImage> list = new ArrayList<>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String query = "select * from sitterimg where user_id = ?";
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, petSitterId);
+			rset = pstmt.executeQuery();
+			while(rset.next()) {
+				SitterImage sitterImage = new SitterImage();
+				sitterImage.setImageNo(rset.getInt("IMG_NO"));
+				sitterImage.setUserId(petSitterId);
+				sitterImage.setOriginFile(rset.getString("IMG_ORIGINFILE"));
+				sitterImage.setRenameFile(rset.getString("IMG_REFILE"));
+				list.add(sitterImage);
+      }
+    }
+  }
 	public ArrayList<SearchingInfo> findPetSitterList(Connection conn, String jido) {
 		ArrayList<SearchingInfo> list = new ArrayList<SearchingInfo>();
 		PreparedStatement pstmt = null;
@@ -520,6 +540,7 @@ public class MemberDao {
 				
 				list.add(SI);
 				System.out.println("dao에서 펫시터 정보 출력 : " + list);
+
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -527,7 +548,6 @@ public class MemberDao {
 			close(rset);
 			close(pstmt);
 		}
-		
 		return list;
 	}
 
