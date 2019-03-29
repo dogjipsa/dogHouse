@@ -29,7 +29,7 @@
 	/* Member loginUsers = (Member) session.getAttribute("loginUser"); */
 %>
 <!DOCTYPE html>
-<html>
+<html id ='tbhtml'>
 <head>
 <meta charset="UTF-8">
 <title>팁게시판</title>
@@ -42,20 +42,105 @@
 		location.href = "/doggybeta/views/tipboard/tipBoardWriteForm.jsp";
 	}
 </script>
-<style>
-a {
- text-decoration:none;
- color: black;
+<style type="text/css">
+
+#tbhtml {
+	font-family: 'Sunflower', 'sans-serif';
+	font-size: 15pt;
 }
-a:hover{
-	color: red;
+	
+	#searchT{ 
+	text-align:center;	
+	}
+	
+	.icon-left-open 
+	{ *zoom: expression( this.runtimeStyle['zoom'] = '1',
+	 this.innerHTML = '&#xe800;&nbsp;'); }
+	 
+h2{
+   position: relative;
+   top: 20px;
+   left : 0px;
+   width: 70%;
+   padding: 2rem 0px;
 }
+.tboard { 
+   position: relative;
+   left : 150px;
+   width: 60%;
+   top: -50px;
+   border-collapse: collapse;
+   text-align: left;
+   line-height: 1.5;
+   table-layout:fixed;   
+}
+
+.tboard tr{
+	line-height : 2em;
+
+}
+
+.tboard thead th{ 
+	padding: 10px;
+    font-weight: bold;
+    vertical-align: top;
+    color: #369;
+    border-bottom: 3px solid #036;}
+
+
+.tboard tbody tr:hover{
+	background-color : #f3f6f7;
+}
+
+.board tbody td a{
+	text-decoration: none;
+	color: black;
+}
+
+.tsearch{
+   position: relative;
+   left : 100px;
+   width: 60%;
+   top: 0px;
+   border-collapse: collapse;
+   text-align: left;
+   line-height: 1.5;
+   table-layout:fixed;  
+}
+
+.tpage{
+	position: relative;
+   left : 100px;
+   width: 60%;
+   top: 0px;
+   border-collapse: collapse;
+   text-align: left;
+   line-height: 1.5;
+   table-layout:fixed; 
+}
+
+.tbutton{
+   position: relative;
+   left : 650px;
+   width: 60%;
+   top: 0px;
+   border-collapse: collapse;
+   text-align: left;
+   line-height: 1.5;
+   table-layout:fixed;  
+
+}
+
+#wrap{
+	left: 200px;
+	margin: 0 auto;
+}
+	 
+	 
 </style>
 </head>
 <body>
 	<%@ include file="..//common/menu.jsp"%>
-
-
 	<div id="wrap">
 		<div id="content">
 			<!-- 내용작성  -->
@@ -63,50 +148,42 @@ a:hover{
 			<h2 align="center">게시글 목록</h2>
 			<a href="/doggybeta/sitterdetail">디테일로 고고</a>
 			<h4 align="center">
-				총 게시글 갯수 :
-				<%=listCount%></h4>
-			<%
-				if (loginUser != null) {
-			%>
-			<div style="align: center; text-align: center;">
-				<button onclick="showWriteForm();">글쓰기</button>
-			</div>
-			<%
-				}
-			%>
+				총 게시글 갯수 :<%=listCount%></h4>
+			
 			<br>
 			<%-- 검색기능 --%>
 			
 			<br>
-			<table align="center" border="1" cellspacing="0" width="700">
-				<tr>
-					<th>번호</th>
-					<th>제목</th>
-					<th>작성자</th>
-					<th>날짜</th>
-					<th>조회수</th>
-					<th>첨부파일</th>
-				</tr>
+			<table class="tboard">
+			<thead>
+         	<tr>
+            <th align="center" width="50">번호</th>
+            <th align="center" width="100">작성자</th>
+            <th align="center" width="200">제목</th>
+            <th align="center" width="130">작성일</th>
+            <th align="center" width="70">조회수</th>
+            <th align="center" width="100">첨부파일</th> 
+         	</tr>   
+   			</thead>
 				<%
 					for (TipBoard t : list) {
 				%>
 				<tr>
 					<td align="center"><%=t.getTipBoardNo()%></td>
-					<td><!-- 로그인 상태일 때만 상세보기 링크 설정함 --> <%
-						if (loginUser != null) { 
-					%> <a href="/doggybeta/tdetail?tnum=<%=t.getTipBoardNo()%>&page=<%=currentPage%>"><%=t.getTipBoardTitle()%></a>
-						<%	} else {
-						%> <%=t.getTipBoardTitle()%> <%
- 						}%> 
+					<td align="center"><%=t.getUserId() %></td>
+					<%	if (loginUser != null) { %> 
+					<td align="center"><a href="/doggybeta/tdetail?tnum=<%=t.getTipBoardNo()%>&page=<%=currentPage%>"><%=t.getTipBoardTitle()%></a>
+						<%	} else{ %> 
+						<%=t.getTipBoardTitle() %> 
+						<% } %> 
 					</td>
-					<td align="center"><%=t.getUserId()%></td>
 					<td align="center"><%=t.getTipBoardDate()%></td>
 					<td align="center"><%=t.getTipBoardViews()%></td>
 					<td align="center">
 						<%
-							if (t.getTipBoardOriginFile() != null) {
-						%> ◎ <%
-							} else {
+							if (t.getTipBoardOriginFile() != null) {%> 
+							<img src="/doggybeta/resources/images/paw.png" width="20px;" align="center;">
+					    <% } else {
 						%> &nbsp; <%
 							 }
 						 %>
@@ -116,9 +193,19 @@ a:hover{
 					} //for each
 				%>
 			</table>
+			
+			
+			<%	if (loginUser != null) {  %>
+			<div class="button" style="align:right; text-align: center;">
+				<button onclick="showWriteForm();">글쓰기</button>
+			</div>
+			<%	}  %>
+			
+			
+			
 			<br>
 			<%-- 페이징 처리  search가 null일 때 처리를 잘 못해서 모든 a태그 링크에 search가 null일 때와 null이 아닐 때 조건이 들어감--%>
-			<div style="text-align: center;">
+			<div class="tpage" style="text-align: center;">
 				<%
 					if (currentPage <= 1) {
 				%>
@@ -212,7 +299,7 @@ a:hover{
 
 			</div>
 			<br>
-			<div id="searchForm" style="text-align:center;">
+			<div class="tsearch" id="searchForm" style="text-align:center;">
 				<form method="post" action="/doggybeta/tlist">
 					<select name="option" id="option">
 						<%--페이지 넘어갈 시 검색한 내용에 대한 option selected 처리
@@ -249,8 +336,9 @@ a:hover{
 					<%} %>
 					<input type="submit" value="검색">
 				</form>
-				
-			</center>
+				</div>
+				</div>
+			
 			<div id="footer"><%@ include file="..//common/footer.jsp"%></div>
 		</div>
 </body>

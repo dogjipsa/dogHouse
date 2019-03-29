@@ -16,13 +16,13 @@ import freeboardreply.model.vo.FreeBoardReply;
  * Servlet implementation class freeBoardSearchReply
  */
 @WebServlet("/frsearch")
-public class freeBoardSearchReply extends HttpServlet {
+public class freeBoardReplySearchServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public freeBoardSearchReply() {
+    public freeBoardReplySearchServlet() {
         super();
         // TODO Auto-generated constructor stub
     }

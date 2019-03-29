@@ -14,21 +14,17 @@ import freeboardreply.model.vo.FreeBoardReply;
 public class FreeBoardReplyDao {
 
 
-	public int updateReplySeq(Connection conn, FreeBoardReply replyBoard) {
-		
-		return 0;
-	}
-
 	public int insertReply(Connection conn, FreeBoardReply replyBoard) {
 		int result = 0;
 		PreparedStatement pstmt = null;
 		
-		String query = "INSERT INTO FREEBOARD_REPLY VALUES(seq_freply.nextval, ?, SYSDATE, 'user01', ?, 'N')";
+		String query = "INSERT INTO FREEBOARD_REPLY VALUES(seq_freply.nextval, ?, SYSDATE, ?, ?, 'N')";
 		
 		try {
 			pstmt = conn.prepareStatement(query);
 			pstmt.setString(1, replyBoard.getFreereplycontent());
-			pstmt.setInt(2, replyBoard.getFreeboardno());
+			pstmt.setString(2, replyBoard.getUserid());
+			pstmt.setInt(3, replyBoard.getFreeboardno());
 	
 			result = pstmt.executeUpdate();
 			
@@ -42,10 +38,27 @@ public class FreeBoardReplyDao {
 	}
 	
 
-	public int deleteReply(Connection conn, FreeBoardReply replyBoard) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int deleteReply(Connection conn, int freeReplyNo) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		
+		String query = "UPDATE FREEBOARD_REPLY SET FREEBOARD_DELETE = 'Y' WHERE FREEREPLY_NO = ?";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, freeReplyNo);
+	
+			result = pstmt.executeUpdate();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		
+		return result;
 	}
+	
 	
 	public FreeBoard selectFreeBoard(Connection conn, int freeBoardNo) {
 		FreeBoard freeboard = null;
@@ -53,7 +66,7 @@ public class FreeBoardReplyDao {
 		ResultSet rset = null;
 		
 		String query = "select * from freeboard "
-				+ "where freeboard_no = ?";
+				+ "where freeboard_no = ? and freeboard_delete in('n', 'N', null)";
 		
 		try {
 			pstmt = conn.prepareStatement(query);

@@ -19,7 +19,7 @@
 	System.out.println("endPage : "+endPage);
 	System.out.println("maxPage : "+maxPage);
 	System.out.println("trcurrnetPage : "+trcurrentPage);
-		
+	System.out.println(tboard);
 %>
 <!DOCTYPE html>
 <html>
@@ -54,7 +54,7 @@
 	var tnum = '<%=((TipBoard)request.getAttribute("tboard")).getTipBoardNo()%>';
 	var trpage = '<%=request.getAttribute("endPage")%>';
 		
-	if(!#tipReply_content)
+	if(!("#tipReply_content").val())
 	{
 		alert("내용을 입력하세요.");
 		return false;
@@ -87,6 +87,64 @@
 }   
  
 </script>
+
+<style type="text/css">
+
+#fbhtml {
+	font-family: 'Sunflower', 'sans-serif';
+	font-size: 13pt;
+}
+
+h2{
+	position: relative;
+	left: 600px;
+    text-align: left;
+    line-height: 1.5;
+    margin: 20px 10px;
+
+}
+#t11 {
+	resize: none;
+}
+
+
+.ttable{
+	position: relative;
+	left: 220px;
+	border-collapse: separate;
+    border-spacing: 1px;
+    text-align: left;
+    line-height: 1.5;
+    border-top: 1px solid #ccc;
+    width : 900px;
+    margin: 20px 10px;
+}
+
+
+.ttable th{
+	background:#f3f6f7;
+	width: 100px;
+	padding: 7px 13px;
+    padding: 10px;
+    font-weight: bold;
+    vertical-align: top;
+    border-bottom: 1px solid #ccc;
+	
+}
+.ttable td {   
+    padding: 10px;
+    vertical-align: top;
+    border-bottom: 1px solid #ccc;
+}
+.buttons{
+	position: relative;
+	left: 700px;
+	
+	
+}
+
+</style>
+
 </head>
 <body>
 <%@ include file="..//common/menu.jsp" %>
@@ -97,7 +155,7 @@
 			<h2 align="center"><%= tboard.getTipBoardNo() %>번 글 상세조회</h2>
 			
 <br>
-<table align="center" cellpadding="10" cellspacing="0" border="1" width="500">
+<table class="ttable" align="center" cellpadding="10" cellspacing="0" border="1" width="500">
 <tr>
 	<th>제목</th>
 	<td><%=tboard.getTipBoardTitle() %></td>
@@ -146,11 +204,9 @@
 <!-- 댓글 부분 -->
 	<div id="comment">
 		
-		<table border="1" bordercolor="lightgray">
+		<table class="ttable" border="1" bordercolor="lightgray">
 		
 	<!-- 댓글 목록 -->	
-<%-- 	<c:if test="${requestScope.commentList != null}">
-		<c:forEach var="comment" items="${requestScope.commentList}"> --%>
 		
 	<% if(replyList != null){ //댓글이 있을 때 %>
 		<% for(TipBoardReply t : replyList){ %>
@@ -171,14 +227,12 @@
 				</td>
 				<!-- 버튼 -->
 				<td width="100">
-					<div id="btn" style="text-align:center;">
-						<a href="#">[답변]</a><br>
 					<!-- 댓글 작성자만 수정, 삭제 가능하도록 -->	
-					<%-- <c:if test="${comment.comment_id == sessionScope.sessionID}"> --%>
+					<div>
 					<%if(loginUser.getUserId().equals(t.getUserId())){ %>
-						<a href="#">[수정]</a><br>	
-						<a href="#">[삭제]</a>
-					<!-- </c:if>	 -->	
+						<a href="/doggybeta/trsearch?trnum=<%= t.getTipReplyNo() %>">[수정]</a><br>	
+						<a href="/doggybeta/trdelete?trnum=<%= t.getTipReplyNo() %>&tnum=<%= t.getTipNo()%>">[삭제]</a>
+					
 					<%} %>
 					
 					</div>
@@ -187,13 +241,11 @@
 			<%}//댓글 리스트 조회 for each 문 끝 %>
 		<%}//if문 끝 %>
 		
-		<!-- </c:forEach>
-	</c:if> -->
+	
 			
 			<!-- 로그인 했을 경우만 댓글 작성가능 -->
 			<% if(loginUser != null){ //로그인 시 댓글 작성 가능%>
 			<tr bgcolor="#F5F5F5">
-			<form id="writeCommentForm">
 				<input type="hidden" name="tipBoard_no" id="tipBoard_no" value="<%=tboard.getTipBoardNo() %><%-- ${board.board_num} --%>">
 				<input type="hidden" name="tipReply_id" id="tipReply_id" value="<%=loginUser.getUserId() %><%-- ${sessionScope.sessionID} --%>">
 				<!-- 아이디-->
@@ -215,7 +267,6 @@
 						<p><a href="#" onclick="writeCmt()">[댓글등록]</a></p>											
 					</div>
 				</td>
-			</form>
 			</tr>
 			<% } //로그인 여부 if 문 종료 %>
 	

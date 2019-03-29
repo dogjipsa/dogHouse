@@ -55,7 +55,6 @@ public class TipBoardListServlet extends HttpServlet {
 				
 				//현재 페이지에 출력할 목록 조회
 				ArrayList<TipBoard> list = bservice.selectList(currentPage, limit, option, word);
-				//System.out.println("list : " + list);
 				
 				//총 페이지수 계산 : 목록이 마지막 1개일 때 1페이지로 처리
 				int maxPage = (int)((double)listCount / limit + 0.9);
@@ -72,7 +71,7 @@ public class TipBoardListServlet extends HttpServlet {
 				response.setContentType("text/html; charset=utf-8");
 				
 				RequestDispatcher view = null;
-				if(list.size() > 0) {//size가 0이어도 조회되어야한다고 생각함 else 삭제해야 할듯
+				if(list.size() >= 0) {//size가 0이어도 조회되어야한다고 생각함 else 삭제해야 할듯
 					view = request.getRequestDispatcher(
 							"views/tipboard/tipBoardListView.jsp");
 					

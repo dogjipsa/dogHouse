@@ -1,13 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ page import="member.model.vo.Member, freeboard.model.vo.FreeBoard, freeboardreply.model.vo.FreeBoardReply" %>    
+<%@ page import="member.model.vo.Member, tipboard.model.vo.TipBoard, tipboardreply.model.vo.TipBoardReply" %>    
 <%
-//	int freeBoardNo = Integer.parseInt(request.getParameter("fnum"));
-//	int currentPage = Integer.parseInt(request.getParameter("page"));
-	FreeBoardReply freeReply = (FreeBoardReply)request.getAttribute("freeReply");
+
+	TipBoardReply tipReply = (TipBoardReply)request.getAttribute("tipReply");
 	
-	/* 
-	Member loginUser = (Member)session.getAttribute("loginUser"); */
 %>    
 <!DOCTYPE html>
 <html>
@@ -42,12 +39,12 @@ h2{
 	<div id="wrap">
 
 <%-- <input type="hidden" name="page" value="<%= currentPage %>"> --%>
-<form action ="/doggybeta/freplyup" method="post">
-<input type="hidden" name="fnum" value="<%= freeReply.getFreeboardno() %>">
-<input type="hidden" name="frnum" value="<%= freeReply.getFreereply() %>">
+<form action ="/doggybeta/trupdate" method="post">
+<input type="hidden" name="tnum" value="<%= tipReply.getTipNo() %>">
+<input type="hidden" name="trnum" value="<%= tipReply.getTipReplyNo() %>">
 <table class="table" align="center">
-<tr><th>작성자</th><td><input type="text" id="frwriter" name="frwriter" style="width:766px" readonly value="<%= freeReply.getUserid() %>"></td></tr>
-	<tr><th>내용</th><td><textarea cols="50" rows="4" id="frcontent" name="frcontent" style="width:766px"><%= freeReply.getFreereplycontent() %></textarea></td></tr>
+<tr><th>작성자</th><td><input type="text" id="trwriter" name="trwriter" style="width:766px" readonly value="<%= tipReply.getUserId() %>"></td></tr>
+	<tr><th>내용</th><td><textarea cols="50" rows="4" id="trcontent" name="trcontent" style="width:766px"><%= tipReply.getTipReplyContent() %></textarea></td></tr>
 <tr><th colspan="2">
 <div align="center">
 	<input type="submit" value="수정하기"> &nbsp;
