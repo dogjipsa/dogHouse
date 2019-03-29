@@ -114,7 +114,7 @@ public class FreeBoardDao {
 		int result = 0;
 		PreparedStatement pstmt = null;
 		
-		String query = "INSERT INTO FREEBOARD VALUES(seq_freeboardno.nextval, ?, ?, SYSDATE, ?, ?, ?, 'user01', DEFAULT, DEFAULT)";
+		String query = "INSERT INTO FREEBOARD VALUES(seq_freeboardno.nextval, ?, ?, SYSDATE, ?, ?, ?, ?, DEFAULT, DEFAULT)";
 		System.out.println(freeboard);
 		try {
 			pstmt = conn.prepareStatement(query);
@@ -123,7 +123,7 @@ public class FreeBoardDao {
 			pstmt.setString(3, freeboard.getFreeboardOriginalFile());
 			pstmt.setInt(4, freeboard.getFreeboardViews());
 			pstmt.setInt(5, freeboard.getFreeboardRecommend());
-		/*	pstmt.setString(6, freeboard.getUserId());\*/
+			pstmt.setString(6, freeboard.getUserId());
 			
 			
 			result = pstmt.executeUpdate();

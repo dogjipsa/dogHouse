@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" errorPage="freeBoardError.jsp" %>
 <%@ page import="member.model.vo.Member" %>
-  
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="ko" xml:lang="ko">
 <head>
@@ -25,7 +24,7 @@
 <form action="/doggybeta/finsert" id="writeform" method="post" enctype="multipart/form-data">
 <table align="center" width="100%">
 <tr><td>제목</td><td><input type="text" name="ftitle" style="width:766px"></td></tr>
-<tr><td>작성자</td><td><input type="text" name="fwriter" style="width:766px" readonly></td></tr>
+<tr><td>작성자</td><td><input type="text" name="fwriter" style="width:766px" readonly value="<%= loginUser.getUserId()%>"></td></tr>
 <tr><td>첨부파일</td><td><input type="file" name="fupfile"></td></tr>
 		<tr><th>내용</th>
 		<td><textarea name="ir1" id="ir1" rows="10" cols="100" style="width:766px; height:412px;"></textarea></td></tr>

@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" import="freeboard.model.vo.FreeBoard, java.util.ArrayList" %>
+    pageEncoding="UTF-8" import="freeboard.model.vo.FreeBoard, java.util.ArrayList"%>
    <%
    ArrayList<FreeBoard> slist = (ArrayList<FreeBoard>)request.getAttribute("slist"); 
    
@@ -18,14 +18,18 @@
 			if(request.getAttribute("inputdata") != null){
 				inputdata = request.getAttribute("inputdata").toString();	 
 			}}
+		
+		 
    %>
+  
 
 <!DOCTYPE html>
-<html>
+<html id='fbhtml'>
 <head>
 <meta charset="UTF-8">
 <title></title>
 <link href="/doggybeta/resources/css/footer.css" rel="stylesheet" type="text/css">
+<link href="https://fonts.googleapis.com/css?family=Sunflower:300,500,700&amp;subset=korean" rel="stylesheet" type="text/css">
 <script type="text/javascript" src="/doggybeta/resources/js/jquery-3.3.1.min.js"></script>
 <script type="text/javascript">
 function showWriteForm(){
@@ -34,9 +38,11 @@ function showWriteForm(){
 
 </script>
 <style type="text/css">
-	th{ 
-	background-color : #D09E88;
-	}
+
+#fbhtml {
+	font-family: 'Sunflower', 'sans-serif';
+	font-size: 15pt;
+}
 	
 	#searchT{ 
 	text-align:center;	
@@ -45,7 +51,87 @@ function showWriteForm(){
 	.icon-left-open 
 	{ *zoom: expression( this.runtimeStyle['zoom'] = '1',
 	 this.innerHTML = '&#xe800;&nbsp;'); }
-	
+	 
+h2{
+   position: relative;
+   top: 20px;
+   left : 0px;
+   width: 70%;
+   padding: 2rem 0px;
+}
+.fboard { 
+   position: relative;
+   left : 150px;
+   width: 60%;
+   top: -50px;
+   border-collapse: collapse;
+   text-align: left;
+   line-height: 1.5;
+   table-layout:fixed;   
+}
+
+.fboard tr{
+	line-height : 2em;
+
+}
+
+.fboard thead th{ 
+	padding: 10px;
+    font-weight: bold;
+    vertical-align: top;
+    color: #369;
+    border-bottom: 3px solid #036;}
+
+
+.fboard tbody tr:hover{
+	background-color : #f3f6f7;
+}
+
+.fboard tbody td a{
+	text-decoration: none;
+	color: black;
+}
+
+.fsearch{
+   position: relative;
+   left : 100px;
+   width: 60%;
+   top: -150px;
+   border-collapse: collapse;
+   text-align: left;
+   line-height: 1.5;
+   table-layout:fixed;  
+}
+
+.fpage{
+	position: relative;
+   left : 100px;
+   width: 60%;
+   top: -150px;
+   border-collapse: collapse;
+   text-align: left;
+   line-height: 1.5;
+   table-layout:fixed; 
+}
+
+.fbutton{
+   position: relative;
+   left : 650px;
+   width: 60%;
+   top: -150px;
+   border-collapse: collapse;
+   text-align: left;
+   line-height: 1.5;
+   table-layout:fixed;  
+
+}
+
+#wrap{
+	left: 200px;
+	margin: 0 auto;
+}
+	 
+	 
 </style>
 
 </head>
@@ -54,13 +140,20 @@ function showWriteForm(){
 	<div id="wrap">
 		  <div id="content">
 <h2 align="center">자유게시판</h2>
-<%-- <h4 align="center">총 게시글 갯수 : <%= listCount %></h4> --%>
 <br><br><br>
-<table align="center"  border="0"  width="800">
-<%-- --%>
-<tr>
-	<th>글번호</th><th>작성자</th><th>제목</th><th>날짜</th><th>조회수</th><th>첨부파일</th>
-</tr>
+
+<table class="fboard">
+	<thead>
+         <tr>
+            <th align="center" width="50">번호</th>
+            <th align="center" width="100">작성자</th>
+            <th align="center" width="200">제목</th>
+            <th align="center" width="130">작성일</th>
+            <th align="center" width="70">조회수</th>
+            <th align="center" width="100">첨부파일</th>
+            
+         </tr>   
+   </thead>
 <% for(FreeBoard f : slist){ %>
 	<tr><td align="center"><%= f.getFreeboardNo() %></td>
 		<td align="center"><%= f.getUserId() %></td>
@@ -73,25 +166,25 @@ function showWriteForm(){
  	<td align="center"><%= f.getFreeboardViews() %></td>
 	<td align="center">
 	<% if(f.getFreeboardOriginalFile() != null){ %>
-		有
+		<img src="/doggybeta/resources/images/paw.png" width="20px;" align="center;">
 	<% }else{ %>
-		
+		&nbsp;
 	<% } %>
 	</td>
 	</tr>
-<% } %>
+	<% } %>
+	</tobody>
 </table>
-
+<br><br><br><br><br><br>
 <%-- 글쓰기 --%>
 <% if(loginUser != null){ %>
-	<div style="align:center; text-align:center;">
-	<button type="button" style="float:right;" onclick="showWriteForm()";>글쓰기</button>
+	<div class="fbutton" style="align:right; text-align:center;">
+	<button type="button"  onclick="showWriteForm()";>글쓰기</button>
 	</div>
 <% } %> 
 
 <%-- 검색기능 --%>
-<br>
-<div id="searchT">
+<div class="fsearch" align="center" id="searchT">
  <form name="form1" method="post" action="/doggybeta/flist">
   <select name="opt">
   <option value="0" >제목</option>
@@ -104,7 +197,7 @@ function showWriteForm(){
 </div>
 	
 	<%-- 페이지징 처리 --%>
-<div style="text-align:center;">
+<div class="fpage" style="text-align:center;">
 <% if(currentPage <= 1){ %>
 	[맨처음]&nbsp;
 <% }else{ %>
@@ -126,8 +219,12 @@ function showWriteForm(){
 <% }} %> &nbsp;
 
 <!-- 다음 -->
-<% if((currentPage + 10) > endPage && currentPage != 1){ %>
-	<a href="/doggybeta/flist?page=<%= endPage + 1 %>">[next]</a>&nbsp;
+<% if(endPage < maxPage){ %>
+<% if(opt == null){ %>
+	<a href="/doggybeta/flist?page=<%= endPage + 1 %>">[next]</a>
+<% }else{ %>
+	<a href="/doggybeta/flist?inputdata=<%= inputdata %>&page=<%= endPage + 1 %>&opt=<%= opt %>"></a>[next]&nbsp;
+<% } %>
 <% }else{ %>
 	[next]&nbsp;
 <% } %>
@@ -135,7 +232,11 @@ function showWriteForm(){
 <% if(currentPage >= maxPage){ %>
 	[맨끝]
 <% }else{ %>
+<% if(opt == null){ %>
 	<a href="/doggybeta/flist?page=<%= maxPage %>">[맨끝]</a>
+<% }else{ %>
+	<a href="/doggybeta/flist?inputdata=<%= inputdata %> %>page=<%= maxPage %>&opt=<%= opt %>">[맨끝]</a>
+<%  } %>
 <% } %>
 </div> 	  
 	

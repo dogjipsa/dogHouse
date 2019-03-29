@@ -14,9 +14,8 @@
 <script type="text/javascript" src="/doggybeta/resources/js/jquery-3.3.1.min.js"></script>
 
 <style type="text/css">
-table{
+.table{
 	position: relative;
-	left: 400px;
 	border-collapse: separate;
     border-spacing: 1px;
     text-align: left;
@@ -25,7 +24,7 @@ table{
 }
 h2{
 	position: relative;
-	left: 700px;
+	/* left: 700px; */
     text-align: left;
     line-height: 1.5;
     margin: 20px 10px;
@@ -46,9 +45,9 @@ h2{
 <input type="hidden" name="fnum" value="<%= freeboard.getFreeboardNo() %>">
 <input type="hidden" name="fofile" value="<%= freeboard.getFreeboardOriginalFile() %>">
 <input type="hidden" name="frfile" value="<%= freeboard.getFreeboardRefile() %>">
-<table align="right">
-<tr><th>제목</th><td><input type="text" style="width:766px" name="ftitle" value="<%= freeboard.getFreeboardTitle() %>"></td></tr>
-<tr><th>작성자</th><td><input type="text" style="width:766px" name="fwriter" readonly value="<%= freeboard.getUserId() %>"></td></tr>
+<table class="table" align="right">
+<tr><th>제목</th><td><input type="text" style="width:766px" id="ftitle" name="ftitle" value="<%= freeboard.getFreeboardTitle() %>"></td></tr>
+<tr><th>작성자</th><td><input type="text" style="width:766px" id="fwriter" name="fwriter" readonly value="<%= freeboard.getUserId() %>"></td></tr>
 <tr><th>첨부파일</th>
 <td><% if(freeboard.getFreeboardOriginalFile() != null){ %>
 	<%= freeboard.getFreeboardOriginalFile() %>
@@ -57,7 +56,7 @@ h2{
 </td>
 </tr>
 <tr><th>내용</th>
-<td><textarea id="ir1" name="ir1" rows="7" cols="50" name="fcontent" rows="10" cols="100" style="width:766px; height:412px"><%= freeboard.getFreeboardContent() %></textarea></td></tr>
+<td><textarea id="ir1" name="ir1" rows="7" cols="50" rows="10" cols="100" style="width:766px; height:412px"><%= freeboard.getFreeboardContent() %></textarea></td></tr>
 <tr>
 	<th colspan="2" align="center">
 	<input type="button" id="save" value="수정하기" />
@@ -65,21 +64,7 @@ h2{
 </th></tr>
 </table>
 </form>
-<%-- <% }else{ //댓글 수정 %>
-<form action="/first/breplyup" method="post">
-<input type="hidden" name="page" value="<%= currentPage %>">
-<input type="hidden" name="bnum" value="<%= board.getBoardNum() %>">
-<table align="center">
-<tr><th>제목</th><td><input type="text" name="btitle" value="<%= board.getBoardTitle() %>"></td></tr>
-<tr><th>작성자</th><td><input type="text" name="bwriter" readonly value="<%= board.getBoardWriter() %>"></td></tr>
-<tr><th>내용</th>
-<td><textarea rows="7" cols="50" name="bcontent"><%= board.getBoardContent() %></textarea></td></tr>
-<tr><th colspan="2">
-	<input type="submit" value="수정하기"> &nbsp;
-	<a href="/first/blist?page=<%= currentPage %>">[목록]</a>
-</th></tr>
-</table></form> 
-<% } %>--%>
+
 <script type="text/javascript">
 var oEditors = [];
 $(function(){
