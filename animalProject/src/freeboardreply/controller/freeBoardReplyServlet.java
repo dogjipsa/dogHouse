@@ -49,16 +49,17 @@ public class freeBoardReplyServlet extends HttpServlet {
 		
 		int currentPage = 1;
 		int result = 1;
-//		int currentPage = Integer.parseInt(request.getParameter("page"));
+		
+		if(request.getParameter("page") != null) 
+			currentPage = Integer.parseInt(request.getParameter("page"));
+		
 		
 		int freeBoardNo = Integer.parseInt(request.getParameter("fnum"));	
 		String freeBoardWriter = request.getParameter("fwriter");
 		String freeBoardContent = request.getParameter("fcontent");	
 		
 		FreeBoardReplyService frservice = new FreeBoardReplyService();
-		System.out.println("fnum : " + freeBoardNo);
-		System.out.println("fwriter : " + freeBoardWriter);
-		System.out.println("fcontent : " + freeBoardContent);
+
 		
 		// 댓글 객체 생성 및 등록
 		if(freeBoardContent != null) {
@@ -72,7 +73,6 @@ public class freeBoardReplyServlet extends HttpServlet {
 		}
 		
 		//댓글 가져오기
-		System.out.println("fnum : " + freeBoardNo);
 		HashMap<String, Object> map = new HashMap<>();
 		map.put("freeBoardNo", freeBoardNo);
 		map.put("startRow", currentPage*10-9);// 1, 11, 21, 31....
@@ -80,7 +80,6 @@ public class freeBoardReplyServlet extends HttpServlet {
 		System.out.println("map : " + map.get("freeBoardNo") + ", " + map.get("startRow"));
 		
 		ArrayList<FreeBoardReply> flist = frservice.selectReplyList(map);
-		
 		for(FreeBoardReply f : flist) {
 		System.out.println("댓글List : " + f);
 		}
@@ -88,7 +87,7 @@ public class freeBoardReplyServlet extends HttpServlet {
 		response.setContentType("text/html; charset=utf-8");
 		RequestDispatcher view = null;
 		if (result > 0) {
-			view = request.getRequestDispatcher("views/freeBoard/freeBoardDetailView.jsp");
+			view = request.getRequestDispatcher("/doggybeta/fdetail?page=" + currentPage);
 			request.setAttribute("replyList", flist);
 			view.forward(request, response);
 			

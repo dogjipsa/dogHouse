@@ -69,7 +69,6 @@ public class freeBoardDetailServlet extends HttpServlet {
 		FreeBoard freeboard = fservice.selectFreeBoard(freeBoardNo);
 		
 		//댓글 가져오기
-		System.out.println("fnum : " + freeBoardNo);
 		HashMap<String, Object> map = new HashMap<>();
 		map.put("freeBoardNo", freeBoardNo);
 		map.put("startRow", currentPage*10-9);// 1, 11, 21, 31....

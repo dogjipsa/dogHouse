@@ -1,8 +1,6 @@
-package member.controller;
+package manager.controller;
 
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -11,20 +9,20 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import member.model.service.MemberService;
-import member.model.vo.SearchingInfo;
+import freeboard.model.service.FreeBoardService;
+import freeboard.model.vo.FreeBoard;
 
 /**
- * Servlet implementation class FindingPetSitterListServlet
+ * Servlet implementation class ManagerBoardDetailServlet
  */
-@WebServlet("/finding")
-public class FindingPetSitterServlet extends HttpServlet {
+@WebServlet("/manbdetail")
+public class ManagerBoardDetailServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public FindingPetSitterServlet() {
+    public ManagerBoardDetailServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -33,22 +31,25 @@ public class FindingPetSitterServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		String userid = request.getParameter("userid");
+		// 관리자 페이지 게시판 상세보기 처리용 컨트롤러
+		int boardNum = Integer.parseInt(request.getParameter("bnum"));
+		int currentPage = Integer.parseInt(request.getParameter("page"));
 		
-		ArrayList<SearchingInfo> list = new MemberService().searchPetSitter(userid);
-		System.out.println("서블릿: " + userid);
+		FreeBoardService fService = new FreeBoardService();
+		//해당 글 번호 게시글 조회
+		FreeBoard board = fService.selectFreeBoard(boardNum);
+		
 		response.setContentType("text/html; charset=utf-8");
 		RequestDispatcher view = null;
-		
-		System.out.println("서블릿: " + list);
-		if(list.size() > 0) {
-			view = request.getRequestDispatcher("views/findSitter/petSitterListView.jsp");
-			request.setAttribute("list", list);
+		if(board != null) {
+			view = request.getRequestDispatcher("views/manager/managerBoardDetailView.jsp");
+			request.setAttribute("fboard", board);
+			request.setAttribute("currentPage", currentPage);
 			view.forward(request, response);
-		}else {
-			PrintWriter out = response.getWriter();
-		
+		} else {
+			view = request.getRequestDispatcher("views/manager/managerError.jsp");
+			request.setAttribute("massage", boardNum + "게시글 조회에 실패하였습니다.");
+			view.forward(request, response);
 		}
 	}
 

@@ -1,6 +1,8 @@
 package tipboardreply.controller;
 
 import java.io.IOException;
+
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -31,9 +33,29 @@ public class TipBoardReplyUpdateServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		int tipBoardNum = Integer.parseInt(request.getParameter("tnum"));
-		TipBoardReply tboardRe = new TipBoardReplyService().selectTipBoardReply(tipBoardNum);
-	}
+		request.setCharacterEncoding("utf-8");
+		
+		int tipBoardReplyNo = Integer.parseInt(request.getParameter("trnum"));
+		String tipReplyContent = request.getParameter("trcontent");
+		System.out.println("trcontent : " + tipReplyContent);
+		System.out.println("trnum : " + tipBoardReplyNo);
+		
+		int result = new TipBoardReplyService().updateReply(tipReplyContent, tipBoardReplyNo);
+				
+
+		RequestDispatcher view = null;
+		if(result > 0) {
+			response.sendRedirect("/doggybeta/tlist");
+
+		}else {
+			view = request.getRequestDispatcher("views/tipboard/tipBoardError.jsp");
+			request.setAttribute("message", "댓글 수정 실패!");
+			view.forward(request, response);
+				}
+			}
+		
+		
+	
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)

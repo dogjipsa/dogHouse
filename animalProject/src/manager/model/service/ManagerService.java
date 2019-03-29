@@ -2,12 +2,15 @@ package manager.model.service;
 
 import manager.model.dao.ManagerDao;
 import manager.model.vo.Manager;
+import notice.model.vo.Notice;
+import tipboard.model.vo.TipBoard;
 
 import static common.JDBCTemplate.*;
 
 import java.sql.Connection;
 import java.util.ArrayList;
 
+import faq.model.vo.Faq;
 import freeboard.model.vo.FreeBoard;
 
 public class ManagerService {
@@ -25,12 +28,43 @@ public class ManagerService {
 		return loginManager;
 	}
 
-	public ArrayList<FreeBoard> selectAllBoardList(int pageNumber) {
+	public int boardListCount() {
 		Connection conn = getConnection();
-		ArrayList<FreeBoard> managerList = manDao.selectAllBoardList(conn, pageNumber);
-		/*System.out.println(managerList + "<- service");*/
-		
+		int result = manDao.boardListCount(conn);
+		return result;
+	}
+	public int faqboardListCount() {
+		Connection conn = getConnection();
+		int result = manDao.faqboardListCount(conn);
+		return result;
+	}
+	public int tipboardListCount() {
+		Connection conn = getConnection();
+		int result = manDao.tipboardListCount(conn);
+		return result;
+	}
+
+	public ArrayList<FreeBoard> selectFreeBoardList(int currentPage, int pageList) {
+		Connection conn = getConnection();
+		ArrayList<FreeBoard> fList = manDao.selectFreeBoardList(conn, currentPage, pageList);
 		close(conn);
-		return managerList;
+		
+		return fList;
+	}
+
+	public ArrayList<TipBoard> selectTipBoardList(int currentPage, int pageList) {
+		Connection conn = getConnection();
+		ArrayList<TipBoard> tList = manDao.selectTipBoardList(conn, currentPage, pageList);
+		close(conn);
+		
+		return tList;
+	}
+
+	public ArrayList<Faq> selectFAQList(int currentPage, int pageList) {
+		Connection conn = getConnection();
+		ArrayList<Faq> faqList = manDao.selectFAQList(conn, currentPage, pageList);
+		close(conn);
+		
+		return faqList;
 	}
 }
