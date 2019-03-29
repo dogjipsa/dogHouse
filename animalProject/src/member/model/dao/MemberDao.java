@@ -490,12 +490,12 @@ public class MemberDao {
 		return petSitter;
 	}
 
-	public SearchingInfo findPetSitterList(Connection conn, String jido) {
-		SearchingInfo SI = new SearchingInfo();
+	public ArrayList<SearchingInfo> findPetSitterList(Connection conn, String jido) {
+		ArrayList<SearchingInfo> list = new ArrayList<SearchingInfo>();
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		
-		String query = "SELECT DISTINCT P.USER_ID, P.USER_NAME, P.PRICE, Z.PET_NAME FROM MEMBER U, MEMBER P LEFT OUTER JOIN PET Z ON (P.USER_ID = Z.USER_ID) WHERE P.PETSITTER = '2' AND P.ADDRESS LIKE ?";
+		String query = "SELECT DISTINCT P.USER_ID, P.USER_NAME, P.PRICE, Z.PET_NAME, Z.PET_BREADS, P.USER_ORIGINFILE, P.USER_REFILE, P.ADDRESS, I.IMG_ORIGINFILE, I.IMG_REFILE FROM MEMBER U, MEMBER P LEFT OUTER JOIN PET Z ON (P.USER_ID = Z.USER_ID) LEFT OUTER JOIN SITTERIMG I ON (I.USER_ID = P.USER_ID) WHERE P.PETSITTER = '2' AND P.ADDRESS LIKE ?";
 		
 		try {
 			pstmt = conn.prepareStatement(query);
@@ -504,12 +504,22 @@ public class MemberDao {
 			rset = pstmt.executeQuery();
 			
 			while(rset.next()) {
+				SearchingInfo SI = new SearchingInfo();
+				
 				SI.setPuserId(rset.getString(1));
 				SI.setPuserName(rset.getString(2));
 				SI.setPrice(rset.getInt(3));
 				SI.setPuserPetName(rset.getString(4));
+				SI.setPetBreads(rset.getString(5));
+				SI.setPuserOriginFile(rset.getString(6));
+				SI.setPuserReFile(rset.getString(7));
+				SI.setPuserAddress(rset.getString(8));				
+				SI.setPuserHouseImage(rset.getString(9));
+				SI.setPuserHouseReImage(rset.getString(10));
 				
-				System.out.println("dao에서 펫시터 정보 출력 : " + SI.toString());
+				
+				list.add(SI);
+				System.out.println("dao에서 펫시터 정보 출력 : " + list);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -518,7 +528,7 @@ public class MemberDao {
 			close(pstmt);
 		}
 		
-		return SI;
+		return list;
 	}
 
 }

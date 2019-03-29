@@ -20,37 +20,70 @@
 
 <script>
 $(function(){
+	$.ajax({
+		url : "/doggybeta/finding",
+		data : {userid : $("#userid").val()}, //dao로 넘길 값
+		type : "post",
+		dataType : "json",
+		success : function(data){
+			console.log("성공");
+			console.log(data);
+			//$("#userpwd").val(data.pwd); //db에서 받아서 json에 넘긴 password
+			
+		}
+	}); //ajax 종료
+});
+
+/* $(function(){
 	$("#search").click(function(){
-		var service = $("select[name=service]").val();
-		var userid = $("#userid").val();
-		var jido = $("#jido").val();
-		console.log(service);
-		
+
 		$.ajax({
 			type : 'post',
-			data : {userid : userid, service : service, jido : jido },
+			cache: false,
+			datatype: 'json',
+			data : {userid : $("#userid").val(), 
+				service : $("select[name=service]").val(), 
+				jido : $("#jido").val() },
 			url : '/doggybeta/fplist',
-			sucess:function(data){
-				alert("성공!");
-				$("#jido").val(data.jido);
+			success:function(data){
+				console.log(data.list);
+				 $.each(data.list, function(index){
+					var items = [];			
+					items.push('<td>' + '펫시터 검색' + '</td>');
+					items.push('<td>' + decodeURIComponent(data.list[index].address) + '</td>');
+					items.push('<td>' + data.list[index].price +'</td>');
+					items.push('<td>' + decodeURIComponent(data.list[index].sitterName) + '</td>');
+					items.push('<td>' + '<img src=/doggybeta/files/profile/' + data.list[index].petsitterImg + '>' + '</td>');
+				 	items.push('<td>' + '<img src=/doggybeta/files/profile/' + data.list[index].houseImg + '>' + '</td>');
+
+					$('<tr/>', {html : items}).appendTo('tbody');
+				}); //each
 				
-			}
+			}  //success
+			
+			});
 		});
-	});
+	}); */
 	
-});
+function categoryChange(e) {
+	  var detail_name1 = ['강남구','강동구','강북구','강서구','관악구','광진구','구로구','금천구','노원구','도봉구','동대문구','동작구','마포구','서대문구','서초구','성동구','성북구','송파구','양천구','영등포구','용산구','은평구','종로구','중구','중랑구'];
+	  var detail_name2 = ['고양','과천','광명','광주','구리','군포','김포','남양주','동두천','부천', '성남', '수원','시흥','안산','안양','오산','용인','의왕','의정부','이천','파주','평택','하남','화성','가평','양주','양평','여주','연천','포천'];
+	  var target = document.getElementById("detail");
+	 
+	  if(e.value == "서울") var d = detail_name1;
+	  else if(e.value == "경기") var d = detail_name2;
+
+	 
+	  target.options.length = 0;
+	 
+	  for (x in d) {
+	    var opt = document.createElement("option");
+	    opt.value = d[x];
+	    opt.innerHTML = d[x];
+	    target.appendChild(opt);
+	  } 
+	}
 					
-</script>
-<script type="text/javascript">
-
-$(function(){
-
-    $("#date").datepicker({
-    	dateFormat: 'yy-mm-dd'
-    });
-
-});
-
 </script>
 
 <style type="text/css">
@@ -98,28 +131,27 @@ text-align: center;
 
 <div id="wrap" >
 <div id="content">
+<input type="hidden" id="userid" name="userid" value="<%=loginUser.getUserId() %>">
 
-날짜 선택 : <input type="text" id="date">
-
-<form name="petinfo" method="post" action="/doggybeta/finding">
+<form name="petinfo" method="post" action="/doggybeta/fplist">
 	<!-- 조건 검색 테이블  -->	
-		<input type="hidden" name="userid" value="<%=loginUser.getUserId() %>">
-<div id="bringpetinfo">		
+		
+ <div id="bringpetinfo">		
 		<%=loginUser.getUserName() %> 님 안녕하세요!
-<input type="submit" value="우리 강아지 정보 가져오기">
+	
 
 </div>
-</form> 
+ 
 			<table id=searchpettable>
 				<tr>
 					<th width="100">서비스</th>
-					<th width="200">날짜</th>
+					<th width="200">주소</th>
 					<th width="100">견종</th>
 					<th width="100">반려견크기</th>
 					<th width="100">반려견나이</th>
 				</tr>		
 				<tr>
-			
+
 					<td>  
 						<select name="service" style="width:180px; height:30px;">
 						  <option value="0">[당일]우리집으로 부르기</option>
@@ -129,27 +161,37 @@ text-align: center;
 						</select>
 					</td>
 					<td>
-					주소 입력 : <input type="text" id="jido">
-					</td>
-					<td>
-				
-					<p style="width:180px; height:30px;">
-	
-					</p>
+					  <select name="jido" onChange="categoryChange(this)" style="width:80px; height:30px;">
+						<option selected>-선택-</option>
+						<option value='서울'>서울</option>
+						<option value='경기'>경기</option>
+						<option value='대구'>대구</option>
+						<option value='인천'>인천</option>
+						<option value='강원'>강원</option>
+						<option value='충청'>충청</option>
+						<option value='대전'>대전</option>
+						<option value='울산'>울산</option>
+						<option value='부산'>부산</option>
+						<option value='경상'>경상</option>
+						<option value='전라'>전라</option>
+					</select>
+					<select id="detail" style="width:80px; height:30px;">
+					<option>-선택-</option>
+					</select>
 					</td>
 
-				  	    <% if(list != null){for(SearchingInfo SI : list){ %>
+				  	 <%--     <% if(list != null){for(SearchingInfo SI : list){ %>
 				 	  
 					<td><%= SI.getPetBreads() %></td>
 					<td><%= SI.getPetSize() %></td>
 					<td><%= SI.getAge() %> 살</td>
-					<%} }%> 
+					<%} }%> --%>  
 				</tr>
 			</table>
 			<br>
 
-<input type="submit" value="펫시터 찾기" id="search">
-
+<input type="submit" value="펫시터 찾기">
+</form>
 <br><br>
 <!-- 조건에 대한 결과 -->
 <div id="detailmain" style="width:1400px" >
@@ -157,166 +199,94 @@ text-align: center;
 상단 : 검색 결과 건수 조회
 <hr>
 <br>
+
 	<div id="detail" style="overflow-x: hidden; overflow-y:scroll; height:550px;">
+		<%if(list != null) {for(SearchingInfo SI : list){%>
 		<div id="detailtable" style="float:left; width: 50%;">
-		<table style="border: 1px solid #d2dee1; width: 300px;">			
-		<tr>
-		<td>
-			<div style="position: relative;">
-			<img src="/doggybeta/resources/images/house.jpeg" height="150px;" width="100%;">
-			</div>
-			<div style="position: relative; top: -40px;">
-			<img src="/doggybeta/resources/images/dog1.jpg" style="height: 60px; width : 60px; border-radius: 50px; border: 3px solid white">
-			</div>		
-		</td>
-		</tr>
-		<tr>
-		<th>내 가족처럼 안전하게~</th>
-		</tr>
-		<tr>
-		<td>서울시 서초구</td>
-		</tr>
-		<tr>
-		<td>반려견 1마리</td>
-		<tr>
-		<td style="float:left;">가격 : 50000원/1일</td> 
-		<td style="float:right;">평점 : 
-		<span class="fa fa-star checked"></span>
-		<span class="fa fa-star checked"></span>
-		<span class="fa fa-star checked"></span>
-		<span class="fa fa-star"></span>
-		<span class="fa fa-star"></span>	
-		</td>
-		</tr>		
-		</table>
-		</div>
-		<div id="detailtable" style="float:left; width: 50%;">
-		<table style="border: 1px solid #d2dee1; width: 300px;">			
-		<tr>
-		<td>
-			<div style="position: relative;">
-			<img src="/doggybeta/resources/images/house.jpeg" height="150px;" width="100%;">
-			</div>
-			<div style="position: relative; top: -40px;">
-			<img src="/doggybeta/resources/images/dog1.jpg" style="height: 60px; width : 60px; border-radius: 50px; border: 3px solid white">
-			</div>	
-					
-		</td>
-		</tr>
-		<tr>
-		<th>내 가족처럼 안전하게~</th>
-		</tr>
-		<tr>
-		<td>서울시 서초구</td>
-		</tr>
-		<tr>
-		<td>반려견 1마리</td>
-		<tr>
-		<td style="float:left;">가격 : 50000원/1일</td> 
-		<td style="float:right;">평점 : 
-		<span class="fa fa-star checked"></span>
-		<span class="fa fa-star checked"></span>
-		<span class="fa fa-star checked"></span>
-		<span class="fa fa-star"></span>
-		<span class="fa fa-star"></span>	
-		</td>
-		</tr>		
-		</table>
-		</div>
-		<div id="detailtable" style="float:left; width: 50%;">
-		<table style="border: 1px solid #d2dee1; width: 300px;">			
-		<tr>
-		<td>
-			<div style="position: relative;">
-			<img src="/doggybeta/resources/images/house.jpeg" height="150px;" width="100%;">
-			</div>
-			<div style="position: relative; top: -40px;">
-			<img src="/doggybeta/resources/images/dog1.jpg" style="height: 60px; width : 60px; border-radius: 50px; border: 3px solid white">
-			</div>
 		
-		</td>
-		</tr>
+		<table style="border: 1px solid #d2dee1; width: 300px; height: 300px" onclick="">			
+		
 		<tr>
-		<th>내 가족처럼 안전하게~</th>
-		</tr>
-		<tr>
-		<td>서울시 서초구</td>
-		</tr>
-		<tr>
-		<td>반려견 1마리</td>
-		<tr>
-		<td style="float:left;">가격 : 50000원/1일</td> 
-		<td style="float:right;">평점 : 
-		<span class="fa fa-star checked"></span>
-		<span class="fa fa-star checked"></span>
-		<span class="fa fa-star checked"></span>
-		<span class="fa fa-star"></span>
-		<span class="fa fa-star"></span>	
-		</td>
-		</tr>		
-		</table>
-		</div>
-		<div id="detailtable" style="float:left; width: 50%;">
-		<table style="border: 1px solid #d2dee1; width: 300px;">			
-		<tr>
-		<td>
+		<td>	
 			<div style="position: relative;">
-			<img src="/doggybeta/resources/images/house.jpeg" height="150px;" width="100%;">
-			</div>
-			<div style="position: relative; top: -40px;">
-			<img src="/doggybeta/resources/images/dog1.jpg" style="height: 60px; width : 60px; border-radius: 50px; border: 3px solid white">
-			</div>	
-					
-		</td>
-		</tr>
-		<tr>
-		<th>내 가족처럼 안전하게~</th>
-		</tr>
-		<tr>
-		<td>서울시 서초구</td>
-		</tr>
-		<tr>
-		<td>반려견 1마리</td>
-		<tr>
-		<td style="float:left;">가격 : 50000원/1일</td> 
-		<td style="float:right;">평점 : 
-		<span class="fa fa-star checked"></span>
-		<span class="fa fa-star checked"></span>
-		<span class="fa fa-star checked"></span>
-		<span class="fa fa-star"></span>
-		<span class="fa fa-star"></span>	
-		</td>
-		</tr>		
+         <% if(SI.getPuserHouseReImage() != null){ %>
+         <img src="/doggybeta/files/profile/<%= SI.getPuserHouseReImage() %>" height="150px;" width="100%;">
+         <%}else{ %>
+         등록된 사진이 없습니다.
+         <%} %>
+         </div>
+         <div style="position: relative; top: -40px;">
+         <% if(SI.getPuserReFile() != null) {%>
+         <img src="/doggybeta/files/profile/<%= SI.getPuserReFile() %>" style="height: 60px; width : 60px; border-radius: 50px; border: 3px solid white">
+         <%}else{ %>
+         등록된 사진이 없습니다.
+         <%} %>
+         </div>	
+         </td>
+         </tr>
+         <tr><td><%=SI.getPuserAddress() %></td></tr>
+         <tr><td>가격 : <%=SI.getPrice() %>/1일</td></tr>
 		</table>
+		
+		</div>
+	<%} }else{ %>
+<%} %>	
 		</div>
 		
-	</div>
+		
+	</div> -->
 	<!-- detailinfo닫기 -->
 
 </div>
 </div>
 
-<!-- <div style="float:left; width:50%;">
+<%-- <div style="float:left; width:50%;">
 지도출력
 <hr>
 <br>
-<div id="map" style="width:100%;height:550px;"></div>
-
-<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=61e779cba5e3e9729c7fb3b2830dba72"></script>
+<div id="map"style="width:40%;height:350px;"><%=petSitter.getAddress()%></div>
+</div>
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=b9810167e43ee638a44b19264113db0d&libraries=services"></script>
 <script>
-	var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
-    	mapOption = { 
-        center: new daum.maps.LatLng(37.499274, 127.032963), // 지도의 중심좌표
+var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+    mapOption = { 
+        center: new daum.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
         level: 3 // 지도의 확대 레벨
     };
 
-	var map = new daum.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
+// 지도를 표시할 div와  지도 옵션으로  지도를 생성합니다
+// 지도를 생성합니다    
+var map = new daum.maps.Map(mapContainer, mapOption); 
 
-    // 마우스 드래그로 지도 이동 가능여부를 설정합니다
-    map.setDraggable(true);  
+// 주소-좌표 변환 객체를 생성합니다
+var geocoder = new daum.maps.services.Geocoder();
 
+// 주소로 좌표를 검색합니다
+geocoder.addressSearch('<%=petSitter.getAddress()%>', function(result, status) {
+
+    // 정상적으로 검색이 완료됐으면 
+     if (status === daum.maps.services.Status.OK) {
+
+        var coords = new daum.maps.LatLng(result[0].y, result[0].x);
+
+        // 결과값으로 받은 위치를 마커로 표시합니다
+        var marker = new daum.maps.Marker({
+            map: map,
+            position: coords
+        });
+
+        // 인포윈도우로 장소에 대한 설명을 표시합니다
+        var infowindow = new daum.maps.InfoWindow({
+            content: '<div style="width:150px;text-align:center;padding:6px 0;">우리회사</div>'
+        });
+        infowindow.open(map, marker);
+
+        // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
+        map.setCenter(coords);
+    } 
+});     
 </script>
-</div> -->
+</div> --%>
 </div> 
 </div>
 		

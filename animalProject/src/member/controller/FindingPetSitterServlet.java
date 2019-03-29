@@ -48,8 +48,7 @@ public class FindingPetSitterServlet extends HttpServlet {
 			view.forward(request, response);
 		}else {
 			PrintWriter out = response.getWriter();
-			out.println("<script>alert('펫 정보를 반드시 등록해야 합니다.'); location.href='views/findSitter/petSitterListView.jsp';</script>");
-			out.flush();
+		
 		}
 	}
 
