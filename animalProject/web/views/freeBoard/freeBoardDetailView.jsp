@@ -4,7 +4,6 @@
 				  java.util.*"%>
 <%
 	FreeBoard freeboard = (FreeBoard)request.getAttribute("freeboard");
-//	int currentPage = ((Integer)request.getAttribute("currentPage")).intValue(); 
 	ArrayList<FreeBoardReply> replyList = (ArrayList<FreeBoardReply>)request.getAttribute("replyList"); 
 	
 	
@@ -16,10 +15,12 @@
 	
 %>    
 <!DOCTYPE html>
-<html>
+<html id='fbhtml'>
 <head>
 <meta charset="UTF-8">
-<title>doggybeta</title>
+<title></title>
+<link href="/doggybeta/resources/css/footer.css" rel="stylesheet" type="text/css">
+<link href="https://fonts.googleapis.com/css?family=Sunflower:300,500,700&amp;subset=korean" rel="stylesheet" type="text/css">
 <script type="text/javascript" src="/doggybeta/resources/js/jquery-3.3.1.min.js"></script>
 <script type="text/javascript">
 $(function(){
@@ -42,7 +43,8 @@ $(function(){
 	$("#replyUpdate").click(function(){
 		$.ajax({
 			url: "/doggybeta/freplyup",
-			data: {fnum : $("fnum").val(), frnum : $("frnum").val()},
+			data: {fnum : $("fnum").val(), 
+				   frnum : $("frnum").val()},
 			type: "post",
 			dataType: "json",
 			success: function(data){
@@ -50,27 +52,25 @@ $(function(){
 			}
 		});  //ajax
 	});  //click
-
+	
 });
-
-
+	
+$(function(){
+	$("#frnum").hide();
+});
 </script>
 
 
 <style type="text/css">
 
-table{
-	position: relative;
-	left: 400px;
-	border-collapse: separate;
-    border-spacing: 1px;
-    text-align: left;
-    line-height: 1.5;
-    margin: 20px 10px;
+#fbhtml {
+	font-family: 'Sunflower', 'sans-serif';
+	font-size: 13pt;
 }
+
 h2{
 	position: relative;
-	left: 700px;
+	left: 600px;
     text-align: left;
     line-height: 1.5;
     margin: 20px 10px;
@@ -79,17 +79,42 @@ h2{
 #t11 {
 	resize: none;
 }
-p{
-		position: relative;
-	left: 400px;
+
+
+.fdtable{
+	position: relative;
+	left: 220px;
 	border-collapse: separate;
     border-spacing: 1px;
     text-align: left;
     line-height: 1.5;
+    border-top: 1px solid #ccc;
+    width : 900px;
     margin: 20px 10px;
-
 }
 
+
+.fdtable th{
+	background:#f3f6f7;
+	width: 100px;
+	padding: 7px 13px;
+    padding: 10px;
+    font-weight: bold;
+    vertical-align: top;
+    border-bottom: 1px solid #ccc;
+	
+}
+.fdtable td {   
+    padding: 10px;
+    vertical-align: top;
+    border-bottom: 1px solid #ccc;
+}
+.buttons{
+	position: relative;
+	left: 700px;
+	
+	
+}
 
 
 </style> 
@@ -102,7 +127,7 @@ p{
 <%-- 상세보기  --%>	
 <h2><%= freeboard.getFreeboardNo() %>번 게시글 상세보기</h2>
 <br>
-<table id="t" align="center"  width="800">
+<table class="fdtable" id="t" align="center"  width="800">
 <tr>
 	<th>제목</th>
 	<td align="center"><%= freeboard.getFreeboardTitle() %></td>
@@ -144,7 +169,7 @@ p{
 
 <%-- 댓글 보이기 --%>
 	<div id="comment">
-	<table border="1" bordercolor="lightgray">	
+	<table class="fdtable" border="1" bordercolor="lightgray">	
 		
 	<% if(replyList != null){ //댓글이 있을 때 %>
 		<% for(FreeBoardReply f : replyList){ %>
@@ -154,29 +179,24 @@ p{
 					<div>
 						<%=f.getUserid() %><br>					
 						<font size="2" color="lightgray"><%= f.getFreereplydate() %></font>
-						<br>
-					<div id="frnum">				
-						<font size="2" color="lightgray"><%= f.getFreereply() %></font>
 					</div>
-					</div>
-				</td>			
-				<!-- 본문내용 -->
+				</td>		
+					
+				<!-- 본문내용 -->			
 				<td width="550">
 					<div class="text_wrapper">
 						<%=f.getFreereplycontent() %>
 					</div>
 				</td>
+				
 				<!-- 버튼 -->
+				<div>
 				<td width="100">
-					<!-- <div id="btn" style="text-align:center;">
-						<a href="#">[답변]</a><br> -->
-					<!-- 댓글 작성자만 수정, 삭제 가능하도록 -->	
 					<%if(loginUser.getUserId().equals(f.getUserid())){ %>
 					<a href="/doggybeta/frsearch?frnum=<%= f.getFreereply()%>">[수정]</a>
-					<a href="#">[삭제]</a>	
+					<a href="/doggybeta/frdelete?frnum=<%= f.getFreereply()%>&fnum=<%= f.getFreeboardno()%>">[삭제]</a>	
 					<%} %>
-					
-					</div>
+				</div>
 				</td>
 			</tr>
 			<%}//댓글 리스트 조회 for each 문 끝 %>
@@ -185,7 +205,7 @@ p{
 		</div>
 
 <%-- 댓글등록 --%>
-<div>
+<div class="fdtable">
 <% if(loginUser != null){ %>	
 		<input type="hidden" id="fnum" name="fnum" value="<%= freeboard.getFreeboardNo() %>">
 		<input type="hidden" name="page" value="">
@@ -202,7 +222,6 @@ p{
 </div>
 
 <hr>
-
 <%-- 페이지징 처리 --%>
 <div style="text-align:center;">
 <% if(currentPage <= 1){ %>
@@ -223,7 +242,7 @@ p{
 <% } %> &nbsp;
 
 <!-- 다음 -->
-<% if((currentPage + 10) > endPage && currentPage != 1){ %>
+<% if(endPage < maxPage){ %>
 	<a href="/doggybeta/fdetail?page=<%= endPage + 1 %>&fnum=<%= freeboard.getFreeboardNo() %>">[next]</a>&nbsp;
 <% }else{ %>
 	[next]&nbsp;
@@ -234,13 +253,16 @@ p{
 <% }else{ %>
 	<a href="/doggybeta/fdetail?page=<%= maxPage %>&fnum=<%= freeboard.getFreeboardNo() %>">[맨끝]</a>
 <% } %>
-</div> 	  
+</div>  	 
+<hr>
+<br>
+ 
 
 
-		<div id="footer" align="right">
-			<%@ include file="..//common/footer.jsp"%></div>
+		</div>
+		<div id="footer"><%@ include file="..//common/footer.jsp"%></div>
 	</div>
-	</div>
+	<br>
 </body>
 </html>	
 

@@ -190,13 +190,29 @@ public class MemberService {
 		return result;
 	}
 
+
 	public ArrayList<SitterImage> selectSitterFacilityImg(String petSitterId) {
 		Connection conn = getConnection();
 		ArrayList<SitterImage> list = mdao.selectSitterFacilityImg(conn, petSitterId);
 		close(conn);
 		return list;
+  }
+
+	/*public SearchingInfo findPetsitterList(String jido) {
+		Connection conn = getConnection();
+		SearchingInfo SI = mdao.findPetSitterList(conn, jido);
+		System.out.println("서비스단 펫시터 리스트 : " + SI);
+		close(conn);
+		return SI;
+	}*/
+
+	public ArrayList<SearchingInfo> findPetSitterList(String jido) {
+		Connection conn = getConnection();
+		ArrayList<SearchingInfo> list = mdao.findPetSitterList(conn, jido);
+		System.out.println("서비스단 펫시터 리스트 : " + list + "주소 값 : " + jido);
+		close(conn);
+		return list;
+		
+
 	}
-	
-
-
 }

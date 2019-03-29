@@ -72,7 +72,8 @@ public class freeBoardOriginUpdateServlet extends HttpServlet {
 
 		freeboard.setFreeboardNo(Integer.parseInt(mrequest.getParameter("fnum")));
 		freeboard.setFreeboardTitle(mrequest.getParameter("ftitle"));		
-		freeboard.setFreeboardContent(mrequest.getParameter("fcontent"));
+		freeboard.setFreeboardContent(mrequest.getParameter("ir1"));
+		System.out.println("fcontent : " + freeboard.getFreeboardContent());
 		
 		//hidden 에 담겨서 전송온 원파일명과 바뀐파일명 꺼내서 저장
 		String foriginFileName = mrequest.getParameter("fofile");

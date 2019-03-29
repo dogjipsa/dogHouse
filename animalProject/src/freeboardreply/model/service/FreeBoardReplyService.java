@@ -38,17 +38,6 @@ public class FreeBoardReplyService {
 	}
 	
 	
-	public void updateReplySeq(FreeBoardReply replyBoard) {
-		Connection conn = getConnection();
-		int result = fdao.updateReplySeq(conn, replyBoard);
-		if(result > 0)
-			commit(conn);
-		else
-			rollback(conn);
-		close(conn);
-		return;
-	}
-	
 	public int insertReply(FreeBoardReply replyBoard) {
 		Connection conn = getConnection();
 		int result = fdao.insertReply(conn, replyBoard);
@@ -60,9 +49,9 @@ public class FreeBoardReplyService {
 		return result;
 	}
 	
-	public int deleteReply(FreeBoardReply replyBoard) {
+	public int deleteReply(int freeReplyNo) {
 		Connection conn = getConnection();
-		int result = fdao.deleteReply(conn, replyBoard);
+		int result = fdao.deleteReply(conn, freeReplyNo);
 		if(result > 0)
 			commit(conn);
 		else

@@ -9,20 +9,20 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import tipboard.model.service.TipBoardService;
 import tipboardreply.model.service.TipBoardReplyService;
+import tipboardreply.model.vo.TipBoardReply;
 
 /**
- * Servlet implementation class TipBoardReplyDeleteServlet
+ * Servlet implementation class TipBoardReplySearchServlet
  */
-@WebServlet("/trdelete")
-public class TipBoardReplyDeleteServlet extends HttpServlet {
+@WebServlet("/trsearch")
+public class TipBoardReplySearchServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public TipBoardReplyDeleteServlet() {
+    public TipBoardReplySearchServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -31,24 +31,22 @@ public class TipBoardReplyDeleteServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		int tipReplyBoardNum = Integer.parseInt(request.getParameter("trnum"));
-		int tipBoardNum = Integer.parseInt(request.getParameter("tnum"));
+		int tipBoardReplyNo = Integer.parseInt(request.getParameter("trnum"));
+		TipBoardReply tipReply = new TipBoardReplyService().selectTipBoardReply(tipBoardReplyNo);
 		
-		int result = new TipBoardReplyService().deleteTipBoardReply(tipBoardNum);
-	
-	
+		
+		response.setContentType("text/html; charset=utf-8");
 		RequestDispatcher view = null;
-		if(result > 0) {
-			response.sendRedirect("/doggybeta/fdetail?fnum=" + tipBoardNum);
-
-		}else {
-			view = request.getRequestDispatcher("views/tipBoard/tipBoardError.jsp");
-			request.setAttribute("message", "댓글 삭제 실패!");
+		if(tipReply != null) {
+			view = request.getRequestDispatcher("views/tipboard/tipBoardReplyUpdateView.jsp");
+			request.setAttribute("tipReply", tipReply);			
 			view.forward(request, response);
-				}
-			}
-			
-		
+		}else {
+			view = request.getRequestDispatcher("views/tipboard/tipBoardError.jsp");
+			request.setAttribute("message", tipBoardReplyNo + "번 댓글 수정 실패!");
+			view.forward(request, response);
+		}
+	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
