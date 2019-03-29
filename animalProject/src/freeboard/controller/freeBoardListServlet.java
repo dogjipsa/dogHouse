@@ -44,8 +44,7 @@ public class freeBoardListServlet extends HttpServlet {
 				String inputdata = request.getParameter("inputdata");
 				
 			if(opt == null) {
-				
-				
+					
 				if(request.getParameter("page") != null) 
 					currentPage = Integer.parseInt(request.getParameter("page"));
 					

@@ -15,9 +15,9 @@ public class TipBoardReplyService {
 	
 	public TipBoardReplyService() {}
 	
-	public int deleteTipBoardReply(int tipReplyBoardNum, int tipBoardNum) {
+	public int deleteTipBoardReply(int tipBoardNum) {
 		Connection conn = getConnection();
-		int result = trdao.delteTipBoardReply(conn, tipReplyBoardNum, tipBoardNum);
+		int result = trdao.delteTipBoardReply(conn, tipBoardNum);
 		if(result > 0)
 			commit(conn);
 		else
@@ -25,6 +25,7 @@ public class TipBoardReplyService {
 		close(conn);
 		return result;
 	}
+	
 	public int insertTipBoardReply(TipBoardReply trboard) {
 		Connection conn = getConnection();
 		int result = trdao.insertBoard(conn, trboard);
@@ -35,9 +36,10 @@ public class TipBoardReplyService {
 		close(conn);
 		return result;
 	}
-	public TipBoardReply selectTipBoardReply(int tipBoardNum) {
+	
+	public TipBoardReply selectTipBoardReply(int tipBoardReplyNo) {
 		Connection conn = getConnection();
-		TipBoardReply tboardRe = trdao.selectBoard(conn, tipBoardNum);
+		TipBoardReply tboardRe = trdao.selectTipBoardReply(conn, tipBoardReplyNo);
 		close(conn);
 		return tboardRe;
 	}
@@ -55,4 +57,12 @@ public class TipBoardReplyService {
 		close(conn);
 		return listCount;
 	}
+
+	public int updateReply(String tipReplyContent, int tipBoardReplyNo) {
+		Connection conn = getConnection();
+		int result = trdao.updateReply(conn, tipReplyContent, tipBoardReplyNo);
+		close(conn);
+		return result;
+	}
+
 }

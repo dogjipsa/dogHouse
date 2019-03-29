@@ -13,9 +13,24 @@ import tipboardreply.model.vo.TipBoardReply;
 
 public class TipBoardReplyDao {
 
-	public int delteTipBoardReply(Connection conn, int tipReplyBoardNum, int tipBoardNum) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int delteTipBoardReply(Connection conn, int tipBoardNum) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String query = "UPDATE TIPBOARD_REPLY SET TIPREPLY_DELETE = 'Y' WHERE TIPREPLY_NO = ?";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, tipBoardNum);
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+			
+		return result;
 	}
 
 	public int insertBoard(Connection conn, TipBoardReply trboard) {
@@ -36,10 +51,7 @@ public class TipBoardReplyDao {
 		return result;
 	}
 
-	public TipBoardReply selectBoard(Connection conn, int tipBoardNum) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+
 
 	public ArrayList<TipBoardReply> selectList(Connection conn, int tipBoardNo, int trcurrentPage, int limit) {
 		ArrayList<TipBoardReply> list = new ArrayList<TipBoardReply>();
@@ -114,6 +126,62 @@ public class TipBoardReplyDao {
 		}
 		
 		return listCount;
+	}
+
+	public int updateReply(Connection conn, String tipReplyContent, int tipBoardReplyNo) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		
+		String query = "update tipboard_reply set tipreply_content = ? where tipreply_no = ?";
+			
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, tipReplyContent);
+			pstmt.setInt(2, tipBoardReplyNo);
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
+	public TipBoardReply selectTipBoardReply(Connection conn, int tipBoardNo) {
+		TipBoardReply trboard = new TipBoardReply();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String query = "SELECT * FROM TIPBOARD_REPLY WHERE TIPREPLY_NO = ?";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, tipBoardNo);
+			rset = pstmt.executeQuery();
+			while(rset.next()) {
+				
+				trboard = new TipBoardReply();
+				trboard.setTipReplyNo(rset.getInt("TIPREPLY_NO"));
+				trboard.setTipReplyContent(rset.getString("TIPREPLY_CONTENT"));
+				trboard.setTipReplyDate(rset.getDate("TIPREPLY_DATE"));
+				trboard.setTipNo(tipBoardNo);
+				trboard.setUserId(rset.getString("USER_ID"));
+				trboard.setTipReplyDelete("TIPREPLY_DELETE");
+				}
+			
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+	
+		return trboard;
 	}
 
 }
