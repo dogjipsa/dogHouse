@@ -28,11 +28,48 @@ for (let i = 0; i < items.length; i++) {
             bkTable.style.display = 'none';
             hostMain.style.display = 'none';
             addPetMain.style.display = 'grid';
-
+            requestPetListAjax();
         }
     });
 }
-// 
+// 나의 펫 리스트 출력 Ajax
+function requestPetListAjax(){
+    const xhr = new XMLHttpRequest();
+
+    xhr.onload = () =>{
+        const petList = document.querySelector('.rounded-list');
+        while(petList.firstChild){
+            petList.removeChild(petList.firstChild);
+        }
+        const json = JSON.parse(xhr.responseText);
+        const li = document.createElement('li');
+        const div = document.createElement('div');
+        const span = document.createElement('span');
+        // petList.appendChild(li).appendChild(div).appendChild(span).textContent = '테스트!';
+        for(let i in json.list){
+            const petInfo = {
+                'pno': json.list[i].pno,
+                'pname': decodeURIComponent(json.list[i].pname),
+                'breeds': decodeURIComponent(json.list[i].breeds),
+                'birth': json.list[i].birth,
+                'size': decodeURIComponent(json.list[i].size),
+                'gender': json.list[i].gender,
+                'neutral': json.list[i].neutral,
+                'userid': json.list[i].userid,
+                'origin': decodeURIComponent(json.list[i].origin),
+                'rename': json.list[i].rename
+            }
+        }
+    }
+    const requestData = 'userid='+encodeURIComponent(userid.value);
+    xhr.open('POST','/doggybeta/gplist');
+    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+    xhr.send(requestData);
+}
+
+
+
+// 펫 추가 Ajax
 const pSubmitBtn = document.querySelector('#p-submit');
 const petRegForm = document.getElementById('pet_reg_form');
 pSubmitBtn.addEventListener('click', function(e){
@@ -41,12 +78,31 @@ pSubmitBtn.addEventListener('click', function(e){
     const xhr = new XMLHttpRequest();
     
     xhr.onload = ()=>{
-        console.log('good!');
+        const popup = document.querySelector('.modal-content');
+        popup.style.display ="block";
+
+        // 클로징 처리
+        const mCloses = document.querySelectorAll('.m-close');
+        for(let i = 0; i < mCloses.length; i++){
+            mCloses[i].addEventListener('click', ()=>{
+                popup.style.display ="none"; // 팝업 내리기
+                petRegForm.reset(); // 인풋 클리어
+                petImagePreview.setAttribute('src','/doggybeta/resources/images/default.jpg'); // 이미지 프리뷰 클리어
+                document.querySelector('fieldset').style ="block"; // page 1로 이동
+                document.querySelectorAll('fieldset')[2].style.display ="none"; // 현재 페이지 숨기기
+                document.querySelectorAll('#progressbar li')[1].classList.remove('active');
+                document.querySelectorAll('#progressbar li')[2].classList.remove('active');
+            });
+        }
+        modalText = document.getElementById('modal-text');
+        if(xhr.responseText === 'ok'){
+            modalText.textContent = "강아지를 성공적으로 추가했습니다!";
+        } else {
+            modalText.textContent = "강아지 등록에 실패했습니다. 관리자에게 문의하세요";
+        }
+
     }
-    
-    console.log(petData);
-    xhr.open('POST','/doggybeta/addpet');
-    
+    xhr.open('POST','/doggybeta/addpet'); 
     xhr.send(petData);
 });
 
@@ -145,7 +201,6 @@ function requestHostAjax() {
     xhr.onload = function () {
         if (xhr.responseText) {
             const json = JSON.parse(xhr.responseText);
-            console.log(json);
             while (tbody.firstChild) {
                 tbody.removeChild(tbody.firstChild);
             }

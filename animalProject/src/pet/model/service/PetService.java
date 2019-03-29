@@ -1,6 +1,7 @@
 package pet.model.service;
 
 import java.sql.Connection;
+import java.util.ArrayList;
 
 import pet.model.dao.PetDao;
 import pet.model.vo.Pet;
@@ -19,6 +20,20 @@ public class PetService {
 			rollback(conn);
 		close(conn);
 		return result;
+	}
+
+	public int getTotalPetListCount(String userid) {
+		Connection conn = getConnection();
+		int count = pdao.getTotalPetListCount(conn, userid);
+		close(conn);
+		return count;
+	}
+
+	public ArrayList<Pet> selectPetList(String userid, int start, int end) {
+		Connection conn = getConnection();
+		ArrayList<Pet> list = pdao.selectPetList(conn, userid, start, end);
+		close(conn);
+		return list;
 	}
 
 }

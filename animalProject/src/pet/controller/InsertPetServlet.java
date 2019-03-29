@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
 
@@ -88,11 +89,14 @@ public class InsertPetServlet extends HttpServlet {
 			Pet pet = new Pet(0,pname,breeds,pbirth,size,gender,neutral,etc,userid,originFileName,renameFileName); 
 			
 			int result = new PetService().insertPet(pet);
-			if(result > 0) {
-				System.out.println("ok");
-			} else {
-				System.out.println("fail");
-			}
+			response.setContentType("text/html; charset=utf-8");
+			PrintWriter out = response.getWriter();
+			if(result > 0) 
+				out.write("ok");
+			 else 
+				out.write("no");
+			out.flush();
+			out.close();
 		}
 	}
 

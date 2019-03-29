@@ -2,6 +2,9 @@ package pet.model.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.ArrayList;
+
 import static common.JDBCTemplate.*;
 
 import pet.model.vo.Pet;
@@ -13,17 +16,6 @@ public class PetDao {
 		PreparedStatement pstmt = null;
 		
 		String query = "INSERT INTO PET VALUES(SEQ_PETNO.NEXTVAL, ?,?,?,?,?,?,?,?,?,?)";
-		/*PET_NO	NUMBER
-		PET_NAME	VARCHAR2(100 BYTE)
-		PET_BREADS	VARCHAR2(100 BYTE)
-		PET_DATE	VARCHAR2(100 BYTE)
-		PET_SIZE	VARCHAR2(100 BYTE)
-		PET_GENDER	VARCHAR2(100 BYTE)
-		PET_NEUTRALIZE	VARCHAR2(100 BYTE)
-		PET_CHARATER	VARCHAR2(100 BYTE)
-		USER_ID	VARCHAR2(100 BYTE)
-		PET_ORIGINFILE	VARCHAR2(50 BYTE)
-		PET_REFILE	VARCHAR2(50 BYTE)*/
 		try {
 			pstmt = conn.prepareStatement(query);
 			pstmt.setString(1, pet.getPetName());
@@ -45,6 +37,67 @@ public class PetDao {
 			close(pstmt);
 		}
 		return result;
+	}
+
+	public int getTotalPetListCount(Connection conn, String userid) {
+		int count = 0;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String query = "SELECT COUNT(*) FROM PET WHERE USER_ID = ?";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, userid);
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				count = rset.getInt(1);
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return count;
+	}
+
+	public ArrayList<Pet> selectPetList(Connection conn, String userid, int start, int end) {
+		ArrayList<Pet> list = new ArrayList<>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String query = "SELECT X.RNUM, X.PET_NO, X.PET_NAME, X.PET_BREADS, X.PET_DATE, X.PET_SIZE, X.PET_GENDER, X.PET_NEUTRALIZE, X.PET_CHARATER, X.USER_ID, X.PET_ORIGINFILE, X.PET_REFILE FROM (SELECT ROWNUM AS RNUM, P.PET_NO, P.PET_NAME, P.PET_BREADS, P.PET_DATE, P.PET_SIZE, P.PET_GENDER, P.PET_NEUTRALIZE, P.PET_CHARATER, P.USER_ID, P.PET_ORIGINFILE, P.PET_REFILE FROM (SELECT PET_NO, PET_NAME, PET_BREADS, PET_DATE, PET_SIZE, PET_GENDER, PET_NEUTRALIZE, PET_CHARATER, USER_ID, PET_ORIGINFILE, PET_REFILE FROM PET WHERE USER_ID = ? ORDER BY PET_NO) P WHERE ROWNUM <= ?) X WHERE X.RNUM >= ?";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, userid);
+			pstmt.setInt(2, end);
+			pstmt.setInt(3, start);
+			rset = pstmt.executeQuery();
+			while(rset.next()) {
+				Pet pet = new Pet();
+				pet.setPetNo(rset.getInt(2));
+				pet.setPetName(rset.getString(3));
+				pet.setBreeds(rset.getString(4));
+				pet.setPetDate(rset.getDate(5));
+				pet.setPetSize(rset.getString(6));
+				pet.setPetGender(rset.getString(7));
+				pet.setPetNeutralize(rset.getString(8));
+				pet.setPetCharater(rset.getString(9));
+				pet.setUserId(rset.getString(10));
+				pet.setOriginFileName(rset.getString(11));
+				pet.setRenameFileName(rset.getString(12));
+				
+				list.add(pet);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		return list;
 	}
 
 }
