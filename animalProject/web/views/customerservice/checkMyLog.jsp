@@ -13,10 +13,10 @@
 
 <body>
 	<%@ include file="..//common/menu.jsp" %>
-	<input type="hidden" name="userid" value="<%=loginUser.getUserId() %>">
-	<div class="wrap_content">
+	<div class="wrap_content modal">
 		<!-- section1 - 변경 버튼's -->
 		<div class="section1">
+			<input type="hidden" name="userid" value="<%=loginUser.getUserId() %>">
 			<input type="radio" name="item" id="cml_booking" value="booking" checked>
 			<input type="radio" name="item" id="cml_host" value="host">
 			<input type="radio" name="item" id="cml_addpet" value="addpet">
@@ -33,8 +33,8 @@
 						등록/수정</span></li>
 			</ul><span class="icon__emoji">
 		</div>
-		<div class="section2">section2 - 페이지 내용 헤더</div>
-		<div class="section3">section3 - 알람 정보</div>
+		<div class="section2"></div>
+		<div class="section3"></div>
 		<!-- section4 - 예약/결제내역/내정보 수정 등의 메인 섹션 -->
 		<div class="section4">
 			<table id="reserv_table">
@@ -97,17 +97,17 @@
 				<div class="pet_insert">
 					<form id="pet_reg_form">
 						<ul id="progressbar">
-							<li class="active">Account Setup</li>
+							<li class="active">Pet Setup</li>
 							<li>Add Profiles</li>
 							<li>Details</li>
 						</ul>
 						<fieldset>
-							<h2 class="pi-title">Account Setup</h2>
+							<h2 class="pi-title">Pet Setup</h2>
 							<h3 class="pi-subtitle">아이디 / 이름 / 견종 / 생년월일</h3>
 							<input name="userid" value="<%= loginUser.getUserId()%>" readonly>
 							<input name="pname" placeholder="강아지 이름" required>
-							<input type="breeds" placeholder="견종 입력" />
-							<input type="date" id="puppybirth">
+							<input name="breeds" placeholder="견종 입력" />
+							<input type="date" name="birth" id="puppybirth">
 							<input type="button" name="next" class="next action-button" value="Next" />
 						</fieldset>
 						<fieldset>
@@ -124,36 +124,66 @@
 							<h2 class="pi-title">Details</h2>
 							<h3 class="pi-subtitle">크기 / 성별 / 중성화여부 / 특이사항</h3>
 							<input type="radio" name="size" id="cml_small" value="소형" checked>
-							<input type="radio" name="size" id="cml_medium" value="중형" >
-							<input type="radio" name="size" id="cml_big" value="대형" >
+							<input type="radio" name="size" id="cml_medium" value="중형">
+							<input type="radio" name="size" id="cml_big" value="대형">
 							<div class="radio-box">
-								<label for="cml_small"><div class="btn-radio size">소형</div></label>
-								<label for="cml_medium"><div class="btn-radio size">중형</div></label>
-								<label for="cml_big"><div class="btn-radio size">대형</div></label>
-							</div><hr>
+								<label for="cml_small">
+									<div class="btn-radio size">소형</div>
+								</label>
+								<label for="cml_medium">
+									<div class="btn-radio size">중형</div>
+								</label>
+								<label for="cml_big">
+									<div class="btn-radio size">대형</div>
+								</label>
+							</div>
+							<hr>
 							<input type="radio" name="gender" id="cml_male" value="M" checked>
-							<input type="radio" name="gender" id="cml_female" value="F" >
-							<input type="radio" name="gender" id="cml_neutral" value="N" >
+							<input type="radio" name="gender" id="cml_female" value="F">
+							<input type="radio" name="gender" id="cml_neutral" value="N">
 							<div class="radio-box">
-								<label for="cml_male"><div class="btn-radio gender">수컷</div></label>
-								<label for="cml_female"><div class="btn-radio gender">암컷</div></label>
-								<label for="cml_neutral"><div class="btn-radio gender">중성화</div></label>
-							</div><hr>
-							<textarea name="etc" id="p_etc" cols="30" rows="10" placeholder="강아지의 특이사항을 입력해주세요"></textarea>
+								<label for="cml_male">
+									<div class="btn-radio gender">수컷</div>
+								</label>
+								<label for="cml_female">
+									<div class="btn-radio gender">암컷</div>
+								</label>
+								<label for="cml_neutral">
+									<div class="btn-radio gender">중성화</div>
+								</label>
+							</div>
+							<hr>
+							<textarea name="etc" id="p_etc" cols="30" rows="10"
+								placeholder="강아지의 특이사항을 입력해주세요"></textarea>
 							<input type="button" name="previous" class="previous action-button" value="Previous" />
 							<input type="submit" id="p-submit" class="submit action-button" value="Submit" />
 						</fieldset>
 					</form>
 				</div>
-				<div class="pet_list"></div>
+				<div class="pet_list">
+					<ol class="rounded-list">
+						<li><div><span>232313 </span><span> 12345555</span><input type="hidden"></div><input type="hidden"></li>
+						<li><div>11111111</div></li>
+						<li><div>11111111</div></li>
+					</ol>
+				</div>
+				<div class="pet_list_pagination"></div>
 				<div class="pet_update"></div>
 			</div>
 		</div>
 		<div class="section5">
 			<div class="pagination"></div>
 		</div>
+		<div class="modal-content animate">
+			<span class="m-close xBtn" title="Close Modal">&times;</span>
+			<div class="modal-container">
+				<img src="/doggybeta/resources/images/modal.gif" id="modal-img">
+				<h4 id="modal-text"></h4>
+				<button type="button" class="m-close cancelbtn">확인</button>
+			</div>
+		</div>
 	</div>
-	<div id="footer"><%@ include file="..//common/footer.jsp"%></div>
+	
 	<script src="/doggybeta/resources/js/checkMyLog.js"></script>
 	<script src="/doggybeta/resources/js/hmap.js"></script>
 </body>

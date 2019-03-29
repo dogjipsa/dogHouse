@@ -28,21 +28,81 @@ for (let i = 0; i < items.length; i++) {
             bkTable.style.display = 'none';
             hostMain.style.display = 'none';
             addPetMain.style.display = 'grid';
-
+            requestPetListAjax();
         }
     });
 }
-// 
+// 나의 펫 리스트 출력 Ajax
+function requestPetListAjax(){
+    const xhr = new XMLHttpRequest();
+
+    xhr.onload = () =>{
+        const petList = document.querySelector('.rounded-list');
+        while(petList.firstChild){
+            petList.removeChild(petList.firstChild);
+        }
+        const json = JSON.parse(xhr.responseText);
+        const li = document.createElement('li');
+        const div = document.createElement('div');
+        const span = document.createElement('span');
+        // petList.appendChild(li).appendChild(div).appendChild(span).textContent = '테스트!';
+        for(let i in json.list){
+            const petInfo = {
+                'pno': json.list[i].pno,
+                'pname': decodeURIComponent(json.list[i].pname),
+                'breeds': decodeURIComponent(json.list[i].breeds),
+                'birth': json.list[i].birth,
+                'size': decodeURIComponent(json.list[i].size),
+                'gender': json.list[i].gender,
+                'neutral': json.list[i].neutral,
+                'userid': json.list[i].userid,
+                'origin': decodeURIComponent(json.list[i].origin),
+                'rename': json.list[i].rename
+            }
+        }
+    }
+    const requestData = 'userid='+encodeURIComponent(userid.value);
+    xhr.open('POST','/doggybeta/gplist');
+    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+    xhr.send(requestData);
+}
+
+
+
+// 펫 추가 Ajax
 const pSubmitBtn = document.querySelector('#p-submit');
 const petRegForm = document.getElementById('pet_reg_form');
 pSubmitBtn.addEventListener('click', function(e){
     e.preventDefault();
     const petData = new FormData(petRegForm);
-
-    console.log(petData);
     const xhr = new XMLHttpRequest();
-    xhr.open('POST','/doggybeta/addpet');
-    xhr.setRequestHeader('Content-Type', 'multipart/form-data');
+    
+    xhr.onload = ()=>{
+        const popup = document.querySelector('.modal-content');
+        popup.style.display ="block";
+
+        // 클로징 처리
+        const mCloses = document.querySelectorAll('.m-close');
+        for(let i = 0; i < mCloses.length; i++){
+            mCloses[i].addEventListener('click', ()=>{
+                popup.style.display ="none"; // 팝업 내리기
+                petRegForm.reset(); // 인풋 클리어
+                petImagePreview.setAttribute('src','/doggybeta/resources/images/default.jpg'); // 이미지 프리뷰 클리어
+                document.querySelector('fieldset').style ="block"; // page 1로 이동
+                document.querySelectorAll('fieldset')[2].style.display ="none"; // 현재 페이지 숨기기
+                document.querySelectorAll('#progressbar li')[1].classList.remove('active');
+                document.querySelectorAll('#progressbar li')[2].classList.remove('active');
+            });
+        }
+        modalText = document.getElementById('modal-text');
+        if(xhr.responseText === 'ok'){
+            modalText.textContent = "강아지를 성공적으로 추가했습니다!";
+        } else {
+            modalText.textContent = "강아지 등록에 실패했습니다. 관리자에게 문의하세요";
+        }
+
+    }
+    xhr.open('POST','/doggybeta/addpet'); 
     xhr.send(petData);
 });
 
@@ -52,10 +112,19 @@ document.getElementById('puppybirth').valueAsDate = new Date();
 const nextBtns = document.querySelectorAll('.next');
 for(let i = 0; i < nextBtns.length; i++){
     nextBtns[i].addEventListener('click',function(){
-        
         current_fs = nextBtns[i].parentNode;
         next_fs = nextBtns[i].parentNode.nextElementSibling;
-        
+        const currentInputs = current_fs.querySelectorAll('input');
+        for(let i = 0; i < currentInputs.length; i++){
+            if(currentInputs[i].value === ""){
+                currentInputs[i].style.boxShadow = '0 0 0 2px white, 0 0 0 3px red';
+                currentInputs[i].addEventListener('click', function(){
+                    currentInputs[i].style.boxShadow = 'none';
+                })
+                return false;
+            }
+            currentInputs[i].style.boxShadow = 'none';
+        }
         document.querySelectorAll('#progressbar li')[indexOf(next_fs)].setAttribute('class','active');
         next_fs.style.display ='block';
         current_fs.style.display = 'none';
@@ -75,7 +144,8 @@ for(let i = 0; i < prevBtns.length; i++){
 const realPetpic = document.querySelector('#petpic');
 const petpicBtn = document.getElementById('petpic-btn');
 const petImagePreview = document.getElementById('pet-img-preview');
-petpicBtn.addEventListener('click',()=>{
+petpicBtn.addEventListener('click',(e)=>{
+    e.preventDefault();
     realPetpic.click();
 });
 
@@ -131,7 +201,6 @@ function requestHostAjax() {
     xhr.onload = function () {
         if (xhr.responseText) {
             const json = JSON.parse(xhr.responseText);
-            console.log(json);
             while (tbody.firstChild) {
                 tbody.removeChild(tbody.firstChild);
             }
@@ -209,7 +278,7 @@ function requestHostAjax() {
             if(startPage > 1){
                 const pageBox = document.createElement('div');
                 pageBox.setAttribute('class','pagebox');
-                pageBox.textContent = '처음';
+                pageBox.textContent = 'first';
                 pagination.appendChild(pageBox);
                 page.onclick = () =>{
                     chosenPage = 1;
@@ -219,7 +288,7 @@ function requestHostAjax() {
             if(currentPage > 1){
                 const pageBox = document.createElement('div');
                 pageBox.setAttribute('class','pagebox');
-                pageBox.textContent = '이전';
+                pageBox.textContent = 'prev';
                 pagination.appendChild(pageBox);
                 pageBox.onclick = ()=>{
                     chosenPage = currentPage -1;
@@ -246,7 +315,7 @@ function requestHostAjax() {
             if(currentPage < totalPage){
                 const pageBox = document.createElement('div');
                     pageBox.setAttribute('class','pagebox');
-                    pageBox.textContent = '다음';
+                    pageBox.textContent = 'next';
                     pagination.appendChild(pageBox);
                     pageBox.onclick = () => {
                         chosenPage = currentPage+1;
@@ -256,7 +325,7 @@ function requestHostAjax() {
             if(endPage < totalPage){
                 const pageBox = document.createElement('div');
                     pageBox.setAttribute('class','pagebox');
-                    pageBox.textContent = '끝';
+                    pageBox.textContent = 'end';
                     pagination.appendChild(pageBox);
                     pageBox.onclick = () =>{
                         chosenPage = endPage;
@@ -334,7 +403,7 @@ function requestBkAjax() {
             if(startPage > 1){
                 const pageBox = document.createElement('div');
                 pageBox.setAttribute('class','pagebox');
-                pageBox.textContent = '처음';
+                pageBox.textContent = 'first';
                 pagination.appendChild(pageBox);
                 page.onclick = () =>{
                     chosenPage = 1;
@@ -344,7 +413,7 @@ function requestBkAjax() {
             if(currentPage > 1){
                 const pageBox = document.createElement('div');
                 pageBox.setAttribute('class','pagebox');
-                pageBox.textContent = '이전';
+                pageBox.textContent = 'prev';
                 pagination.appendChild(pageBox);
                 pageBox.onclick = ()=>{
                     chosenPage = currentPage -1;
@@ -372,7 +441,7 @@ function requestBkAjax() {
             if(currentPage < totalPage){
                 const pageBox = document.createElement('div');
                     pageBox.setAttribute('class','pagebox');
-                    pageBox.textContent = '다음';
+                    pageBox.textContent = 'next';
                     pagination.appendChild(pageBox);
                     pageBox.onclick = () => {
                         chosenPage = currentPage+1;
@@ -382,7 +451,7 @@ function requestBkAjax() {
             if(endPage < totalPage){
                 const pageBox = document.createElement('div');
                     pageBox.setAttribute('class','pagebox');
-                    pageBox.textContent = '끝';
+                    pageBox.textContent = 'end';
                     pagination.appendChild(pageBox);
                     pageBox.onclick = () =>{
                         chosenPage = endPage;
