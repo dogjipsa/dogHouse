@@ -39,7 +39,7 @@ public class SelectPetListServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String userid = request.getParameter("userid");
 		int currentPage = 1;
-		int limit = 12;
+		int limit = 10;
 		int countPage = 3;
 		if(request.getParameter("page") != null) 
 			currentPage = Integer.parseInt(request.getParameter("page"));
@@ -84,7 +84,7 @@ public class SelectPetListServlet extends HttpServlet {
 				job.put("gender", p.getPetGender());
 				job.put("neutral", p.getPetNeutralize());
 				job.put("userid", p.getUserId());
-				job.put("origin", URLEncoder.encode(p.getOriginFileName(), "utf-8"));
+				job.put("origin", p.getOriginFileName());
 				job.put("rename", p.getRenameFileName());
 				
 				jlist.add(job);

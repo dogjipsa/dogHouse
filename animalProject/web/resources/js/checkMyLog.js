@@ -37,15 +37,12 @@ function requestPetListAjax(){
     const xhr = new XMLHttpRequest();
 
     xhr.onload = () =>{
-        const petList = document.querySelector('.rounded-list');
+        const petList = document.querySelector('.pet_list');
         while(petList.firstChild){
             petList.removeChild(petList.firstChild);
         }
         const json = JSON.parse(xhr.responseText);
-        const li = document.createElement('li');
-        const div = document.createElement('div');
-        const span = document.createElement('span');
-        // petList.appendChild(li).appendChild(div).appendChild(span).textContent = '테스트!';
+        
         for(let i in json.list){
             const petInfo = {
                 'pno': json.list[i].pno,
@@ -56,9 +53,18 @@ function requestPetListAjax(){
                 'gender': json.list[i].gender,
                 'neutral': json.list[i].neutral,
                 'userid': json.list[i].userid,
-                'origin': decodeURIComponent(json.list[i].origin),
+                'origin': json.list[i].origin,
                 'rename': json.list[i].rename
             }
+            const tabBtn = document.createElement('button');
+            tabBtn.classList.add('tabs__button');
+            tabBtn.textContent = petInfo.pname;
+            petList.appendChild(tabBtn);
+            
+            tabBtn.addEventListener('click', function(){
+
+            });
+
         }
     }
     const requestData = 'userid='+encodeURIComponent(userid.value);
@@ -334,6 +340,8 @@ function requestHostAjax() {
             }
 
         }
+        if(tbody.firstChild)
+        tbody.firstChild.click();
     }
     const requestData = 'userid=' + encodeURIComponent(userid.value)+'&page='+encodeURIComponent(chosenPage);
 

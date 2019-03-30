@@ -39,7 +39,7 @@ public class BookingHostServiceServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String userid = request.getParameter("userid");
 		int currentPage = 1;
-		int limit = 2;
+		int limit = 12;
 		int countPage = 10;
 		if (request.getParameter("page") != null) {
 			currentPage = Integer.parseInt(request.getParameter("page"));
