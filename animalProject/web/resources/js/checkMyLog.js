@@ -575,7 +575,9 @@ function requestBkAjax() {
                     const td = document.createElement('td');
                     const button = document.createElement("button");
                     button.textContent = pg;
-                    button.classList= 'naverPayBtn';
+                    button.addEventListener('click', function(){
+                        payInIt(json.list[i]);
+                    });
                     tr.appendChild(td).appendChild(button);
                 } else {
                     const td = document.createElement('td');
