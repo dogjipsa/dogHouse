@@ -10,7 +10,7 @@ import java.util.HashMap;
 
 import member.model.dao.MemberDao;
 import member.model.vo.Member;
-import member.model.vo.SearchingInfo;
+
 import member.model.vo.SitterImage;
 
 
@@ -110,22 +110,6 @@ public class MemberService {
 	}
 
 
-	public ArrayList<SearchingInfo> searchPetSitter(String userid) {
-		Connection conn = getConnection();
-		System.out.println("서비스단 : " + userid);
-		ArrayList<SearchingInfo> list = mdao.searchPetSitter(conn, userid);
-		close(conn);
-		return list;
-	}
-
-	public ArrayList<SearchingInfo> insertCondition(HashMap<String, Object> map) {
-		Connection conn = getConnection();
-		ArrayList<SearchingInfo> list = mdao.insertCondition(conn, map);
-		close(conn);
-		return list;
-	}
-
-
 	public int updateNaverMember(Member member) {
 		Connection conn = getConnection();
 		int result = mdao.updateNaverMember(conn, member);
@@ -206,13 +190,44 @@ public class MemberService {
 		return SI;
 	}*/
 
-	public ArrayList<SearchingInfo> findPetSitterList(String jido) {
+	public ArrayList<Member> findPetSitterList(HashMap<String, Object> map) {
 		Connection conn = getConnection();
-		ArrayList<SearchingInfo> list = mdao.findPetSitterList(conn, jido);
-		System.out.println("서비스단 펫시터 리스트 : " + list + "주소 값 : " + jido);
+		ArrayList<Member> list = mdao.findPetSitterList(conn, map);
+		System.out.println("service petsitter list : " + list);
 		close(conn);
 		return list;
 		
 
 	}
+
+	
+	public ArrayList<SitterImage> selectSitterFacilityImg(HashMap<String, Object> img) {
+		Connection conn = getConnection();
+		ArrayList<SitterImage> list = mdao.selectSitterFacilityImg(conn, img);
+		close(conn);
+		return list;
+  }
+
+	public int countPetSitter(HashMap<String, Object> map) {
+		Connection conn = getConnection();
+		int result = mdao.countPetSitter(conn, map);
+		System.out.println("서비스 : " + result);
+		if(result > 0) 
+			commit(conn);
+		else
+			rollback(conn);
+		close(conn);
+		return result;
+	}
+
+
+	public Member selectDetailMember(String userId) {
+		Connection conn = getConnection();
+		Member member = mdao.selectDetailMember(conn, userId);
+		close(conn);
+		return member;
+	}
+
+	
+
 }

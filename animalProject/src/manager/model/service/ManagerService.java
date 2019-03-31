@@ -2,6 +2,7 @@ package manager.model.service;
 
 import manager.model.dao.ManagerDao;
 import manager.model.vo.Manager;
+import member.model.vo.Member;
 import notice.model.vo.Notice;
 import tipboard.model.vo.TipBoard;
 
@@ -9,6 +10,7 @@ import static common.JDBCTemplate.*;
 
 import java.sql.Connection;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import faq.model.vo.Faq;
 import freeboard.model.vo.FreeBoard;
@@ -31,16 +33,28 @@ public class ManagerService {
 	public int boardListCount() {
 		Connection conn = getConnection();
 		int result = manDao.boardListCount(conn);
+		if(result > 0)
+			commit(conn);
+		else
+			rollback(conn);
 		return result;
 	}
 	public int faqboardListCount() {
 		Connection conn = getConnection();
 		int result = manDao.faqboardListCount(conn);
+		if(result > 0)
+			commit(conn);
+		else
+			rollback(conn);
 		return result;
 	}
 	public int tipboardListCount() {
 		Connection conn = getConnection();
 		int result = manDao.tipboardListCount(conn);
+		if(result > 0)
+			commit(conn);
+		else
+			rollback(conn);
 		return result;
 	}
 
@@ -67,4 +81,59 @@ public class ManagerService {
 		
 		return faqList;
 	}
+
+
+	public ArrayList<Member> selectMemberList(HashMap<String, Object> listOpt) {
+		Connection conn = getConnection();
+		ArrayList<Member> memberList = manDao.selectMemberList(conn, listOpt);
+		close(conn);
+		
+		return memberList;
+	}
+	
+	public ArrayList<Member> selectPetsitterList(HashMap<String, Object> listOpt) {
+		Connection conn = getConnection();
+		ArrayList<Member> petsitterList = manDao.selectPetsitterList(conn, listOpt);
+		close(conn);
+		
+		return petsitterList;
+	}
+
+	public int getMemberListCount(HashMap<String, Object> listOpt) {
+		Connection conn = getConnection();
+		int listCount = manDao.memberListCount(conn, listOpt);
+		return listCount;
+	}
+	
+	public int getPetsitterListCount(HashMap<String, Object> listOpt) {
+		Connection conn = getConnection();
+		int listCount = manDao.petsitterListCount(conn, listOpt);
+		return listCount;
+	}
+
+	public int updatePetsitter(String userId) {
+		Connection conn = getConnection();
+		int result = manDao.updatePetsitter(conn, userId);
+		System.out.println("service userId : " + userId);
+		System.out.println("service result : " + result );
+		if(result > 0) {
+			commit(conn);
+		}else {
+			rollback(conn);}
+		close(conn);
+		
+		return result;
+	}
+		
+	
+	public int managerDeleteFreeBoard(String delNo) {
+		Connection conn = getConnection();
+		int result = manDao.managerDeleteFreeBoard(conn, delNo);
+		if(result > 0)
+			commit(conn);
+		else
+			rollback(conn);
+		return result;
+	}
+
 }

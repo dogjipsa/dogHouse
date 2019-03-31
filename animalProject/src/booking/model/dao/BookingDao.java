@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 import static common.JDBCTemplate.*;
 
-
+import booking.model.vo.Booking;
 import booking.model.vo.BookingCheck;
 import booking.model.vo.BookingForHost;
 
@@ -161,6 +161,102 @@ public class BookingDao {
 		}
 		
 		return result;
+	}
+
+	public int selectBooking(Connection conn, String checkin, String checkout, String petSitterId, String userId) {
+		int bookingNo = 0;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String query = "select booking_no from booking where checkin_date = to_date(?, 'YYYY/MM/DD HH24:MI') and checkout_date = to_date(?, 'YYYY/MM/DD HH24:MI') and puser_id = ? and user_id = ?";
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, checkin);
+			pstmt.setString(2, checkout);
+			pstmt.setString(3, petSitterId);
+			pstmt.setString(4, userId);
+			rset = pstmt.executeQuery();
+			if(rset.next()) {
+				bookingNo = rset.getInt(1);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return bookingNo;
+	}
+
+	public int updateBookingProgressOne(Connection conn, int bookingNo) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String query = "update booking set booking_progress = '1' where booking_no = ?";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, bookingNo);
+		
+			result = pstmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
+	public Booking selectBooking(Connection conn, int bookingNo) {
+		Booking booking = new Booking();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String query = "select * from booking where booking_no = ?";
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, bookingNo);
+			rset = pstmt.executeQuery();
+			if(rset.next()) {
+				booking.setBookingNo(rset.getInt("booking_no"));
+				booking.setCheckInDate(rset.getDate("checkin_date"));
+				booking.setCheckOutDate(rset.getDate("checkout_date"));
+				booking.setPetNo(rset.getInt("pet_no"));
+				booking.setUserId(rset.getString("user_id"));
+				booking.setBookingProgress(rset.getString("booking_progress"));
+				booking.setBookingEtc(rset.getString("booking_etc"));
+				booking.setServiceKind(rset.getString("service_kind"));
+				booking.setPuserId(rset.getString("puser_id"));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return booking;
+	}
+	
+	public int selectDates(Connection conn, String checkin, String checkout) {
+		int dates = 0;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String query = "select trunc(to_date(?, 'YYYY/MM/DD HH24:MI') - to_date(?, 'YYYY/MM/DD HH24:MI')) from dual";
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, checkout);
+			pstmt.setString(2, checkin);
+			rset = pstmt.executeQuery();
+			if(rset.next()) {
+				dates = rset.getInt(1);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return dates;
 	}
 	
 }

@@ -6,7 +6,6 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
-import member.model.vo.SearchingInfo;
 import static common.JDBCTemplate.*;
 import member.model.vo.Member;
 import member.model.vo.SitterImage;
@@ -258,54 +257,6 @@ public class MemberDao {
 		return result;
 	}
 
-
-	public ArrayList<SearchingInfo> searchPetSitter(Connection conn, String userid) {
-		ArrayList<SearchingInfo> list = new ArrayList<SearchingInfo>();
-		PreparedStatement pstmt = null;
-		ResultSet rset = null;
-		
-		String query = "SELECT P.PET_BREADS, P.PET_SIZE, TRUNC(MONTHS_BETWEEN(sysdate, pet_date)/12) as AGE  FROM MEMBER M JOIN PET P ON(P.USER_ID = M.USER_ID) WHERE M.USER_ID = ?";
-		System.out.println("dao단 id조회 : " + userid);
-		
-		try {
-			
-			pstmt = conn.prepareStatement(query);
-			pstmt.setString(1, userid);
-			
-			rset = pstmt.executeQuery();
-			
-			while(rset.next()) {
-				SearchingInfo petInfo = new SearchingInfo();
-				
-				petInfo.setPetBreads(rset.getString(1));
-				petInfo.setPetSize(rset.getString(2));
-				petInfo.setAge(rset.getInt(3));
-				petInfo.setUserId(userid);
-				
-				list.add(petInfo);
-			}
-			System.out.println("dao단 : " + list.toString());
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			close(rset);
-			close(pstmt);
-		}
-		
-		return list;
-	}
-
-	public ArrayList<SearchingInfo> insertCondition(Connection conn, HashMap<String, Object> map) {
-		ArrayList<SearchingInfo> list = new ArrayList<SearchingInfo>();
-		
-		PreparedStatement pstmt = null;
-		ResultSet rset = null;
-		
-		String query = "";
-
-		return list;
-	}
-
 	public int updateNaverMember(Connection conn, Member member) {
 		//네이버 로그인시 이미 등록되어있는 계정이라면
 		int result = 0;
@@ -508,40 +459,58 @@ public class MemberDao {
 				sitterImage.setRenameFile(rset.getString("IMG_REFILE"));
 				list.add(sitterImage);
       }
-    }
+    }catch (Exception e) {
+	  	e.printStackTrace();
+	  } finally {
+	  	close(rset);
+	  	close(pstmt);
+	  }
+	  return list;
   }
-	public ArrayList<SearchingInfo> findPetSitterList(Connection conn, String jido) {
-		ArrayList<SearchingInfo> list = new ArrayList<SearchingInfo>();
+	public ArrayList<Member> findPetSitterList(Connection conn, HashMap<String, Object> map) {
+		
+		
+		ArrayList<Member> list = new ArrayList<Member>();
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		
-		String query = "SELECT DISTINCT P.USER_ID, P.USER_NAME, P.PRICE, Z.PET_NAME, Z.PET_BREADS, P.USER_ORIGINFILE, P.USER_REFILE, P.ADDRESS, I.IMG_ORIGINFILE, I.IMG_REFILE FROM MEMBER U, MEMBER P LEFT OUTER JOIN PET Z ON (P.USER_ID = Z.USER_ID) LEFT OUTER JOIN SITTERIMG I ON (I.USER_ID = P.USER_ID) WHERE P.PETSITTER = '2' AND P.ADDRESS LIKE ?";
+		String userId = (String)map.get("userid");
+		String jido = (String)map.get("jido");
+		String detail = (String)map.get("detail");
+
+
+		if(detail == null || detail.equals("전체")) {
+			jido = (String)map.get("jido");
+		}else if(detail != "전체"){
+			jido = jido + " " + detail;
+		}
+
 		
+		String query = "SELECT DISTINCT P.USER_ID, P.USER_NAME, P.PRICE, P.USER_ORIGINFILE, "
+				+ "P.USER_REFILE, P.ADDRESS FROM MEMBER P LEFT OUTER JOIN PET Z ON (P.USER_ID = Z.USER_ID) "
+				+ "WHERE P.USER_ID NOT IN ? AND P.PETSITTER = '2' AND P.ADDRESS LIKE ?";
+
 		try {
 			pstmt = conn.prepareStatement(query);
-			pstmt.setString(1, "%" + jido + "%");
 			
+			pstmt.setString(1, userId);
+			pstmt.setString(2, "%" + jido + "%");
 			rset = pstmt.executeQuery();
 			
+			
 			while(rset.next()) {
-				SearchingInfo SI = new SearchingInfo();
+				Member findSitter = new Member();
 				
-				SI.setPuserId(rset.getString(1));
-				SI.setPuserName(rset.getString(2));
-				SI.setPrice(rset.getInt(3));
-				SI.setPuserPetName(rset.getString(4));
-				SI.setPetBreads(rset.getString(5));
-				SI.setPuserOriginFile(rset.getString(6));
-				SI.setPuserReFile(rset.getString(7));
-				SI.setPuserAddress(rset.getString(8));				
-				SI.setPuserHouseImage(rset.getString(9));
-				SI.setPuserHouseReImage(rset.getString(10));
-				
-				
-				list.add(SI);
-				System.out.println("dao에서 펫시터 정보 출력 : " + list);
-
+				findSitter.setUserId(rset.getString(1));
+				findSitter.setUserName(rset.getString(2));
+				findSitter.setPrice(rset.getInt(3));
+				findSitter.setUseroriginfile(rset.getString(4));
+				findSitter.setUserrefile(rset.getString(5));
+				findSitter.setAddress(rset.getString(6).substring(0, 9));
+						
+				list.add(findSitter);
 			}
+			System.out.println("dao : " + list);
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -550,5 +519,106 @@ public class MemberDao {
 		}
 		return list;
 	}
+
+
+	public ArrayList<SitterImage> selectSitterFacilityImg(Connection conn, HashMap<String, Object> img) {
+		ArrayList<SitterImage> list = new ArrayList<>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String petSitterId = (String)img.get("petSitterId");
+		
+		String query = "select * from sitterimg where user_id = ?";
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, petSitterId);
+			rset = pstmt.executeQuery();
+			while(rset.next()) {
+				SitterImage sitterImage = new SitterImage();
+				sitterImage.setImageNo(rset.getInt("IMG_NO"));
+				sitterImage.setUserId(petSitterId);
+				sitterImage.setOriginFile(rset.getString("IMG_ORIGINFILE"));
+				sitterImage.setRenameFile(rset.getString("IMG_REFILE"));
+				list.add(sitterImage);
+      }
+    }catch (Exception e) {
+		e.printStackTrace();
+	} finally {
+		close(rset);
+		close(pstmt);
+	}
+	return list;
+	}
+
+	public int countPetSitter(Connection conn, HashMap<String, Object> map) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String userId = (String)map.get("userid");
+		String jido = (String)map.get("jido");
+		String detail = (String)map.get("detail");
+
+
+		if(detail == null || detail.equals("전체")) {
+			jido = (String)map.get("jido");
+		}else if(detail != "전체"){
+			jido = jido + " " + detail;
+		}
+		
+		String query = "SELECT COUNT(USER_ID) FROM MEMBER WHERE USER_ID NOT IN ? AND PETSITTER = '2' AND ADDRESS LIKE ?";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			
+			pstmt.setString(1, userId);
+			pstmt.setString(2, "%" + jido + "%");
+	
+		
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				result = rset.getInt(1);
+			}
+			System.out.println("dao : " + result);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
+
+	public Member selectDetailMember(Connection conn, String userId) {
+		Member member = null;
+		PreparedStatement pstat = null;
+		ResultSet rSet = null;
+		String query = "select user_id, email, user_name, address, phone  from member where user_id = ?";
+		try {
+			pstat = conn.prepareStatement(query);
+			pstat.setString(1, userId);
+			rSet = pstat.executeQuery();
+			
+			if(rSet.next()) {
+				member = new Member();
+				member.setUserId(userId);
+				member.setEmail(rSet.getString("email"));
+				member.setUserName(rSet.getString("user_name"));
+				member.setAddress(rSet.getString("address"));
+				member.setPhone(rSet.getString("phone"));
+				
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(rSet);
+			close(pstat);
+		}
+		
+		return member;
+	}
+	
 
 }

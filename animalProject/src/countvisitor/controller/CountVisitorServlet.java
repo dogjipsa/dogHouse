@@ -1,8 +1,9 @@
-package member.controller;
+package countvisitor.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Date;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -11,20 +12,23 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import member.model.service.MemberService;
-import member.model.vo.SearchingInfo;
+import org.json.simple.JSONObject;
+
+import countvisitor.model.dao.CountVisitorDao;
+import countvisitor.model.service.CountService;
+import countvisitor.model.vo.CountVisitor;
 
 /**
- * Servlet implementation class FindingPetSitterListServlet
+ * Servlet implementation class CountVisitorService
  */
-@WebServlet("/finding")
-public class FindingPetSitterServlet extends HttpServlet {
+@WebServlet("/cntserve")
+public class CountVisitorServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public FindingPetSitterServlet() {
+    public CountVisitorServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -34,21 +38,21 @@ public class FindingPetSitterServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		String userid = request.getParameter("userid");
+		/*CountVisitorDao cvDao = new CountVisitorDao();*/
+		Date today = new Date();
+    	java.sql.Date sqlDate = new java.sql.Date(today.getTime());
 		
-		ArrayList<SearchingInfo> list = new MemberService().searchPetSitter(userid);
-		System.out.println("서블릿: " + userid);
-		response.setContentType("text/html; charset=utf-8");
-		RequestDispatcher view = null;
-		
-		System.out.println("서블릿: " + list);
-		if(list.size() > 0) {
-			view = request.getRequestDispatcher("views/findSitter/petSitterListView.jsp");
-			request.setAttribute("list", list);
-			view.forward(request, response);
-		}else {
+		CountService cntService = new CountService();
+		CountVisitor cntList = cntService.selectCntVisitor(sqlDate);
+		System.out.println(cntList + " <- servlet size");
+		if(cntList != null) {
 			PrintWriter out = response.getWriter();
-		
+			response.setContentType("application/json; charset=utf-8");
+			JSONObject job = new JSONObject();
+			job.put("cnt", cntList.getCountVisitor());
+			System.out.println(job.toJSONString() + " <- job");
+			out.println(job.toJSONString());
+			
 		}
 	}
 

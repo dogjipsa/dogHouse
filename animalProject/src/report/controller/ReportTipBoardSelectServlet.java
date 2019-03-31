@@ -1,28 +1,30 @@
-package tipboard.controller;
+package report.controller;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import freeboard.model.service.FreeBoardService;
+import freeboard.model.vo.FreeBoard;
 import tipboard.model.service.TipBoardService;
 import tipboard.model.vo.TipBoard;
 
 /**
- * Servlet implementation class TipBoardSearchWriterServlet
+ * Servlet implementation class ReportTipBoardSelectServlet
  */
-@WebServlet("/tsearchw")
-public class TipBoardSearchWriterServlet extends HttpServlet {
+@WebServlet("/rtselect")
+public class ReportTipBoardSelectServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public TipBoardSearchWriterServlet() {
+    public ReportTipBoardSelectServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -31,11 +33,23 @@ public class TipBoardSearchWriterServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String writer = request.getParameter("keyword");
-		int currentPage = 1;
-		int limit = 10;
+		int reportTipBoardNo = Integer.parseInt(request.getParameter("reportTipBoardNo"));
+		
 		TipBoardService tservice = new TipBoardService();
-		ArrayList<TipBoard> list = tservice.tipBoardSearchWriter(writer, currentPage, limit);
+		TipBoard tipboard = tservice.selectTipBoard(reportTipBoardNo);
+		
+		response.setContentType("text/html; charset=utf-8");
+		RequestDispatcher view = null;
+		if(tipboard != null) {
+			view = request.getRequestDispatcher("views/report/reportTipBoardInsertView.jsp");
+			request.setAttribute("tipboard", tipboard);
+			view.forward(request, response);
+		}else {
+			view = request.getRequestDispatcher("views/freeboard/freeBoardError.jsp");
+			request.setAttribute("message","자유게시판 "  + reportTipBoardNo + "번 게시글 신고페이지로 이동 실패!");
+			view.forward(request, response);
+		}
+		
 	}
 
 	/**

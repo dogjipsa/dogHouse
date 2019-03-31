@@ -1,29 +1,28 @@
-package tipboard.controller;
+package manager.controller;
 
 import java.io.IOException;
-import java.sql.Date;
-import java.util.ArrayList;
+import java.io.PrintWriter;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import tipboard.model.service.TipBoardService;
-import tipboard.model.vo.TipBoard;
+import manager.model.service.ManagerService;
 
 /**
- * Servlet implementation class TipBoardSearchDateServlet
+ * Servlet implementation class ManagerDeleteListServlet
  */
-@WebServlet("/tsearchd")
-public class TipBoardSearchDateServlet extends HttpServlet {
+@WebServlet("/mandelete")
+public class ManagerDeleteListServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public TipBoardSearchDateServlet() {
+    public ManagerDeleteListServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -32,13 +31,28 @@ public class TipBoardSearchDateServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		Date begin = Date.valueOf(request.getParameter("begin"));
-		Date end = Date.valueOf(request.getParameter("end"));
-		int currentPage = 1;
-		int limit = 10;
-		TipBoardService tservice = new TipBoardService();
-		ArrayList<TipBoard> list = tservice.tipBoardSearchDate(begin, end, currentPage, limit);
+		// 자유게시판 관리자 게시물 삭제 처리용 컨트롤러
+		request.setCharacterEncoding("utf-8");
+		response.setContentType("text/html;charset=utf-8");
+		String []delNo = request.getParameterValues("delNo[]");
+		System.out.println(delNo);
+		int result = 0;
+		
+		for(int i = 0; i < delNo.length; i ++) {
+			result = new ManagerService().managerDeleteFreeBoard(delNo[i]);
+		}
+		PrintWriter out = response.getWriter();
+		if(result > 0) {
+			out.println("y");
+		} else {
+			out.print("n");
+		}
 	}
+
+
+		
+		/**/
+	
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)

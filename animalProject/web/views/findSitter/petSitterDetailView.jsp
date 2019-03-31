@@ -5,7 +5,10 @@
 	Member petSitter = (Member)request.getAttribute("petSitter");
 	ArrayList<SitterImage> sitterFacilityImg = (ArrayList<SitterImage>)request.getAttribute("sitterFacilityImg");
 	String service = (String)request.getAttribute("service");
+
 	System.out.println("view에서 service 확인 : "+service);
+	System.out.println("아이디 확인"+petSitter);
+
 %>
 <!DOCTYPE html>
 <html>
@@ -29,9 +32,9 @@ h2{
 }
 .board { 
    position: relative;
-   left : 150px;
-   top: 100px;
-   width: 60%;
+   left : 10px;
+   top: 20px;
+   width: 100%;
    border-collapse: collapse;
    text-align: left;
    line-height: 1.5;
@@ -187,13 +190,14 @@ img {
   opacity: 1;
 }
 </style>
+
 </head>
 <body>
 <div>
 <%@ include file="..//common/menu.jsp" %>
 <div id="wrap" >
 <div id="content">
-<div style="float:left; width:800px;"><!-- 가운데 영역, 영역구분을 위해  float처리  -->
+<div style="float:left; width:700px;"><!-- 가운데 영역, 영역구분을 위해  float처리  -->
 <div class="container"><!-- 슬라이드쇼 https://www.w3schools.com/howto/howto_js_slideshow_gallery.asp 참고  -->
   <div class="mySlides">
     <div class="numbertext">1 / 3</div>
@@ -265,8 +269,8 @@ function showSlides(n) {
 }
 </script>
 
-<div style="height:800px; width:800px">
-<table class="board">
+<div style="height:800px; width:700px">
+<table class="board" >
 <thead><tr><th>인적사항</th></tr></thead>
 <tbody><tr><td rowspan=3><img src="/doggybeta/files/profile/<%=petSitter.getUserrefile()%>" width=100%></td><td>이름 : <%=petSitter.getUserName() %></td></tr>
 <tr><td>나이 : <%=petSitter.getUserDate() %></td><td></td></tr>
@@ -274,7 +278,7 @@ function showSlides(n) {
 </table>
 <br>
 <!-- 펫시터 조회  -->
-<table class="board">
+<table class="board" >
 
 <thead><tr><th>세부조건</th></tr></thead>
 <tr><td>돌봄 가능한 강아지 크기&나이 :  </td><td></td></tr>
@@ -313,6 +317,7 @@ var map = new daum.maps.Map(mapContainer, mapOption);
 var geocoder = new daum.maps.services.Geocoder();
 
 // 주소로 좌표를 검색합니다
+
 geocoder.addressSearch('<%=petSitter.getAddress()%>', function(result, status) {
 
     // 정상적으로 검색이 완료됐으면 
@@ -386,14 +391,19 @@ geocoder.addressSearch('<%=petSitter.getAddress()%>', function(result, status) {
 </div>
 
 </div><!-- 가운데 영역  끝-->
-<div style="float:left;"><!-- 오른쪽 영역  --> 
+<div style="float:left;padding-top:100px"><!-- 오른쪽 영역  --> 
 <div><!-- 날짜 입력  -->
 <form action="/doggybeta/bkinsert" type="post">
-<input type="text" name="datetimes" />
+<input type="text" name="datetimes" onchange="priceCal()" id="datetimes" size="35"/>
+<br><br>
 <textarea name="etc"></textarea>
 <input type="hidden" name="service" value="<%=service%>">
 <input type="hidden" name="petSitterId" value="<%=petSitter.getUserId()%>">
 <input type="hidden" name="userId" value="<%=loginUser.getUserId()%>">
+<input type="hidden" name="price" id="price" value="<%=petSitter.getPrice() %>">
+<br><br>
+총 가격 : <input type="text" value=""  id="priceSum" name="priceSum" readonly> 원
+<br><br>
 <input type="submit" value="예약하기">
 
 <script>
@@ -407,8 +417,26 @@ $(function() {
     }
 
   });
-  console.log($('input[name="datetimes"]').val());
+ 
+  /* 가격계산 ajax  */
 });
+function priceCal(){
+	 console.log($('input[name="datetimes"]').val());
+	 console.log($('#datetimes').val());
+	 console.log($('#price').val());
+   	 $.ajax({
+				url: '/doggybeta/priceCal',
+				type: 'post',
+				dataType: 'json',
+				data: {datetimes: $('#datetimes').val(),
+						price: $('#price').val()},
+				success: function(data){
+							$("#priceSum").val(data.pricesum);
+						}
+				
+				
+			});
+  }
 </script>
 </form>
 </div>

@@ -199,15 +199,15 @@ h2{
 	<%-- 페이지징 처리 --%>
 <div class="fpage" style="text-align:center;">
 <% if(currentPage <= 1){ %>
-	[맨처음]&nbsp;
+	◀◀&nbsp;
 <% }else{ %>
-	<a href="/doggybeta/flist?page=1">[맨처음]</a>&nbsp;
+	<a href="/doggybeta/flist?page=1">◀◀</a>&nbsp;
 <% } %> 
 <!-- 이전 -->
 <% if((currentPage - 10) <= startPage && (currentPage - 10) >= 1){ %>
-	<a href="/doggybeta/flist?page=<%= startPage - 1 %>"></a>
+	<a href="/doggybeta/flist?page=<%= startPage - 1 %>">◀</a>
 <% }else{ %>
-	[prev]
+	◀
 <% } %>
 
 <!-- 현재 페이지가 포함된 페이지 그룹 숫자 출력 처리 -->
@@ -221,21 +221,21 @@ h2{
 <!-- 다음 -->
 <% if(endPage < maxPage){ %>
 <% if(opt == null){ %>
-	<a href="/doggybeta/flist?page=<%= endPage + 1 %>">[next]</a>
+	<a href="/doggybeta/flist?page=<%= endPage + 1 %>">▶</a>
 <% }else{ %>
-	<a href="/doggybeta/flist?inputdata=<%= inputdata %>&page=<%= endPage + 1 %>&opt=<%= opt %>"></a>[next]&nbsp;
+	<a href="/doggybeta/flist?inputdata=<%= inputdata %>&page=<%= endPage + 1 %>&opt=<%= opt %>">▶</a>&nbsp;
 <% } %>
 <% }else{ %>
-	[next]&nbsp;
+	▶&nbsp;
 <% } %>
 
 <% if(currentPage >= maxPage){ %>
 	[맨끝]
 <% }else{ %>
 <% if(opt == null){ %>
-	<a href="/doggybeta/flist?page=<%= maxPage %>">[맨끝]</a>
+	<a href="/doggybeta/flist?page=<%= maxPage %>">▶▶</a>
 <% }else{ %>
-	<a href="/doggybeta/flist?inputdata=<%= inputdata %> %>page=<%= maxPage %>&opt=<%= opt %>">[맨끝]</a>
+	<a href="/doggybeta/flist?inputdata=<%= inputdata %> %>page=<%= maxPage %>&opt=<%= opt %>">▶▶</a>
 <%  } %>
 <% } %>
 </div> 	  

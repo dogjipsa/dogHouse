@@ -18,7 +18,7 @@ public class FreeBoardReplyDao {
 		int result = 0;
 		PreparedStatement pstmt = null;
 		
-		String query = "INSERT INTO FREEBOARD_REPLY VALUES(seq_freply.nextval, ?, SYSDATE, ?, ?, 'N')";
+		String query = "INSERT INTO FREEBOARD_REPLY VALUES(seq_freereplyno.nextval, ?, SYSDATE, ?, ?, 'n')";
 		
 		try {
 			pstmt = conn.prepareStatement(query);
@@ -155,7 +155,7 @@ public class FreeBoardReplyDao {
 		int freeBoardNo = (Integer)map.get("freeBoardNo");
 		int listCount = 1;
 	
-		String query = "select count(*) from freeboard_reply where freeboard_no = ?";
+		String query = "select count(*) from freeboard_reply where freeboard_no = ? and FREEBOARD_DELETE='n'";
 		
 		try {
 			pstmt = conn.prepareStatement(query);

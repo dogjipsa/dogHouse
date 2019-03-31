@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * Servlet implementation class BoardFileDownServlet
  */
-@WebServlet("/bfdown")
+@WebServlet("/ffdown")
 public class freeBoardFileDownServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -41,7 +41,7 @@ public class freeBoardFileDownServlet extends HttpServlet {
 		String renameFileName = request.getParameter("rfile");
 
 		// 3. 웹프로젝트 내의 저장폴더 지정
-		String readFolder = request.getSession().getServletContext().getRealPath("/files/board");
+		String readFolder = request.getSession().getServletContext().getRealPath("/files/freeBoard");
 
 		// 4. 클라이언트로 내보낼 출력 스트림 생성
 		ServletOutputStream downOut = response.getOutputStream();

@@ -34,7 +34,7 @@ public class PetSitterDetailServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		//펫시터의 저장된 정보를 받아와야 함.
-		String petSitterId = "user01";//예를 들어 user01
+		String petSitterId = request.getParameter("petSitterId");;//예를 들어 user01
 		//request.getParameter("");//list에서 클릭시 parameter값으로 넘겨 받아야 함.
 		Member petSitter = new MemberService().selectDetailPetSitter(petSitterId);
 		ArrayList<SitterImage> sitterFacilityImg = new MemberService().selectSitterFacilityImg(petSitterId);

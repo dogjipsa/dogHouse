@@ -34,12 +34,12 @@ public class TipBoardReplyDeleteServlet extends HttpServlet {
 		int tipReplyBoardNum = Integer.parseInt(request.getParameter("trnum"));
 		int tipBoardNum = Integer.parseInt(request.getParameter("tnum"));
 		
-		int result = new TipBoardReplyService().deleteTipBoardReply(tipBoardNum);
+		int result = new TipBoardReplyService().deleteTipBoardReply(tipReplyBoardNum);
 	
 	
 		RequestDispatcher view = null;
 		if(result > 0) {
-			response.sendRedirect("/doggybeta/fdetail?fnum=" + tipBoardNum);
+			response.sendRedirect("/doggybeta/tdetail?tnum=" + tipBoardNum);
 
 		}else {
 			view = request.getRequestDispatcher("views/tipBoard/tipBoardError.jsp");

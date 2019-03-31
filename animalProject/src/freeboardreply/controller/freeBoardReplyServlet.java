@@ -77,11 +77,11 @@ public class freeBoardReplyServlet extends HttpServlet {
 		map.put("freeBoardNo", freeBoardNo);
 		map.put("startRow", currentPage*10-9);// 1, 11, 21, 31....
 		
-		System.out.println("map : " + map.get("freeBoardNo") + ", " + map.get("startRow"));
+		//System.out.println("map : " + map.get("freeBoardNo") + ", " + map.get("startRow"));
 		
 		ArrayList<FreeBoardReply> flist = frservice.selectReplyList(map);
 		for(FreeBoardReply f : flist) {
-		System.out.println("댓글List : " + f);
+		//System.out.println("댓글List : " + f);
 		}
 		
 		response.setContentType("text/html; charset=utf-8");
