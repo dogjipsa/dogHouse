@@ -100,4 +100,49 @@ public class PetDao {
 		return list;
 	}
 
+	public int updatePet(Connection conn, Pet pet) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		
+		String query = "UPDATE PET SET PET_NAME =?, PET_BREADS =?, PET_DATE =?, PET_SIZE = ?, PET_GENDER =? , PET_NEUTRALIZE = ?, PET_CHARATER = ?, USER_ID =?, PET_ORIGINFILE =?, PET_REFILE = ? WHERE PET_NO = ? ";
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, pet.getPetName());
+			pstmt.setString(2, pet.getBreeds());
+			pstmt.setDate(3, pet.getPetDate());
+			pstmt.setString(4, pet.getPetSize());
+			pstmt.setString(5, pet.getPetGender());
+			pstmt.setString(6, pet.getPetNeutralize());
+			pstmt.setString(7, pet.getPetCharater());
+			pstmt.setString(8, pet.getUserId());
+			pstmt.setString(9, pet.getOriginFileName());
+			pstmt.setString(10, pet.getRenameFileName());
+			pstmt.setInt(11, pet.getPetNo());
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		return result;
+	}
+
+	public int deletePet(Connection conn, int pno) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String query = "DELETE PET WHERE PET_NO = ?";
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, pno);
+			result = pstmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
+
 }
