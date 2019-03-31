@@ -22,7 +22,7 @@ import='freeboard.model.vo.FreeBoard, java.util.ArrayList, faq.model.vo.Faq,
 <link href="/doggybeta/resources/css/manager/managerBoardList.css" rel="stylesheet" type="text/css">
 <script type="text/javascript" src="/doggybeta/resources/js/jquery-3.3.1.min.js"></script>
 <script type="text/javascript">
-$(document).ready(function(){
+/* $(function(){
 	$('ul.tabs li').click(function(){
 		var tab_id = $(this).attr('data-tab');
 
@@ -33,20 +33,7 @@ $(document).ready(function(){
 		$("#"+tab_id).addClass('current');
 		console.log();
 	}); //click function
-}); //ready
-/* $(function() {
-	$(".row").hide();
-    $(".row:first").show();
-    
-    $("ul.tabs li").click(function () {
-        $("ul.tabs li").removeClass("active").css("color", "#333");
-        //$(this).addClass("active").css({"color": "darkred","font-weight": "bolder"});
-        $(this).addClass("active").css("color", "darkred");
-        $(".row").hide()
-        var activeTab = $(this).attr("rel");
-        $("#" + activeTab).fadeIn()
-    });
-}); */
+}); //ready */
 /*$(function() {
 	$.ajax({
 		url: '/doggybeta/manboard',
@@ -84,6 +71,45 @@ $(document).ready(function(){
 	/*});//ajax
 });//ready 
 */
+$(function(){
+    //최상단 체크박스 클릭
+    $("#checkAll").click(function(){
+        //클릭되었으면
+        if($("#checkAll").prop("checked")){
+            //input태그의 name이 chk인 태그들을 찾아서 checked옵션을 true로 정의
+            $("input[class=checkDel]").prop("checked",true);
+            //클릭이 안되있으면
+        }else{
+            //input태그의 name이 chk인 태그들을 찾아서 checked옵션을 false로 정의
+            $("input[class=checkDel]").prop("checked",false);
+        }
+    }); //전체선택 click fx
+    
+    var chkBoxArray = [];
+    var cBox = $('.checkDel');
+    
+    $('#del').click(function() {
+    	$('input[name=delNo]:checked').each(function(i){
+    		chkBoxArray.push($(this).val());
+    	});
+    	
+    	console.log(chkBoxArray);
+    	alert(chkBoxArray);
+    	if(confirm('정말 삭제하시겠습니까?')) {
+    		$.ajax({
+    			url: '/doggybeta/mandelete',
+    			datatype: 'text',
+    			data: { delNo: chkBoxArray },
+    			type: 'post',
+    			cache: false,
+    			success: function(data) {
+    				chageVal(data);
+    				alert('변경이 완료되었습니다!');
+    			} //success
+    		});//ajax
+        } //if confirm
+    }); //delete click
+});
 </script>
 </head>
 <body id='mBoardListBody'>
@@ -93,9 +119,6 @@ $(document).ready(function(){
 	<h3>게시판 관리</h3>
 	<ul class="tabs">
 		<li class="tab-link current" data-tab="tab-1">자유게시판</li>
-		<li class="tab-link" data-tab="tab-2">팁 게시판</li>
-		<li class="tab-link" data-tab="tab-3">FAQ</li>
-		<li class="tab-link" data-tab="tab-4">Tab Four</li>
 	</ul>
 	<!-- <div class='tabs'>
 		<button class="tab-link current" data-tab="tab-1">자유</button>
@@ -118,13 +141,13 @@ $(document).ready(function(){
 			<% for(FreeBoard fb : list) { %>
 			<tbody>
 				<tr>
-					<td class='firstTd'><input type='checkbox'/>삭제</td>
+					<td class='firstTd'><input type='checkbox' class='checkDel' value='<%= fb.getFreeboardNo() %>' name='delNo'/>삭제</td>
 					<td>자유</td>
 					<td><%= fb.getFreeboardNo() %></td>
-					<td class='fourthTd'><a href='/doggybeta/manbdetail?bnum=<%= fb.getFreeboardNo() %>&page=<%= currentPage %>'><%= fb.getFreeboardTitle() %></a></td>
+					<td class='fourthTd'><a href='/doggybeta/manbdetail?fnum=<%= fb.getFreeboardNo() %>&page=<%= currentPage %>'><%= fb.getFreeboardTitle() %></a></td>
 					<td><%= fb.getUserId() %></td>
 					<td><%= fb.getFreeboardDate() %></td>
-					<td><%= fb.getFreeboardDelete() %></td>
+					<td class='yorn'><%= fb.getFreeboardDelete() %></td>
 				</tr>
 			</tbody>
 			<% } %> <%-- for each --%>
@@ -162,8 +185,16 @@ $(document).ready(function(){
 		<% } %>
 		</div>
 		<a href = "write.jsp" class="btn btn-primary pull-right">글쓰기</a>
-		<a href = "#" >전체 삭제</a>
+		<!-- <a href = "#" >전체 삭제</a> -->
+		
 	</div>
+		<input type="checkbox" id="checkAll" class='styled-checkbox'/>전체선택
+		<input type='button' id='del' value='선택삭제'/>
+		<select name='chooson'>
+			<option value='delyorn'>삭제여부</option>
+			<option value='writer'>작성자</option>
+			<option value='createDate'>작성일</option>
+		</select>
 </div>
 
 </section>

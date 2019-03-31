@@ -41,7 +41,7 @@ public class BookingLogListServlet extends HttpServlet {
 			throws ServletException, IOException {
 		String userid = request.getParameter("userid");
 		int currentPage = 1;
-		int limit = 2;
+		int limit = 12;
 		int countPage = 10;
 		if (request.getParameter("page") != null) {
 			currentPage = Integer.parseInt(request.getParameter("page"));

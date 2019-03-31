@@ -32,7 +32,7 @@ public class ManagerBoardDetailServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// 관리자 페이지 게시판 상세보기 처리용 컨트롤러
-		int boardNum = Integer.parseInt(request.getParameter("bnum"));
+		int boardNum = Integer.parseInt(request.getParameter("fnum"));
 		int currentPage = Integer.parseInt(request.getParameter("page"));
 		
 		FreeBoardService fService = new FreeBoardService();

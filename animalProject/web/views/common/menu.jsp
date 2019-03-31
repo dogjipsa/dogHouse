@@ -28,16 +28,16 @@
 <script type="text/javascript" src="https://static.nid.naver.com/js/naveridlogin_js_sdk_2.0.0.js" charset="utf-8"></script>
 <script type="text/javascript">
 	 $(function() {
- 		$('.login-form').hide();
+ 		$('.loginbody').hide();
 		 
 		$('.btn').click(function() {
 			$('body').append('<div id="mask"></div>');
 		    $('#mask').fadeIn(300);
-		    $('.login-form').fadeIn(300);
-			$('.login-form').show();
+		    $('.loginbody').fadeIn(280);
+			$('.loginbody').show();
 			
 		    $('#mask').click(function() {
-		    	$('#mask, .login-form').fadeOut(300);
+		    	$('#mask, .loginbody').fadeOut(300);
 		    });
 		    
 		});
@@ -121,7 +121,7 @@
 		<p align='center' id='orid'>------- 또는 -------</p>
 			<%
    				 String clientId = "obXTFPuiHDCuNQb5kAmx";//애플리케이션 클라이언트 아이디값";
-   				 String redirectURI = URLEncoder.encode("http://127.0.0.1:8888/doggybeta/naverlogin", "UTF-8");
+   				 String redirectURI = URLEncoder.encode("http://127.0.0.1:8333/doggybeta/naverlogin", "UTF-8");
    				 SecureRandom random = new SecureRandom();
    				 String state = new BigInteger(130, random).toString();
    				 String apiURL = "https://nid.naver.com/oauth2.0/authorize?response_type=code";

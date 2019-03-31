@@ -94,8 +94,5 @@ import='freeboard.model.vo.FreeBoard, java.util.ArrayList, faq.model.vo.Faq,
 	</div>
 </div>
 </section>
-<%-- <% } else { %>
-<% pageContext.forward("/views/manager/managerLogin.jsp"); %>
-<% } %> --%>
 </body>
 </html>

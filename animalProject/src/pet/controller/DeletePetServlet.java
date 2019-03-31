@@ -1,7 +1,7 @@
-package tipboard.controller;
+package pet.controller;
 
 import java.io.IOException;
-import java.util.ArrayList;
+import java.io.PrintWriter;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -9,20 +9,19 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import tipboard.model.service.TipBoardService;
-import tipboard.model.vo.TipBoard;
+import pet.model.service.PetService;
 
 /**
- * Servlet implementation class TipBoardSearchWriterServlet
+ * Servlet implementation class DeletePetServlet
  */
-@WebServlet("/tsearchw")
-public class TipBoardSearchWriterServlet extends HttpServlet {
+@WebServlet("/pdels")
+public class DeletePetServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public TipBoardSearchWriterServlet() {
+    public DeletePetServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -31,11 +30,17 @@ public class TipBoardSearchWriterServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String writer = request.getParameter("keyword");
-		int currentPage = 1;
-		int limit = 10;
-		TipBoardService tservice = new TipBoardService();
-		ArrayList<TipBoard> list = tservice.tipBoardSearchWriter(writer, currentPage, limit);
+		int pno = Integer.parseInt(request.getParameter("pno"));
+		int result = new PetService().deletePet(pno);
+		
+		response.setContentType("text/html; charset=utf-8");
+		PrintWriter out = response.getWriter();
+		if(result > 0) 
+			out.write("ok");
+		 else 
+			out.write("no");
+		out.flush();
+		out.close();
 	}
 
 	/**

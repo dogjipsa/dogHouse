@@ -199,6 +199,7 @@ public class MemberService {
 		
 
 	}
+
 	
 	public ArrayList<SitterImage> selectSitterFacilityImg(HashMap<String, Object> img) {
 		Connection conn = getConnection();
@@ -218,4 +219,15 @@ public class MemberService {
 		close(conn);
 		return result;
 	}
+
+
+	public Member selectDetailMember(String userId) {
+		Connection conn = getConnection();
+		Member member = mdao.selectDetailMember(conn, userId);
+		close(conn);
+		return member;
+	}
+
+	
+
 }

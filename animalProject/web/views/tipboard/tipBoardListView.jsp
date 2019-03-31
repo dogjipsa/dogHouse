@@ -219,7 +219,7 @@ h2{
 								%>
 								<a href="/doggybeta/tlist?page=<%=1%>">◀◀</a>
 								<% }else{ %>
-								<a href="/doggybeta/tlist?word=<%=keyword%>&page=<%=1%>&option=<%=search%>">[맨처음]</a>
+								<a href="/doggybeta/tlist?word=<%=keyword%>&page=<%=1%>&option=<%=search%>">◀◀</a>
 								<%} %>
 				<%	}%>
 				
