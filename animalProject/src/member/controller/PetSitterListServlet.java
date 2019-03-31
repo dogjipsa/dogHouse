@@ -17,7 +17,9 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 import member.model.service.MemberService;
-import member.model.vo.SearchingInfo;
+import member.model.vo.Member;
+
+import member.model.vo.SitterImage;
 
 /**
  * Servlet implementation class PetSitterListServlet
@@ -40,32 +42,68 @@ public class PetSitterListServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		request.setCharacterEncoding("UTF-8");
-
-		//서비스, 지도, 날짜 넘기고
+		String userId = request.getParameter("userid");
 		String serviceKind = request.getParameter("service");
 		String jido = request.getParameter("jido");
-		System.out.println("주소 값 : " + jido);
-		System.out.println("서비스 종류 : " + serviceKind); //넘어가는 거 확인
+		String detail = request.getParameter("detail");
+		HashMap<String, Object> map = new HashMap<String, Object>();
 		
-		ArrayList<SearchingInfo> list = new ArrayList<SearchingInfo>();
-
-		list = new MemberService().findPetSitterList(jido);
+		map.put("userid", userId);
+		map.put("jido", jido);
+		map.put("detail", detail);
 		
-		System.out.println("펫시터 리스트 서블릿 : " + list);
+	
 		
-
+		ArrayList<Member> list = new MemberService().findPetSitterList(map);//주소에 맞는 펫시터를 찾기
+		//System.out.println("서블릿에서 list에 담긴 값 : " + list);
+		
 		response.setContentType("text/html; charset=utf-8");
 		RequestDispatcher view = null;
+		String petSitterId = null;
+		
+		int count = new MemberService().countPetSitter(map);
+		//System.out.println("건 수 조회 : " + count);
+		HashMap<String, String> img = null;
+		ArrayList<SitterImage> imglist = null; 
+		ArrayList<String> address = null;
+		
+		for(Member m : list) {
+			petSitterId = m.getUserId();
+			//System.out.println("for문 : " + petSitterId);
+			imglist = new MemberService().selectSitterFacilityImg(petSitterId);
+			
+			
+			/*img.put(petSitterId, imglist.get(0).getRenameFile());*/
+			}
+		address = new ArrayList<String>();
+		for(int i = 0; i < list.size(); i++) {
+		address.add(list.get(i).getAddress());
+			//System.out.println("주소 : " + address);
+			System.out.println("list 확인용 서블릿 : " + imglist.get(i).getRenameFile()); 
+			//System.out.println(sitterFacilityImg.get(0).getRenameFile());
+		}
+		
+		//System.out.println("주소 제대로 : " + address);
+
 		
 		if(list.size() > 0) {
 			view = request.getRequestDispatcher("views/findSitter/petSitterListView.jsp");
-			request.setAttribute("list", list);
+			
+			//request.setAttribute("map", img);
+			request.setAttribute("list", list);		
+			request.setAttribute("imglist", imglist);
+			request.setAttribute("count", count);
+			request.setAttribute("address", address);
+			request.setAttribute("service", serviceKind);
+			request.setAttribute("petSitterId", petSitterId);//petsitterdetail.jsp로 넘긴 후 
 			view.forward(request, response);
 		}else {
 			PrintWriter out = response.getWriter();
-			out.println("<script>alert('조건에 맞는 펫시터가 없습니다. 다시 검색 해주세요.'); location.href='views/findSitter/petSitterListView.jsp';</script>");
+			out.println("<script>alert('검색된 내용이 없습니다.'); location.href='views/findSitter/petSitterListView.jsp';</script>");
 			out.flush();
 		}
+		
+		
 		
 		
 		
