@@ -10,18 +10,19 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import question.model.service.QuestionService;
+import question.model.vo.Question;
 
 /**
- * Servlet implementation class questionDeleteServlet
+ * Servlet implementation class questionReplyUpdateServlet
  */
-@WebServlet("/qdelete")
-public class questionDeleteServlet extends HttpServlet {
+@WebServlet("/qreplyup")
+public class questionReplyUpdateServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public questionDeleteServlet() {
+    public questionReplyUpdateServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -30,15 +31,23 @@ public class questionDeleteServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		int questionNo = Integer.parseInt(request.getParameter("no"));
-				
-		if(new QuestionService().deleteQuestion(questionNo) > 0) {
-			response.sendRedirect("/doggybeta/qlist");
+		request.setCharacterEncoding("utf-8");
+		
+		Question question = new Question();
+		question.setQuestionNo(Integer.parseInt(request.getParameter("qno")));
+		question.setQuestionTitle(request.getParameter("qtitle"));
+		question.setQuestionContent(request.getParameter("qcontent"));
+		
+		int result = new QuestionService().updateReply(question);
+		
+		if(result > 0) {
+			response.sendRedirect("/doggybeta/qlist?page=" + Integer.parseInt(request.getParameter("page")));
 		}else {
 			RequestDispatcher view = request.getRequestDispatcher("views/question/questionError.jsp");
-			request.setAttribute("message", questionNo + "번 글 삭제 실패!");
+			request.setAttribute("message", question.getQuestionNo());
 			view.forward(request, response);
 		}
+		
 	}
 
 	/**

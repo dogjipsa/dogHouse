@@ -89,7 +89,7 @@
 				<ul class="m2">
 					<li><a href='/doggybeta/faqlist'>FAQ</a></li>
 					<li><a href='#'>이용방법</a></li>
-					<li><a href='#'>1:1문의</a></li>
+					<li><a href='/doggybeta/views/question/questionMainView.jsp'>1:1문의</a></li>
 				</ul>
 			</li>
 
@@ -192,7 +192,7 @@
 				<ul class="m2">
 					<li><a href='/doggybeta/faqlist'>FAQ</a></li>
 					<li><a href='#'>이용방법</a></li>
-					<li><a href='#'>1:1문의</a></li>
+					<li><a href='/doggybeta/views/question/questionMainView.jsp'>1:1문의</a></li>
 				</ul>
 			</li>
 
