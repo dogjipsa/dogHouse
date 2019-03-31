@@ -41,6 +41,7 @@ function requestPetListAjax() {
         while (petList.firstChild) {
             petList.removeChild(petList.firstChild);
         }
+        if(xhr.responseText){
         const json = JSON.parse(xhr.responseText);
 
         for (let i in json.list) {
@@ -52,7 +53,7 @@ function requestPetListAjax() {
                 'size': decodeURIComponent(json.list[i].size),
                 'gender': json.list[i].gender,
                 'neutral': json.list[i].neutral,
-                'etc': json.list[i].etc,
+                'etc': json.list[i].etc.replace(/\+/gi, " "),
                 'userid': json.list[i].userid,
                 'origin': json.list[i].origin,
                 'rename': json.list[i].rename
@@ -74,6 +75,7 @@ function requestPetListAjax() {
                 tabBtn.style.fontWeight = "bold";
                 petUpForm.reset();
                 document.querySelector('#pet_up_form input[name="userid"]').value = petInfo.userid;
+                document.querySelector('#pet_up_form input[name="pno"]').value = petInfo.pno;
                 document.querySelector('#pet_up_form input[name="pname"]').value = petInfo.pname;
                 document.querySelector('#pet_up_form input[name="breeds"]').value = petInfo.breeds;
                 const genders = document.querySelectorAll('#pet_up_form input[name="gender"]');
@@ -87,7 +89,8 @@ function requestPetListAjax() {
                         sizes[i].click();
                 }
                 document.querySelector('#pet_up_form input[name="birth"]').value = petInfo.birth;
-                document.querySelector('#pet_up_form textarea').setAttribute('placeholder', petInfo.etc);
+                document.querySelector('#pet_up_form input[name="origin"]').value = petInfo.origin;
+                document.querySelector('#pet_up_form textarea').value = petInfo.etc;
                 document.querySelector('#pet_up_form .pet__img__update').setAttribute('src', '/doggybeta/files/pet/' + petInfo.rename);
             });
 
@@ -167,27 +170,74 @@ function requestPetListAjax() {
             }
         }
     }
+}
     const requestData = 'userid=' + encodeURIComponent(userid.value)+'&page='+encodeURIComponent(chosenPage);
     xhr.open('POST', '/doggybeta/gplist');
     xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
     xhr.send(requestData);
 }
+const petUpForm = document.querySelector('#pet_up_form');
+// 펫 정보 삭제 Ajax
+const pDelButton = document.querySelector('#pet_del__btn');
+pDelButton.addEventListener('click', function(e){
+    e.preventDefault();
+    const xhr = new XMLHttpRequest();
+    xhr.onload = ()=>{
+        const popup = document.querySelector('.modal-content');
+        popup.style.display = "block";
+
+        // 클로징 처리
+        const mCloses = document.querySelectorAll('.m-close');
+        for (let i = 0; i < mCloses.length; i++) {
+            mCloses[i].addEventListener('click', () => {
+                popup.style.display = "none"; // 팝업 내리기
+                petUpForm.reset(); // 인풋 클리어                
+            });
+        }
+        modalText = document.getElementById('modal-text');
+        if (xhr.responseText === 'ok') {
+            modalText.textContent = "강아지를 성공적으로 삭제했습니다!";
+            requestPetListAjax();
+        } else {
+            modalText.textContent = "강아지 삭제에 실패했습니다. 관리자에게 문의하세요";
+        }
+    }
+    const pno = 'pno='+encodeURIComponent(petUpForm.querySelector('input[name="pno"]').value);
+    xhr.open('GET','/doggybeta/pdels?'+pno);
+    xhr.send();
+});
+
 // 펫 정보 수정 Ajax
 const pUpButton = document.querySelector('#pet_up__btn');
-const petUpForm = document.querySelector('#pet_up_form');
 pUpButton.addEventListener('click', (e)=>{
     e.preventDefault();
     const petData = new FormData(petUpForm);
-    console.log(petUpForm.querySelector('input[name="ppic"]').result)
     if(petUpForm.querySelector('input[name="ppic"]').result === undefined){
-        petData.append('ppic',)
+        petData.append('ppic2',document.querySelector('#pet_up_form input[name="origin"]'));
     }
     const xhr = new XMLHttpRequest();
     xhr.onload = ()=>{
+        const popup = document.querySelector('.modal-content');
+        popup.style.display = "block";
 
+        // 클로징 처리
+        const mCloses = document.querySelectorAll('.m-close');
+        for (let i = 0; i < mCloses.length; i++) {
+            mCloses[i].addEventListener('click', () => {
+                popup.style.display = "none"; // 팝업 내리기
+                petUpForm.reset(); // 인풋 클리어                
+            });
+        }
+        modalText = document.getElementById('modal-text');
+        if (xhr.responseText === 'ok') {
+            modalText.textContent = "강아지를 성공적으로 수정했습니다!";
+            requestPetListAjax();
+        } else {
+            modalText.textContent = "강아지 수정에 실패했습니다. 관리자에게 문의하세요";
+        }
     }
-    
-    console.log('passed');
+    xhr.open('POST','/doggybeta/pups');
+    xhr.send(petData);
 });
 
 // 업데이트 섹션 이미지 프리뷰
@@ -515,11 +565,21 @@ function requestBkAjax() {
                     'price': json.list[i].price + "원",
                     'hostId': json.list[i].puserid,
                     'date': json.list[i].indate + " ~ " + json.list[i].outdate,
-                    'pg': pg
                 }
                 for (let j in tableForm) {
                     const td = document.createElement('td');
                     td.textContent = tableForm[j];
+                    tr.appendChild(td);
+                }
+                if(json.list[i].progress === "2"){
+                    const td = document.createElement('td');
+                    const button = document.createElement("button");
+                    button.textContent = pg;
+                    button.classList= 'naverPayBtn';
+                    tr.appendChild(td).appendChild(button);
+                } else {
+                    const td = document.createElement('td');
+                    td.textContent = pg;
                     tr.appendChild(td);
                 }
             }

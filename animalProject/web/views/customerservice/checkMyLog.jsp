@@ -168,7 +168,9 @@
 				<div class="pet_list_pagination"></div>
 				<div class="pet_update">
 					<form id="pet_up_form">
+						<input type="hidden" name="pno">
 						<input type="hidden" name="userid">
+						<input type="hidden" name="origin">
 						<p>Name</p>
 						<input type="text" name="pname">
 						<span class="flex__box fbox1">
@@ -181,11 +183,11 @@
 								<input type="date" name="birth">
 							</div>
 						</span>
-						
+
 						<span class="flex__box radio-toolbar">
 							<div>
 								<p>Gender</p>
-								<section>				
+								<section>
 									<input type="radio" name="gender" id="cml_he" value="M">
 									<label for="cml_he">He</label>
 									<input type="radio" name="gender" id="cml_she" value="F">
@@ -206,11 +208,11 @@
 								</section>
 							</div>
 						</span>
-								<p>Character</p>
-								<textarea name="etc" cols="18" rows="4"></textarea>					
-								<p>Profile</p>
-								<img src="" alt="" class="pet__img__update">
-								<input type="file" name="ppic" id="up_ppic">
+						<p>Character</p>
+						<textarea name="etc" cols="18" rows="4"></textarea>
+						<p>Profile</p>
+						<img src="" alt="" class="pet__img__update">
+						<input type="file" name="ppic" id="up_ppic">
 						<div class="updel__btns">
 							<button id="pet_up__btn">수정하기</button>
 							<button id="pet_del__btn">삭제하기</button>
@@ -232,9 +234,10 @@
 			</div>
 		</div>
 	</div>
-
 	<script src="/doggybeta/resources/js/checkMyLog.js"></script>
 	<script src="/doggybeta/resources/js/hmap.js"></script>
+	<script src="https://cdn.bootpay.co.kr/js/bootpay-3.0.0.min.js" type="application/javascript"></script>
+	<script src="/doggybeta/resources/js/npay.js"></script>
 </body>
 
 </html>
