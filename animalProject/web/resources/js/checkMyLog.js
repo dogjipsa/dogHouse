@@ -9,7 +9,7 @@ let chosenPage = 1;
 // section1 버튼 클릭 시 main 내용 변경 이벤트 처리
 for (let i = 0; i < items.length; i++) {
     items[i].addEventListener('change', function () {
-        while(pagination.firstChild){
+        while (pagination.firstChild) {
             pagination.removeChild(pagination.firstChild);
         }
         if (items[i].value === 'booking') {
@@ -24,7 +24,7 @@ for (let i = 0; i < items.length; i++) {
             hostMain.style.display = 'grid';
             requestHostAjax();
         }
-        if(items[i].value === 'addpet'){
+        if (items[i].value === 'addpet') {
             bkTable.style.display = 'none';
             hostMain.style.display = 'none';
             addPetMain.style.display = 'grid';
@@ -33,17 +33,17 @@ for (let i = 0; i < items.length; i++) {
     });
 }
 // 나의 펫 리스트 출력 Ajax
-function requestPetListAjax(){
+function requestPetListAjax() {
     const xhr = new XMLHttpRequest();
 
-    xhr.onload = () =>{
+    xhr.onload = () => {
         const petList = document.querySelector('.pet_list');
-        while(petList.firstChild){
+        while (petList.firstChild) {
             petList.removeChild(petList.firstChild);
         }
         const json = JSON.parse(xhr.responseText);
-        
-        for(let i in json.list){
+
+        for (let i in json.list) {
             const petInfo = {
                 'pno': json.list[i].pno,
                 'pname': decodeURIComponent(json.list[i].pname),
@@ -52,6 +52,7 @@ function requestPetListAjax(){
                 'size': decodeURIComponent(json.list[i].size),
                 'gender': json.list[i].gender,
                 'neutral': json.list[i].neutral,
+                'etc': json.list[i].etc,
                 'userid': json.list[i].userid,
                 'origin': json.list[i].origin,
                 'rename': json.list[i].rename
@@ -60,55 +61,182 @@ function requestPetListAjax(){
             tabBtn.classList.add('tabs__button');
             tabBtn.textContent = petInfo.pname;
             petList.appendChild(tabBtn);
-            
-            tabBtn.addEventListener('click', function(){
 
+            const petUpForm = document.querySelector('#pet_up_form');
+
+            tabBtn.addEventListener('click', function () {
+                const btns = document.querySelectorAll('.pet_list .tabs__button');
+                for (let i = 0; i < btns.length; i++) {
+                    btns[i].style.borderRight = "none";
+                    btns[i].style.fontWeight = "100";
+                }
+                tabBtn.style.borderRight = "4px solid #27AE60";
+                tabBtn.style.fontWeight = "bold";
+                petUpForm.reset();
+                document.querySelector('#pet_up_form input[name="userid"]').value = petInfo.userid;
+                document.querySelector('#pet_up_form input[name="pname"]').value = petInfo.pname;
+                document.querySelector('#pet_up_form input[name="breeds"]').value = petInfo.breeds;
+                const genders = document.querySelectorAll('#pet_up_form input[name="gender"]');
+                const sizes = document.querySelectorAll('#pet_up_form input[name="size"]');
+                for (let i = 0; i < genders.length; i++) {
+                    if (genders[i].value === petInfo.gender || genders[i].value === petInfo.neutral)
+                        genders[i].click();
+                }
+                for (let i = 0; i < sizes.length; i++) {
+                    if (sizes[i].value === petInfo.size)
+                        sizes[i].click();
+                }
+                document.querySelector('#pet_up_form input[name="birth"]').value = petInfo.birth;
+                document.querySelector('#pet_up_form textarea').setAttribute('placeholder', petInfo.etc);
+                document.querySelector('#pet_up_form .pet__img__update').setAttribute('src', '/doggybeta/files/pet/' + petInfo.rename);
             });
 
         }
+        if (petList.firstChild)
+            petList.firstChild.click();
+
+        // 펫 리스트 페이징 처리
+        const startPage = json.plist.start;
+        const endPage = json.plist.end;
+        const currentPage = json.plist.page;
+        const totalPage = json.plist.totalpage;
+        const listPagination = document.querySelector('.pet_list_pagination');
+
+        while (listPagination.firstChild) {
+            listPagination.removeChild(listPagination.firstChild);
+        }
+
+        const pageBox = document.createElement('div');
+        pageBox.setAttribute('class', 'pagebox');
+
+        if (startPage > 1) {
+            const pageBox = document.createElement('div');
+            pageBox.setAttribute('class', 'pagebox');
+            pageBox.textContent = '<<';
+            listPagination.appendChild(pageBox);
+            pageBox.onclick = () => {
+                chosenPage = 1;
+                requestPetListAjax();
+            }
+        }
+        if (currentPage > 1) {
+            const pageBox = document.createElement('div');
+            pageBox.setAttribute('class', 'pagebox');
+            pageBox.textContent = '<';
+            listPagination.appendChild(pageBox);
+            pageBox.onclick = () => {
+                chosenPage = currentPage - 1;
+                requestPetListAjax();
+            }
+        }
+        for (let i = startPage; i <= endPage; i++) {
+            const pageBox = document.createElement('div');
+            pageBox.setAttribute('class', 'pagebox');
+            if (i === currentPage) {
+                pageBox.textContent = i;
+                pageBox.style.color = 'dodgerblue';
+                listPagination.appendChild(pageBox);
+            } else {
+                pageBox.textContent = i;
+                listPagination.appendChild(pageBox);
+            }
+            pageBox.onclick = () => {
+                chosenPage = i;
+                requestPetListAjax();
+            }
+        }
+
+        if (currentPage < totalPage) {
+            const pageBox = document.createElement('div');
+            pageBox.setAttribute('class', 'pagebox');
+            pageBox.textContent = '>';
+            listPagination.appendChild(pageBox);
+            pageBox.onclick = () => {
+                chosenPage = currentPage + 1;
+                requestPetListAjax();
+            }
+        }
+        if (endPage < totalPage) {
+            const pageBox = document.createElement('div');
+            pageBox.setAttribute('class', 'pagebox');
+            pageBox.textContent = '>>';
+            listPagination.appendChild(pageBox);
+            pageBox.onclick = () => {
+                chosenPage = totalPage;
+                requestPetListAjax();
+            }
+        }
     }
-    const requestData = 'userid='+encodeURIComponent(userid.value);
-    xhr.open('POST','/doggybeta/gplist');
+    const requestData = 'userid=' + encodeURIComponent(userid.value)+'&page='+encodeURIComponent(chosenPage);
+    xhr.open('POST', '/doggybeta/gplist');
     xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
     xhr.send(requestData);
 }
+// 펫 정보 수정 Ajax
+const pUpButton = document.querySelector('#pet_up__btn');
+const petUpForm = document.querySelector('#pet_up_form');
+pUpButton.addEventListener('click', (e)=>{
+    e.preventDefault();
+    const petData = new FormData(petUpForm);
+    console.log(petUpForm.querySelector('input[name="ppic"]').result)
+    if(petUpForm.querySelector('input[name="ppic"]').result === undefined){
+        petData.append('ppic',)
+    }
+    const xhr = new XMLHttpRequest();
+    xhr.onload = ()=>{
 
+    }
+    
+    console.log('passed');
+});
 
-
+// 업데이트 섹션 이미지 프리뷰
+const upPicFile = document.querySelector('#pet_up_form #up_ppic');
+upPicFile.addEventListener('change', (e) => {
+    const img = e.target.files[0];
+    if (img) {
+        const reader = new FileReader();
+        reader.onload = (r) => {
+            document.querySelector('#pet_up_form .pet__img__update').setAttribute('src', r.target.result);
+        }
+        reader.readAsDataURL(img);
+    }
+})
 // 펫 추가 Ajax
 const pSubmitBtn = document.querySelector('#p-submit');
 const petRegForm = document.getElementById('pet_reg_form');
-pSubmitBtn.addEventListener('click', function(e){
+pSubmitBtn.addEventListener('click', function (e) {
     e.preventDefault();
     const petData = new FormData(petRegForm);
     const xhr = new XMLHttpRequest();
-    
-    xhr.onload = ()=>{
+
+    xhr.onload = () => {
         const popup = document.querySelector('.modal-content');
-        popup.style.display ="block";
+        popup.style.display = "block";
 
         // 클로징 처리
         const mCloses = document.querySelectorAll('.m-close');
-        for(let i = 0; i < mCloses.length; i++){
-            mCloses[i].addEventListener('click', ()=>{
-                popup.style.display ="none"; // 팝업 내리기
+        for (let i = 0; i < mCloses.length; i++) {
+            mCloses[i].addEventListener('click', () => {
+                popup.style.display = "none"; // 팝업 내리기
                 petRegForm.reset(); // 인풋 클리어
-                petImagePreview.setAttribute('src','/doggybeta/resources/images/default.jpg'); // 이미지 프리뷰 클리어
-                document.querySelector('fieldset').style ="block"; // page 1로 이동
-                document.querySelectorAll('fieldset')[2].style.display ="none"; // 현재 페이지 숨기기
+                petImagePreview.setAttribute('src', '/doggybeta/resources/images/default.jpg'); // 이미지 프리뷰 클리어
+                document.querySelector('fieldset').style = "block"; // page 1로 이동
+                document.querySelectorAll('fieldset')[2].style.display = "none"; // 현재 페이지 숨기기
                 document.querySelectorAll('#progressbar li')[1].classList.remove('active');
                 document.querySelectorAll('#progressbar li')[2].classList.remove('active');
             });
         }
         modalText = document.getElementById('modal-text');
-        if(xhr.responseText === 'ok'){
+        if (xhr.responseText === 'ok') {
             modalText.textContent = "강아지를 성공적으로 추가했습니다!";
+            requestPetListAjax();
         } else {
             modalText.textContent = "강아지 등록에 실패했습니다. 관리자에게 문의하세요";
         }
 
     }
-    xhr.open('POST','/doggybeta/addpet'); 
+    xhr.open('POST', '/doggybeta/addpet');
     xhr.send(petData);
 });
 
@@ -116,29 +244,29 @@ pSubmitBtn.addEventListener('click', function(e){
 let current_fs, next_fs, previous_fs;
 document.getElementById('puppybirth').valueAsDate = new Date();
 const nextBtns = document.querySelectorAll('.next');
-for(let i = 0; i < nextBtns.length; i++){
-    nextBtns[i].addEventListener('click',function(){
+for (let i = 0; i < nextBtns.length; i++) {
+    nextBtns[i].addEventListener('click', function () {
         current_fs = nextBtns[i].parentNode;
         next_fs = nextBtns[i].parentNode.nextElementSibling;
         const currentInputs = current_fs.querySelectorAll('input');
-        for(let i = 0; i < currentInputs.length; i++){
-            if(currentInputs[i].value === ""){
+        for (let i = 0; i < currentInputs.length; i++) {
+            if (currentInputs[i].value === "") {
                 currentInputs[i].style.boxShadow = '0 0 0 2px white, 0 0 0 3px red';
-                currentInputs[i].addEventListener('click', function(){
+                currentInputs[i].addEventListener('click', function () {
                     currentInputs[i].style.boxShadow = 'none';
                 })
                 return false;
             }
             currentInputs[i].style.boxShadow = 'none';
         }
-        document.querySelectorAll('#progressbar li')[indexOf(next_fs)].setAttribute('class','active');
-        next_fs.style.display ='block';
+        document.querySelectorAll('#progressbar li')[indexOf(next_fs)].setAttribute('class', 'active');
+        next_fs.style.display = 'block';
         current_fs.style.display = 'none';
     });
 }
 const prevBtns = document.querySelectorAll('.previous');
-for(let i = 0; i < prevBtns.length; i++){
-    prevBtns[i].addEventListener('click', function(){
+for (let i = 0; i < prevBtns.length; i++) {
+    prevBtns[i].addEventListener('click', function () {
         current_fs = prevBtns[i].parentNode;
         previous_fs = current_fs.previousElementSibling;
         document.querySelectorAll('#progressbar li')[indexOf(current_fs)].classList.remove('active');
@@ -150,17 +278,17 @@ for(let i = 0; i < prevBtns.length; i++){
 const realPetpic = document.querySelector('#petpic');
 const petpicBtn = document.getElementById('petpic-btn');
 const petImagePreview = document.getElementById('pet-img-preview');
-petpicBtn.addEventListener('click',(e)=>{
+petpicBtn.addEventListener('click', (e) => {
     e.preventDefault();
     realPetpic.click();
 });
 
-realPetpic.addEventListener('change', (e)=>{
+realPetpic.addEventListener('change', (e) => {
     const petpicFile = e.target.files[0];
-    if(petpicFile){
+    if (petpicFile) {
         const reader = new FileReader();
-        reader.onload = (r)=>{
-            petImagePreview.setAttribute('src',r.target.result);
+        reader.onload = (r) => {
+            petImagePreview.setAttribute('src', r.target.result);
         }
         reader.readAsDataURL(petpicFile);
     }
@@ -169,9 +297,9 @@ realPetpic.addEventListener('change', (e)=>{
 // 성별 라디오 버튼 커스터 마이징
 const genderRadios = document.querySelectorAll('.radio-box .gender');
 genderRadios[0].style.boxShadow = '0 0 0 2px white, 0 0 0 3px dodgerblue'; // default checked
-for(let i = 0; i < genderRadios.length; i++){
-    genderRadios[i].addEventListener('click', function(e){
-        for(let j = 0; j < genderRadios.length; j++){
+for (let i = 0; i < genderRadios.length; i++) {
+    genderRadios[i].addEventListener('click', function (e) {
+        for (let j = 0; j < genderRadios.length; j++) {
             genderRadios[j].style.boxShadow = 'none';
         }
         e.target.style.boxShadow = '0 0 0 2px white, 0 0 0 3px dodgerblue';
@@ -180,9 +308,9 @@ for(let i = 0; i < genderRadios.length; i++){
 // 애완견 크기 버튼 커스터 마이징
 const sizeRadios = document.querySelectorAll('.radio-box .size');
 sizeRadios[0].style.boxShadow = '0 0 0 2px white, 0 0 0 3px dodgerblue'; // default checked
-for(let i = 0; i < sizeRadios.length; i++){
-    sizeRadios[i].addEventListener('click', function(e){
-        for(let j = 0; j < sizeRadios.length; j++){
+for (let i = 0; i < sizeRadios.length; i++) {
+    sizeRadios[i].addEventListener('click', function (e) {
+        for (let j = 0; j < sizeRadios.length; j++) {
             sizeRadios[j].style.boxShadow = 'none';
         }
         e.target.style.boxShadow = '0 0 0 2px white, 0 0 0 3px dodgerblue';
@@ -190,12 +318,12 @@ for(let i = 0; i < sizeRadios.length; i++){
 }
 
 // 인덱스 리턴 메소드
-function indexOf(node){
+function indexOf(node) {
     const children = node.parentNode.childNodes;
     let num = 0;
-    for(let i = 0; i < children.length; i++){
-        if(children[i] === node) return num;
-        if(children[i].nodeType === 1 && children[i].nodeName === node.nodeName) num++;
+    for (let i = 0; i < children.length; i++) {
+        if (children[i] === node) return num;
+        if (children[i].nodeType === 1 && children[i].nodeName === node.nodeName) num++;
     }
     return -1;
 }
@@ -231,27 +359,27 @@ function requestHostAjax() {
                     'bno': json.list[i].bno,
                     'kind': kind,
                     'name': decodeURIComponent(json.list[i].username),
-                    'etc': decodeURIComponent(json.list[i].etc).replace(/\+/gi," "),
-                    'date': json.list[i].indate +' ~ '+ json.list[i].outdate,
-                    'price': json.list[i].price+'원',
+                    'etc': decodeURIComponent(json.list[i].etc).replace(/\+/gi, " "),
+                    'date': json.list[i].indate + ' ~ ' + json.list[i].outdate,
+                    'price': json.list[i].price + '원',
                     'progress': pg,
-                    'address': decodeURIComponent(json.list[i].addr).replace(/\+/gi," "),
+                    'address': decodeURIComponent(json.list[i].addr).replace(/\+/gi, " "),
                     'pno': json.list[i].pno
                 }
                 for (let j in tableForm) {
-                    if(j === 'address'){
+                    if (j === 'address') {
                         const hInput = document.createElement('input');
-                        hInput.setAttribute("type","hidden");
-                        hInput.setAttribute("name","addr");
-                        hInput.setAttribute("value",tableForm[j]);
+                        hInput.setAttribute("type", "hidden");
+                        hInput.setAttribute("name", "addr");
+                        hInput.setAttribute("value", tableForm[j]);
                         tr.appendChild(hInput);
-                    } else if(j === 'pno'){
+                    } else if (j === 'pno') {
                         const hInput = document.createElement('input');
-                        hInput.setAttribute("type","hidden");
-                        hInput.setAttribute("name","pno");
-                        hInput.setAttribute("value",tableForm[j]);
+                        hInput.setAttribute("type", "hidden");
+                        hInput.setAttribute("name", "pno");
+                        hInput.setAttribute("value", tableForm[j]);
                         tr.appendChild(hInput);
-                        
+
                     } else {
                         const td = document.createElement('td');
                         td.textContent = tableForm[j];
@@ -259,11 +387,11 @@ function requestHostAjax() {
                     }
                 }
 
-                tr.addEventListener('click', function(){
+                tr.addEventListener('click', function () {
                     initMap(tableForm.address.split(",")[0], tableForm.name);
                     document.querySelector('#addr_text').textContent = tableForm.address;
                     const miniInfo = document.querySelector('.host_side2');
-                    while(miniInfo.firstChild){
+                    while (miniInfo.firstChild) {
                         miniInfo.removeChild(miniInfo.firstChild);
                     }
 
@@ -274,37 +402,37 @@ function requestHostAjax() {
             const currentPage = json.plist.page;
             const totalPage = json.plist.totalpage;
 
-            while(pagination.firstChild){
+            while (pagination.firstChild) {
                 pagination.removeChild(pagination.firstChild);
             }
 
             const pageBox = document.createElement('div');
-            pageBox.setAttribute('class','pagebox');
-            
-            if(startPage > 1){
+            pageBox.setAttribute('class', 'pagebox');
+
+            if (startPage > 1) {
                 const pageBox = document.createElement('div');
-                pageBox.setAttribute('class','pagebox');
-                pageBox.textContent = 'first';
+                pageBox.setAttribute('class', 'pagebox');
+                pageBox.textContent = '<<';
                 pagination.appendChild(pageBox);
-                page.onclick = () =>{
+                page.onclick = () => {
                     chosenPage = 1;
                     requestHostAjax();
                 }
             }
-            if(currentPage > 1){
+            if (currentPage > 1) {
                 const pageBox = document.createElement('div');
-                pageBox.setAttribute('class','pagebox');
-                pageBox.textContent = 'prev';
+                pageBox.setAttribute('class', 'pagebox');
+                pageBox.textContent = '<';
                 pagination.appendChild(pageBox);
-                pageBox.onclick = ()=>{
-                    chosenPage = currentPage -1;
+                pageBox.onclick = () => {
+                    chosenPage = currentPage - 1;
                     requestHostAjax();
                 }
             }
-            for(let i = startPage; i <= endPage; i++){
+            for (let i = startPage; i <= endPage; i++) {
                 const pageBox = document.createElement('div');
-                pageBox.setAttribute('class','pagebox');
-                if(i === currentPage){
+                pageBox.setAttribute('class', 'pagebox');
+                if (i === currentPage) {
                     pageBox.textContent = i;
                     pageBox.style.color = 'dodgerblue';
                     pagination.appendChild(pageBox);
@@ -312,38 +440,38 @@ function requestHostAjax() {
                     pageBox.textContent = i;
                     pagination.appendChild(pageBox);
                 }
-                pageBox.onclick = ()=>{
+                pageBox.onclick = () => {
                     chosenPage = i;
                     requestHostAjax();
                 }
             }
 
-            if(currentPage < totalPage){
+            if (currentPage < totalPage) {
                 const pageBox = document.createElement('div');
-                    pageBox.setAttribute('class','pagebox');
-                    pageBox.textContent = 'next';
-                    pagination.appendChild(pageBox);
-                    pageBox.onclick = () => {
-                        chosenPage = currentPage+1;
-                        requestHostAjax();
-                    }
+                pageBox.setAttribute('class', 'pagebox');
+                pageBox.textContent = '>';
+                pagination.appendChild(pageBox);
+                pageBox.onclick = () => {
+                    chosenPage = currentPage + 1;
+                    requestHostAjax();
+                }
             }
-            if(endPage < totalPage){
+            if (endPage < totalPage) {
                 const pageBox = document.createElement('div');
-                    pageBox.setAttribute('class','pagebox');
-                    pageBox.textContent = 'end';
-                    pagination.appendChild(pageBox);
-                    pageBox.onclick = () =>{
-                        chosenPage = endPage;
-                        requestHostAjax();
-                    }
+                pageBox.setAttribute('class', 'pagebox');
+                pageBox.textContent = '>>';
+                pagination.appendChild(pageBox);
+                pageBox.onclick = () => {
+                    chosenPage = totalPage;
+                    requestHostAjax();
+                }
             }
 
         }
-        if(tbody.firstChild)
-        tbody.firstChild.click();
+        if (tbody.firstChild)
+            tbody.firstChild.click();
     }
-    const requestData = 'userid=' + encodeURIComponent(userid.value)+'&page='+encodeURIComponent(chosenPage);
+    const requestData = 'userid=' + encodeURIComponent(userid.value) + '&page=' + encodeURIComponent(chosenPage);
 
     xhr.open("POST", "/doggybeta/hservice");
     xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
@@ -395,44 +523,44 @@ function requestBkAjax() {
                     tr.appendChild(td);
                 }
             }
-            
+
             const startPage = json.plist.start;
             const endPage = json.plist.end;
             const currentPage = json.plist.page;
             const totalPage = json.plist.totalpage;
 
-            while(pagination.firstChild){
+            while (pagination.firstChild) {
                 pagination.removeChild(pagination.firstChild);
             }
-            
+
             const pageBox = document.createElement('div');
-            pageBox.setAttribute('class','pagebox');
-            
-            if(startPage > 1){
+            pageBox.setAttribute('class', 'pagebox');
+
+            if (startPage > 1) {
                 const pageBox = document.createElement('div');
-                pageBox.setAttribute('class','pagebox');
-                pageBox.textContent = 'first';
+                pageBox.setAttribute('class', 'pagebox');
+                pageBox.textContent = '<<';
                 pagination.appendChild(pageBox);
-                page.onclick = () =>{
+                pageBox.onclick = () => {
                     chosenPage = 1;
                     requestBkAjax();
                 }
             }
-            if(currentPage > 1){
+            if (currentPage > 1) {
                 const pageBox = document.createElement('div');
-                pageBox.setAttribute('class','pagebox');
-                pageBox.textContent = 'prev';
+                pageBox.setAttribute('class', 'pagebox');
+                pageBox.textContent = '<';
                 pagination.appendChild(pageBox);
-                pageBox.onclick = ()=>{
-                    chosenPage = currentPage -1;
+                pageBox.onclick = () => {
+                    chosenPage = currentPage - 1;
                     requestBkAjax();
                 }
 
             }
-            for(let i = startPage; i <= endPage; i++){
+            for (let i = startPage; i <= endPage; i++) {
                 const pageBox = document.createElement('div');
-                pageBox.setAttribute('class','pagebox');
-                if(i === currentPage){
+                pageBox.setAttribute('class', 'pagebox');
+                if (i === currentPage) {
                     pageBox.textContent = i;
                     pageBox.style.color = 'dodgerblue';
                     pagination.appendChild(pageBox);
@@ -440,36 +568,36 @@ function requestBkAjax() {
                     pageBox.textContent = i;
                     pagination.appendChild(pageBox);
                 }
-                pageBox.onclick = ()=>{
+                pageBox.onclick = () => {
                     chosenPage = i;
                     requestBkAjax();
                 }
             }
 
-            if(currentPage < totalPage){
+            if (currentPage < totalPage) {
                 const pageBox = document.createElement('div');
-                    pageBox.setAttribute('class','pagebox');
-                    pageBox.textContent = 'next';
-                    pagination.appendChild(pageBox);
-                    pageBox.onclick = () => {
-                        chosenPage = currentPage+1;
-                        requestBkAjax();
-                    }
+                pageBox.setAttribute('class', 'pagebox');
+                pageBox.textContent = '>';
+                pagination.appendChild(pageBox);
+                pageBox.onclick = () => {
+                    chosenPage = currentPage + 1;
+                    requestBkAjax();
+                }
             }
-            if(endPage < totalPage){
+            if (endPage < totalPage) {
                 const pageBox = document.createElement('div');
-                    pageBox.setAttribute('class','pagebox');
-                    pageBox.textContent = 'end';
-                    pagination.appendChild(pageBox);
-                    pageBox.onclick = () =>{
-                        chosenPage = endPage;
-                        requestBkAjax();
-                    }
+                pageBox.setAttribute('class', 'pagebox');
+                pageBox.textContent = '>>';
+                pagination.appendChild(pageBox);
+                pageBox.onclick = () => {
+                    chosenPage = totalPage;
+                    requestBkAjax();
+                }
             }
         }
     };
-    
-    const requestData = 'userid=' + encodeURIComponent(userid.value)+'&page='+encodeURIComponent(chosenPage);
+
+    const requestData = 'userid=' + encodeURIComponent(userid.value) + '&page=' + encodeURIComponent(chosenPage);
 
     xhr.open('POST', '/doggybeta/bklist');
     xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');

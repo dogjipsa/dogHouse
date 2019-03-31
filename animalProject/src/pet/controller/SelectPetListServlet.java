@@ -52,7 +52,7 @@ public class SelectPetListServlet extends HttpServlet {
 		if(currentPage > totalPage)
 			currentPage = totalPage;
 		
-		int startpage = ((currentPage - 1) / 10) * countPage + 1;
+		int startpage = ((currentPage - 1) / countPage) * countPage + 1;
 		int endpage = startpage + countPage -1;
 		
 		if(endpage > totalPage)
@@ -73,7 +73,7 @@ public class SelectPetListServlet extends HttpServlet {
 			USER_ID
 			PET_ORIGINFILE
 			PET_REFILE*/
-			SimpleDateFormat sdf = new SimpleDateFormat("yyyy'년 'MM'월 'dd'일'");
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 			for(Pet p : list) {
 				JSONObject job = new JSONObject();
 				job.put("pno", p.getPetNo());
@@ -83,6 +83,7 @@ public class SelectPetListServlet extends HttpServlet {
 				job.put("size", URLEncoder.encode(p.getPetSize(), "utf-8"));
 				job.put("gender", p.getPetGender());
 				job.put("neutral", p.getPetNeutralize());
+				job.put("etc", p.getPetCharater());
 				job.put("userid", p.getUserId());
 				job.put("origin", p.getOriginFileName());
 				job.put("rename", p.getRenameFileName());
