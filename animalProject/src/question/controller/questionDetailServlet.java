@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import answer.model.service.AnswerService;
+import answer.model.vo.Answer;
 import question.model.service.QuestionService;
 import question.model.vo.Question;
 
@@ -40,13 +42,14 @@ protected void doGet(HttpServletRequest request, HttpServletResponse response) t
 		/*qservice.addReadCount(questionNo);*/
 		
 		Question question = qservice.selectQuestion(questionNo);
+		Answer answer = new AnswerService().selectAnswer(questionNo);
 		
 		response.setContentType("text/html; charset=utf-8");
 		RequestDispatcher view = null;
 		if(question != null) {
 			view = request.getRequestDispatcher("views/question/questionDetailView.jsp");
 			request.setAttribute("question", question);
-			/*request.setAttribute("currentPage", currentPage);*/
+			request.setAttribute("answer", answer);
 			view.forward(request, response);
 		}else {
 			view = request.getRequestDispatcher("views/question/questionError.jsp");

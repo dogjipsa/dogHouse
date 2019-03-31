@@ -1,10 +1,13 @@
-
+ï»¿
 ver 1.5
-1. booking(¿¹¾à)Å×ÀÌºí¿¡ ½ÅÃ»ÀÚID Ãß°¡ÇÏ¿© ½ÅÃ»ÀÚ ID¿Í Æê½ÃÅÍ ID°¡ ÀÖ°Ô ÇÔ
-2. booking Å×ÀÌºí, paymentÅ×ÀÌºí¿¡ userid, pet_no¸¦ on delete cascade·Î ÇÔ
-3. manager, member, tipboard ±âº» µ¥ÀÌÅÍ »ı¼º
-  managerÀÇ id = manager   // password = pass01
+1. booking(ì˜ˆì•½)í…Œì´ë¸”ì— ì‹ ì²­ìID ì¶”ê°€í•˜ì—¬ ì‹ ì²­ì IDì™€ í«ì‹œí„° IDê°€ ìˆê²Œ í•¨
+2. booking í…Œì´ë¸”, paymentí…Œì´ë¸”ì— userid, pet_noë¥¼ on delete cascadeë¡œ í•¨
+3. manager, member, tipboard ê¸°ë³¸ ë°ì´í„° ìƒì„±
+  managerì˜ id = manager   // password = pass01
   member id= user01  //passowrd = pass01
 
 ver 1.6
-1. FAQ¿¡ FAQ_TYPE ÄÃ·³ Ãß°¡
+1. FAQì— FAQ_TYPE ì»¬ëŸ¼ ì¶”ê°€
+
+ver 2,.1
+1. question í…Œì´ë¸” ìˆ˜ì •

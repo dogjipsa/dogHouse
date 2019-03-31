@@ -1,10 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ page import="member.model.vo.Member, question.model.vo.Question, java.sql.Date" %>
+<%@ page import="member.model.vo.Member, question.model.vo.Question, answer.model.vo.Answer, java.sql.Date" %>
 <%
 	Question question = (Question)request.getAttribute("question");
-	int currentPage = ((Integer)request.getAttribute("currentPage"));
-	
+	Answer answer = (Answer)request.getAttribute("answer");
+	int currentPage = ((Integer)request.getAttribute("currentPage"));	
 %>
 <!DOCTYPE html>
 <html>
@@ -33,7 +33,8 @@ function deleteQuestion(){
 
 <h2 align="center">해당글 상세보기</h2>
 <hr style="clear:both;">
-<br>
+
+<br><br><br>
 <table align="center" cellpadding="10" cellspacing="0" border="1" width="600">
 	<tr>
 		<th>제목</th>
@@ -43,7 +44,7 @@ function deleteQuestion(){
 		<th>첨부파일</th>
 		<td>
 			<% if(question.getQuestionOriginalFileName() != null){ %>
-				<a href="/doggybeta/qfdown?ofile=<%= question.getQuestionOriginalFileName() %>&rfile=<%= question.getQuestionRenameFileName() %>"><%= question.getQuestionOriginalFileName() %></a>			
+				<a href="/doggybeta/qfdown?qfile=<%=question.getQuestionOriginalFileName()%>&rfile<%=question.getQuestionRenameFileName() %>"><%=question.getQuestionRenameFileName()%></a>	
 			<% }else{ %>
 				첨부파일 없음
 			<% } %>
@@ -54,29 +55,26 @@ function deleteQuestion(){
 		<td><%=question.getQuestionContent() %></td>
     </tr>
    	<tr>
-    	<th colspan="2">    		
-    		<a href="/doggybeta/views/question/questionReplyForm.jsp?qno=<%=question.getQuestionNo()%>">댓글달기</a>
+    	<th colspan="2">    	    			
     		<button onclick="moveUpdatePage();">수정</button>&nbsp;
     		<input type="button" value="삭제하기" onclick="deleteQuestion();">&nbsp;&nbsp;&nbsp;
     		<button onclick="location.href='/doggybeta/qlist'; return false;">뒤로가기</button>    		
     	</th>    	
     </tr>
-    </div></div>
-    </table>
+</table>
 <br><br><br>
 
 
-<<table align="center" cellpadding="10" cellspacing="0" border="1" width="600">
+<h2 align="center">운영자 답변</h2>
+<table align="center" cellpadding="10" cellspacing="0" border="1" width="600">	
 	<tr>
-		<th>운영자 답변내용</th>		
-	</tr>
-	<tr>
-		<td width="300"></td>
-	</tr>	
-</div></div>	
+		<th>답변내용</th>
+		<td><%= answer.getAnswerContent() %></td>
+    </tr>   	
+    </div></div>	
 </table>
-
 <br><br><br><br><br><br><br><br><br><br>
+
 <hr>
 <div id="footer"><%@ include file="../common/footer.jsp"%></div>
 </body>
