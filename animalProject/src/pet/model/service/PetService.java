@@ -36,4 +36,11 @@ public class PetService {
 		return list;
 	}
 
+	public Pet selectPet(String userId) {
+		Connection conn = getConnection();
+		Pet pet = pdao.selectPet(conn, userId);
+		close(conn);
+		return pet;
+	}
+
 }

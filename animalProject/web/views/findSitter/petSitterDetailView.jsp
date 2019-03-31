@@ -5,7 +5,7 @@
 	Member petSitter = (Member)request.getAttribute("petSitter");
 	ArrayList<SitterImage> sitterFacilityImg = (ArrayList<SitterImage>)request.getAttribute("sitterFacilityImg");
 	String service = (String)request.getAttribute("service");
-	System.out.println("view에서 service 확인 : "+service);
+	System.out.println("view에서 service 확인 : "+service);  
 %>
 <!DOCTYPE html>
 <html>
@@ -187,6 +187,7 @@ img {
   opacity: 1;
 }
 </style>
+
 </head>
 <body>
 <div>
@@ -389,12 +390,15 @@ geocoder.addressSearch('<%=petSitter.getAddress()%>', function(result, status) {
 <div style="float:left;padding-top:100px"><!-- 오른쪽 영역  --> 
 <div><!-- 날짜 입력  -->
 <form action="/doggybeta/bkinsert" type="post">
-<input type="text" name="datetimes" size="35"/>
+<input type="text" name="datetimes" onchange="priceCal()" id="datetimes" size="35"/>
 <br><br>
 <textarea name="etc"></textarea>
 <input type="hidden" name="service" value="<%=service%>">
 <input type="hidden" name="petSitterId" value="<%=petSitter.getUserId()%>">
 <input type="hidden" name="userId" value="<%=loginUser.getUserId()%>">
+<input type="hidden" name="price" id="price" value="<%=petSitter.getPrice() %>">
+<br><br>
+총 가격 : <input type="text" value=""  id="priceSum" name="priceSum" readonly> 원
 <br><br>
 <input type="submit" value="예약하기">
 
@@ -409,8 +413,26 @@ $(function() {
     }
 
   });
-  console.log($('input[name="datetimes"]').val());
+ 
+  /* 가격계산 ajax  */
 });
+function priceCal(){
+	 console.log($('input[name="datetimes"]').val());
+	 console.log($('#datetimes').val());
+	 console.log($('#price').val());
+   	 $.ajax({
+				url: '/doggybeta/priceCal',
+				type: 'post',
+				dataType: 'json',
+				data: {datetimes: $('#datetimes').val(),
+						price: $('#price').val()},
+				success: function(data){
+							$("#priceSum").val(data.pricesum);
+						}
+				
+				
+			});
+  }
 </script>
 </form>
 </div>

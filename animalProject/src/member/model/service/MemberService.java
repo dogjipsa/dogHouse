@@ -215,4 +215,13 @@ public class MemberService {
 		
 
 	}
+
+	public Member selectDetailMember(String userId) {
+		Connection conn = getConnection();
+		Member member = mdao.selectDetailMember(conn, userId);
+		close(conn);
+		return member;
+	}
+
+	
 }

@@ -100,4 +100,39 @@ public class PetDao {
 		return list;
 	}
 
+	public Pet selectPet(Connection conn, String userId) {
+		Pet pet = new Pet();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String query = "select * from pet where user_id = ?";
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, userId);
+			
+			rset = pstmt.executeQuery();
+			if(rset.next()) {
+				pet.setPetNo(rset.getInt("PET_NO"));
+				pet.setPetName(rset.getString("PET_NAME"));
+				pet.setBreeds(rset.getString("PET_BREADS"));
+				pet.setPetDate(rset.getDate("PET_DATE"));
+				pet.setPetSize(rset.getString("PET_SIZE"));
+				pet.setPetGender(rset.getString("PET_GENDER"));
+				pet.setPetNeutralize(rset.getString("PET_NEUTRALIZE"));
+				pet.setPetCharater(rset.getString("PET_CHARATER"));
+				pet.setUserId(userId);
+				pet.setOriginFileName(rset.getString("PET_ORIGINFILE"));
+				pet.setRenameFileName(rset.getString("PET_REFILE"));
+				
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return pet;
+	}
+	
+	
+
 }

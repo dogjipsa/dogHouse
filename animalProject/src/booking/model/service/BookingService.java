@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import static common.JDBCTemplate.*;
 
 import booking.model.dao.BookingDao;
+import booking.model.vo.Booking;
 import booking.model.vo.BookingCheck;
 import booking.model.vo.BookingForHost;
 
@@ -53,4 +54,35 @@ public class BookingService {
 		return result;
 	}
 
+	public int selectBookingNo(String checkin, String checkout, String petSitterId, String userId) {
+		Connection conn = getConnection();
+		int bookingNo = bdao.selectBooking(conn, checkin, checkout, petSitterId, userId);
+		close(conn);
+		return bookingNo;
+	}
+
+	public int updateBookingProgressOne(int bookingNo) {
+		Connection conn = getConnection();
+		int result = bdao.updateBookingProgressOne(conn, bookingNo);
+		if(result > 0)
+			commit(conn);
+		else
+			rollback(conn);
+		close(conn);
+		return result;
+	}
+
+	public Booking selectBooking(int bookingNo) {
+		Connection conn = getConnection();
+		Booking booking = bdao.selectBooking(conn, bookingNo);
+		close(conn);
+		return booking;
+	}
+	
+	public int selectDates(String checkin, String checkout) {
+		Connection conn = getConnection();
+		int dates = bdao.selectDates(conn, checkin, checkout);
+		close(conn);
+		return dates;
+	}
 }

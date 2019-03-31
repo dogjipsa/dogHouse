@@ -557,4 +557,34 @@ public class MemberDao {
 		return list;
 	}
 
+	public Member selectDetailMember(Connection conn, String userId) {
+		Member member = null;
+		PreparedStatement pstat = null;
+		ResultSet rSet = null;
+		String query = "select user_id, email, user_name, address, phone  from member where user_id = ?";
+		try {
+			pstat = conn.prepareStatement(query);
+			pstat.setString(1, userId);
+			rSet = pstat.executeQuery();
+			
+			if(rSet.next()) {
+				member = new Member();
+				member.setUserId(userId);
+				member.setEmail(rSet.getString("email"));
+				member.setUserName(rSet.getString("user_name"));
+				member.setAddress(rSet.getString("address"));
+				member.setPhone(rSet.getString("phone"));
+				
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(rSet);
+			close(pstat);
+		}
+		
+		return member;
+	}
+
+	
 }
