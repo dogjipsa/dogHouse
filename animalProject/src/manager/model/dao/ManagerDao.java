@@ -76,6 +76,7 @@ public class ManagerDao {
 			pstat = conn.prepareStatement(query.toString());
 			pstat.setInt(1, endCount);
 			pstat.setInt(2, startCount);
+
 			rSet = pstat.executeQuery();
 			// 한 페이지당 10개까지만 출력되게
 
@@ -200,13 +201,6 @@ public class ManagerDao {
 				tipBoard.setTipBoardNo(rSet.getInt("tipboard_no"));
 				tipBoard.setTipBoardContent(rSet.getString("tipboard_content"));
 				tipBoard.setTipBoardDate(rSet.getDate("tipboard_date"));
-				/*
-				 * freeBoard.setFreeboardOriginalFile(rSet.getString("freeboard_originfile"));
-				 * freeBoard.setFreeboardViews(rSet.getInt("freeboard_views"));
-				 * freeBoard.setFreeboardRecommend(rSet.getInt("freeboard_recommend"));
-				 * freeBoard.setFreeboardDelete(rSet.getString("freeboard_delete"));
-				 * freeBoard.setFreeboardRefile(rSet.getString("freeboard_refile"));
-				 */
 				tipboardList.add(tipBoard);
 			}
 		} catch (Exception e) {
@@ -217,6 +211,26 @@ public class ManagerDao {
 		}
 
 		return tipboardList;
+	}
+	public int managerDeleteFreeBoard(Connection conn, String delNo) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		
+		String query = "update freeboard set freeboard_delete = 'y' where freeboard_no in ?";
+		
+		try {
+			pstmt = conn.prepareStatement(query);				
+			pstmt.setInt(1, Integer.parseInt(delNo));
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		
+		return result;
 	}
 
 	public ArrayList<Faq> selectFAQList(Connection conn, int currentPage, int pageList) {

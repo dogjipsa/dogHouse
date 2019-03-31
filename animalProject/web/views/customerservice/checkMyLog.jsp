@@ -30,7 +30,7 @@
 						호스트 서비스</span></li>
 				<li class="navigation__item"><label for="cml_addpet" class="item__icon"><span class="icon__emoji"><img
 								src="/doggybeta/resources/images/dog3.png"></span></label><span class="item__text">펫
-						등록/수정</span></li>
+						등록 / 수정</span></li>
 			</ul><span class="icon__emoji">
 		</div>
 		<div class="section2"></div>
@@ -161,14 +161,65 @@
 					</form>
 				</div>
 				<div class="pet_list">
-					<ol class="rounded-list">
-						<li><div><span>232313 </span><span> 12345555</span><input type="hidden"></div><input type="hidden"></li>
-						<li><div>11111111</div></li>
-						<li><div>11111111</div></li>
-					</ol>
+					<button class="tabs__button tabs__button--active">달리</button>
+					<button class="tabs__button">콩콩이</button>
+					<button class="tabs__button">3</button>
 				</div>
 				<div class="pet_list_pagination"></div>
-				<div class="pet_update"></div>
+				<div class="pet_update">
+					<form id="pet_up_form">
+						<input type="hidden" name="pno">
+						<input type="hidden" name="userid">
+						<input type="hidden" name="origin">
+						<p>Name</p>
+						<input type="text" name="pname">
+						<span class="flex__box fbox1">
+							<div>
+								<p>Breeds</p>
+								<input type="text" name="breeds">
+							</div>
+							<div>
+								<p>Birth</p>
+								<input type="date" name="birth">
+							</div>
+						</span>
+
+						<span class="flex__box radio-toolbar">
+							<div>
+								<p>Gender</p>
+								<section>
+									<input type="radio" name="gender" id="cml_he" value="M">
+									<label for="cml_he">He</label>
+									<input type="radio" name="gender" id="cml_she" value="F">
+									<label for="cml_she">She</label>
+									<input type="radio" name="gender" id="cml_neut" value="N">
+									<label for="cml_neut">Neutral</label>
+								</section>
+							</div>
+							<div>
+								<p>Size</p>
+								<section>
+									<input type="radio" name="size" id="cml_s" value="소형">
+									<label for="cml_s">Small</label>
+									<input type="radio" name="size" id="cml_m" value="중형">
+									<label for="cml_m">Medium</label>
+									<input type="radio" name="size" id="cml_b" value="대형">
+									<label for="cml_b">Huge</label>
+								</section>
+							</div>
+						</span>
+						<p>Character</p>
+						<textarea name="etc" cols="18" rows="4"></textarea>
+						<p>Profile</p>
+						<img src="" alt="" class="pet__img__update">
+						<input type="file" name="ppic" id="up_ppic">
+						<div class="updel__btns">
+							<button id="pet_up__btn">수정하기</button>
+							<button id="pet_del__btn">삭제하기</button>
+						</div>
+					</form>
+
+				</div>
 			</div>
 		</div>
 		<div class="section5">
@@ -183,9 +234,10 @@
 			</div>
 		</div>
 	</div>
-	
 	<script src="/doggybeta/resources/js/checkMyLog.js"></script>
 	<script src="/doggybeta/resources/js/hmap.js"></script>
+	<script src="https://cdn.bootpay.co.kr/js/bootpay-3.0.0.min.js" type="application/javascript"></script>
+	<script src="/doggybeta/resources/js/npay.js"></script>
 </body>
 
 </html>

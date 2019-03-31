@@ -516,6 +516,7 @@ public class MemberDao {
 		}
 		return list;
 	}
+
 	public ArrayList<SearchingInfo> findPetSitterList(Connection conn, String jido) {
 		ArrayList<SearchingInfo> list = new ArrayList<SearchingInfo>();
 		PreparedStatement pstmt = null;

@@ -51,7 +51,7 @@ public class NaverLoginServlet extends HttpServlet {
 		String clientSecret = "gRoBiBR9aR"; 
 		String code = request.getParameter("code");
 		String state = request.getParameter("state");
-		String redirectURI = URLEncoder.encode("http://127.0.0.1:8888/doggybeta/","UTF-8");
+		String redirectURI = URLEncoder.encode("http://127.0.0.1:8333/doggybeta/","UTF-8");
 		
 		StringBuffer apiURL = new StringBuffer();
 		apiURL.append("https://nid.naver.com/oauth2.0/token?grant_type=authorization_code&");

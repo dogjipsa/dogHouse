@@ -33,16 +33,28 @@ public class ManagerService {
 	public int boardListCount() {
 		Connection conn = getConnection();
 		int result = manDao.boardListCount(conn);
+		if(result > 0)
+			commit(conn);
+		else
+			rollback(conn);
 		return result;
 	}
 	public int faqboardListCount() {
 		Connection conn = getConnection();
 		int result = manDao.faqboardListCount(conn);
+		if(result > 0)
+			commit(conn);
+		else
+			rollback(conn);
 		return result;
 	}
 	public int tipboardListCount() {
 		Connection conn = getConnection();
 		int result = manDao.tipboardListCount(conn);
+		if(result > 0)
+			commit(conn);
+		else
+			rollback(conn);
 		return result;
 	}
 
@@ -69,6 +81,7 @@ public class ManagerService {
 		
 		return faqList;
 	}
+
 
 	public ArrayList<Member> selectMemberList(HashMap<String, Object> listOpt) {
 		Connection conn = getConnection();
@@ -111,8 +124,16 @@ public class ManagerService {
 		
 		return result;
 	}
+		
 	
-	
+	public int managerDeleteFreeBoard(String delNo) {
+		Connection conn = getConnection();
+		int result = manDao.managerDeleteFreeBoard(conn, delNo);
+		if(result > 0)
+			commit(conn);
+		else
+			rollback(conn);
+		return result;
+	}
 
-	
 }
