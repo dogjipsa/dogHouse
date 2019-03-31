@@ -1,8 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ page import='manager.model.vo.Manager' %>
+<%@ page import='manager.model.vo.Manager, java.util.ArrayList, countvisitor.model.vo.CountVisitor'%>
 <%
 	Manager loginManager = (Manager)session.getAttribute("loginmanager");
+	CountVisitor cntlist = (CountVisitor)request.getAttribute("cntList");
 %>
 <!DOCTYPE html>
 <html id='managerMainPageBg'>
@@ -17,16 +18,27 @@ $(function() {
 		e.preventDefault();
 		$(this).toggleClass('submenu').next().slideToggle()
 	});//click
+	
+	$.ajax({
+		url: '/doggybeta/cntserve',
+		type: 'post',
+		success: function(data){
+			console.log("성공 : "+data);
+			$('#cntvisit').val(data.cnt);
+		}
+	})//ajax
 });//ready
 </script>
 </head>
 <body>
+<% if(loginManager != null) { %>
 <nav>
 	<ul class='mVertical-menu'>
 		<p>현재 로그인 된 관리자</p>
 		<p><%= loginManager.getManagerName() %> 님</p>
+		<%-- <%= cntList.size() %> --%>
 		<li>
-			<span class="logout"><i class="icon-signout"></i>Logout</span>
+			<a href='/doggybeta/mDHLogout'><span class="logout"><i class="icon-signout"></i>Logout</span></a>
 		</li>
 		<li><a href='/doggybeta/managerMainPage.jsp'>
 			<span class="logout">
@@ -50,5 +62,10 @@ $(function() {
 		</li>
 	</ul>
 </nav>
+<label class='labcnt' for='cntvisit' data-content='방문자 수'>방문자 수</label>
+<input type='text' id='cntvisit' />
+<% } else { %>
+<%@ include file="../views/manager/managerLogin.jsp"%>
+<% } %>
 </body>
 </html>
