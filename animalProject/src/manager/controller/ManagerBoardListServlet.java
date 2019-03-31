@@ -86,7 +86,6 @@ public class ManagerBoardListServlet extends HttpServlet {
 		if(fList.size() >= 0) {
 			view = request.getRequestDispatcher("views/manager/managerAllBoard.jsp");
 			request.setAttribute("flist", fList);
-			request.setAttribute("faqlist", faqList);
 			
 			request.setAttribute("currentPage", currentPage);
 			request.setAttribute("totalPage", totalPage);

@@ -1,5 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8" errorPage="managerError.jsp"%>
+<%@ page import='manager.model.vo.Manager' %>
+<%
+
+%>
 <!DOCTYPE html>
 <html id='loginPageCss'>
 <head>
