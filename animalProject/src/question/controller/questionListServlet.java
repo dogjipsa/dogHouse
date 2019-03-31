@@ -1,6 +1,7 @@
 package question.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -13,16 +14,16 @@ import question.model.service.QuestionService;
 import question.model.vo.Question;
 
 /**
- * Servlet implementation class questionUpdateServlet
+ * Servlet implementation class questionDetailServlet
  */
-@WebServlet("/qupdate")
-public class questionUpdateServlet extends HttpServlet {
+@WebServlet("/qlist")
+public class questionListServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public questionUpdateServlet() {
+    public questionListServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -31,23 +32,50 @@ public class questionUpdateServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		int questionNo = Integer.parseInt(request.getParameter("no"));
 		
-		Question question = new QuestionService().selectQuestion(questionNo);
+		int currentPage = 1;
+		
+		if(request.getParameter("page") != null) {
+			 currentPage = Integer.parseInt(request.getParameter("page"));
+		}
+		
+		int limit = 10;
+		
+		QuestionService qservice = new QuestionService();
+		
+		int listCount = qservice.getListCount();
+		
+		ArrayList<Question> list = qservice.selectList();
+				
+		int maxPage = (int)((double)listCount	/	limit + 0.9);
+		
+		int startPage = (((int)((double)currentPage / limit + 0.9)) -1) * limit + 1;
+		
+		int endPage = startPage + limit -1;
+		
+		if(maxPage	<	endPage) {
+			endPage = maxPage;
+		}
 		
 		response.setContentType("text/html; charset=utf-8");
 		RequestDispatcher view = null;
-		if(question != null) {
-			view = request.getRequestDispatcher("views/question/questionUpdateView.jsp");
-			request.setAttribute("question", question);
+		if(list.size() > 0) {
+			view = request.getRequestDispatcher("views/question/questionListView.jsp");
+			
+			request.setAttribute("list", list);
+			request.setAttribute("currentPage", currentPage);
+			request.setAttribute("maxPage", maxPage);
+			request.setAttribute("startPage", startPage);
+			request.setAttribute("endPage", endPage);
+			
 			view.forward(request, response);
-		}else{
+		}else {
 			view = request.getRequestDispatcher("views/question/questionError.jsp");
-			request.setAttribute("message", questionNo + "1:1 문의 수정페이지 이동 실패!");
+			request.setAttribute("message", "1:1문의 조회 실패!");
 			view.forward(request, response);
 		}
-	}
-
+	}	
+	
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
