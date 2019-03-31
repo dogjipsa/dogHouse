@@ -22,7 +22,7 @@
 	System.out.println(tboard);
 %>
 <!DOCTYPE html>
-<html>
+<html id="tbhtml">
 <head>
 <meta charset="UTF-8">
 <title>팁게시판</title>
@@ -52,15 +52,15 @@
 	<%-- var tnum = <%((TipBoard)request.getAttribute("tboard")).getTipBoardNo();%>;
 	var trpage = <%((Integer) request.getAttribute("endPage")).intValue();%>; --%>
 	var tnum = '<%=((TipBoard)request.getAttribute("tboard")).getTipBoardNo()%>';
-	var trpage = '<%=request.getAttribute("endPage")%>';
+	var trpage = '<%=request.getAttribute("maxPage")%>';
 		
-	if(!("#tipReply_content").val())
+	/* if(!("#tipReply_content").val())
 	{
 		alert("내용을 입력하세요.");
 		return false;
-	}
-	else
-	{	
+	} */
+	/* else
+	{ */
 		$(function(){
 			$.ajax({
 				url: "/doggybeta/trinsert",
@@ -68,13 +68,13 @@
 					   tipReply_id : $("#tipReply_id").val(),
 					   tipReply_content : $("#tipReply_content").val()},
 				type: "post"
-				
 			});
 			document.location.reload(); 
 			location.href="/doggybeta/tdetail?tnum="+tnum+"&trpage="+trpage;			
 		});
-	}
-} 
+	/* console.log($("#tipReply_content").val());
+	}  */
+}
 
  function checkFunc(){
 	if(httpRequest.readyState == 4){
@@ -90,7 +90,7 @@
 
 <style type="text/css">
 
-#fbhtml {
+#tbhtml {
 	font-family: 'Sunflower', 'sans-serif';
 	font-size: 13pt;
 }
@@ -112,7 +112,6 @@ h2{
 	position: relative;
 	left: 220px;
 	border-collapse: separate;
-    border-spacing: 1px;
     text-align: left;
     line-height: 1.5;
     border-top: 1px solid #ccc;
@@ -155,7 +154,7 @@ h2{
 			<h2 align="center"><%= tboard.getTipBoardNo() %>번 글 상세조회</h2>
 			
 <br>
-<table class="ttable" align="center" cellpadding="10" cellspacing="0" border="1" width="500">
+<table class="ttable" id="t" align="center"  width="800">
 <tr>
 	<th>제목</th>
 	<td><%=tboard.getTipBoardTitle() %></td>
@@ -192,6 +191,7 @@ h2{
 	<% } %>
 	&nbsp; &nbsp;
 	<a href="/doggybeta/tlist?page=<%= currentPage%>">[목록]</a>
+	<a href="/doggybeta/rtselect?reportTipBoardNo=<%= tboard.getTipBoardNo() %>">[신고하기]</a>
 	</th>
 </tr>
 <tr>
@@ -204,7 +204,7 @@ h2{
 <!-- 댓글 부분 -->
 	<div id="comment">
 		
-		<table class="ttable" border="1" bordercolor="lightgray">
+		<table class="ttable"  bordercolor="lightgray">
 		
 	<!-- 댓글 목록 -->	
 		
@@ -232,7 +232,7 @@ h2{
 					<%if(loginUser.getUserId().equals(t.getUserId())){ %>
 						<a href="/doggybeta/trsearch?trnum=<%= t.getTipReplyNo() %>">[수정]</a><br>	
 						<a href="/doggybeta/trdelete?trnum=<%= t.getTipReplyNo() %>&tnum=<%= t.getTipNo()%>">[삭제]</a>
-					
+						<a href="/doggybeta/rtrselect?trnum=<%= t.getTipReplyNo() %>">[신고하기]</a>	
 					<%} %>
 					
 					</div>
@@ -277,22 +277,22 @@ h2{
 				<%
 					if (trcurrentPage <= 1) {
 				%>
-				[맨처음]&nbsp;
+				◀◀&nbsp;
 				<%
 					} else {  
 						%>
-							<a href="/doggybeta/tdetail?tnum=<%=tboard.getTipBoardNo()%>&trpage=<%=1%>">[맨처음]</a>
+							<a href="/doggybeta/tdetail?tnum=<%=tboard.getTipBoardNo()%>&trpage=<%=1%>">◀◀</a>
 								
 				<%	}%>
 				
 				<%
 					if ((trcurrentPage - 10) <= startPage && (trcurrentPage - 10) >= 1) {//조건식에 =을 붙여줘야 11,21,31....페이지 일 때 링크가 뜸
 						%>
-							<a href="/doggybeta/tdetail?tnum=<%=tboard.getTipBoardNo()%>&trpage=<%=startPage - 1%>">[prev]</a>
+							<a href="/doggybeta/tdetail?tnum=<%=tboard.getTipBoardNo()%>&trpage=<%=startPage - 1%>">◀</a>
 				<%
 					} else {
 				%>
-				[prev]
+				◀
 				<%
 					}
 				%>
@@ -325,22 +325,22 @@ h2{
 				<%
 					if (endPage < maxPage ) {
 				%>
-						<a href="/doggybeta/tdetail?tnum=<%=tboard.getTipBoardNo()%>&trpage=<%=endPage + 1%>">[next]</a>
+						<a href="/doggybeta/tdetail?tnum=<%=tboard.getTipBoardNo()%>&trpage=<%=endPage + 1%>">▶</a>
 				<%
 					} else {
 				%>
-				[next]&nbsp;
+				▶&nbsp;
 				<%
 					}
 				%>
 				<%
 					if (trcurrentPage >= maxPage) {
 				%>
-				[맨끝]
+				▶▶
 				<%
 					} else {
 				%>
-						<a href="/doggybeta/tdetail?tnum=<%=tboard.getTipBoardNo()%>&trpage=<%=maxPage%>">[맨끝]</a>	
+						<a href="/doggybeta/tdetail?tnum=<%=tboard.getTipBoardNo()%>&trpage=<%=maxPage%>">▶▶</a>	
 				<%
 					}
 				%>

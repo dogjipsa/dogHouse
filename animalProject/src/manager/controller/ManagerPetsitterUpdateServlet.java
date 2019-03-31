@@ -1,4 +1,4 @@
-package tipboardreply.controller;
+package manager.controller;
 
 import java.io.IOException;
 
@@ -9,20 +9,20 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import tipboard.model.service.TipBoardService;
-import tipboardreply.model.service.TipBoardReplyService;
+import manager.model.service.ManagerService;
+import member.model.vo.Member;
 
 /**
- * Servlet implementation class TipBoardReplyDeleteServlet
+ * Servlet implementation class ManagerPetsitterUpdateServlet
  */
-@WebServlet("/trdelete")
-public class TipBoardReplyDeleteServlet extends HttpServlet {
+@WebServlet("/mpupdate")
+public class ManagerPetsitterUpdateServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public TipBoardReplyDeleteServlet() {
+    public ManagerPetsitterUpdateServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -31,25 +31,27 @@ public class TipBoardReplyDeleteServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		int tipReplyBoardNum = Integer.parseInt(request.getParameter("trnum"));
-		int tipBoardNum = Integer.parseInt(request.getParameter("tnum"));
+		request.setCharacterEncoding("utf-8");
 		
-		int result = new TipBoardReplyService().deleteTipBoardReply(tipReplyBoardNum);
-	
-	
+		String userId = request.getParameter("userid");
+		/*int page = Integer.parseInt(request.getParameter("page"));*/
+		System.out.println("userid : " + userId);
+		ManagerService mservice = new ManagerService();
+		int result = mservice.updatePetsitter(userId);
+		
+		response.setContentType("text/html; charset=utf-8");
 		RequestDispatcher view = null;
 		if(result > 0) {
-			response.sendRedirect("/doggybeta/tdetail?tnum=" + tipBoardNum);
-
+			response.sendRedirect("/doggybeta/mpsearch");
+			
 		}else {
-			view = request.getRequestDispatcher("views/tipBoard/tipBoardError.jsp");
-			request.setAttribute("message", "댓글 삭제 실패!");
+			view = request.getRequestDispatcher("views/manager/managerError.jsp");
+			request.setAttribute("message", "펫시터 승인 실패!");
 			view.forward(request, response);
 				}
-			}
 			
-		
-
+		}
+	
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */

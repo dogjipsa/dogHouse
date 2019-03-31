@@ -14,7 +14,7 @@
 <script type="text/javascript" src="/doggybeta/resources/js/jquery-3.3.1.min.js"></script>
 <script type="text/javascript">
 $(function() {
-	$('.boardManage').click(function(e) {
+	$('.manage').click(function(e) {
 		e.preventDefault();
 		$(this).toggleClass('submenu').next().slideToggle()
 	});//click
@@ -50,7 +50,7 @@ $(function() {
 			<span class="messages"><i class="icon-envelope-alt"></i>쪽지<em>5</em></span>
 		</li>
 		<li>
-			<span class="boardManage"><i class="icon-cog"></i>게시판관리</span>
+			<span class="manage"><i class="icon-cog"></i>게시판관리</span>
 			<ul class='submenu'>
 				<li>게시판 공지사항</li>
 				<li><a href='/doggybeta/manboard'>전체 게시판 조회 및 관리</a></li>
@@ -58,7 +58,13 @@ $(function() {
 			</ul>
 		</li>
 		<li>
-			<span class="profile" ><i class="icon-user"></i>회원관리</span>
+			<span class="manage" ><i class="icon-user"></i>회원관리</span>
+			<ul class='submenu'>
+				<li><a href="/doggybeta/mmsearch">전체 회원 열람</a></li>
+				<li><a href='/doggybeta/mpsearch'>펫시터 열람</a></li>
+				<li><a href="#">불량 고객</a></li>
+				<li><a href="#">불량 펫시터</a></li>
+			</ul>
 		</li>
 	</ul>
 </nav>

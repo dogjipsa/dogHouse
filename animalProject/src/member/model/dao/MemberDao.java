@@ -508,16 +508,15 @@ public class MemberDao {
 				sitterImage.setRenameFile(rset.getString("IMG_REFILE"));
 				list.add(sitterImage);
 			}
-		} catch(Exception e) {
-			e.printStackTrace(); 
+		}catch (Exception e) {
+			e.printStackTrace();
 		} finally {
 			close(rset);
 			close(pstmt);
 		}
 		return list;
-		
-    }
-  
+	}
+
 	public ArrayList<SearchingInfo> findPetSitterList(Connection conn, String jido) {
 		ArrayList<SearchingInfo> list = new ArrayList<SearchingInfo>();
 		PreparedStatement pstmt = null;
