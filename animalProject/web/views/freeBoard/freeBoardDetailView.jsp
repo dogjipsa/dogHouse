@@ -12,6 +12,11 @@
 	int endPage = ((Integer)request.getAttribute("endPage")).intValue();
 	int maxPage = ((Integer)request.getAttribute("maxPage")).intValue();
 	int currentPage = ((Integer)request.getAttribute("currentPage")).intValue(); 
+	System.out.println("count : " + listCount);
+	System.out.println("start페이지 : " + startPage);
+	System.out.println("end페이지 : " + endPage);
+	System.out.println("max페이지 : " + maxPage);
+	System.out.println("current페이지 : " + currentPage);
 	
 %>    
 <!DOCTYPE html>
@@ -23,6 +28,8 @@
 <link href="https://fonts.googleapis.com/css?family=Sunflower:300,500,700&amp;subset=korean" rel="stylesheet" type="text/css">
 <script type="text/javascript" src="/doggybeta/resources/js/jquery-3.3.1.min.js"></script>
 <script type="text/javascript">
+var fnum = '<%=((FreeBoard)request.getAttribute("freeboard")).getFreeboardNo()%>';
+var page = '<%=request.getAttribute("maxPage")%>';
 $(function(){
 	$("#save").click(function(){
 		$.ajax({
@@ -35,6 +42,7 @@ $(function(){
 			}
 		});  //ajax
 		document.location.reload();
+		location.href="/doggybeta/fdetail?fnum="+fnum+"&page="+page;
 	});  //click
 
 }); //ready
@@ -130,16 +138,16 @@ h2{
 <table class="fdtable" id="t" align="center"  width="800">
 <tr>
 	<th>제목</th>
-	<td align="center"><%= freeboard.getFreeboardTitle() %></td>
+	<td><%= freeboard.getFreeboardTitle() %></td>
 </tr>
 
 <tr>
 	<th>작성자</th>
-	<td align="center"><%= freeboard.getUserId() %></td>
+	<td><%= freeboard.getUserId() %></td>
 </tr>
 <tr>
 	<th>첨부파일</th>
-	<td align="center">
+	<td>
 	 		<% if(freeboard.getFreeboardOriginalFile() != null){ %>
 			<a href="/doggybeta/ffdown?ofile=<%= freeboard.getFreeboardOriginalFile() %>&rfile=<%= freeboard.getFreeboardRefile() %>"><%= freeboard.getFreeboardOriginalFile()%></a>
 		<% }else{ %>
@@ -149,7 +157,7 @@ h2{
 </tr> 
 <tr>
 	<th>내용</th>
-	<td align="center"><%= freeboard.getFreeboardContent() %></td>
+	<td><%= freeboard.getFreeboardContent() %></td>
 </tr>
 <tr>
 	<th colspan="2" align="center">
@@ -160,6 +168,7 @@ h2{
 	 <% } %> 
 	&nbsp; &nbsp;
 	 <a href="/doggybeta/flist">[목록]</a> 
+	 <a href="/doggybeta/rfselect?reportFreeBoardNo=<%= freeboard.getFreeboardNo()%>">[신고하기]</a>
 	</th>	
 </tr>
 </table>
@@ -194,7 +203,8 @@ h2{
 				<td width="100">
 					<%if(loginUser.getUserId().equals(f.getUserid())){ %>
 					<a href="/doggybeta/frsearch?frnum=<%= f.getFreereply()%>">[수정]</a>
-					<a href="/doggybeta/frdelete?frnum=<%= f.getFreereply()%>&fnum=<%= f.getFreeboardno()%>">[삭제]</a>	
+					<a href="/doggybeta/frdelete?frnum=<%= f.getFreereply()%>&fnum=<%= f.getFreeboardno()%>">[삭제]</a>
+					<a href="/doggybeta/rfrselect?frnum=<%= f.getFreereply()%>">[신고하기]</a>	
 					<%} %>
 				</div>
 				</td>
@@ -221,19 +231,19 @@ h2{
 <% } %> 
 </div>
 
-<hr>
+
 <%-- 페이지징 처리 --%>
 <div style="text-align:center;">
 <% if(currentPage <= 1){ %>
-	[맨처음]&nbsp;
+	◀◀&nbsp;
 <% }else{ %>
-	<a href="/doggybeta/fdetail?page=1&fnum=<%= freeboard.getFreeboardNo() %>">[맨처음]</a>&nbsp;
+	<a href="/doggybeta/fdetail?page=1&fnum=<%= freeboard.getFreeboardNo() %>">◀◀</a>&nbsp;
 <% } %> 
 <!-- 이전 -->
 <% if((currentPage - 10) <= startPage && (currentPage - 10) >= 1){ %>
-	<a href="/doggybeta/fdetail?page=<%= startPage - 1 %>&fnum=<%= freeboard.getFreeboardNo() %>"></a>
+	<a href="/doggybeta/fdetail?page=<%= startPage - 1 %>&fnum=<%= freeboard.getFreeboardNo() %>">◀</a>
 <% }else{ %>
-	[prev]
+	◀
 <% } %>
 
 <!-- 현재 페이지가 포함된 페이지 그룹 숫자 출력 처리 -->
@@ -243,18 +253,18 @@ h2{
 
 <!-- 다음 -->
 <% if(endPage < maxPage){ %>
-	<a href="/doggybeta/fdetail?page=<%= endPage + 1 %>&fnum=<%= freeboard.getFreeboardNo() %>">[next]</a>&nbsp;
+	<a href="/doggybeta/fdetail?page=<%= endPage + 1 %>&fnum=<%= freeboard.getFreeboardNo() %>">▶</a>&nbsp;
 <% }else{ %>
-	[next]&nbsp;
+	▶&nbsp;
 <% } %>
 
 <% if(currentPage >= maxPage){ %>
-	[맨끝]
+	▶▶
 <% }else{ %>
-	<a href="/doggybeta/fdetail?page=<%= maxPage %>&fnum=<%= freeboard.getFreeboardNo() %>">[맨끝]</a>
+	<a href="/doggybeta/fdetail?page=<%= maxPage %>&fnum=<%= freeboard.getFreeboardNo() %>">▶▶</a>
 <% } %>
 </div>  	 
-<hr>
+
 <br>
  
 

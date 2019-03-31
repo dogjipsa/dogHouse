@@ -1,4 +1,4 @@
-package tipboardreply.controller;
+package report.controller;
 
 import java.io.IOException;
 
@@ -9,20 +9,22 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import tipboard.model.service.TipBoardService;
-import tipboardreply.model.service.TipBoardReplyService;
+import freeboard.model.service.FreeBoardService;
+import freeboard.model.vo.FreeBoard;
+import report.model.service.ReportService;
+import report.model.vo.Report;
 
 /**
- * Servlet implementation class TipBoardReplyDeleteServlet
+ * Servlet implementation class ReportFreeBoardInsertServlet
  */
-@WebServlet("/trdelete")
-public class TipBoardReplyDeleteServlet extends HttpServlet {
+@WebServlet("/rfselect")
+public class ReportFreeBoardSelectServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public TipBoardReplyDeleteServlet() {
+    public ReportFreeBoardSelectServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -31,24 +33,24 @@ public class TipBoardReplyDeleteServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		int tipReplyBoardNum = Integer.parseInt(request.getParameter("trnum"));
-		int tipBoardNum = Integer.parseInt(request.getParameter("tnum"));
+		int reportFreeBoardNo = Integer.parseInt(request.getParameter("reportFreeBoardNo"));
+	
+		FreeBoardService fservice = new FreeBoardService();
+		FreeBoard freeboard = fservice.selectFreeBoard(reportFreeBoardNo);
 		
-		int result = new TipBoardReplyService().deleteTipBoardReply(tipReplyBoardNum);
-	
-	
+		response.setContentType("text/html; charset=utf-8");
 		RequestDispatcher view = null;
-		if(result > 0) {
-			response.sendRedirect("/doggybeta/tdetail?tnum=" + tipBoardNum);
-
-		}else {
-			view = request.getRequestDispatcher("views/tipBoard/tipBoardError.jsp");
-			request.setAttribute("message", "댓글 삭제 실패!");
+		if(freeboard != null) {
+			view = request.getRequestDispatcher("views/report/reportFreeBoardInsertView.jsp");
+			request.setAttribute("freeboard", freeboard);
 			view.forward(request, response);
-				}
-			}
-			
+		}else {
+			view = request.getRequestDispatcher("views/freeboard/freeBoardError.jsp");
+			request.setAttribute("message","자유게시판 "  + reportFreeBoardNo + "번 게시글 신고페이지로 이동 실패!");
+			view.forward(request, response);
+		}
 		
+	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
