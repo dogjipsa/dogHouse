@@ -6,6 +6,7 @@
 	ArrayList<SitterImage> sitterFacilityImg = (ArrayList<SitterImage>)request.getAttribute("sitterFacilityImg");
 	String service = (String)request.getAttribute("service");
 	System.out.println("view에서 service 확인 : "+service);
+	System.out.println("아이디 확인"+petSitter);
 %>
 <!DOCTYPE html>
 <html>
@@ -313,6 +314,7 @@ var map = new daum.maps.Map(mapContainer, mapOption);
 var geocoder = new daum.maps.services.Geocoder();
 
 // 주소로 좌표를 검색합니다
+
 geocoder.addressSearch('<%=petSitter.getAddress()%>', function(result, status) {
 
     // 정상적으로 검색이 완료됐으면 
