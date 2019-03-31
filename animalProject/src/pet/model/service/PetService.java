@@ -36,11 +36,34 @@ public class PetService {
 		return list;
 	}
 
+
 	public Pet selectPet(String userId) {
 		Connection conn = getConnection();
 		Pet pet = pdao.selectPet(conn, userId);
 		close(conn);
 		return pet;
+  }
+	public int updatePet(Pet pet) {
+		Connection conn = getConnection();
+		int result = pdao.updatePet(conn, pet);
+		if(result > 0)
+			commit(conn);
+		else
+			rollback(conn);
+		close(conn);
+		return result;
+	}
+
+	public int deletePet(int pno) {
+		Connection conn = getConnection();
+		int result = pdao.deletePet(conn, pno);
+		if(result > 0)
+			commit(conn);
+		else
+			rollback(conn);
+		close(conn);
+		return result;
+
 	}
 
 }

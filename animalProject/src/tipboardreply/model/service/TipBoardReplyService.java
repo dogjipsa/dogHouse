@@ -39,9 +39,9 @@ public class TipBoardReplyService {
 	
 	public TipBoardReply selectTipBoardReply(int tipBoardReplyNo) {
 		Connection conn = getConnection();
-		TipBoardReply tboardRe = trdao.selectTipBoardReply(conn, tipBoardReplyNo);
+		TipBoardReply tipReply = trdao.selectTipBoardReply(conn, tipBoardReplyNo);
 		close(conn);
-		return tboardRe;
+		return tipReply;
 	}
 
 	public ArrayList<TipBoardReply> selectList(int tipBoardNo, int trcurrentPage, int limit) {
@@ -61,6 +61,10 @@ public class TipBoardReplyService {
 	public int updateReply(String tipReplyContent, int tipBoardReplyNo) {
 		Connection conn = getConnection();
 		int result = trdao.updateReply(conn, tipReplyContent, tipBoardReplyNo);
+		if(result>0)
+			commit(conn);
+		else
+			rollback(conn);
 		close(conn);
 		return result;
 	}

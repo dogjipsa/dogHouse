@@ -112,3 +112,11 @@ ul.mVertical-menu {
 .submenu li span {
     margin-left: 30px;
 }
+#cntvisit {
+	position: relative;
+	left: 50%;
+}
+.labcnt {
+	position: relative;
+	left: 50%;
+}

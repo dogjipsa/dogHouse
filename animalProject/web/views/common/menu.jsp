@@ -28,16 +28,16 @@
 <script type="text/javascript" src="https://static.nid.naver.com/js/naveridlogin_js_sdk_2.0.0.js" charset="utf-8"></script>
 <script type="text/javascript">
 	 $(function() {
- 		$('.login-form').hide();
+ 		$('.loginbody').hide();
 		 
 		$('.btn').click(function() {
 			$('body').append('<div id="mask"></div>');
 		    $('#mask').fadeIn(300);
-		    $('.login-form').fadeIn(300);
-			$('.login-form').show();
+		    $('.loginbody').fadeIn(280);
+			$('.loginbody').show();
 			
 		    $('#mask').click(function() {
-		    	$('#mask, .login-form').fadeOut(300);
+		    	$('#mask, .loginbody').fadeOut(300);
 		    });
 		    
 		});
