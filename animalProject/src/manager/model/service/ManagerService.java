@@ -48,6 +48,7 @@ public class ManagerService {
 			rollback(conn);
 		return result;
 	}
+	
 	public int tipboardListCount() {
 		Connection conn = getConnection();
 		int result = manDao.tipboardListCount(conn);
@@ -114,12 +115,11 @@ public class ManagerService {
 	public int updatePetsitter(String userId) {
 		Connection conn = getConnection();
 		int result = manDao.updatePetsitter(conn, userId);
-		System.out.println("service userId : " + userId);
-		System.out.println("service result : " + result );
-		if(result > 0) {
+		System.out.println("service result : " + result);
+		if(result > 0) 
 			commit(conn);
-		}else {
-			rollback(conn);}
+		else 
+			rollback(conn);
 		close(conn);
 		
 		return result;
