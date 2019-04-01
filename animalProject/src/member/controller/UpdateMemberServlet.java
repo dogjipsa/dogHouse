@@ -36,25 +36,34 @@ public class UpdateMemberServlet extends HttpServlet {
 		// 회원 정보 db 업데이트 처리용 컨트롤러 (19.03.26 아직 필요하지 않음)
 		request.setCharacterEncoding("utf-8");
 		System.out.println("확인중!");
+		
 		Member member = new Member();
 		member.setUserId(request.getParameter("userid"));
 		member.setUserPwd(request.getParameter("userpwd"));
 		member.setPhone(request.getParameter("phone"));
 		member.setEmail(request.getParameter("email"));
-		//member.setAddress(request.getParameter("address"));
+		String fullAddr = request.getParameter("addr") + ", " + request.getParameter("extra") + " "
+		            + request.getParameter("daddr") + " (" + request.getParameter("postcode") + ")";
+		member.setAddress(fullAddr);
+		
+		System.out.println("전체 주소 : " + fullAddr);
+		
 		member.setJob(request.getParameter("job"));
 		
 		System.out.println("회원 수정 서블릿 : " + member.toString());
 		int result = new MemberService().updateMember(member);
+		
 		response.setContentType("text/html; charset=utf-8");
+		
 		System.out.println("서블릿 result : " + result);
 		RequestDispatcher view = null;
+		
 		PrintWriter out = response.getWriter();
+		
 		if(result > 0) {
 			/*view = request.getRequestDispatcher("views/member/changeInformation.jsp");
 			request.setAttribute("member", member);			
-			view.forward(request, response);			
-			mem*/
+			view.forward(request, response);	*/					
 			response.sendRedirect("/doggybeta/jipsalogout");
 		}else {
 			

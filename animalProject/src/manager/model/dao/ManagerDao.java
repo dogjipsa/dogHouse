@@ -827,7 +827,7 @@ public class ManagerDao {
 		int result = 0;
 		PreparedStatement pstmt = null;
 		
-		String query = "update member set petsitter = 2 where user_id = ? and petsitter = 1 and user_delete in('n', 'N', null)"; 
+		String query = "update member set petsitter = '2' where user_id like ? and user_delete in('n', 'N', null)"; 
 		
 		try {
 			pstmt = conn.prepareStatement(query);

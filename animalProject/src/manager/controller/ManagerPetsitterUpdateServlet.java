@@ -36,10 +36,12 @@ public class ManagerPetsitterUpdateServlet extends HttpServlet {
 		String userId = request.getParameter("userid");
 		/*int page = Integer.parseInt(request.getParameter("page"));*/
 		System.out.println("userid : " + userId);
+		
 		ManagerService mservice = new ManagerService();
+		
 		int result = mservice.updatePetsitter(userId);
 		
-		response.setContentType("text/html; charset=utf-8");
+//		response.setContentType("text/html; charset=utf-8");
 		RequestDispatcher view = null;
 		if(result > 0) {
 			response.sendRedirect("/doggybeta/mpsearch");

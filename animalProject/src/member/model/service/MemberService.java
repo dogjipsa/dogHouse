@@ -165,7 +165,7 @@ public class MemberService {
 	public int updateMember(Member member) {
 		Connection conn = getConnection();
 		int result = mdao.updateMember(conn, member);
-		System.out.println("서비스 : " + result);
+		System.out.println("서비스 업데이트 부분 : " + result);
 		if(result > 0) 
 			commit(conn);
 		else
