@@ -182,6 +182,37 @@ public class PetDao {
 		return result;
 	}
 
+
+	public Pet findPetInfo(Connection conn, String petSitterId) {
+		Pet pet = new Pet();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String query = "SELECT PET_NAME, PET_BREADS, TRUNC(MONTHS_BETWEEN(sysdate, pet_date)/12) as AGE, PET_SIZE, PET_GENDER, PET_NEUTRALIZE, PET_CHARATER, PET_REFILE FROM PET WHERE USER_ID = ?";
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, petSitterId);
+			
+			rset = pstmt.executeQuery();
+			if(rset.next()) {
+				pet.setPetName(rset.getString("PET_NAME"));
+				pet.setBreeds(rset.getString("PET_BREADS"));
+				pet.setAge(rset.getInt(3));
+				pet.setPetSize(rset.getString(4));
+				pet.setPetGender(rset.getString("PET_GENDER"));
+				pet.setPetNeutralize(rset.getString("PET_NEUTRALIZE"));
+				pet.setPetCharater(rset.getString("PET_CHARATER"));
+        pet.setRenameFileName(rset.getString("PET_REFILE"));
+				
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return pet;
+	}
+
 	public Pet selectOnePet(Connection conn, String userid) {
 		Pet pet = new Pet();
 		PreparedStatement pstmt = null;

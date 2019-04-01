@@ -488,7 +488,7 @@ public class MemberDao {
 
 		
 		String query = "SELECT DISTINCT P.USER_ID, P.USER_NAME, P.PRICE, P.USER_ORIGINFILE, "
-				+ "P.USER_REFILE, P.ADDRESS FROM MEMBER P LEFT OUTER JOIN PET Z ON (P.USER_ID = Z.USER_ID) "
+				+ "P.USER_REFILE, P.ADDRESS, P.TITLE_IMG FROM MEMBER P LEFT OUTER JOIN PET Z ON (P.USER_ID = Z.USER_ID) "
 				+ "WHERE P.USER_ID NOT IN ? AND P.PETSITTER = '2' AND P.ADDRESS LIKE ?";
 
 		try {
@@ -507,7 +507,8 @@ public class MemberDao {
 				findSitter.setPrice(rset.getInt(3));
 				findSitter.setUseroriginfile(rset.getString(4));
 				findSitter.setUserrefile(rset.getString(5));
-				findSitter.setAddress(rset.getString(6).substring(0, 5));
+				findSitter.setAddress(rset.getString(6).substring(0, 7));
+				findSitter.setTitleImg(rset.getString(7));
 						
 				list.add(findSitter);
 			}

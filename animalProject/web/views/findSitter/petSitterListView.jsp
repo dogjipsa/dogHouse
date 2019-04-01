@@ -32,39 +32,33 @@
 
 
 <script>
-/* $(function(){
-	$("#search").click(function(){
-
+ $(function(){
+	 
 		$.ajax({
 			type : 'post',
 			cache: false,
 			datatype: 'json',
-			data : {userid : $("#userid").val(), 
-				service : $("select[name=service]").val(), 
-				jido : $("#jido").val() },
-			url : '/doggybeta/fplist',
+			data : {petuserid : $("#petuserid").val()},
+			url : '/doggybeta/fpinfo',
 			success:function(data){
-				console.log(data.list);
-				 $.each(data.list, function(index){
-					var items = [];			
-					items.push('<td>' + '펫시터 검색' + '</td>');
-					items.push('<td>' + decodeURIComponent(data.list[index].address) + '</td>');
-					items.push('<td>' + data.list[index].price +'</td>');
-					items.push('<td>' + decodeURIComponent(data.list[index].sitterName) + '</td>');
-					items.push(
-							
-							'<td>' + '<img src=/doggybeta/files/profile/' + data.list[index].petsitterImg + '>' + '</td>');
-				 	items.push('<td>' + '<img src=/doggybeta/files/profile/' + data.list[index].houseImg + '>' + '</td>');
+				console.log(data);	
+				console.log(data.img);
+				$("#pet").html($("#pet").text() 
+						+ "<table id='petinfotable'>"
+						+ "<tr><th>강아지이름</th><td>" + decodeURIComponent(data.petname) + "</td></tr>"  
+						+ "<tr><th>강아지나이</th><td>" + data.petage + "살</td></tr>"
+						+ "<tr><th>강아지 크기</th><td>" + decodeURIComponent(data.petsize) + "</td></tr>"
+						+ "<tr><th>견종</th><td>" + decodeURIComponent(data.breads) + "</td></tr>"
+						+ "<tr><th>성별</th><td>" + data.gender + "</td></tr>"
+						+ "<tr><th>중성화여부</th><td>" + data.yesorno + "</td></tr></table>"
+						+ "<img src='/doggybeta/files/pet/" + decodeURIComponent(data.img) + "'>" )
 
-					$('<tr/>', {html : items}).appendTo('tbody');
-				}); //each
-				
 			}  //success
 			
 			});
-		});
-	}); */
-	
+		 
+ });	
+
 function categoryChange(e) {
 	  var detail_name1 = ['전체', '강남구','강동구','강북구','강서구','관악구','광진구','구로구','금천구','노원구','도봉구','동대문구','동작구','마포구','서대문구','서초구','성동구','성북구','송파구','양천구','영등포구','용산구','은평구','종로구','중구','중랑구'];
 	  var detail_name2 = ['전체', '고양','과천','광명','광주','구리','군포','김포','남양주','동두천','부천', '성남', '수원','시흥','안산','안양','오산','용인','의왕','의정부','이천','파주','평택','하남','화성','가평','양주','양평','여주','연천','포천'];
@@ -109,7 +103,7 @@ body{
 	padding: 30px 30px;
 	margin: 10px 10px;
 	height: auto;
-	width: 800px;
+	width: 600px;
 				
 }
 input[type=button]{
@@ -124,7 +118,22 @@ input[type=button]{
 table td{
 text-align: center;
 }
- #detail table{
+#searchpettable tr{
+padding: 10px 10px;
+margin: 10px 10px;
+}
+
+#petinfotable{
+border : 1px solid #2ec4b6;
+background: #fff;
+padding: 10px 10px;
+margin: 10px 10px;
+border-radius: 10px;
+display: inline-block;
+position: absolute;
+left: 650px;
+}
+ #detail table{`
 	margin: 8px;
 } 
 
@@ -142,14 +151,16 @@ text-align: center;
 
 <div id="wrap" >
 <div id="content">
+<input type="hidden" id="petuserid" name="petuserid" value="<%=loginUser.getUserId() %>">
+<p id="pet">
 
+</p>
 
 <form name="petinfo" method="post" action="/doggybeta/fplist">
 	<!-- 조건 검색 테이블  -->	
 		
  <div id="bringpetinfo">		
-	
-<input type="hidden" id="userid" name="userid" value="<%=loginUser.getUserId() %>">
+<input type="hidden" id="userid" name="userid" value="<%=loginUser.getUserId() %>">	
 </div>
  
 			<table id=searchpettable>
@@ -161,12 +172,48 @@ text-align: center;
 				<tr>
 
 					<td>  
+					<%if(service != null){ %>
+					<%if(service.equals("1")) {%>
 						<select name="service" style="width:180px; height:30px;">
+						  <option>선택</option>
 						  <option value="0">[당일]우리집으로 부르기</option>
-						  <option value="1">우리집으로 부르기</option>
+						  <option value="1" selected>우리집으로 부르기</option>
 						  <option value="2">[당일]펫시터 집에 맡기기</option>
 						  <option value="3">펫시터 집에 맡기기</option>
 						</select>
+					<%}else if(service.equals("2")) {%>
+					<select name="service" style="width:180px; height:30px;">
+						<option>선택</option>
+						  <option value="0">[당일]우리집으로 부르기</option>
+						  <option value="1" >우리집으로 부르기</option>
+						  <option value="2" selected>[당일]펫시터 집에 맡기기</option>
+						  <option value="3">펫시터 집에 맡기기</option>
+						</select>	
+					<%}else if(service.equals("3")) {%>	
+						<select name="service" style="width:180px; height:30px;">
+						<option>선택</option>
+						  <option value="0">[당일]우리집으로 부르기</option>
+						  <option value="1" >우리집으로 부르기</option>
+						  <option value="2" >[당일]펫시터 집에 맡기기</option>
+						  <option value="3" selected>펫시터 집에 맡기기</option>
+						</select>	
+					<%}else if(service.equals("0")) {%>	
+					<select name="service" style="width:180px; height:30px;">
+					<option>선택</option>
+					  <option value="0" selected>[당일]우리집으로 부르기</option>
+					  <option value="1" >우리집으로 부르기</option>
+					  <option value="2" >[당일]펫시터 집에 맡기기</option>
+					  <option value="3" >펫시터 집에 맡기기</option>
+					</select>
+					<%}} else{%>
+					<select name="service" style="width:180px; height:30px;">
+					<option selected>선택</option>
+						  <option value="0" >[당일]우리집으로 부르기</option>
+						  <option value="1" >우리집으로 부르기</option>
+						  <option value="2" >[당일]펫시터 집에 맡기기</option>
+						  <option value="3">펫시터 집에 맡기기</option>
+						</select>
+					<%} %>					
 					</td>
 					<td>
 					  <select name="jido" onChange="categoryChange(this)" style="width:80px; height:30px;">
@@ -182,19 +229,20 @@ text-align: center;
 						<option value='부산'>부산</option>
 						<option value='경상'>경상</option>
 						<option value='전라'>전라</option>
+						<option value='제주'>제주</option>
 					</select>
 					<select name="detail" id="detail" style="width:80px; height:30px;">
 					<option>-선택-</option>
 					</select>
 					</td>
-					<td><input type="submit" value="펫시터 찾기" style="width:80px; height:30px;"></td>
-
+					<td>
+					<input type="submit" value="펫시터 찾기" style="width:80px; height:30px;">					
+					</td>
 				</tr>
 			</table>
 			<br>
-
-
 </form>
+
 <br><br>
 <!-- 조건에 대한 결과 -->
 <div id="detailmain" style="width:1300px" >
@@ -213,19 +261,17 @@ text-align: center;
 		<td>
 		
 			<div style="position: relative;">
-		<%if(imglist.size() != 0) {for(int i = 0; i < list.size(); i++){%>
-		<%if(list.get(i).getUserId() == imglist.get(i).getRenameFile()) {%>
-		<%=imglist.get(i).getRenameFile() %>
-          <img src="/doggybeta/files/profile/<%=imglist.get(i).getRenameFile() %>" height="150px;" width="100%;">   
-         <%}}}else{ %>
-         등록된 사진이 없습니다.
+		<%if(imglist.size() != 0) { %>
+          <img src="/doggybeta/files/profile/<%=m.getTitleImg() %>" height="150px;" width="100%;">   
+         <%}else{ %>
+         <img src="/doggybeta/resources/imgaes/로고test2.png" height="150px;" width="100%;">
          <%} %>  
          </div>
          <div style="position: relative; top: -40px;">
          <% if(m.getUserrefile() != null) {%>
          <img src="/doggybeta/files/profile/<%= m.getUserrefile() %>" style="height: 60px; width : 60px; border-radius: 50px; border: 3px solid white">
          <%}else{ %>
-         등록된 사진이 없습니다.
+         	<img src="/doggybeta/resources/imgaes/로고test2.png" style="height: 60px; width : 60px; border-radius: 50px; border: 3px solid white">
          <%} %>
          </div>	
          </td>

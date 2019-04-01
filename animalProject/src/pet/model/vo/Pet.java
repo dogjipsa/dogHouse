@@ -17,12 +17,16 @@ public class Pet implements Serializable {
 	private String userId;
 	private String originFileName;
 	private String renameFileName;
+	private int age;
+
 	
 	public Pet() {
 	}
-	
+
+
 	public Pet(int petNo, String petName, String breeds, Date petDate, String petSize, String petGender,
-			String petNeutralize, String petCharater, String userId, String originFileName, String renameFileName) {
+			String petNeutralize, String petCharater, String userId, String originFileName, String renameFileName,
+			int age) {
 		super();
 		this.petNo = petNo;
 		this.petName = petName;
@@ -35,104 +39,144 @@ public class Pet implements Serializable {
 		this.userId = userId;
 		this.originFileName = originFileName;
 		this.renameFileName = renameFileName;
+		this.age = age;
 	}
+
 
 	public int getPetNo() {
 		return petNo;
 	}
 
+
 	public void setPetNo(int petNo) {
 		this.petNo = petNo;
 	}
+
 
 	public String getPetName() {
 		return petName;
 	}
 
+
 	public void setPetName(String petName) {
 		this.petName = petName;
 	}
+
 
 	public String getBreeds() {
 		return breeds;
 	}
 
+
 	public void setBreeds(String breeds) {
 		this.breeds = breeds;
 	}
+
 
 	public Date getPetDate() {
 		return petDate;
 	}
 
+
 	public void setPetDate(Date petDate) {
 		this.petDate = petDate;
 	}
+
 
 	public String getPetSize() {
 		return petSize;
 	}
 
+
 	public void setPetSize(String petSize) {
 		this.petSize = petSize;
 	}
+
 
 	public String getPetGender() {
 		return petGender;
 	}
 
+
 	public void setPetGender(String petGender) {
 		this.petGender = petGender;
 	}
+
 
 	public String getPetNeutralize() {
 		return petNeutralize;
 	}
 
+
 	public void setPetNeutralize(String petNeutralize) {
 		this.petNeutralize = petNeutralize;
 	}
+
 
 	public String getPetCharater() {
 		return petCharater;
 	}
 
+
 	public void setPetCharater(String petCharater) {
 		this.petCharater = petCharater;
 	}
+
 
 	public String getUserId() {
 		return userId;
 	}
 
+
 	public void setUserId(String userId) {
 		this.userId = userId;
 	}
+
 
 	public String getOriginFileName() {
 		return originFileName;
 	}
 
+
 	public void setOriginFileName(String originFileName) {
 		this.originFileName = originFileName;
 	}
+
 
 	public String getRenameFileName() {
 		return renameFileName;
 	}
 
+
 	public void setRenameFileName(String renameFileName) {
 		this.renameFileName = renameFileName;
 	}
+
+
+	public int getAge() {
+		return age;
+	}
+
+
+	public void setAge(int age) {
+		this.age = age;
+	}
+
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
 
+
 	@Override
 	public String toString() {
-		return petNo + ", " + petName + ", " + breeds + ", " + petDate + ", " + petSize + ", " + petGender + ", "
-				+ petNeutralize + ", " + petCharater + ", " + userId + ", " + originFileName + ", " + renameFileName;
+		return "Pet [petNo=" + petNo + ", petName=" + petName + ", breeds=" + breeds + ", petDate=" + petDate
+				+ ", petSize=" + petSize + ", petGender=" + petGender + ", petNeutralize=" + petNeutralize
+				+ ", petCharater=" + petCharater + ", userId=" + userId + ", originFileName=" + originFileName
+				+ ", renameFileName=" + renameFileName + ", age=" + age + "]";
 	}
+
+	
+	
 	
 }
