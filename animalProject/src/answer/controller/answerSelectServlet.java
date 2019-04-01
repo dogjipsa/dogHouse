@@ -1,4 +1,4 @@
-package question.controller;
+package answer.controller;
 
 import java.io.IOException;
 
@@ -9,20 +9,20 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import question.model.service.QuestionService;
-import question.model.vo.Question;
+import answer.model.service.AnswerService;
+import answer.model.vo.Answer;
 
 /**
- * Servlet implementation class questionUpdateServlet
+ * Servlet implementation class answerWriteServlet
  */
-@WebServlet("/qupdate")
-public class questionUpdateServlet extends HttpServlet {
+@WebServlet("/ansinsert")
+public class answerSelectServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public questionUpdateServlet() {
+    public answerSelectServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -31,26 +31,30 @@ public class questionUpdateServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		int questionNo = Integer.parseInt(request.getParameter("no"));
+		int questionNo = Integer.parseInt(request.getParameter("qnum"));
+		System.out.println("ans servlet qnum : " + questionNo);
 		
-		Question question = new QuestionService().selectQuestion(questionNo);
-		
-		response.setContentType("text/html; charset=utf-8");
+		Answer answer = new Answer();
+		answer = new AnswerService().selectAnswer(questionNo);
+		System.out.println("servlet ans :"+answer);
+		System.out.println(answer.getAnswerNo());
 		RequestDispatcher view = null;
-		if(question != null) {
-			view = request.getRequestDispatcher("views/question/questionUpdateView.jsp");
-			request.setAttribute("question", question);
+		 /*&& questionNo == answer.getAnswerNo()*/
+		if(answer != null) {
+			view = request.getRequestDispatcher("views/question/questionListView.jsp");
+			request.setAttribute("answer", answer);
 			view.forward(request, response);
 		}else{
 			view = request.getRequestDispatcher("views/question/questionError.jsp");
 			request.setAttribute("message", questionNo + "1:1 문의 수정페이지 이동 실패!");
 			view.forward(request, response);
 		}
+		
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
+/**
+* @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+*/
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doGet(request, response);
