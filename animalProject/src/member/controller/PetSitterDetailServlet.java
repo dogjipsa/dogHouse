@@ -40,7 +40,7 @@ public class PetSitterDetailServlet extends HttpServlet {
 		ArrayList<SitterImage> sitterFacilityImg = new MemberService().selectSitterFacilityImg(petSitterId);
 		response.setContentType("text/html; charset=utf-8");
 		
-		String service = "0";//request.getParameter("service");//petsitterlistview.jsp에서 넘겨받은 서비스
+		String service = request.getParameter("service");//petsitterlistview.jsp에서 넘겨받은 서비스
 		System.out.println("detail서블릿에서 서비스 : "  + service);
 		RequestDispatcher view = null;
 		view = request.getRequestDispatcher("views/findSitter/petSitterDetailView.jsp");
