@@ -9,20 +9,22 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import answer.model.service.AnswerService;
+import answer.model.vo.Answer;
 import question.model.service.QuestionService;
 import question.model.vo.Question;
 
 /**
- * Servlet implementation class questionUpdateServlet
+ * Servlet implementation class questionDetailServlet
  */
-@WebServlet("/qupdate")
-public class questionUpdateServlet extends HttpServlet {
+@WebServlet("/qdetail")
+public class questionDetailServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public questionUpdateServlet() {
+    public questionDetailServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -30,22 +32,30 @@ public class questionUpdateServlet extends HttpServlet {
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		int questionNo = Integer.parseInt(request.getParameter("no"));
+protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		Question question = new QuestionService().selectQuestion(questionNo);
+		int questionNo = Integer.parseInt(request.getParameter("no"));
+		/*int currentPage = Integer.parseInt(request.getParameter("page"));*/
+		
+		QuestionService qservice = new QuestionService();
+		
+		/*qservice.addReadCount(questionNo);*/
+		
+		Question question = qservice.selectQuestion(questionNo);
+		Answer answer = new AnswerService().selectAnswer(questionNo);
 		
 		response.setContentType("text/html; charset=utf-8");
 		RequestDispatcher view = null;
 		if(question != null) {
-			view = request.getRequestDispatcher("views/question/questionUpdateView.jsp");
+			view = request.getRequestDispatcher("views/question/questionDetailView.jsp");
 			request.setAttribute("question", question);
+			request.setAttribute("answer", answer);
 			view.forward(request, response);
-		}else{
+		}else {
 			view = request.getRequestDispatcher("views/question/questionError.jsp");
-			request.setAttribute("message", questionNo + "1:1 문의 수정페이지 이동 실패!");
+			request.setAttribute("message", questionNo + " 번 1:1 문의글 상세조회 실패!");
 			view.forward(request, response);
-		}
+		}	
 	}
 
 	/**
