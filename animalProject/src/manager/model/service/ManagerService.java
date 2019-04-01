@@ -61,6 +61,7 @@ public class ManagerService {
 
 	public ArrayList<FreeBoard> selectFreeBoardList(int currentPage, int pageList, String option, String word) {
 		Connection conn = getConnection();
+		System.out.println("서비스 word : " + word);
 		ArrayList<FreeBoard> fList = manDao.selectFreeBoardList(conn, currentPage, pageList, option, word);
 		close(conn);
 		System.out.println("서비스 flist " + fList);
@@ -134,6 +135,14 @@ public class ManagerService {
 		else
 			rollback(conn);
 		return result;
+	}
+
+	public ArrayList<FreeBoard> selectReadCountTop5() {
+		Connection conn = getConnection();
+		ArrayList<FreeBoard> flist = manDao.selectReadCountTop5(conn);
+		close(conn);
+		
+		return flist;
 	}
 
 }
