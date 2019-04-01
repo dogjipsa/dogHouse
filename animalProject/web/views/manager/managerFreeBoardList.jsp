@@ -13,6 +13,18 @@ import='freeboard.model.vo.FreeBoard, java.util.ArrayList, faq.model.vo.Faq,
 	int endPage = ((Integer)request.getAttribute("endPage"));
 	int currentPage = ((Integer)request.getAttribute("currentPage"));
 	int totalPage = ((Integer)request.getAttribute("totalPage"));
+	
+	String search = null;
+	String keyword = null;
+	if(request.getAttribute("search") != null) {
+		search = request.getAttribute("search").toString();
+		keyword = request.getAttribute("keyword").toString();
+	}
+	System.out.println("cp " + currentPage);
+	System.out.println("sp " + startPage);
+	System.out.println("ep " + endPage);
+	System.out.println("tp " + totalPage);
+	System.out.println("flist " + list);
 %>
 <!DOCTYPE html>
 <html>
@@ -116,7 +128,7 @@ $(function(){
 <%@ include file="../../../managerMainPage.jsp" %>
 <section>
 <div class="mcontainer">
-	<h3>게시판 관리</h3>
+	<h3>게시판 관리 <%= list.size() %></h3>
 	<ul class="tabs">
 		<li class="tab-link current" data-tab="tab-1">자유게시판</li>
 	</ul>
@@ -154,8 +166,58 @@ $(function(){
 		</table>
 		<%-- 페이징 --%>
 		<div style='text-align: center;'>
-		<% if(startPage > 1) { %>
+		<% if(currentPage <= 1) { %>
+		◁◁&nbsp;
+		<% } else { %>
+			<% if(search == null) { %>
+			<a href='/doggybeta/manboard?page=1'>◁</a><br>
+			<% } else { %>
+			<a href='/doggybeta/manboard?word=<%= keyword %>&page=1&option=<%= search %>'>[HOME]</a>
+			
+			<% } %>
+		<% } %>
+		<% if((currentPage - 10) <= startPage && (currentPage - 10) >= 1) { %>
+			<% if(search == null) { %>
+			<a href='/doggybeta/manboard?page=<%= startPage - 1%>'>◁</a><br>
+			<% } else { %>
+			<a href='/doggybeta/manboard?word=<%= keyword %>&page=<%= startPage - 1%>&option=<%= search %>'>[HOME]</a>
+			
+			<% } %>
+		<% } else { %>
+		◁
+		<% } %>
+		<% for(int p = startPage; p <= endPage; p ++) {
+			if(p == currentPage) { %>
+				<font color='skyblue' size='4'><b><%= p %></b></font>
+			<% } else { %>
+				<% if(search == null) { %>
+					<a href='/doggybeta/manboard?page=<%= p %>'><%= p %></a>
+				<% } else { %>
+					<a href='/doggybeta/manboard?word=<%= keyword %>&page<%= p %>&option=<%= search%>'><%= p %></a>
+				<% } %>
+			<% } %>
+		<% } //for문 %>&nbsp;
+		<% if(endPage < totalPage) { %>
+		<!-- ◁◁ -->
+			<% if(search == null) { %>
+				<a href='/doggybeta/manboard?page=<%= totalPage %>'>▷▷</a>
+			<% } else { %>
+				<a href='/doggybeta/manboard?word=<%= keyword %>&page=<%= totalPage %>&option<%= search %>'>▷▷</a>
+			<% } %>
+		<% } else { %>
+			▷&nbsp;
+		<% } %>
+		<% if(currentPage >= totalPage) { %>
+		▷▷
+		<% }  else {%>
+		<% if(search == null) { %>
+			<a href='/doggybeta/manboard?page=<%= totalPage %>'>▷▷</a>
+		<% } else { %>
+			<a href='/doggybeta/manboard?word=<%= keyword %>&page=<%= totalPage %>&option=<%= search %>'>▷▷</a>
+		<% } } %>
+		<%-- <% if(startPage > 1) { %>
 			<a href='/doggybeta/manboard?page=1'>[HOME]</a><br>
+		
 		<% } else if(startPage == 1) { %>
 			[HOME]
 		<% } %>
@@ -186,15 +248,24 @@ $(function(){
 		</div>
 		<a href = "write.jsp" class="btn btn-primary pull-right">글쓰기</a>
 		<!-- <a href = "#" >전체 삭제</a> -->
-		
+		--%>
 	</div>
-		<input type="checkbox" id="checkAll" class='styled-checkbox'/>전체선택
-		<input type='button' id='del' value='선택삭제'/>
-		<select name='chooson'>
-			<option value='delyorn'>삭제여부</option>
-			<option value='writer'>작성자</option>
-			<option value='createDate'>작성일</option>
-		</select>
+	<input type="checkbox" id="checkAll" class='styled-checkbox'/>전체선택
+	<input type='button' id='del' value='선택삭제'/>
+	<div>
+	<div class="fsearch" align="center" id="searchT">
+ <form name="form1" method="post" action="/doggybeta/manboard">
+  <select name="option">
+  <option value="delyorn" >삭제여부</option>
+  <option value="writer" >작성자</option>
+  <option value="createDel" >날짜</option>
+   </select>
+ <input type="text" size="20" name="inputdata" />&nbsp;
+ <input type="submit" value ="검색"/>
+</form>
+</div>
+	</div>
+</div>
 </div>
 
 </section>

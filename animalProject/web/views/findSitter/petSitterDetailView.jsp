@@ -201,16 +201,16 @@ img {
 <div class="container"><!-- 슬라이드쇼 https://www.w3schools.com/howto/howto_js_slideshow_gallery.asp 참고  -->
   <div class="mySlides">
     <div class="numbertext">1 / 3</div>
-    <img src="/doggybeta/files/profile/<%=sitterFacilityImg.get(0).getRenameFile() %>" style="width:100%">
+    <img src="/doggybeta/files/profile/<%=sitterFacilityImg.get(0).getRenameFile() %>" style="width:100%;height:500px">
   </div>
   <div class="mySlides">
     <div class="numbertext">2 / 3</div>
-    <img src="/doggybeta/files/profile/<%=sitterFacilityImg.get(1).getRenameFile() %>" style="width:100%">
+    <img src="/doggybeta/files/profile/<%=sitterFacilityImg.get(1).getRenameFile() %>" style="width:100%;height:500px">
   </div>
 
   <div class="mySlides">
     <div class="numbertext">3 / 3</div>
-    <img src="/doggybeta/files/profile/<%=sitterFacilityImg.get(2).getRenameFile() %>" style="width:100%">
+    <img src="/doggybeta/files/profile/<%=sitterFacilityImg.get(2).getRenameFile() %>" style="width:100%;height:500px">
   </div>
   
   

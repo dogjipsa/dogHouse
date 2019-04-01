@@ -36,16 +36,13 @@ public class PriceCalculatorServlet extends HttpServlet {
 		//String date = request.getParameter("datetimes");
 		//System.out.println("ajax 확인 : "+date);
 		int price = Integer.parseInt(request.getParameter("price"));
-		System.out.println("가격확인 : " + price);
 		String[] date = request.getParameter("datetimes").split(" - ");
 		String checkin = date[0];
 		String checkout = date[1];
 		int dates = new BookingService().selectDates(checkin,checkout);
-		System.out.println("데이트 확인 : "+dates);
 		int priceSum = (dates+1)*price;
 		JSONObject job = new JSONObject();
 		job.put("pricesum", priceSum);
-		System.out.println("맵 확인 : " + priceSum);
 		response.setContentType("application/json; charset=utf-8");
 		PrintWriter out = response.getWriter();
 		out.println(job.toJSONString());
