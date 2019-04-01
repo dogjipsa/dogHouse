@@ -45,36 +45,39 @@
 	
 </script>
 </head>
-<body>
+<body background="/doggybeta/resources/images/puppies_1.2.jpg">
 <%@ include file="../common/menu.jsp" %>
 <div id="wrap">
 <div id="cotent">
-	<h2 align="center">나의 문의내역</h2>
-	<hr style="clear:both;">
+	<h2 align="center" style="color:white;">나의 문의내역</h2>
+	<!-- <hr style="clear:both;"> -->
+
+<hr style="width:600px">
 <br>
-<br>
-<table align="center" width="700" cellspacing="1" border="3">
+<div align="center">
+<table style="text-align:center; border:1px; solid #dddddd">
+	<thead>
 	<tr>
-	<!-- <th>번호</th> -->
-		<th>제목</th>	
-		<th>날짜</th>
-		<th>답변유무</th>
-		<%-- <th><%= answer.getAnswerNo() %></th>		 --%>	
+		<th style="background-color:#eeeee; text-align:center; color:white;">제목</th>
+		<th style="background-color:#eeeee; text-align:center; color:white;">날짜 </th>
+		<th style="background-color:#eeeee; text-align:center; color:white;">답변유무</th>		
 	</tr>
+	</thead>
 <% 
 	for(Question question : list){
 %>
 <input type="hidden" name="qnum" id="qnum" value="<%= question.getQuestionNo() %>"> 
 	<tr>		
 	<%-- <td><input type='text' value='<%= question.getQuestionNo()%>'></td> --%>
-	<td>
+	<td align="left">
 			<% if(loginUser != null){ %>
 				<a href="/doggybeta/qdetail?no=<%= question.getQuestionNo() %>"><%= question.getQuestionTitle() %></a>
 			<% }else{ %>
 				<%= question.getQuestionTitle() %>
-			<% } %></td>
- 
-		<td align="center"><%= question.getQuestionDate() %></td>
+			<% } %> &nbsp; &nbsp; &nbsp;</td>
+ 			
+		<td align="center"><%= question.getQuestionDate() %>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+		
 	 	<td align="center"> <%-- <% if(answer.getAnswerContent() != null){ %>
 								답변완료
 							<% }else{ %>
@@ -83,9 +86,10 @@
 						<%= question.getQuestionReplyYn() %>
 							</td>
 	</tr>
-</div></div>
+
 <% } %>
 </table>
+</div>
 <br>
 <%-- 페이징 처리 --%>
 <div style="text-align:center;">
@@ -117,6 +121,8 @@
 <% }else{ %>
 	<a href="/doggybeta/qlist?page=<%= maxPage %>">[마지막]</a>
 <% } %>
+</div>
+</div>
 </div>
 <br><br><br><br>
 <%-- <div id="footer"><%@ include file="../common/footer.jsp"%></div> --%>

@@ -57,7 +57,7 @@ public class QuestionDao {
 	public ArrayList<Question> selectList(Connection conn) {
 		ArrayList<Question> list = new ArrayList<Question>();
 		Statement stmt = null;
-		ResultSet rset = null;		
+		ResultSet rset = null;	
 	      
 	    String query = "SELECT * from question order by question_no desc";
 	      
