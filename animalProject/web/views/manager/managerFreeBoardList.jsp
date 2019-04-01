@@ -121,16 +121,22 @@ $(function(){
     		});//ajax
         } //if confirm
     }); //delete click
+    $('#days').click(function(){
+    	$('#searchDate').show();
+    	$('input[id=keyw]').hide();
+    });
 });
 </script>
+<style type="text/css">
+	#formDialogDiv {
+	display:none;}
+</style>
 </head>
 <body id='mBoardListBody'>
 <%@ include file="../../../managerMainPage.jsp" %>
-<section>
 <div class="mcontainer">
-	<h3>게시판 관리 <%= list.size() %></h3>
 	<ul class="tabs">
-		<li class="tab-link current" data-tab="tab-1">자유게시판</li>
+		<li class="tab-link current" data-tab="tab-1">자유게시판 관리</li>
 	</ul>
 	<!-- <div class='tabs'>
 		<button class="tab-link current" data-tab="tab-1">자유</button>
@@ -254,20 +260,20 @@ $(function(){
 	<input type='button' id='del' value='선택삭제'/>
 	<div>
 	<div class="fsearch" align="center" id="searchT">
- <form name="form1" method="post" action="/doggybeta/manboard">
-  <select name="option">
-  <option value="delyorn" >삭제여부</option>
-  <option value="writer" >작성자</option>
-  <option value="createDel" >날짜</option>
-   </select>
- <input type="text" size="20" name="inputdata" />&nbsp;
- <input type="submit" value ="검색"/>
-</form>
-</div>
+ 	<form name="form1" method="post" action="/doggybeta/manboard">
+  	<select name="option">
+  		<option value="delyorn" >삭제여부</option>
+  		<option value="writer" >작성자</option>
+  		<option value="createDel" id='days'>날짜</option>
+   	</select>
+   		<input type='date' id='searchDate' name='keyword'/>
+ 		<input type="text" size="20" name="keyword" id='keyw'/>&nbsp;
+ 		<input type="submit" value ="검색"/>
+	</form>
+		</div>
+		</div>
 	</div>
 </div>
-</div>
-
 </section>
 <%-- <% } else { %>
 <% pageContext.forward("/views/manager/managerLogin.jsp"); %>

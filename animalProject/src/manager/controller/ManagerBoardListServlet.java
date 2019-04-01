@@ -59,8 +59,8 @@ public class ManagerBoardListServlet extends HttpServlet {
 		int pageList = 10; //원하는 출력 개수
 		
 		String option = request.getParameter("option");
-		String word = request.getParameter("word");
-		
+		String word = request.getParameter("keyword");
+		System.out.println(option + ", " + word);
 		int listCount = ms.boardListCount(option, word); //총 게시글 수
 		
 		//현재 페이지에 출력할 목록 조회

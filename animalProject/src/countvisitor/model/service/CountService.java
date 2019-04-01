@@ -47,5 +47,12 @@ public class CountService {
 		return result;
 		
 	}
+	public CountVisitor sumOfVisitor() {
+		Connection conn = getConnection();
+		CountVisitor cntVisitor = cntDao.sumOfvisitor(conn);
+		close(conn);
+		
+		return cntVisitor;
+	}
 
 }
