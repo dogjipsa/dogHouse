@@ -148,8 +148,8 @@ public class MemberDao {
 		int result = 0;
 		PreparedStatement pstat = null;
 		StringBuffer query = new StringBuffer();
-		query.append("insert into member values ( ");
-		query.append("?,?,?,?,?,?,default,?,sysdate,?,default,?,?,?)");
+		query.append("insert into member values ( ")
+			 .append("?,?,?,?,?,?,default,?,sysdate,?,default,?,?,?)");
 		
 		try {
 			
