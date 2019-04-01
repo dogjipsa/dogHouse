@@ -17,6 +17,10 @@
 		<!-- section1 - 변경 버튼's -->
 		<div class="section1">
 			<input type="hidden" name="userid" value="<%=loginUser.getUserId() %>">
+			<input type="hidden" name="username" value="<%= loginUser.getUserName()%>">
+			<input type="hidden" name="phone" value="<%= loginUser.getPhone()%>">
+			<input type="hidden" name="addr" value="<%= loginUser.getAddress()%>">
+			<input type="hidden" name="email" value="<%= loginUser.getEmail()%>">
 			<input type="radio" name="item" id="cml_booking" value="booking" checked>
 			<input type="radio" name="item" id="cml_host" value="host">
 			<input type="radio" name="item" id="cml_addpet" value="addpet">

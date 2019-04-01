@@ -1,5 +1,5 @@
 const items = document.querySelectorAll('input[name="item"]');
-const userid = document.querySelector('input[name="userid"]');
+const userid = document.querySelector('.section1 input[name="userid"]');
 const bkTable = document.querySelector('#reserv_table');
 const hostMain = document.querySelector('.host_main');
 const addPetMain = document.querySelector('#add_pet');
@@ -194,7 +194,7 @@ pDelButton.addEventListener('click', function(e){
                 petUpForm.reset(); // 인풋 클리어                
             });
         }
-        modalText = document.getElementById('modal-text');
+        const modalText = document.getElementById('modal-text');
         if (xhr.responseText === 'ok') {
             modalText.textContent = "강아지를 성공적으로 삭제했습니다!";
             requestPetListAjax();
@@ -577,6 +577,7 @@ function requestBkAjax() {
                     button.textContent = pg;
                     button.addEventListener('click', function(){
                         payInIt(json.list[i]);
+                        // location.href ="/doggybeta/bpselect?bookingNo="+tableForm.bookingNo+"&priceSum="+json.list[i].price;
                     });
                     tr.appendChild(td).appendChild(button);
                 } else {

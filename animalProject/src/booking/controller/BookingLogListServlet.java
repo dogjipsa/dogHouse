@@ -83,7 +83,7 @@ public class BookingLogListServlet extends HttpServlet {
 				job.put("bno", bc.getBookingNo());
 				String indate = sdf.format(bc.getCheckInDate());
 				String outdate = sdf.format(bc.getCheckOutDate());
-
+				
 				job.put("indate", indate);
 				job.put("outdate", outdate);
 				job.put("progress", bc.getBookingProgress());
