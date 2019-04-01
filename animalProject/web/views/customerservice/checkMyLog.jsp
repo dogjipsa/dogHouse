@@ -52,6 +52,7 @@
 						<th>펫시터</th>
 						<th>이용날짜</th>
 						<th>진행상황</th>
+						<th>리뷰</th>
 					</tr>
 				</thead>
 				<tbody></tbody>

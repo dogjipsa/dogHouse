@@ -411,8 +411,7 @@ function requestHostAjax() {
                     'name': decodeURIComponent(json.list[i].username),
                     'etc': decodeURIComponent(json.list[i].etc).replace(/\+/gi, " "),
                     'date': json.list[i].indate + ' ~ ' + json.list[i].outdate,
-                    'price': json.list[i].price + '원',
-                    'progress': pg,
+                    'price': numberWithCommas(json.list[i].price) + '원',                    
                     'address': decodeURIComponent(json.list[i].addr).replace(/\+/gi, " "),
                     'pno': json.list[i].pno
                 }
@@ -436,6 +435,8 @@ function requestHostAjax() {
                         tr.appendChild(td);
                     }
                 }
+
+                if(json.list[i].progress === '')
 
                 tr.addEventListener('click', function () {
                     initMap(tableForm.address.split(",")[0], tableForm.name);
@@ -562,7 +563,7 @@ function requestBkAjax() {
                     'kind': kind,
                     'pname': decodeURIComponent(json.list[i].pname),
                     'addr': decodeURIComponent(json.list[i].addr).replace(/\+/gi, " "),
-                    'price': json.list[i].price + "원",
+                    'price': numberWithCommas(json.list[i].price) + "원",
                     'hostId': json.list[i].puserid,
                     'date': json.list[i].indate + " ~ " + json.list[i].outdate,
                 }
@@ -583,6 +584,16 @@ function requestBkAjax() {
                 } else {
                     const td = document.createElement('td');
                     td.textContent = pg;
+                    tr.appendChild(td);
+                }
+                if(json.list[i].progress === "3"){
+                    const td = document.createElement('td');
+                    const button = document.createElement("button");
+                    button.textContent = "리뷰 작성";
+                    tr.appendChild(td).appendChild(button);
+                } else {
+                    const td = document.createElement('td');
+                    td.textContent = "진행 중";
                     tr.appendChild(td);
                 }
             }
@@ -665,6 +676,10 @@ function requestBkAjax() {
     xhr.open('POST', '/doggybeta/bklist');
     xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
     xhr.send(requestData);
+}
+// 숫자 세자리마다 ,찍기 함수
+function numberWithCommas(x) {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 
 // 페이지 로드시 예약/결제 내역 출력
