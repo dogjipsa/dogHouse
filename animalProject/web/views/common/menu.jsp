@@ -75,7 +75,7 @@
 					<li><a href="/doggybeta/views/aboutus/location.jsp">오시는 길</a></li>
 				</ul>
 			</li>
-			<li><a href='/doggybeta/views/findSitter/petSitterListView.jsp' id='icon3'> <span>&nbsp;&nbsp;&nbsp;펫시터
+			<li><a href='#' id='icon3'> <span>&nbsp;&nbsp;&nbsp;펫시터
 						찾기</span></a> </li>
 			<li class="m1"><a href='#' id='icon4'> <span>&nbsp;&nbsp;&nbsp;게시판</span>
 				</a>
@@ -179,7 +179,7 @@
 							도그집사</a></li>
 					<li><a href="/doggybeta/views/aboutus/location.jsp">오시는 길</a></li>
 				</ul></li>
-			<li><a href='views/findSitter/petSitterListView.jsp' id='icon3'> <span>&nbsp;&nbsp;&nbsp;펫시터	찾기</span></a> </li>
+			<li><a href='/doggybeta/views/findSitter/petSitterListView.jsp' id='icon3'> <span>&nbsp;&nbsp;&nbsp;펫시터	찾기</span></a> </li>
 			<li class="m1"><a href='#'  id='icon4'> <span>&nbsp;&nbsp;&nbsp;게시판</span>
 			</a>
 				<ul class="m2">

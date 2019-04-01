@@ -41,7 +41,10 @@ public class UpdateMemberServlet extends HttpServlet {
 		member.setUserPwd(request.getParameter("userpwd"));
 		member.setPhone(request.getParameter("phone"));
 		member.setEmail(request.getParameter("email"));
-		//member.setAddress(request.getParameter("address"));
+		String fullAddr = request.getParameter("addr") + ", " + request.getParameter("extra") + " "
+		            + request.getParameter("daddr") + " (" + request.getParameter("postcode") + ")";
+		member.setAddress(fullAddr);
+		System.out.println("전체 주소 : " + fullAddr);
 		member.setJob(request.getParameter("job"));
 		
 		System.out.println("회원 수정 서블릿 : " + member.toString());

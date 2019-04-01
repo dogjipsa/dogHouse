@@ -390,7 +390,7 @@ public class MemberDao {
 		int result = 0;
 		PreparedStatement pstmt = null;
 		
-		String query = "UPDATE MEMBER SET EMAIL = ?, PHONE = ?, JOB = ?, PASSWORD = ? WHERE USER_ID = ?";
+		String query = "UPDATE MEMBER SET EMAIL = ?, PHONE = ?, JOB = ?, PASSWORD = ?, ADDRESS = ? WHERE USER_ID = ?";
 		
 		try {
 			pstmt = conn.prepareStatement(query);
@@ -398,7 +398,8 @@ public class MemberDao {
 			pstmt.setString(2, member.getPhone());
 			pstmt.setString(3, member.getJob());
 			pstmt.setString(4, member.getUserPwd());
-			pstmt.setString(5, member.getUserId());
+			pstmt.setString(5, member.getAddress());
+			pstmt.setString(6, member.getUserId());
 			
 			result = pstmt.executeUpdate();
 			
