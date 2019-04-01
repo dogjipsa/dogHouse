@@ -79,7 +79,7 @@
 					<p id="addr_text"></p>
 				</div>
 				<div class="host_side2">
-					<div class="showbox">
+					<form class="showbox">
 						<img id="showbox_img">
 						<div class="showbox_info">						
 							<p>PET NAME</p>
@@ -91,7 +91,7 @@
 							<p>BREEDS</p>
 							<input type="text" name="breeds" readonly>
 						</div>
-					</div>
+					</form>
 				</div>
 			</div>
 			<div id="add_pet">

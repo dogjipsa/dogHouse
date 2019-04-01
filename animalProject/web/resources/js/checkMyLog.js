@@ -469,7 +469,7 @@ function requestHostAjax() {
                 tr.addEventListener('click', function () {
                     initMap(tableForm.address.split(",")[0], tableForm.name);
                     document.querySelector('#addr_text').textContent = tableForm.address;
-                    initSubInfo(json.list[i].userid);
+                    initSubInfo(json.list[i].userid, json.list[i].pno);
                 });
             }
             const startPage = json.plist.start;
@@ -553,16 +553,26 @@ function requestHostAjax() {
     xhr.send(requestData);
 }
 // 서브 인포메이션 출력 Ajax
-function initSubInfo(data) {
-    const miniInfo = document.querySelector('.host_side2');
+function initSubInfo(userid, pno) {
+    const miniInfoForm = document.querySelector('.host_side2 .showbox');
+    miniInfoForm.reset();
+    const showboxImage = document.querySelector('#showbox_img');
+    showboxImage.setAttribute('src','/doggybeta/resources/images/default.jpg');
     const xhr = new XMLHttpRequest();
 
     xhr.onload = ()=>{
         if(xhr.responseText){
-            
+            const json = JSON.parse(xhr.responseText);
+            if(json.img !== null){
+                showboxImage.setAttribute('src','.doggybeta/files/pet/'+json.img);
+            }
+            document.querySelector('.showbox_info input[name="pname"]').value = decodeURIComponent(json.pname);
+            document.querySelector('.showbox_info input[name="age"]').value = json.age+"살";
+            document.querySelector('.showbox_info input[name="phone"]').value = json.phone;
+            document.querySelector('.showbox_info input[name="breeds"]').value = json.breeds;
         }
     }
-    const requestData = 'userid='+encodeURIComponent(data);
+    const requestData = 'userid='+encodeURIComponent(userid)+'&pno='+encodeURIComponent(pno);
     xhr.open('POST','/doggybeta/gsinfo');
     xhr.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
     xhr.send(requestData);
