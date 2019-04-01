@@ -37,7 +37,7 @@ public class ReportTipBoardReplyInsertServlet extends HttpServlet {
 		String rtrcategory = request.getParameter("rtrcategory");
 		String rtrcontent = request.getParameter("rfrcontent");
 		int tboardNo = Integer.parseInt(request.getParameter("rtrboard"));
-		int replyNo = Integer.parseInt(request.getParameter("rtrboardReply"));
+		int replyNo = Integer.parseInt(request.getParameter("rtrboardreply"));
 		
 		String tboaodNoS = String.valueOf(tboardNo);
 		String replyNoS = String.valueOf(replyNo);

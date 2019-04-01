@@ -37,8 +37,8 @@ public class freeBoardFileDownServlet extends HttpServlet {
 		request.setCharacterEncoding("utf-8");
 
 		// 2.
-		String originalFileName = request.getParameter("ofile");
-		String renameFileName = request.getParameter("rfile");
+		String originalFileName = request.getParameter("fofile");
+		String renameFileName = request.getParameter("frfile");
 
 		// 3. 웹프로젝트 내의 저장폴더 지정
 		String readFolder = request.getSession().getServletContext().getRealPath("/files/freeBoard");
