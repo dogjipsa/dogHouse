@@ -19,12 +19,13 @@ public class BookingForHost implements Serializable{
 	private String etc;
 	private int petNo;
 	private String address;
+	private String userid;
 	
 	public BookingForHost() {
 	}
 
 	public BookingForHost(int bookingNo, String serviceKind, String userName, Date checkInDate, Date checkOutDate,
-			int price, String progress, String etc, int petNo, String address) {
+			int price, String progress, String etc, int petNo, String address, String userid) {
 		super();
 		this.bookingNo = bookingNo;
 		this.serviceKind = serviceKind;
@@ -36,6 +37,7 @@ public class BookingForHost implements Serializable{
 		this.etc = etc;
 		this.petNo = petNo;
 		this.address = address;
+		this.userid = userid;
 	}
 
 	public int getBookingNo() {
@@ -121,12 +123,21 @@ public class BookingForHost implements Serializable{
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
+	
+	public String getUserid() {
+		return userid;
+	}
+
+	public void setUserid(String userid) {
+		this.userid = userid;
+	}
 
 	@Override
 	public String toString() {
 		return bookingNo + ", " + serviceKind + ", " + userName + ", " + checkInDate + ", " + checkOutDate + ", "
-				+ price + ", " + progress + ", " + etc + ", " + petNo + ", " + address;
+				+ price + ", " + progress + ", " + etc + ", " + petNo + ", " + address + ", " + userid;
 	}
 
+	
 }
 	

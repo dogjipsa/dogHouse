@@ -119,6 +119,7 @@
 }
 #reserv_table button:hover{
     cursor: pointer;
+    opacity: 0.7;
 }
 
 .wrap_content .section4 .host_main {
@@ -133,6 +134,13 @@
     display: grid;
     grid-column: span 1;
     grid-row: span 2;
+}
+.host_table button {
+    font-size: 11px;
+    cursor: pointer;
+}
+.host_table button:hover{
+    opacity: 0.7;
 }
 
 .host_table thead tr{
@@ -173,9 +181,40 @@
 }
 
 .host_main .host_side2{
-    display: grid;
     grid-column: span 1;
     border: 1px solid rgba(0,0,0,0.4);
+}
+.host_side2 .showbox {
+    display: flex; 
+    justify-content: space-around;
+    align-items: center;
+    border: 1px solid red;
+    height: 100%;
+}
+.showbox #showbox_img{
+    width: 35%;
+    height: 150px;
+    border: 1px solid rgba(0, 0, 0, 0.4);
+}
+.showbox .showbox_info{
+    width: 60%;
+    height : 80%;
+    border: blue solid 1px;
+}
+
+.host_side2 p {
+    font-size: 13px;
+    font-weight: 300;
+    margin: 1px 3px;
+}
+.host_side2 input {
+    border: none;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+    background: transparent;
+    outline: none;
+    height: 25px;
+    color: rgba(0, 0, 0, 0.7);
+    font-size: 11px;
 }
 .section4 #add_pet {
     display: none;

@@ -79,23 +79,19 @@
 					<p id="addr_text"></p>
 				</div>
 				<div class="host_side2">
-					<%if(loginUser.getPetSitter().equals("1")){ // 승인 대기중인 회원 페이지 %>
-					<span>
-						<p><%= loginUser.getUserName()%>님의 승인 신청이 완료되었습니다.</p>
-						<p>현재 승인 대기 상태이며, 24시간 이내에 승인여부를 확인하실 수 있습니다.</p>
-					</span>
-					<%} else if (loginUser.getPetSitter().equals("2")){ // 호스트인 회원 페이지 %>
-					<span>
-						<p><%= loginUser.getUserName() %> 호스트님 환영합니다.</p>
-						<p>귀여운 강아지들이 <%= loginUser.getUserName() %>님을 기다리고 있습니다!</p>
-					</span>
-					<%} else { // 일반 회원 페이지%>
-					<span>
-						<p><%=loginUser.getUserName()%>님 안녕하세요</p>
-						<p>호스트 신청을하여 귀여운 강아지들을 만나보세요!</p>
-						<button>펫시터 신청</button>
-					</span>
-					<%} %>
+					<div class="showbox">
+						<img id="showbox_img">
+						<div class="showbox_info">						
+							<p>PET NAME</p>
+							<input type="text" name="pname" readonly>
+							<p>AGE</p>
+							<input type="text" name="age" readonly>
+							<p>PHONE</p>
+							<input type="text" name="phone" readonly>
+							<p>BREEDS</p>
+							<input type="text" name="breeds" readonly>
+						</div>
+					</div>
 				</div>
 			</div>
 			<div id="add_pet">
@@ -166,9 +162,6 @@
 					</form>
 				</div>
 				<div class="pet_list">
-					<button class="tabs__button tabs__button--active">달리</button>
-					<button class="tabs__button">콩콩이</button>
-					<button class="tabs__button">3</button>
 				</div>
 				<div class="pet_list_pagination"></div>
 				<div class="pet_update">
