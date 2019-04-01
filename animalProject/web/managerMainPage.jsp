@@ -24,7 +24,12 @@ $(function() {
 		type: 'post',
 		success: function(data){
 			console.log("성공 : "+data);
-			$('#cntvisit').val(data.cnt);
+			var content = '오늘 방문회원 ['+data.cntToday+']';
+			var contenty = '어제 방문회원 ['+data.cntYesterday+']';
+			var contentt = '전체 방문회원 ['+data.cntTotal+']';
+			$('#cntvisit2').val(contenty)
+			$('#cntvisit').val(content);
+			$('#cntvisit3').val(contentt);
 		}
 	})//ajax
 });//ready
@@ -53,7 +58,8 @@ $(function() {
 			<span class="manage"><i class="icon-cog"></i>게시판관리</span>
 			<ul class='submenu'>
 				<li>게시판 공지사항</li>
-				<li><a href='/doggybeta/manboard'>전체 게시판 조회 및 관리</a></li>
+				<li><a href='/doggybeta/manboard'>자유게시판 관리</a></li>
+				<li><a href='/doggybeta/manboard'>팁 게시판 관리</a></li>
 				<li>신고 게시물 관리</li>
 			</ul>
 		</li>
@@ -68,8 +74,16 @@ $(function() {
 		</li>
 	</ul>
 </nav>
-<label class='labcnt' for='cntvisit' data-content='방문자 수'>방문자 수</label>
-<input type='text' id='cntvisit' />
+<input type='text' id='cntvisit' class='btn btn-3 btn-3c' readonly/>
+<input type='text' id='cntvisit2' class='btn btn-3 btn-3c' readonly/>
+<input type='text' id='cntvisit3' class='btn btn-3 btn-3c' readonly/>
+<%@ include file="../views/manager/managerBoardsTop5.jsp"%>
+<!-- <div style="float:left;border:1px solid navy;padding:5px;margin:5px">
+	<h4>인기 게시글</h4>
+	<table id="toplist" border="1" cellspacing="0">
+	<tr><th>번호</th><th width="200">제목</th><th>조회수</th></tr>
+	</table>
+</div> -->
 <% } else { %>
 <%@ include file="../views/manager/managerLogin.jsp"%>
 <% } %>

@@ -87,8 +87,8 @@ public class BookingHostServiceServlet extends HttpServlet {
 				if(b.getEtc() != null) {
 					job.put("etc", URLEncoder.encode(b.getEtc(), "utf-8"));
 				}
-				job.put("pno", b.getPetNo());
 				job.put("addr", URLEncoder.encode(b.getAddress(),"utf-8"));
+				job.put("userid", b.getUserid());
 				
 				jar.add(job);
 			}

@@ -32,6 +32,18 @@ public class QuestionService {
 		return list;
 	}
 	
+
+	public void addReadCount(int questionNo) {
+		Connection conn = getConnection();
+		int result = qdao.addReadCount(conn, questionNo);
+		if(result > 0)
+			commit(conn);
+		else
+			rollback(conn);
+		close(conn);
+	}
+	
+
 	public Question selectQuestion(int questionNo) {
 		Connection conn = getConnection();
 		Question question = qdao.selectQuestion(conn, questionNo);

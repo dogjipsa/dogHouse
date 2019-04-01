@@ -1,5 +1,5 @@
 const items = document.querySelectorAll('input[name="item"]');
-const userid = document.querySelector('input[name="userid"]');
+const userid = document.querySelector('.section1 input[name="userid"]');
 const bkTable = document.querySelector('#reserv_table');
 const hostMain = document.querySelector('.host_main');
 const addPetMain = document.querySelector('#add_pet');
@@ -41,137 +41,137 @@ function requestPetListAjax() {
         while (petList.firstChild) {
             petList.removeChild(petList.firstChild);
         }
-        if(xhr.responseText){
-        const json = JSON.parse(xhr.responseText);
+        if (xhr.responseText) {
+            const json = JSON.parse(xhr.responseText);
 
-        for (let i in json.list) {
-            const petInfo = {
-                'pno': json.list[i].pno,
-                'pname': decodeURIComponent(json.list[i].pname),
-                'breeds': decodeURIComponent(json.list[i].breeds),
-                'birth': json.list[i].birth,
-                'size': decodeURIComponent(json.list[i].size),
-                'gender': json.list[i].gender,
-                'neutral': json.list[i].neutral,
-                'etc': json.list[i].etc.replace(/\+/gi, " "),
-                'userid': json.list[i].userid,
-                'origin': json.list[i].origin,
-                'rename': json.list[i].rename
+            for (let i in json.list) {
+                const petInfo = {
+                    'pno': json.list[i].pno,
+                    'pname': decodeURIComponent(json.list[i].pname),
+                    'breeds': decodeURIComponent(json.list[i].breeds),
+                    'birth': json.list[i].birth,
+                    'size': decodeURIComponent(json.list[i].size),
+                    'gender': json.list[i].gender,
+                    'neutral': json.list[i].neutral,
+                    'etc': json.list[i].etc.replace(/\+/gi, " "),
+                    'userid': json.list[i].userid,
+                    'origin': json.list[i].origin,
+                    'rename': json.list[i].rename
+                }
+                const tabBtn = document.createElement('button');
+                tabBtn.classList.add('tabs__button');
+                tabBtn.textContent = petInfo.pname;
+                petList.appendChild(tabBtn);
+
+                const petUpForm = document.querySelector('#pet_up_form');
+
+                tabBtn.addEventListener('click', function () {
+                    const btns = document.querySelectorAll('.pet_list .tabs__button');
+                    for (let i = 0; i < btns.length; i++) {
+                        btns[i].style.borderRight = "none";
+                        btns[i].style.fontWeight = "100";
+                    }
+                    tabBtn.style.borderRight = "4px solid #27AE60";
+                    tabBtn.style.fontWeight = "bold";
+                    petUpForm.reset();
+                    document.querySelector('#pet_up_form input[name="userid"]').value = petInfo.userid;
+                    document.querySelector('#pet_up_form input[name="pno"]').value = petInfo.pno;
+                    document.querySelector('#pet_up_form input[name="pname"]').value = petInfo.pname;
+                    document.querySelector('#pet_up_form input[name="breeds"]').value = petInfo.breeds;
+                    const genders = document.querySelectorAll('#pet_up_form input[name="gender"]');
+                    const sizes = document.querySelectorAll('#pet_up_form input[name="size"]');
+                    for (let i = 0; i < genders.length; i++) {
+                        if (genders[i].value === petInfo.gender || genders[i].value === petInfo.neutral)
+                            genders[i].click();
+                    }
+                    for (let i = 0; i < sizes.length; i++) {
+                        if (sizes[i].value === petInfo.size)
+                            sizes[i].click();
+                    }
+                    document.querySelector('#pet_up_form input[name="birth"]').value = petInfo.birth;
+                    document.querySelector('#pet_up_form input[name="origin"]').value = petInfo.origin;
+                    document.querySelector('#pet_up_form textarea').value = petInfo.etc;
+                    document.querySelector('#pet_up_form .pet__img__update').setAttribute('src', '/doggybeta/files/pet/' + petInfo.rename);
+                });
+
             }
-            const tabBtn = document.createElement('button');
-            tabBtn.classList.add('tabs__button');
-            tabBtn.textContent = petInfo.pname;
-            petList.appendChild(tabBtn);
+            if (petList.firstChild)
+                petList.firstChild.click();
 
-            const petUpForm = document.querySelector('#pet_up_form');
+            // 펫 리스트 페이징 처리
+            const startPage = json.plist.start;
+            const endPage = json.plist.end;
+            const currentPage = json.plist.page;
+            const totalPage = json.plist.totalpage;
+            const listPagination = document.querySelector('.pet_list_pagination');
 
-            tabBtn.addEventListener('click', function () {
-                const btns = document.querySelectorAll('.pet_list .tabs__button');
-                for (let i = 0; i < btns.length; i++) {
-                    btns[i].style.borderRight = "none";
-                    btns[i].style.fontWeight = "100";
-                }
-                tabBtn.style.borderRight = "4px solid #27AE60";
-                tabBtn.style.fontWeight = "bold";
-                petUpForm.reset();
-                document.querySelector('#pet_up_form input[name="userid"]').value = petInfo.userid;
-                document.querySelector('#pet_up_form input[name="pno"]').value = petInfo.pno;
-                document.querySelector('#pet_up_form input[name="pname"]').value = petInfo.pname;
-                document.querySelector('#pet_up_form input[name="breeds"]').value = petInfo.breeds;
-                const genders = document.querySelectorAll('#pet_up_form input[name="gender"]');
-                const sizes = document.querySelectorAll('#pet_up_form input[name="size"]');
-                for (let i = 0; i < genders.length; i++) {
-                    if (genders[i].value === petInfo.gender || genders[i].value === petInfo.neutral)
-                        genders[i].click();
-                }
-                for (let i = 0; i < sizes.length; i++) {
-                    if (sizes[i].value === petInfo.size)
-                        sizes[i].click();
-                }
-                document.querySelector('#pet_up_form input[name="birth"]').value = petInfo.birth;
-                document.querySelector('#pet_up_form input[name="origin"]').value = petInfo.origin;
-                document.querySelector('#pet_up_form textarea').value = petInfo.etc;
-                document.querySelector('#pet_up_form .pet__img__update').setAttribute('src', '/doggybeta/files/pet/' + petInfo.rename);
-            });
+            while (listPagination.firstChild) {
+                listPagination.removeChild(listPagination.firstChild);
+            }
 
-        }
-        if (petList.firstChild)
-            petList.firstChild.click();
-
-        // 펫 리스트 페이징 처리
-        const startPage = json.plist.start;
-        const endPage = json.plist.end;
-        const currentPage = json.plist.page;
-        const totalPage = json.plist.totalpage;
-        const listPagination = document.querySelector('.pet_list_pagination');
-
-        while (listPagination.firstChild) {
-            listPagination.removeChild(listPagination.firstChild);
-        }
-
-        const pageBox = document.createElement('div');
-        pageBox.setAttribute('class', 'pagebox');
-
-        if (startPage > 1) {
             const pageBox = document.createElement('div');
             pageBox.setAttribute('class', 'pagebox');
-            pageBox.textContent = '<<';
-            listPagination.appendChild(pageBox);
-            pageBox.onclick = () => {
-                chosenPage = 1;
-                requestPetListAjax();
-            }
-        }
-        if (currentPage > 1) {
-            const pageBox = document.createElement('div');
-            pageBox.setAttribute('class', 'pagebox');
-            pageBox.textContent = '<';
-            listPagination.appendChild(pageBox);
-            pageBox.onclick = () => {
-                chosenPage = currentPage - 1;
-                requestPetListAjax();
-            }
-        }
-        for (let i = startPage; i <= endPage; i++) {
-            const pageBox = document.createElement('div');
-            pageBox.setAttribute('class', 'pagebox');
-            if (i === currentPage) {
-                pageBox.textContent = i;
-                pageBox.style.color = 'dodgerblue';
+
+            if (startPage > 1) {
+                const pageBox = document.createElement('div');
+                pageBox.setAttribute('class', 'pagebox');
+                pageBox.textContent = '<<';
                 listPagination.appendChild(pageBox);
-            } else {
-                pageBox.textContent = i;
+                pageBox.onclick = () => {
+                    chosenPage = 1;
+                    requestPetListAjax();
+                }
+            }
+            if (currentPage > 1) {
+                const pageBox = document.createElement('div');
+                pageBox.setAttribute('class', 'pagebox');
+                pageBox.textContent = '<';
                 listPagination.appendChild(pageBox);
+                pageBox.onclick = () => {
+                    chosenPage = currentPage - 1;
+                    requestPetListAjax();
+                }
             }
-            pageBox.onclick = () => {
-                chosenPage = i;
-                requestPetListAjax();
+            for (let i = startPage; i <= endPage; i++) {
+                const pageBox = document.createElement('div');
+                pageBox.setAttribute('class', 'pagebox');
+                if (i === currentPage) {
+                    pageBox.textContent = i;
+                    pageBox.style.color = 'dodgerblue';
+                    listPagination.appendChild(pageBox);
+                } else {
+                    pageBox.textContent = i;
+                    listPagination.appendChild(pageBox);
+                }
+                pageBox.onclick = () => {
+                    chosenPage = i;
+                    requestPetListAjax();
+                }
             }
-        }
 
-        if (currentPage < totalPage) {
-            const pageBox = document.createElement('div');
-            pageBox.setAttribute('class', 'pagebox');
-            pageBox.textContent = '>';
-            listPagination.appendChild(pageBox);
-            pageBox.onclick = () => {
-                chosenPage = currentPage + 1;
-                requestPetListAjax();
+            if (currentPage < totalPage) {
+                const pageBox = document.createElement('div');
+                pageBox.setAttribute('class', 'pagebox');
+                pageBox.textContent = '>';
+                listPagination.appendChild(pageBox);
+                pageBox.onclick = () => {
+                    chosenPage = currentPage + 1;
+                    requestPetListAjax();
+                }
             }
-        }
-        if (endPage < totalPage) {
-            const pageBox = document.createElement('div');
-            pageBox.setAttribute('class', 'pagebox');
-            pageBox.textContent = '>>';
-            listPagination.appendChild(pageBox);
-            pageBox.onclick = () => {
-                chosenPage = totalPage;
-                requestPetListAjax();
+            if (endPage < totalPage) {
+                const pageBox = document.createElement('div');
+                pageBox.setAttribute('class', 'pagebox');
+                pageBox.textContent = '>>';
+                listPagination.appendChild(pageBox);
+                pageBox.onclick = () => {
+                    chosenPage = totalPage;
+                    requestPetListAjax();
+                }
             }
         }
     }
-}
-    const requestData = 'userid=' + encodeURIComponent(userid.value)+'&page='+encodeURIComponent(chosenPage);
+    const requestData = 'userid=' + encodeURIComponent(userid.value) + '&page=' + encodeURIComponent(chosenPage);
     xhr.open('POST', '/doggybeta/gplist');
     xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
     xhr.send(requestData);
@@ -179,10 +179,10 @@ function requestPetListAjax() {
 const petUpForm = document.querySelector('#pet_up_form');
 // 펫 정보 삭제 Ajax
 const pDelButton = document.querySelector('#pet_del__btn');
-pDelButton.addEventListener('click', function(e){
+pDelButton.addEventListener('click', function (e) {
     e.preventDefault();
     const xhr = new XMLHttpRequest();
-    xhr.onload = ()=>{
+    xhr.onload = () => {
         const popup = document.querySelector('.modal-content');
         popup.style.display = "block";
 
@@ -194,7 +194,7 @@ pDelButton.addEventListener('click', function(e){
                 petUpForm.reset(); // 인풋 클리어                
             });
         }
-        modalText = document.getElementById('modal-text');
+        const modalText = document.getElementById('modal-text');
         if (xhr.responseText === 'ok') {
             modalText.textContent = "강아지를 성공적으로 삭제했습니다!";
             requestPetListAjax();
@@ -202,21 +202,21 @@ pDelButton.addEventListener('click', function(e){
             modalText.textContent = "강아지 삭제에 실패했습니다. 관리자에게 문의하세요";
         }
     }
-    const pno = 'pno='+encodeURIComponent(petUpForm.querySelector('input[name="pno"]').value);
-    xhr.open('GET','/doggybeta/pdels?'+pno);
+    const pno = 'pno=' + encodeURIComponent(petUpForm.querySelector('input[name="pno"]').value);
+    xhr.open('GET', '/doggybeta/pdels?' + pno);
     xhr.send();
 });
 
 // 펫 정보 수정 Ajax
 const pUpButton = document.querySelector('#pet_up__btn');
-pUpButton.addEventListener('click', (e)=>{
+pUpButton.addEventListener('click', (e) => {
     e.preventDefault();
     const petData = new FormData(petUpForm);
-    if(petUpForm.querySelector('input[name="ppic"]').result === undefined){
-        petData.append('ppic2',document.querySelector('#pet_up_form input[name="origin"]'));
+    if (petUpForm.querySelector('input[name="ppic"]').result === undefined) {
+        petData.append('ppic2', document.querySelector('#pet_up_form input[name="origin"]'));
     }
     const xhr = new XMLHttpRequest();
-    xhr.onload = ()=>{
+    xhr.onload = () => {
         const popup = document.querySelector('.modal-content');
         popup.style.display = "block";
 
@@ -236,7 +236,7 @@ pUpButton.addEventListener('click', (e)=>{
             modalText.textContent = "강아지 수정에 실패했습니다. 관리자에게 문의하세요";
         }
     }
-    xhr.open('POST','/doggybeta/pups');
+    xhr.open('POST', '/doggybeta/pups');
     xhr.send(petData);
 });
 
@@ -394,8 +394,8 @@ function requestHostAjax() {
                 let pg = "";
                 let kind = "";
                 switch (json.list[i].pg) {
-                    case '0': pg = "예약 신청"; break;
-                    case '1': pg = "예약 완료"; break;
+
+                    case '1': pg = "예약 승인"; break;
                     case '2': pg = "결제 대기"; break;
                     case '3': pg = "결제 완료"; break;
                 }
@@ -411,10 +411,8 @@ function requestHostAjax() {
                     'name': decodeURIComponent(json.list[i].username),
                     'etc': decodeURIComponent(json.list[i].etc).replace(/\+/gi, " "),
                     'date': json.list[i].indate + ' ~ ' + json.list[i].outdate,
-                    'price': json.list[i].price + '원',
-                    'progress': pg,
+                    'price': numberWithCommas(json.list[i].price) + '원',
                     'address': decodeURIComponent(json.list[i].addr).replace(/\+/gi, " "),
-                    'pno': json.list[i].pno
                 }
                 for (let j in tableForm) {
                     if (j === 'address') {
@@ -423,13 +421,6 @@ function requestHostAjax() {
                         hInput.setAttribute("name", "addr");
                         hInput.setAttribute("value", tableForm[j]);
                         tr.appendChild(hInput);
-                    } else if (j === 'pno') {
-                        const hInput = document.createElement('input');
-                        hInput.setAttribute("type", "hidden");
-                        hInput.setAttribute("name", "pno");
-                        hInput.setAttribute("value", tableForm[j]);
-                        tr.appendChild(hInput);
-
                     } else {
                         const td = document.createElement('td');
                         td.textContent = tableForm[j];
@@ -437,14 +428,48 @@ function requestHostAjax() {
                     }
                 }
 
+                if (json.list[i].pg !== '1') {
+                    const td = document.createElement('td');
+                    td.textContent = pg;
+                    tr.appendChild(td);
+                } else {
+                    const td = document.createElement('td');
+                    const button = document.createElement('button');
+                    button.textContent = "예약 승인";
+                    button.addEventListener('click', function () {
+                        const xhr = new XMLHttpRequest();
+                        xhr.onload = () => {
+                            const popup = document.querySelector('.modal-content');
+                            popup.style.display = "block";
+
+                            // 클로징 처리
+                            const mCloses = document.querySelectorAll('.m-close');
+                            for (let i = 0; i < mCloses.length; i++) {
+                                mCloses[i].addEventListener('click', () => {
+                                    popup.style.display = "none"; // 팝업 내리기
+                                    petUpForm.reset(); // 인풋 클리어                
+                                });
+                            }
+                            modalText = document.getElementById('modal-text');
+                            if (xhr.responseText === 'ok') {
+                                modalText.textContent = "예약 승인이 완료되었습니다!";
+                                requestHostAjax();
+                            } else {
+                                modalText.textContent = "예약 승인을 실패했습니다. 관리자에게 문의하세요";
+                            }
+                        }
+                        const requestData = 'bno=' + encodeURIComponent(tableForm.bno);
+                        xhr.open('POST', '/doggybeta/buphost');
+                        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+                        xhr.send(requestData);
+                    });
+                    tr.appendChild(td).appendChild(button);
+                }
+
                 tr.addEventListener('click', function () {
                     initMap(tableForm.address.split(",")[0], tableForm.name);
                     document.querySelector('#addr_text').textContent = tableForm.address;
-                    const miniInfo = document.querySelector('.host_side2');
-                    while (miniInfo.firstChild) {
-                        miniInfo.removeChild(miniInfo.firstChild);
-                    }
-
+                    initSubInfo(json.list[i].userid);
                 });
             }
             const startPage = json.plist.start;
@@ -527,6 +552,21 @@ function requestHostAjax() {
     xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
     xhr.send(requestData);
 }
+// 서브 인포메이션 출력 Ajax
+function initSubInfo(data) {
+    const miniInfo = document.querySelector('.host_side2');
+    const xhr = new XMLHttpRequest();
+
+    xhr.onload = ()=>{
+        if(xhr.responseText){
+            
+        }
+    }
+    const requestData = 'userid='+encodeURIComponent(data);
+    xhr.open('POST','/doggybeta/gsinfo');
+    xhr.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
+    xhr.send(requestData);
+}
 // 예약/결제 내역 Ajax
 function requestBkAjax() {
     const xhr = new XMLHttpRequest();
@@ -545,7 +585,6 @@ function requestBkAjax() {
                 let pg = "";
                 let kind = "";
                 switch (json.list[i].progress) {
-                    case '0': pg = "예약 신청"; break;
                     case '1': pg = "예약 완료"; break;
                     case '2': pg = "결제 대기"; break;
                     case '3': pg = "결제 완료"; break;
@@ -562,7 +601,7 @@ function requestBkAjax() {
                     'kind': kind,
                     'pname': decodeURIComponent(json.list[i].pname),
                     'addr': decodeURIComponent(json.list[i].addr).replace(/\+/gi, " "),
-                    'price': json.list[i].price + "원",
+                    'price': numberWithCommas(json.list[i].price) + "원",
                     'hostId': json.list[i].puserid,
                     'date': json.list[i].indate + " ~ " + json.list[i].outdate,
                 }
@@ -571,15 +610,28 @@ function requestBkAjax() {
                     td.textContent = tableForm[j];
                     tr.appendChild(td);
                 }
-                if(json.list[i].progress === "2"){
+                if (json.list[i].progress === "2") {
                     const td = document.createElement('td');
                     const button = document.createElement("button");
                     button.textContent = pg;
-                    button.classList= 'naverPayBtn';
+                    button.addEventListener('click', function () {
+                        payInIt(json.list[i]);
+                        // location.href ="/doggybeta/bpselect?bookingNo="+tableForm.bookingNo+"&priceSum="+json.list[i].price;
+                    });
                     tr.appendChild(td).appendChild(button);
                 } else {
                     const td = document.createElement('td');
                     td.textContent = pg;
+                    tr.appendChild(td);
+                }
+                if (json.list[i].progress === "3") {
+                    const td = document.createElement('td');
+                    const button = document.createElement("button");
+                    button.textContent = "리뷰 작성";
+                    tr.appendChild(td).appendChild(button);
+                } else {
+                    const td = document.createElement('td');
+                    td.textContent = "진행 중";
                     tr.appendChild(td);
                 }
             }
@@ -662,6 +714,10 @@ function requestBkAjax() {
     xhr.open('POST', '/doggybeta/bklist');
     xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
     xhr.send(requestData);
+}
+// 숫자 세자리마다 ,찍기 함수
+function numberWithCommas(x) {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 
 // 페이지 로드시 예약/결제 내역 출력

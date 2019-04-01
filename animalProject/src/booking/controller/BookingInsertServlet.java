@@ -68,7 +68,8 @@ public class BookingInsertServlet extends HttpServlet {
 		int result = bkservice.updateBookingProgressOne(bookingNo);
 		
 		if(result>0) {
-			response.sendRedirect("/doggybeta/bpselect?bookingNo="+bookingNo+"&priceSum="+priceSum);//BeforePaymentSelectServlet으로 예약번호 전달
+			//response.sendRedirect("/doggybeta/bpselect?bookingNo="+bookingNo+"&priceSum="+priceSum);//BeforePaymentSelectServlet으로 예약번호 전달
+			response.sendRedirect("views/customerservice/checkMyLog.jsp");
 		}else {
 			System.out.println("booking insert 실패");
 		}

@@ -58,7 +58,7 @@ public class BookingDao {
 		ResultSet rset = null;
 		BookingForHost b = null;
 		
-		String query = "SELECT X.RNUM, X.BOOKING_NO, X.SERVICE_KIND, X.PET_NO, X.USER_NAME, X.ADDRESS, X.CHECKIN_DATE, X.CHECKOUT_DATE, X.BOOKING_PROGRESS, X.PRICE, X.BOOKING_ETC FROM (SELECT ROWNUM AS RNUM, S.BOOKING_NO, S.SERVICE_KIND, S.PET_NO, S.USER_NAME, S.ADDRESS, S.CHECKIN_DATE, S.CHECKOUT_DATE, S.BOOKING_PROGRESS, S.PRICE, S.BOOKING_ETC FROM (SELECT B.BOOKING_NO, B.SERVICE_KIND, P.PET_NO, M.USER_NAME,M.ADDRESS, B.CHECKIN_DATE, B.CHECKOUT_DATE,B.BOOKING_PROGRESS, H.PRICE, B.BOOKING_ETC FROM BOOKING B JOIN MEMBER M ON (B.USER_ID = M.USER_ID) JOIN PET P ON (M.USER_ID = P.USER_ID) JOIN MEMBER H ON (B.PUSER_ID = H.USER_ID) WHERE PUSER_ID = ? ORDER BY 1 DESC) S WHERE ROWNUM <= ?) X WHERE X.RNUM >= ?";
+		String query = "SELECT X.RNUM, X.BOOKING_NO, X.SERVICE_KIND, X.USER_NAME, X.ADDRESS, X.CHECKIN_DATE, X.CHECKOUT_DATE, X.BOOKING_PROGRESS, X.PRICE, X.BOOKING_ETC, X.USER_ID FROM (SELECT ROWNUM AS RNUM, S.BOOKING_NO, S.SERVICE_KIND, S.USER_NAME, S.ADDRESS, S.CHECKIN_DATE, S.CHECKOUT_DATE, S.BOOKING_PROGRESS, S.PRICE, S.BOOKING_ETC, S.USER_ID FROM (SELECT B.BOOKING_NO, B.SERVICE_KIND, M.USER_NAME,M.ADDRESS, B.CHECKIN_DATE, B.CHECKOUT_DATE,B.BOOKING_PROGRESS, H.PRICE, B.BOOKING_ETC, M.USER_ID FROM BOOKING B JOIN MEMBER M ON (B.USER_ID = M.USER_ID) JOIN MEMBER H ON (B.PUSER_ID = H.USER_ID) WHERE PUSER_ID = ? ORDER BY 1 DESC) S WHERE ROWNUM <= ?) X WHERE X.RNUM >= ?";
 		
 		try {
 			pstmt = conn.prepareStatement(query);
@@ -72,14 +72,14 @@ public class BookingDao {
 				b = new BookingForHost();
 				b.setBookingNo(rset.getInt(2));
 				b.setServiceKind(rset.getString(3));
-				b.setPetNo(rset.getInt(4));
-				b.setUserName(rset.getString(5));
-				b.setAddress(rset.getString(6));
-				b.setCheckInDate(rset.getDate(7));
-				b.setCheckOutDate(rset.getDate(8));
-				b.setProgress(rset.getString(9));
-				b.setPrice(rset.getInt(10));
-				b.setEtc(rset.getString(11));
+				b.setUserName(rset.getString(4));
+				b.setAddress(rset.getString(5));
+				b.setCheckInDate(rset.getDate(6));
+				b.setCheckOutDate(rset.getDate(7));
+				b.setProgress(rset.getString(8));
+				b.setPrice(rset.getInt(9));
+				b.setEtc(rset.getString(10));
+				b.setUserid(rset.getString(11));
 				
 				list.add(b);
 			}
@@ -257,6 +257,25 @@ public class BookingDao {
 			close(pstmt);
 		}
 		return dates;
+	}
+
+	public int updateBookingStatus(Connection conn, int bno) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String query = "UPDATE BOOKING SET BOOKING_PROGRESS = '2' WHERE BOOKING_NO = ?";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, bno);
+		
+			result = pstmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
 	}
 	
 }
