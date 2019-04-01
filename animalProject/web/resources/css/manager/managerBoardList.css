@@ -12,6 +12,9 @@
    line-height: 1.5;
    table-layout:fixed;     */
 }
+#searchDate {
+	display: none;
+}
 ul.tabs{
 	margin: 0px;
 	padding: 0px;

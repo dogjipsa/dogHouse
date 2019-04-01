@@ -6,6 +6,7 @@ import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.ArrayList;
 
 import countvisitor.model.vo.CountVisitor;
@@ -70,7 +71,6 @@ public class CountVisitorDao {
 		return result;
 	}
 	public CountVisitor selectCntVisitor(Connection conn, Date day) {
-		int cnt = 0;
 		CountVisitor cv =null;
 		PreparedStatement pstat =null;
 		ResultSet rSet =null;
@@ -91,6 +91,25 @@ public class CountVisitorDao {
 		} finally {
 			close(rSet);
 			close(pstat);
+		}
+		return cv;
+	}
+	public CountVisitor sumOfvisitor(Connection conn) {
+		CountVisitor cv = new CountVisitor();
+		Statement stat = null;
+		ResultSet rSet = null;
+		String query = "select sum(count_visitor) from countvisitor";
+		try {
+			stat = conn.createStatement();
+			rSet = stat.executeQuery(query);
+			if(rSet.next()) {
+				cv.setCountVisitor(rSet.getInt(1));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(rSet);
+			close(stat);
 		}
 		return cv;
 	}

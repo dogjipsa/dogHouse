@@ -182,6 +182,7 @@ public class PetDao {
 		return result;
 	}
 
+
 	public Pet findPetInfo(Connection conn, String petSitterId) {
 		Pet pet = new Pet();
 		PreparedStatement pstmt = null;
@@ -200,6 +201,39 @@ public class PetDao {
 				pet.setPetGender(rset.getString("PET_GENDER"));
 				pet.setPetNeutralize(rset.getString("PET_NEUTRALIZE"));
 				pet.setPetCharater(rset.getString("PET_CHARATER"));
+        pet.setRenameFileName(rset.getString("PET_REFILE"));
+				
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return pet;
+	}
+
+	public Pet selectOnePet(Connection conn, String userid) {
+		Pet pet = new Pet();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String query = "SELECT * FROM PET WHERE USER_ID = ?";
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, userid);
+			
+			rset = pstmt.executeQuery();
+			if(rset.next()) {
+				pet.setPetNo(rset.getInt("PET_NO"));
+				pet.setPetName(rset.getString("PET_NAME"));
+				pet.setBreeds(rset.getString("PET_BREADS"));
+				pet.setPetDate(rset.getDate("PET_DATE"));
+				pet.setPetSize(rset.getString("PET_SIZE"));
+				pet.setPetGender(rset.getString("PET_GENDER"));
+				pet.setPetNeutralize(rset.getString("PET_NEUTRALIZE"));
+				pet.setPetCharater(rset.getString("PET_CHARATER"));
+				pet.setUserId(userid);
+				pet.setOriginFileName(rset.getString("PET_ORIGINFILE"));
 				pet.setRenameFileName(rset.getString("PET_REFILE"));
 				
 			}

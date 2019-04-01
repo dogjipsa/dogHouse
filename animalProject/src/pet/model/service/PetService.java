@@ -66,13 +66,21 @@ public class PetService {
 
 	}
 
+
 	public Pet findPetInfo(String petSitterId) {
 		Connection conn = getConnection();
 		Pet pet = pdao.findPetInfo(conn, petSitterId);
 		System.out.println("강아지 정보 확인 중(서비스) : " + pet);
 		close(conn);
 		return pet;
+  }
 		
+
+	public Pet selectOnePet(String userid) {
+		Connection conn = getConnection();
+		Pet pet = pdao.selectOnePet(conn, userid);
+		close(conn);
+		return pet;
 	}
 
 }

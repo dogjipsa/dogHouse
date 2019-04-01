@@ -38,10 +38,26 @@ public class QuestionDao {
 		return listCount;
 	}
 	
+	public int addReadCount(Connection conn, int questionNo) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String query= "update question set question_readcount = question_readcount + 1 where question_no = ?";
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, questionNo);
+			result = pstmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		return result;
+	}
+	
 	public ArrayList<Question> selectList(Connection conn) {
 		ArrayList<Question> list = new ArrayList<Question>();
 		Statement stmt = null;
-		ResultSet rset = null;		
+		ResultSet rset = null;	
 	      
 	    String query = "SELECT * from question order by question_no desc";
 	      

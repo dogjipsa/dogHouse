@@ -1,4 +1,4 @@
-package member.controller;
+package booking.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -9,22 +9,19 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.json.simple.JSONObject;
-
 import booking.model.service.BookingService;
-import member.model.service.MemberService;
 
 /**
- * Servlet implementation class PriceCalculatorServlet
+ * Servlet implementation class UpdateBookingStatusServlet
  */
-@WebServlet("/priceCal")
-public class PriceCalculatorServlet extends HttpServlet {
+@WebServlet("/buphost")
+public class UpdateBookingStatusServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public PriceCalculatorServlet() {
+    public UpdateBookingStatusServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -33,22 +30,17 @@ public class PriceCalculatorServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		//String date = request.getParameter("datetimes");
-		//System.out.println("ajax 확인 : "+date);
-		int price = Integer.parseInt(request.getParameter("price"));
-		String[] date = request.getParameter("datetimes").split(" - ");
-		String checkin = date[0];
-		String checkout = date[1];
-		int dates = new BookingService().selectDates(checkin,checkout);
-		int priceSum = (dates+1)*price;
-		JSONObject job = new JSONObject();
-		job.put("pricesum", priceSum);
-		response.setContentType("application/json; charset=utf-8");
+		int bno = Integer.parseInt(request.getParameter("bno"));
+		int result = new BookingService().updateBookingStatus(bno);
+
+		response.setContentType("text/html; charset=utf-8");
 		PrintWriter out = response.getWriter();
-		out.println(job.toJSONString());
+		if(result > 0) 
+			out.write("ok");
+		 else 
+			out.write("no");
 		out.flush();
 		out.close();
-		
 	}
 
 	/**

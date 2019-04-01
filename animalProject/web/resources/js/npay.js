@@ -67,7 +67,7 @@ function payInIt(datalist){
 	//비즈니스 로직을 수행하기 전에 결제 유효성 검증을 하시길 추천합니다.
 	const xhr = new XMLHttpRequest();
 	xhr.onload = () =>{
-		console.log('good');
+		location.href ='/doggybeta/views/customerservice/checkMyLog.jsp';
 	}
 	const requestData ='bno='+encodeURIComponent(datalist.bno)+'&method='+encodeURIComponent(data.payment_method);
 	xhr.open('POST','/doggybeta/updpay');

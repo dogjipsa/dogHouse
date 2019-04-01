@@ -10,7 +10,7 @@
 <meta charset="UTF-8">
 <title>first</title>
 </head>
-<body background="/doggybeta/resources/images/dog2.jpg">
+<body background="/doggybeta/resources/images/puppies_1.1.jpg">
 <!-- <img src="/doggybeta/resources/images/backdog1.jpg"> -->
 <h1>도그집사 로그인^^</h1>
 <hr style="clear:left;">
