@@ -92,7 +92,7 @@ $(function(){
 <br>
 
 </div></div>
-<br><br><br><br><br>
+
 <div id="footer"><%@ include file="../common/footer.jsp"%></div>
 
 </body>

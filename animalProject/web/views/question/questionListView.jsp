@@ -5,7 +5,8 @@
 	ArrayList<Question> list = (ArrayList<Question>)request.getAttribute("list");	
 	
 	Answer answer = (Answer)request.getAttribute("answer");
-
+	
+	int listCount = ((Integer)request.getAttribute("listCount")).intValue();
 	int startPage = ((Integer)request.getAttribute("startPage")).intValue();
 	int endPage = ((Integer)request.getAttribute("endPage")).intValue();
 	int maxPage = ((Integer)request.getAttribute("maxPage")).intValue();
@@ -89,32 +90,32 @@
 <%-- 페이징 처리 --%>
 <div style="text-align:center;">
 <% if(currentPage <= 1){ %>
-	[맨처음]&nbsp;
+	[처음]&nbsp;&nbsp;
 <% }else{ %>
-	<a href="/doggybeta/qlist?page=1">[맨처음]</a>&nbsp;
+	<a href="/doggybeta/qlist?page=1">[처음]</a>&nbsp;
 <% } %>
 <% if((currentPage - 10) < startPage && (currentPage - 10) > 1){ %>
-	<a href="/doggybeta/qlist?page=<%= startPage - 10 %>">[prev]</a>
+	<a href="/doggybeta/qlist?page=<%= startPage - 10 %>">[이전]</a>
 <% }else{ %>
-	[prev]
+	[이전]
 <% } %>
 <%-- 현재 페이지가 포함된 페이지 그룹 숫자 출력 처리 --%>
 <% for(int p = startPage; p <= endPage; p++){ 
 		if(p == currentPage){
 %>
-	<font color="red" size="4"><b>[<%= p %>]</b></font>
+	<font color="magenta" size="4"><b>[<%= p %>]</b></font>
 	<% }else{ %>
 	<a href="/doggybeta/qlist?page=<%= p %>"><%= p %></a>
-<% }} %>&nbsp;
+<% }} %>&nbsp;&nbsp;
 <% if((currentPage + 10) > endPage && (currentPage + 10) < maxPage){ %>
-	<a href="/doggybeta/qlist?page=<%= endPage + 10 %>">[next]</a>&nbsp;
+	<a href="/doggybeta/qlist?page=<%= endPage + 10 %>">[다음]</a>&nbsp;
 <% }else{ %>
-	[next]&nbsp;
+	[다음]&nbsp;
 <% } %>
 <% if(currentPage >= maxPage){ %>
-	[맨끝]
+	[마지막]
 <% }else{ %>
-	<a href="/doggybeta/qlist?page=<%= maxPage %>">[맨끝]</a>
+	<a href="/doggybeta/qlist?page=<%= maxPage %>">[마지막]</a>
 <% } %>
 </div>
 <br><br><br><br>

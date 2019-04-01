@@ -33,9 +33,13 @@
 
 <h2 align="center">1:1 문의</h2>
 <hr style="clear:both;">
+<div style="background-color:lightblue; width:550px; border:1px solid black;">
 <h3>문의하시기 전에 FAQ에서 궁금하신 사항을 확인해보세요!</h3> &nbsp;
 <button onclick="moveFAQPage();">FAQ 게시판으로 이동</button>
-<br><br><br>
+<br><br>
+</div>
+<br>
+<div style="background-color:lightblue; width:850px; border:1px solid black;">
 <h3>로그인 후 문의하시면 상세한 답변이 제공되며,답변 내용을 보다 편리하게 확인하실 수 있습니다.</h3> &nbsp;
 
 <% if(loginUser == null ) { %>
@@ -48,7 +52,7 @@
 <% if(loginUser != null){ %>
 <%-- <a href=">문의내역 확인</a>&nbsp; &nbsp; --%>
 <button onclick="moveListPage();">문의내역 확인</button>&nbsp; &nbsp;
-<button onclick="moveWritePage();">문의하기</button>
+<button onclick="moveWritePage();">문의하기</button><br><br>
 <%-- <% }else{ %>
 <a href="/doggybeta/jipsalogin"></a> --%>
 </div></div>
