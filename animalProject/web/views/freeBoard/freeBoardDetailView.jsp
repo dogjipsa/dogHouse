@@ -149,7 +149,7 @@ h2{
 	<th>첨부파일</th>
 	<td>
 	 		<% if(freeboard.getFreeboardOriginalFile() != null){ %>
-			<a href="/doggybeta/ffdown?ofile=<%= freeboard.getFreeboardOriginalFile() %>&rfile=<%= freeboard.getFreeboardRefile() %>"><%= freeboard.getFreeboardOriginalFile()%></a>
+			<a href="/doggybeta/ffdown?fofile=<%= freeboard.getFreeboardOriginalFile() %>&frfile=<%= freeboard.getFreeboardRefile() %>"><%= freeboard.getFreeboardOriginalFile()%></a>
 		<% }else{ %>
 			첨부파일없음
 		<% } %> 
