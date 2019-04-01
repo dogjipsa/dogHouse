@@ -436,7 +436,11 @@ function requestHostAjax() {
                     }
                 }
 
-                if(json.list[i].progress === '')
+                if(json.list[i].progress !== '0'){
+                    const td = document.createElement('td');
+                        td.textContent = pg;
+                        tr.appendChild(td);
+                }
 
                 tr.addEventListener('click', function () {
                     initMap(tableForm.address.split(",")[0], tableForm.name);
