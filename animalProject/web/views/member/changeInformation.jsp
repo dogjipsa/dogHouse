@@ -14,8 +14,8 @@
 <script src="/doggybeta/resources/js/addr.js"></script>
 <script type="text/javascript">
 function okbtn(){
-   alert("회원 정보가 수정되었습니다. 다시 로그인 해주세요.");
-   location.href='/doggybeta/jipsalogout';
+	alert("확인!!")
+  // alert("회원 정보가 수정되었습니다. 다시 로그인 해주세요.");
 
 }
 $(function(){
@@ -315,7 +315,7 @@ header{
 </table>
 <br>         
 <!-- 테이블 종료 -->
-<input type="submit" value="정보수정하기" onclick="okbtn();">
+<input type="submit" value="정보수정하기" >
 </form>
 <input type="button" id="deletebtn" value="탈퇴하기">
 <input type="submit" value="메인으로" onclick="location.href='/doggybeta/jipsalogout'">
