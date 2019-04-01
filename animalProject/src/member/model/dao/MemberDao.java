@@ -506,7 +506,7 @@ public class MemberDao {
 				findSitter.setPrice(rset.getInt(3));
 				findSitter.setUseroriginfile(rset.getString(4));
 				findSitter.setUserrefile(rset.getString(5));
-				findSitter.setAddress(rset.getString(6).substring(0, 9));
+				findSitter.setAddress(rset.getString(6).substring(0, 5));
 						
 				list.add(findSitter);
 			}
