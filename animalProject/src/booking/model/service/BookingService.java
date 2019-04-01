@@ -61,16 +61,7 @@ public class BookingService {
 		return bookingNo;
 	}
 
-	public int updateBookingProgressOne(int bookingNo) {
-		Connection conn = getConnection();
-		int result = bdao.updateBookingProgressOne(conn, bookingNo);
-		if(result > 0)
-			commit(conn);
-		else
-			rollback(conn);
-		close(conn);
-		return result;
-	}
+	
 
 	public Booking selectBooking(int bookingNo) {
 		Connection conn = getConnection();

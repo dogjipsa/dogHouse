@@ -5,9 +5,8 @@
 	Member petSitter = (Member)request.getAttribute("petSitter");
 	ArrayList<SitterImage> sitterFacilityImg = (ArrayList<SitterImage>)request.getAttribute("sitterFacilityImg");
 	String service = (String)request.getAttribute("service");
-
-	System.out.println("view에서 service 확인 : "+service);
-	System.out.println("아이디 확인"+petSitter);
+	String[] location = (petSitter.getAddress()).split(",");//상세주소가 다 나오지 않게 ,로 구분
+	
 
 %>
 <!DOCTYPE html>
@@ -199,7 +198,8 @@ img {
 <div id="content">
 <div style="float:left; width:700px;"><!-- 가운데 영역, 영역구분을 위해  float처리  -->
 <div class="container"><!-- 슬라이드쇼 https://www.w3schools.com/howto/howto_js_slideshow_gallery.asp 참고  -->
-  <div class="mySlides">
+  <%for(int i=0; i<sitterFacilityImg.size(); i++){ %>
+  <%-- <div class="mySlides">
     <div class="numbertext">1 / 3</div>
     <img src="/doggybeta/files/profile/<%=sitterFacilityImg.get(0).getRenameFile() %>" style="width:100%;height:500px">
   </div>
@@ -211,7 +211,12 @@ img {
   <div class="mySlides">
     <div class="numbertext">3 / 3</div>
     <img src="/doggybeta/files/profile/<%=sitterFacilityImg.get(2).getRenameFile() %>" style="width:100%;height:500px">
+  </div> --%>
+  <div class="mySlides">
+    <div class="numbertext">i / <%= sitterFacilityImg.size()%></div>
+    <img src="/doggybeta/files/profile/<%=sitterFacilityImg.get(i).getRenameFile() %>" style="width:100%;height:500px">
   </div>
+  <%} %>
   
   
     
@@ -223,7 +228,8 @@ img {
   </div>
 
   <div class="row">
-    <div class="column">
+  <% for(int i=0; i<sitterFacilityImg.size(); i++){ %>
+    <%-- <div class="column">
       <img class="demo cursor" src="/doggybeta/files/profile/<%=sitterFacilityImg.get(0).getRenameFile() %>" style="width:100%" onclick="currentSlide(1)" alt="<%=petSitter.getUserName()%>님의 시설사진1">
     </div>
     <div class="column">
@@ -231,8 +237,11 @@ img {
     </div>
     <div class="column">
       <img class="demo cursor" src="/doggybeta/files/profile/<%=sitterFacilityImg.get(2).getRenameFile() %>" style="width:100%" onclick="currentSlide(3)" alt="<%=petSitter.getUserName()%>님의 시설사진3">
+    </div> --%>
+    <div class="column">
+      <img class="demo cursor" src="/doggybeta/files/profile/<%=sitterFacilityImg.get(i).getRenameFile() %>" style="width:100%" onclick="currentSlide(<%=i %>)" alt="<%=petSitter.getUserName()%>님의 시설사진<%=i%>">
     </div>
-   
+   <%} %>
   </div>
  
 </div>
@@ -271,16 +280,16 @@ function showSlides(n) {
 
 <div style="height:800px; width:700px">
 <table class="board" >
-<thead><tr><th>인적사항</th></tr></thead>
-<tbody><tr><td rowspan=3><img src="/doggybeta/files/profile/<%=petSitter.getUserrefile()%>" width=100%></td><td>이름 : <%=petSitter.getUserName() %></td></tr>
-<tr><td>나이 : <%=petSitter.getUserDate() %></td><td></td></tr>
+<thead><tr><th>인적사항</th><th></th><th></th></tr></thead>
+<tbody><tr><td rowspan=3><img src="/doggybeta/files/profile/<%=petSitter.getUserrefile()%>" width=100%></td><td>이름 : <%=petSitter.getUserName() %></td><td></td></tr>
+<tr><td>나이 : <%=String.valueOf((petSitter.getUserDate())).substring(0, 4) %> 년생</td><td></td></tr>
 <tr><td>평점 : </td><td></td></tr></tbody>
 </table>
 <br>
 <!-- 펫시터 조회  -->
 <table class="board" >
 
-<thead><tr><th>세부조건</th></tr></thead>
+<thead><tr><th>세부조건</th><th></th></tr></thead>
 <tr><td>돌봄 가능한 강아지 크기&나이 :  </td><td></td></tr>
 <tr><td>하루(1박) : <%=petSitter.getPrice() %> </td><td></td></tr>
 <tr><td>당일(체크인/체크아웃 시간 내) : <%=(int)((petSitter.getPrice() * 0.8 *1000)) /1000%> </td><td></td></tr>
@@ -288,18 +297,18 @@ function showSlides(n) {
 <br>
 <table class="board">
 
-<thead><tr><th>상세내용</th></tr></thead>
+<thead><tr><th>상세내용</th><th></th></tr></thead>
 <tr><td>내용 받아와야 함.(오라클에 컬럼 추가 요망)  </td><td></td></tr>
 </table>
 <br>
 <table class="board">
-<thead><tr><th>돌봄환경</th></tr></thead>
-<tr><td>정기예약 :   </td><td></td></tr>
+
 </table>
 </div>
 <br>
 <div align="center" ><!-- 지도 가운데 정렬을 위한 div  -->
-<div id="map"style="width:40%;height:350px;"><%=petSitter.getAddress()%></div>
+<h4><%=location[0] %></h4>
+<div id="map"style="width:400px;height:350px;"><%=petSitter.getAddress()%></div>
 </div>
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=b9810167e43ee638a44b19264113db0d&libraries=services"></script>
 <script>
@@ -333,7 +342,7 @@ geocoder.addressSearch('<%=petSitter.getAddress()%>', function(result, status) {
 
         // 인포윈도우로 장소에 대한 설명을 표시합니다
         var infowindow = new daum.maps.InfoWindow({
-            content: '<div style="width:150px;text-align:center;padding:6px 0;">우리회사</div>'
+            content: '<div style="width:150px;text-align:center;padding:6px 0;"><%=petSitter.getUserName()%>의 집</div>'
         });
         infowindow.open(map, marker);
 
@@ -344,7 +353,7 @@ geocoder.addressSearch('<%=petSitter.getAddress()%>', function(result, status) {
 </script>
 
 <div style="height:800px"><!-- 리뷰게시판  -->
-<table class="board">
+<table class="board" id="reviewboard">
       <thead>
          <tr>
             <th width="50">작성자</th>
@@ -387,6 +396,83 @@ geocoder.addressSearch('<%=petSitter.getAddress()%>', function(result, status) {
    <% } %>     
    </tbody>    --%>
 </table>
+<p id="p5" style="width:500px;height:300px;border:1px solid red;"></p>
+<textarea rows="" cols="" class='row'></textarea>
+<script type="text/javascript">
+$(function() {
+	console.log($('#petSitterId').val());
+	$.ajax({
+		url: '/doggybeta/rlist',
+		type: 'post',
+		dataType: 'json',
+		data : {petSitterId : $('#petSitterId').val()},
+		success: function(data){
+				 console.log('성공!');
+				 var jsonStr = JSON.stringify(data);
+				 var json = JSON.parse(jsonStr); 
+				 var values = "";
+				 for(var i in json.list){
+					$("#reviewboard").append("<tr><td>"+json.list[i].reviewno+"</td><td>"+json.list[i].point+"</td><td>"+decodeURIComponent(json.list[i].reviewcontent)+"</td><td>"+json.list[i].+"</td></tr>");
+				 }
+				 $("#p5").html(values);
+				 
+		}
+	});
+});
+/* success: function(data){
+console.log('성공!');
+ var jsonStr = JSON.stringify(data);
+var json = JSON.parse(jsonStr);
+
+var values = $('.row').html();
+for(var i in json.managerList) {
+	values += json.managerList[i].freeno + json.managerList[i].freetitle +
+		      json.managerList[i].freedate +
+		      json.managerList[i].freeuserid + json.managerList[i].freedel
+}
+$('.row').html(values);
+} */
+
+/*$(function() {
+$.ajax({
+	url: '/doggybeta/manboard',
+	type: 'post',
+	cache: false,
+	datatype: 'json',
+	success: function(data) {
+		console.log('성공!');
+		/* var jsonStr = JSON.stringify(data);
+		var json = JSON.parse(jsonStr);
+		
+		var values = $('.row').html();
+		for(var i in json.managerList) {
+			values += json.managerList[i].freeno + json.managerList[i].freetitle +
+				      json.managerList[i].freedate +
+				      json.managerList[i].freeuserid + json.managerList[i].freedel
+		}
+		$('.row').html(values); */
+/*	$.each(data.managerList, function(index) {
+			var items = [];
+			items.push("<td class='firstTd'><input type='checkbox'/></td>");
+			items.push('<td>' + '자유' + '</td>');
+			items.push('<td>' + data.managerList[index].freeno + '</td>');
+			items.push("<td class='fourthTd'>" + decodeURIComponent(data.managerList[index].freetitle) + '</td>');
+			items.push('<td>' + data.managerList[index].freeuserid + '</td>');
+			items.push('<td>' + data.managerList[index].freedate + '</td>');
+			$('<tr/>', {
+				html: items
+			}).appendTo('tbody');
+		}); //each  
+	},//success
+	error : function(data) {
+		alert('에러!');
+	} */
+/*});//ajax
+});//ready */
+
+
+</script>
+
 페이징처리
 </div>
 
@@ -394,32 +480,34 @@ geocoder.addressSearch('<%=petSitter.getAddress()%>', function(result, status) {
 <div style="float:left;padding-top:100px"><!-- 오른쪽 영역  --> 
 <div><!-- 날짜 입력  -->
 <form action="/doggybeta/bkinsert" type="post">
-<input type="text" name="datetimes" onchange="priceCal()" id="datetimes" size="35"/>
+예약날짜 <br><input type="text" name="datetimes" onchange="priceCal()" id="datetimes" size="35"/>
 <br><br>
-<textarea name="etc"></textarea>
-<input type="hidden" name="service" value="<%=service%>">
-<input type="hidden" name="petSitterId" value="<%=petSitter.getUserId()%>">
+특이사항 <br><textarea  style="resize: none;" name="etc"  rows="4" cols="37"></textarea>
+<input type="hidden" name="service" id="service" value="<%=service%>">
+<input type="hidden" name="petSitterId" id="petSitterId" value="<%=petSitter.getUserId()%>">
 <input type="hidden" name="userId" value="<%=loginUser.getUserId()%>">
 <input type="hidden" name="price" id="price" value="<%=petSitter.getPrice() %>">
 <br><br>
 총 가격 : <input type="text" value=""  id="priceSum" name="priceSum" readonly> 원
 <br><br>
 <input type="submit" value="예약하기">
-
 <script>
 $(function() {
   $('input[name="datetimes"]').daterangepicker({
     timePicker: true,
     startDate: moment().startOf('hour'),
     endDate: moment().startOf('hour').add(32, 'hour'),
+    
     locale: {
       format: 'YYYY/MM/DD HH:mm'
     }
-
+	
   });
+  
  
-  /* 가격계산 ajax  */
 });
+
+  /* 가격계산 ajax  */
 function priceCal(){
 	 console.log($('input[name="datetimes"]').val());
 	 console.log($('#datetimes').val());
@@ -429,13 +517,15 @@ function priceCal(){
 				type: 'post',
 				dataType: 'json',
 				data: {datetimes: $('#datetimes').val(),
-						price: $('#price').val()},
+						price: $('#price').val(),
+						service: $('#service').val()},
 				success: function(data){
 							$("#priceSum").val(data.pricesum);
 						}
 				
 				
 			});
+   	 
   }
 </script>
 </form>

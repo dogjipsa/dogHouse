@@ -45,11 +45,7 @@ public class BookingInsertServlet extends HttpServlet {
 		String priceSum = request.getParameter("priceSum");
 		//***신청하는 사람이 checkin checkout 가 사이에 날짜에 booking이 있다면 예약 신청 못하게 해야 함.
 		
-		System.out.println(petSitterId);
-		System.out.println(userId);
-		System.out.println(etc);
-		System.out.println("insert 서블릿에서 서비스확인 : "+service);
-		System.out.println("가격 : " + priceSum);
+		
 		
 		
 		/*Timestamp checkinTime = Timestamp.valueOf(checkin);
@@ -57,15 +53,14 @@ public class BookingInsertServlet extends HttpServlet {
 		System.out.println(checkinTime);
 		*/
 		
-		//1. booking(예약)을 함(insert)
-		bkservice.insertBooking(checkin,checkout,petSitterId,userId,etc,service);
+		//1. booking(예약)을 함(insert) booking_progress는 1(펫시터의 승인대기 상태)로 insert
+		int result = bkservice.insertBooking(checkin,checkout,petSitterId,userId,etc,service);
 		
 		//2. 결제 직전 페이지에 booking내용을 조회하기 위해 booking테이블에서 booking_no를 select(이 booking_no를 bpselect로 넘겨줌)
 		int bookingNo = bkservice.selectBookingNo(checkin,checkout,petSitterId,userId);
 		System.out.println("예약번호조회 : " + bookingNo);
 		
-		//3. 예약진행상황(booking_progress)를 1(예약완료)로 업데이트
-		int result = bkservice.updateBookingProgressOne(bookingNo);
+		
 		
 		if(result>0) {
 			//response.sendRedirect("/doggybeta/bpselect?bookingNo="+bookingNo+"&priceSum="+priceSum);//BeforePaymentSelectServlet으로 예약번호 전달

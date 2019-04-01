@@ -1,6 +1,7 @@
 package review.model.vo;
 
 import java.io.Serializable;
+import java.sql.Date;
 
 public class Review implements Serializable {
 	private static final long serialVersionUID = -5555128744764844463L;
@@ -12,11 +13,12 @@ public class Review implements Serializable {
 	private String reviewContent;
 	private String reviewOriginFile;
 	private String reviewReFile;
+	private Date reviewDate;
 	
 	public Review() {}
-	
+
 	public Review(int reviewNo, String userId, int bookingNo, String point, String reviewContent,
-			String reviewOriginFile, String reviewReFile) {
+			String reviewOriginFile, String reviewReFile, Date reviewDate) {
 		super();
 		this.reviewNo = reviewNo;
 		this.userId = userId;
@@ -25,9 +27,8 @@ public class Review implements Serializable {
 		this.reviewContent = reviewContent;
 		this.reviewOriginFile = reviewOriginFile;
 		this.reviewReFile = reviewReFile;
+		this.reviewDate = reviewDate;
 	}
-
-
 
 	public int getReviewNo() {
 		return reviewNo;
@@ -85,6 +86,14 @@ public class Review implements Serializable {
 		this.reviewReFile = reviewReFile;
 	}
 
+	public Date getReviewDate() {
+		return reviewDate;
+	}
+
+	public void setReviewDate(Date reviewDate) {
+		this.reviewDate = reviewDate;
+	}
+
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
@@ -92,7 +101,7 @@ public class Review implements Serializable {
 	@Override
 	public String toString() {
 		return reviewNo + ", " + userId + ", " + bookingNo + ", " + point + ", " + reviewContent + ", "
-				+ reviewOriginFile + ", " + reviewReFile;
+				+ reviewOriginFile + ", " + reviewReFile + ", " + reviewDate;
 	}
 	
 }

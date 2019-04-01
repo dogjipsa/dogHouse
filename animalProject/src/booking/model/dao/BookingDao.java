@@ -142,7 +142,7 @@ public class BookingDao {
 			String etc, String service) {
 		int result = 0;
 		PreparedStatement pstmt = null;
-		String query = "insert into booking values(seq_bookingno.nextval, to_date(?, 'YYYY/MM/DD HH24:MI'), to_date(?, 'YYYY/MM/DD HH24:MI'), (select pet_no from pet where user_id = ?), ?,0,?,?,?)";
+		String query = "insert into booking values(seq_bookingno.nextval, to_date(?, 'YYYY/MM/DD HH24:MI'), to_date(?, 'YYYY/MM/DD HH24:MI'), (select pet_no from pet where user_id = ?), ?,1,?,?,?)";
 		
 		try {
 			pstmt = conn.prepareStatement(query);
@@ -186,25 +186,6 @@ public class BookingDao {
 			close(pstmt);
 		}
 		return bookingNo;
-	}
-
-	public int updateBookingProgressOne(Connection conn, int bookingNo) {
-		int result = 0;
-		PreparedStatement pstmt = null;
-		String query = "update booking set booking_progress = '1' where booking_no = ?";
-		
-		try {
-			pstmt = conn.prepareStatement(query);
-			pstmt.setInt(1, bookingNo);
-		
-			result = pstmt.executeUpdate();
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			close(pstmt);
-		}
-		
-		return result;
 	}
 
 	public Booking selectBooking(Connection conn, int bookingNo) {
