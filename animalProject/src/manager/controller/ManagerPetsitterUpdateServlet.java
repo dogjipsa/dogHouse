@@ -40,8 +40,9 @@ public class ManagerPetsitterUpdateServlet extends HttpServlet {
 		ManagerService mservice = new ManagerService();
 		
 		int result = mservice.updatePetsitter(userId);
+		System.out.println("servlet result : " + result);
 		
-//		response.setContentType("text/html; charset=utf-8");
+		response.setContentType("text/html; charset=utf-8");
 		RequestDispatcher view = null;
 		if(result > 0) {
 			response.sendRedirect("/doggybeta/mpsearch");

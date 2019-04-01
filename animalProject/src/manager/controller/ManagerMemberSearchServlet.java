@@ -59,7 +59,6 @@ public class ManagerMemberSearchServlet extends HttpServlet {
 		
 		//현재 페이지에 출력할 목록 조회
 		int listCount =  mservice.getMemberListCount(listOpt);
-		System.out.println("listCount : " + listCount);
 		//행의 갯수가 101개일 때 다음 페이지로 넘어감.
 		
 		//총 페이지수 계산 : 1페이지부터 현재페이지까지 페이지 갯수

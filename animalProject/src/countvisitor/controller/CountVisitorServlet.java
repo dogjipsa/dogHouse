@@ -42,7 +42,7 @@ public class CountVisitorServlet extends HttpServlet {
 		Date today = new Date();
     	java.sql.Date sqlDate = new java.sql.Date(today.getTime());
 		
-		CountService cntService = new CountService();
+		/*CountService cntService = new CountService();
 		CountVisitor cntList = cntService.selectCntVisitor(sqlDate);
 		System.out.println(cntList + " <- servlet size");
 		if(cntList != null) {
@@ -53,7 +53,7 @@ public class CountVisitorServlet extends HttpServlet {
 			System.out.println(job.toJSONString() + " <- job");
 			out.println(job.toJSONString());
 			
-		}
+		}*/
 	}
 
 	/**
