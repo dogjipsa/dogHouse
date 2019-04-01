@@ -53,12 +53,14 @@ public class CountVisitorServlet extends HttpServlet {
 		//그냥 토탈
 		
 		
+
 		CountService cntService = new CountService();
 		CountVisitor cntToday = cntService.selectCntVisitor(sqlDate);
 		CountVisitor cntYesterday = cntService.selectCntVisitor(ysDate);
 		CountVisitor cntTotal = cntService.sumOfVisitor();
 		
 		if(cntToday != null || cntYesterday != null) {
+
 			PrintWriter out = response.getWriter();
 			response.setContentType("application/json; charset=utf-8");
 			JSONObject job = new JSONObject();

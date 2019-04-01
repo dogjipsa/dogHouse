@@ -4,6 +4,7 @@
 <% 	
 	ArrayList<Question> list = (ArrayList<Question>)request.getAttribute("list");
 %>
+
  <!DOCTYPE html PUBLIC "-//W3C/DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -13,17 +14,21 @@
 <link href="/doggybeta/resources/css/footer.css" rel="stylesheet" type="text/css"></link>
 </head>
 <body background="/doggybeta/resources/images/puppies_1.1.jpg">
+
 <%@ include file="../common/menu.jsp" %>
 <div id="wrap">
 <div id="cotent">
 
+
 <h2 align="center" style=color:white;>1:1 문의 상세정보 입력</h2>
 <hr>
 <h3 style=color:white;>문의 정보</h3>
+
 <br>
 <form action="/doggybeta/qinsert" method="post" enctype="multipart/form-data">
 <table>
 	<tr>
+
 		<td>&nbsp;</td>
 		<td align="center" style=color:white;>제목</td>
 		<td><input type="text" name="qtitle" size="65" maxlength="65"></td>
@@ -56,6 +61,7 @@
 	 <input type="button" value="뒤로가기" onclick="history.go(-1)">
 	 <input type="submit" value="전송하기" onclick="alert('등록되었습니다')">&nbsp; 	 
 	</th>
+
 	<td>&nbsp;</td>
 </tr>	
 </table>

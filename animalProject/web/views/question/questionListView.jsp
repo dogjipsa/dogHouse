@@ -5,8 +5,9 @@
 	ArrayList<Question> list = (ArrayList<Question>)request.getAttribute("list");	
 	
 	Answer answer = (Answer)request.getAttribute("answer");
-	
+
 	int listCount = ((Integer)request.getAttribute("listCount")).intValue();
+
 	int startPage = ((Integer)request.getAttribute("startPage")).intValue();
 	int endPage = ((Integer)request.getAttribute("endPage")).intValue();
 	int maxPage = ((Integer)request.getAttribute("maxPage")).intValue();
@@ -45,6 +46,7 @@
 	
 </script>
 </head>
+
 <body background="/doggybeta/resources/images/puppies_1.2.jpg">
 <%@ include file="../common/menu.jsp" %>
 <div id="wrap">
@@ -63,17 +65,21 @@
 		<th style="background-color:#eeeee; text-align:center; color:white;">답변유무</th>		
 	</tr>
 	</thead>
+
 <% 
 	for(Question question : list){
 %>
 <input type="hidden" name="qnum" id="qnum" value="<%= question.getQuestionNo() %>"> 
 	<tr>		
 	<%-- <td><input type='text' value='<%= question.getQuestionNo()%>'></td> --%>
+
 	<td align="left">
+
 			<% if(loginUser != null){ %>
 				<a href="/doggybeta/qdetail?no=<%= question.getQuestionNo() %>"><%= question.getQuestionTitle() %></a>
 			<% }else{ %>
 				<%= question.getQuestionTitle() %>
+
 			<% } %> &nbsp; &nbsp; &nbsp;</td>
  			
 		<td align="center"><%= question.getQuestionDate() %>&nbsp;&nbsp;&nbsp;&nbsp;</td>
@@ -87,13 +93,16 @@
 							</td>
 	</tr>
 
+
 <% } %>
 </table>
 </div>
+
 <br>
 <%-- 페이징 처리 --%>
 <div style="text-align:center;">
 <% if(currentPage <= 1){ %>
+
 	[처음]&nbsp;&nbsp;
 <% }else{ %>
 	<a href="/doggybeta/qlist?page=1">[처음]</a>&nbsp;
@@ -102,6 +111,7 @@
 	<a href="/doggybeta/qlist?page=<%= startPage - 10 %>">[이전]</a>
 <% }else{ %>
 	[이전]
+
 <% } %>
 <%-- 현재 페이지가 포함된 페이지 그룹 숫자 출력 처리 --%>
 <% for(int p = startPage; p <= endPage; p++){ 
