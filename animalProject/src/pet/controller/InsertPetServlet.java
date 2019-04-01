@@ -86,7 +86,7 @@ public class InsertPetServlet extends HttpServlet {
 					originFile.delete();
 				}
 			}
-			Pet pet = new Pet(0,pname,breeds,pbirth,size,gender,neutral,etc,userid,originFileName,renameFileName); 
+			Pet pet = new Pet(0,pname,breeds,pbirth,size,gender,neutral,etc,userid,originFileName,renameFileName, 0); 
 			
 			int result = new PetService().insertPet(pet);
 			response.setContentType("text/html; charset=utf-8");

@@ -42,8 +42,14 @@ public class UpdateMemberServlet extends HttpServlet {
 		member.setUserPwd(request.getParameter("userpwd"));
 		member.setPhone(request.getParameter("phone"));
 		member.setEmail(request.getParameter("email"));
+		String addr = request.getParameter("addr");
+		String extra = request.getParameter("extra");
+		String daddr = request.getParameter("daddr");
+		String postcode = request.getParameter("postcode");
+		
 		String fullAddr = request.getParameter("addr") + ", " + request.getParameter("extra") + " "
 		            + request.getParameter("daddr") + " (" + request.getParameter("postcode") + ")";
+		
 		member.setAddress(fullAddr);
 		
 		System.out.println("전체 주소 : " + fullAddr);
@@ -63,7 +69,11 @@ public class UpdateMemberServlet extends HttpServlet {
 		if(result > 0) {
 			/*view = request.getRequestDispatcher("views/member/changeInformation.jsp");
 			request.setAttribute("member", member);			
-			view.forward(request, response);	*/					
+			view.forward(request, response);	*/	
+			request.setAttribute("addr", addr);
+			request.setAttribute("extra", extra);
+			request.setAttribute("daddr", daddr);
+			request.setAttribute("postcode", postcode);
 			response.sendRedirect("/doggybeta/jipsalogout");
 		}else {
 			
