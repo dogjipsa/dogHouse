@@ -55,15 +55,19 @@ public class ManagerBoardListServlet extends HttpServlet {
 		// 한 페이지에 출력될 게시물 수 -> pageList
 		// 한 화면에 출력될 페이지 수 -> countPage
 		// 나머지가 있을 경우에만 +1
-		int listCount = ms.boardListCount(); //총 게시글 수
 				
 		int pageList = 10; //원하는 출력 개수
 		
-		//현재 페이지에 출력할 목록 조회
-		int totalPage = listCount / pageList;
-		if(listCount % pageList > 0)
-			totalPage ++;
+		String option = request.getParameter("option");
+		String word = request.getParameter("word");
 		
+		int listCount = ms.boardListCount(option, word); //총 게시글 수
+		
+		//현재 페이지에 출력할 목록 조회
+		/*int totalPage = listCount / pageList;
+		if(listCount % pageList > 0)
+			totalPage ++;*/
+		/*
 		//현재 페이지번호가 토탈쪽수보다 크다면
 		if(totalPage < currentPage)
 			totalPage = currentPage;
@@ -74,17 +78,18 @@ public class ManagerBoardListServlet extends HttpServlet {
 		//끝 페이지가 총 페이지보다 크다면
 		if(endPage > totalPage)
 			endPage = totalPage;
-		
-		ArrayList<FreeBoard> fList = ms.selectFreeBoardList(currentPage, pageList);
-		ArrayList<TipBoard> tList = ms.selectTipBoardList(currentPage, pageList);
-		System.out.println(tList);
-		ArrayList<Faq> faqList = ms.selectFAQList(currentPage, pageList);
-		
-		
+		*/
+		ArrayList<FreeBoard> fList = ms.selectFreeBoardList(currentPage, pageList, option, word);
+		int totalPage = (int)((double)listCount/pageList + 0.9);
+		int startPage = (((int)((double)currentPage / pageList + 0.9)) -1 ) * pageList + 1;
+		int endPage = startPage + pageList - 1;
+		if(totalPage < endPage)
+			endPage = totalPage;
+		System.out.println("서블릿 flist : " + fList);
 		response.setContentType("text/html; charset=utf-8");
 		RequestDispatcher view = null;
 		if(fList.size() >= 0) {
-			view = request.getRequestDispatcher("views/manager/managerAllBoard.jsp");
+			view = request.getRequestDispatcher("views/manager/managerFreeBoardList.jsp");
 			request.setAttribute("flist", fList);
 			
 			request.setAttribute("currentPage", currentPage);
@@ -92,15 +97,12 @@ public class ManagerBoardListServlet extends HttpServlet {
 			request.setAttribute("startPage", startPage);
 			request.setAttribute("endPage", endPage);
 			request.setAttribute("listCount", listCount);
-			view.forward(request, response);
-		} else if(tList.size() >= 0) {
-			request.setAttribute("tlist", tList);
-		} else if(faqList.size() >= 0) {
 			
-		}
-		
-		
-		
+			request.setAttribute("search", option);
+			request.setAttribute("keyword", word);
+			
+			view.forward(request, response);
+		} 
 		else {
 			view = request.getRequestDispatcher("views/manager/managerError.jsp");
 			request.setAttribute("message", currentPage + "쪽 목록 조회 실패");
