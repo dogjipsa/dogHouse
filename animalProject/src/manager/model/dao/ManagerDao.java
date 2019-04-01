@@ -52,52 +52,133 @@ public class ManagerDao {
 		return loginManager;
 	}
 
-	public ArrayList<FreeBoard> selectFreeBoardList(Connection conn, int currentPage, int pageList) {
+	public ArrayList<FreeBoard> selectFreeBoardList(Connection conn, int currentPage, int pageList, String option, String word) {
 		// 게시판 목록 조회용
 		// 일단 자유게시판 하나만 실험
 		ArrayList<FreeBoard> freeboardList = new ArrayList<>();
 		PreparedStatement pstat = null;
 		ResultSet rSet = null;
-
-		int startCount = (currentPage - 1) * pageList + 1;
-		int endCount = currentPage * pageList;
+		
+		int startRow = (currentPage -1) * pageList + 1;
+		int endRow = startRow + pageList - 1;
 
 		StringBuffer query = new StringBuffer();
-		query.append(
-				"select b.rnum, b.freeboard_no, b.user_id, b.freeboard_title, b.freeboard_content, b.freeboard_date, b.freeboard_delete ")
-				.append("from ( select rownum as rnum, a.freeboard_no, a.user_id, a.freeboard_title, a.freeboard_content, a.freeboard_date, a.freeboard_delete ")
-				.append("from ( select freeboard_no, user_id, freeboard_title, freeboard_content, freeboard_date, freeboard_delete ")
-				.append("from freeboard order by freeboard_date desc) a ").append("where rownum <= ?) b ")
-				.append("where b.rnum >= ?");
-		/*query.append("select * from tipboard where rownum between ? and ? ")
-			 .append("union all ")
-			 .append("select * from freeboard where rownum between ? and ? ");*/
 		try {
-			pstat = conn.prepareStatement(query.toString());
-			pstat.setInt(1, endCount);
-			pstat.setInt(2, startCount);
+			if(option == null) {
+				query.append( "select b.rnum, b.freeboard_no, b.user_id, b.freeboard_title, b.freeboard_content, b.freeboard_date, b.freeboard_delete ")
+					 .append("from ( select rownum as rnum, a.freeboard_no, a.user_id, a.freeboard_title, a.freeboard_content, a.freeboard_date, a.freeboard_delete ")
+					 .append("from ( select freeboard_no, user_id, freeboard_title, freeboard_content, freeboard_date, freeboard_delete ")
+					 .append("from freeboard order by freeboard_date desc) a ").append("where rownum <= ?) b ")
+					 .append("where b.rnum >= ?");
+				
+				pstat = conn.prepareStatement(query.toString());
+				pstat.setInt(1, endRow);
+				pstat.setInt(2, startRow);
 
-			rSet = pstat.executeQuery();
-			// 한 페이지당 10개까지만 출력되게
+				rSet = pstat.executeQuery();
+				// 한 페이지당 10개까지만 출력되게
 
-			while (rSet.next()) {
-				FreeBoard freeBoard = new FreeBoard();
-				freeBoard.setFreeboardTitle(rSet.getString("freeboard_title"));
-				freeBoard.setUserId(rSet.getString("user_id"));
-				freeBoard.setFreeboardNo(rSet.getInt("freeboard_no"));
-				freeBoard.setFreeboardDelete(rSet.getString("freeboard_delete"));
-				freeBoard.setFreeboardContent(rSet.getString("freeboard_content"));
-				freeBoard.setFreeboardDate(rSet.getDate("freeboard_date"));
-				/*
-				 * freeBoard.setFreeboardOriginalFile(rSet.getString("freeboard_originfile"));
-				 * freeBoard.setFreeboardViews(rSet.getInt("freeboard_views"));
-				 * freeBoard.setFreeboardRecommend(rSet.getInt("freeboard_recommend"));
-				 * freeBoard.setFreeboardDelete(rSet.getString("freeboard_delete"));
-				 * freeBoard.setFreeboardRefile(rSet.getString("freeboard_refile"));
-				 */
-				/* System.out.println(managerList + "<- list dao"); */
-				freeboardList.add(freeBoard);
+				while (rSet.next()) {
+					FreeBoard freeBoard = new FreeBoard();
+					freeBoard.setFreeboardTitle(rSet.getString("freeboard_title"));
+					freeBoard.setUserId(rSet.getString("user_id"));
+					freeBoard.setFreeboardNo(rSet.getInt("freeboard_no"));
+					freeBoard.setFreeboardDelete(rSet.getString("freeboard_delete"));
+					freeBoard.setFreeboardContent(rSet.getString("freeboard_content"));
+					freeBoard.setFreeboardDate(rSet.getDate("freeboard_date"));
+
+					freeboardList.add(freeBoard);
+				}
+			} else if(option.equals("delyorn")) {//1 if
+				query.append(
+						"select b.rnum, b.freeboard_no, b.user_id, b.freeboard_title, b.freeboard_content, b.freeboard_date, b.freeboard_delete ")
+						.append("from ( select rownum as rnum, a.freeboard_no, a.user_id, a.freeboard_title, a.freeboard_content, a.freeboard_date, a.freeboard_delete ")
+						.append("from ( select freeboard_no, user_id, freeboard_title, freeboard_content, freeboard_date, freeboard_delete ")
+						.append("from freeboard where freeboard_delete like ? order by freeboard_date desc) a ").append("where rownum <= ?) b ")
+						.append("where b.rnum >= ?");
+				
+				pstat = conn.prepareStatement(query.toString());
+				pstat.setString(1, "%"+word+"%");
+				pstat.setInt(2, endRow);
+				pstat.setInt(3, startRow);
+
+				rSet = pstat.executeQuery();
+				// 한 페이지당 10개까지만 출력되게
+
+				while (rSet.next()) {
+					FreeBoard freeBoard = new FreeBoard();
+					freeBoard.setFreeboardTitle(rSet.getString("freeboard_title"));
+					freeBoard.setUserId(rSet.getString("user_id"));
+					freeBoard.setFreeboardNo(rSet.getInt("freeboard_no"));
+					freeBoard.setFreeboardDelete(rSet.getString("freeboard_delete"));
+					freeBoard.setFreeboardContent(rSet.getString("freeboard_content"));
+					freeBoard.setFreeboardDate(rSet.getDate("freeboard_date"));
+					/*
+					 * freeBoard.setFreeboardOriginalFile(rSet.getString("freeboard_originfile"));
+					 * freeBoard.setFreeboardViews(rSet.getInt("freeboard_views"));
+					 * freeBoard.setFreeboardRecommend(rSet.getInt("freeboard_recommend"));
+					 * freeBoard.setFreeboardDelete(rSet.getString("freeboard_delete"));
+					 * freeBoard.setFreeboardRefile(rSet.getString("freeboard_refile"));
+					 */
+					/* System.out.println(managerList + "<- list dao"); */
+					freeboardList.add(freeBoard);
+				}
+			} else if(option.equals("writer")) { //2 if
+				query.append(
+						"select b.rnum, b.freeboard_no, b.user_id, b.freeboard_title, b.freeboard_content, b.freeboard_date, b.freeboard_delete ")
+						.append("from ( select rownum as rnum, a.freeboard_no, a.user_id, a.freeboard_title, a.freeboard_content, a.freeboard_date, a.freeboard_delete ")
+						.append("from ( select freeboard_no, user_id, freeboard_title, freeboard_content, freeboard_date, freeboard_delete ")
+						.append("from freeboard where user_id like ? order by freeboard_date desc) a ").append("where rownum <= ?) b ")
+						.append("where b.rnum >= ?");
+				
+				pstat = conn.prepareStatement(query.toString());
+				pstat.setString(1, "%"+word+"%");
+				pstat.setInt(2, endRow);
+				pstat.setInt(3, startRow);
+
+				rSet = pstat.executeQuery();
+				// 한 페이지당 10개까지만 출력되게
+
+				while (rSet.next()) {
+					FreeBoard freeBoard = new FreeBoard();
+					freeBoard.setFreeboardTitle(rSet.getString("freeboard_title"));
+					freeBoard.setUserId(rSet.getString("user_id"));
+					freeBoard.setFreeboardNo(rSet.getInt("freeboard_no"));
+					freeBoard.setFreeboardDelete(rSet.getString("freeboard_delete"));
+					freeBoard.setFreeboardContent(rSet.getString("freeboard_content"));
+					freeBoard.setFreeboardDate(rSet.getDate("freeboard_date"));
+					
+					freeboardList.add(freeBoard);
+				}
+			} else if(option.equals("createDate")) {
+				query.append(
+						"select b.rnum, b.freeboard_no, b.user_id, b.freeboard_title, b.freeboard_content, b.freeboard_date, b.freeboard_delete ")
+						.append("from ( select rownum as rnum, a.freeboard_no, a.user_id, a.freeboard_title, a.freeboard_content, a.freeboard_date, a.freeboard_delete ")
+						.append("from ( select freeboard_no, user_id, freeboard_title, freeboard_content, freeboard_date, freeboard_delete ")
+						.append("from freeboard where freeboard_date like ? order by freeboard_date desc) a ").append("where rownum <= ?) b ")
+						.append("where b.rnum >= ?");
+				
+				pstat = conn.prepareStatement(query.toString());
+				pstat.setString(1, "%"+word+"%");
+				pstat.setInt(2, endRow);
+				pstat.setInt(3, startRow);
+
+				rSet = pstat.executeQuery();
+				// 한 페이지당 10개까지만 출력되게
+
+				while (rSet.next()) {
+					FreeBoard freeBoard = new FreeBoard();
+					freeBoard.setFreeboardTitle(rSet.getString("freeboard_title"));
+					freeBoard.setUserId(rSet.getString("user_id"));
+					freeBoard.setFreeboardNo(rSet.getInt("freeboard_no"));
+					freeBoard.setFreeboardDelete(rSet.getString("freeboard_delete"));
+					freeBoard.setFreeboardContent(rSet.getString("freeboard_content"));
+					freeBoard.setFreeboardDate(rSet.getDate("freeboard_date"));
+					
+					freeboardList.add(freeBoard);
+				}
 			}
+			System.out.println("디피 flist : " + freeboardList);
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -108,14 +189,30 @@ public class ManagerDao {
 		return freeboardList;
 	}
 
-	public int boardListCount(Connection conn) {
+	public int boardListCount(Connection conn, String option, String word) {
 		int result = 0;
 		Statement stat = null;
+		PreparedStatement pstat = null;
 		ResultSet rSet = null;
 		String query = ("select count(*) from freeboard");
 		try {
-			stat = conn.createStatement();
-			rSet = stat.executeQuery(query);
+			if(option == null) {
+				stat = conn.createStatement();
+				rSet = stat.executeQuery(query);
+			} else if(option.equals("writer")) {
+				query = ("select count(*) from freeboard where user_id like ?"); 
+				pstat = conn.prepareStatement(query);
+				pstat.setString(1, "%" + word + "%");
+				rSet = pstat.executeQuery();
+			} else if(option.equals("createDel")) {
+				query = ("select count(*) from freeboard where freeboard_date like ?"); 
+				pstat = conn.prepareStatement(query);
+				pstat.setString(1, "%" + word + "%");
+				rSet = pstat.executeQuery();
+			} else {
+				stat = conn.createStatement();
+				rSet = stat.executeQuery(query);
+			}
 
 			if (rSet.next()) {
 				result = rSet.getInt(1);
@@ -126,6 +223,7 @@ public class ManagerDao {
 			close(rSet);
 			close(stat);
 		}
+		System.out.println("디비 리스트 카운트 : " + result);
 
 		return result;
 	}
@@ -729,7 +827,7 @@ public class ManagerDao {
 		int result = 0;
 		PreparedStatement pstmt = null;
 		
-		String query = "update member set petsitter = 2 where user_id = ? and petsitter = 1 and user_delete in('n', 'N', null)"; 
+		String query = "update member set petsitter = '2' where user_id like ? and user_delete in('n', 'N', null)"; 
 		
 		try {
 			pstmt = conn.prepareStatement(query);

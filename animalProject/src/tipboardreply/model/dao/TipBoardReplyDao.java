@@ -150,7 +150,7 @@ public class TipBoardReplyDao {
 		return result;
 	}
 
-	public TipBoardReply selectTipBoardReply(Connection conn, int tipBoardNo) {
+	public TipBoardReply selectTipBoardReply(Connection conn, int tipBoardReplyNo) {
 		TipBoardReply trboard = new TipBoardReply();
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
@@ -159,15 +159,15 @@ public class TipBoardReplyDao {
 		
 		try {
 			pstmt = conn.prepareStatement(query);
-			pstmt.setInt(1, tipBoardNo);
+			pstmt.setInt(1, tipBoardReplyNo);
 			rset = pstmt.executeQuery();
 			while(rset.next()) {
 				
 				trboard = new TipBoardReply();
-				trboard.setTipReplyNo(rset.getInt("TIPREPLY_NO"));
+				trboard.setTipReplyNo(tipBoardReplyNo);
 				trboard.setTipReplyContent(rset.getString("TIPREPLY_CONTENT"));
 				trboard.setTipReplyDate(rset.getDate("TIPREPLY_DATE"));
-				trboard.setTipNo(tipBoardNo);
+				trboard.setTipNo(rset.getInt("TIP_NO"));
 				trboard.setUserId(rset.getString("USER_ID"));
 				trboard.setTipReplyDelete("TIPREPLY_DELETE");
 				}

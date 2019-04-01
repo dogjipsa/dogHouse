@@ -80,7 +80,7 @@ public class TipBoardDao {
 			/*String query = "SELECT *  FROM (SELECT ROWNUM RNUM,  TIPBOARD_NO,TIPBOARD_TITLE,TIPBOARD_CONTENT,TIPBOARD_DATE,TIPBOARD_ORIGINFILE,TIPBOARD_VIEWS,TIPBOARD_RECOMMEND,USER_ID,TIPBOARD_DELETE,TIPBOARD_REFILE " + 
 					"				FROM (SELECT * FROM TIPBOARD where tipboard_delete in('n','N',null) order by tipboard_no desc)) " + 
 					"				WHERE RNUM >= ? AND RNUM <= ? ";*/
-			/*String query = "select * from tipboard";*/
+			/*String query = "select * from tapered";*/
 			
 			try {
 				if(option == null) {

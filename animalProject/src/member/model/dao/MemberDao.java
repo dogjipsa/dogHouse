@@ -148,8 +148,8 @@ public class MemberDao {
 		int result = 0;
 		PreparedStatement pstat = null;
 		StringBuffer query = new StringBuffer();
-		query.append("insert into member values ( ");
-		query.append("?,?,?,?,?,?,default,?,sysdate,?,default,?,?,?)");
+		query.append("insert into member values ( ")
+			 .append("?,?,?,?,?,?,default,?,sysdate,?,default,?,?,?)");
 		
 		try {
 			
@@ -390,7 +390,7 @@ public class MemberDao {
 		int result = 0;
 		PreparedStatement pstmt = null;
 		
-		String query = "UPDATE MEMBER SET EMAIL = ?, PHONE = ?, JOB = ?, PASSWORD = ? WHERE USER_ID = ?";
+		String query = "UPDATE MEMBER SET EMAIL = ?, PHONE = ?, JOB = ?, PASSWORD = ?, ADDRESS = ? WHERE USER_ID = ?";
 		
 		try {
 			pstmt = conn.prepareStatement(query);
@@ -398,10 +398,11 @@ public class MemberDao {
 			pstmt.setString(2, member.getPhone());
 			pstmt.setString(3, member.getJob());
 			pstmt.setString(4, member.getUserPwd());
-			pstmt.setString(5, member.getUserId());
+			pstmt.setString(5, member.getAddress());
+			pstmt.setString(6, member.getUserId());
 			
 			result = pstmt.executeUpdate();
-			
+			System.out.println("업데이트 dao 확인 : " +  result);
 			
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -506,7 +507,7 @@ public class MemberDao {
 				findSitter.setPrice(rset.getInt(3));
 				findSitter.setUseroriginfile(rset.getString(4));
 				findSitter.setUserrefile(rset.getString(5));
-				findSitter.setAddress(rset.getString(6).substring(0, 9));
+				findSitter.setAddress(rset.getString(6).substring(0, 5));
 						
 				list.add(findSitter);
 			}

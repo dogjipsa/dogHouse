@@ -30,9 +30,9 @@ public class ManagerService {
 		return loginManager;
 	}
 
-	public int boardListCount() {
+	public int boardListCount(String option, String word) {
 		Connection conn = getConnection();
-		int result = manDao.boardListCount(conn);
+		int result = manDao.boardListCount(conn, option, word);
 		if(result > 0)
 			commit(conn);
 		else
@@ -48,6 +48,7 @@ public class ManagerService {
 			rollback(conn);
 		return result;
 	}
+	
 	public int tipboardListCount() {
 		Connection conn = getConnection();
 		int result = manDao.tipboardListCount(conn);
@@ -58,11 +59,11 @@ public class ManagerService {
 		return result;
 	}
 
-	public ArrayList<FreeBoard> selectFreeBoardList(int currentPage, int pageList) {
+	public ArrayList<FreeBoard> selectFreeBoardList(int currentPage, int pageList, String option, String word) {
 		Connection conn = getConnection();
-		ArrayList<FreeBoard> fList = manDao.selectFreeBoardList(conn, currentPage, pageList);
+		ArrayList<FreeBoard> fList = manDao.selectFreeBoardList(conn, currentPage, pageList, option, word);
 		close(conn);
-		
+		System.out.println("서비스 flist " + fList);
 		return fList;
 	}
 
@@ -114,12 +115,11 @@ public class ManagerService {
 	public int updatePetsitter(String userId) {
 		Connection conn = getConnection();
 		int result = manDao.updatePetsitter(conn, userId);
-		System.out.println("service userId : " + userId);
-		System.out.println("service result : " + result );
-		if(result > 0) {
+		System.out.println("service result : " + result);
+		if(result > 0) 
 			commit(conn);
-		}else {
-			rollback(conn);}
+		else 
+			rollback(conn);
 		close(conn);
 		
 		return result;

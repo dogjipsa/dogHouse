@@ -56,7 +56,7 @@ public class ReportTipBoardInsertServlet extends HttpServlet {
 		response.setContentType("text/html; charset=utf-8");
 		RequestDispatcher view = null;
 		if(result > 0) {
-			response.sendRedirect("/doggybeta/tdetail?tnum=" + rtboard);			
+			response.sendRedirect("/doggybeta/tdetail?tnum=" + No);			
 		}else {
 			view = request.getRequestDispatcher("views/freeboard/freeBoardError.jsp");
 			request.setAttribute("message","자유게시판 "  + rtboard + "번 게시글 신고페이지로 이동 실패!");
