@@ -147,6 +147,7 @@ h2{
 
 			<h2 align="center">게시글 목록</h2>
 			<a href="/doggybeta/sitterdetail">디테일로 고고</a>
+			<a href="/doggybeta/views/review/reviewWriteForm.jsp">리뷰작성</a>
 			<h4 align="center">
 				총 게시글 갯수 :<%=listCount%></h4>
 			
