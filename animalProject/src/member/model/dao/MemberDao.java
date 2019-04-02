@@ -621,6 +621,58 @@ public class MemberDao {
 		
 		return member;
 	}
+
+	public ArrayList<SitterImage> handleOldImages(Connection conn, String userid) {
+		ArrayList<SitterImage> dlist = new ArrayList<>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String query = "SELECT * FROM SITTERIMG WHERE USER_ID = ?";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, userid);
+			
+			rset = pstmt.executeQuery();
+			while(rset.next()) {
+				SitterImage si = new SitterImage();
+				si.setImageNo(rset.getInt(1));
+				si.setUserId(rset.getString(2));
+				si.setOriginFile(rset.getString(3));
+				si.setRenameFile(rset.getString(4));
+				dlist.add(si);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		if(dlist.size() > 0) {
+			deleteOldImages(conn, userid);
+		}
+		return dlist;
+		
+	}
+
+	private void deleteOldImages(Connection conn, String userid) {
+		PreparedStatement pstmt = null;
+		String query = "DELETE SITTERIMG WHERE USER_ID = ?";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, userid);
+			int result = pstmt.executeUpdate();
+			if(result > 0) {
+				System.out.println("delete complete");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+	}
+	
 	
 
 }

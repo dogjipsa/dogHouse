@@ -188,31 +188,32 @@
     display: flex; 
     justify-content: space-around;
     align-items: center;
-    border: 1px solid red;
+    
     height: 100%;
 }
 .showbox #showbox_img{
     width: 35%;
     height: 150px;
     border: 1px solid rgba(0, 0, 0, 0.4);
+    margin-left: 5%;
 }
 .showbox .showbox_info{
     width: 60%;
     height : 80%;
-    border: blue solid 1px;
+    margin-left: 5%;
 }
 
 .host_side2 p {
     font-size: 13px;
-    font-weight: 300;
-    margin: 1px 3px;
+    font-weight: 500;
+    margin: 0;
 }
 .host_side2 input {
     border: none;
     border-bottom: 1px solid rgba(0, 0, 0, 0.3);
     background: transparent;
     outline: none;
-    height: 25px;
+    height: 20px;
     color: rgba(0, 0, 0, 0.7);
     font-size: 11px;
 }
