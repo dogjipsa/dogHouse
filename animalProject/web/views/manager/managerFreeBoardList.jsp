@@ -1,10 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" errorPage="managerError.jsp"%>
-<%@page 
-import='freeboard.model.vo.FreeBoard, java.util.ArrayList, faq.model.vo.Faq,
-		tipboard.model.vo.TipBoard' 
-
-%>
+<%@page import='freeboard.model.vo.FreeBoard, java.util.ArrayList, '%>
 
 <%
 	ArrayList<FreeBoard> list = (ArrayList<FreeBoard>)request.getAttribute("flist");
@@ -133,7 +129,8 @@ $(function(){
 </style>
 </head>
 <body id='mBoardListBody'>
-<%@ include file="../../../managerMainPage.jsp" %>
+<%@ include file="../../views/common/managerMenu.jsp" %>
+<section>
 <div class="mcontainer">
 	<ul class="tabs">
 		<li class="tab-link current" data-tab="tab-1">자유게시판 관리</li>

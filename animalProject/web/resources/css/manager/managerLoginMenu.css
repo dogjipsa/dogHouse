@@ -1,14 +1,11 @@
 @charset "UTF-8";
 @import url("http://netdna.bootstrapcdn.com/font-awesome/3.1.1/css/font-awesome.min.css");
-@font-face {
-	font-family: 'icomoon';
-	src:url('../fonts/icomoon/icomoon.eot');
-	src:url('../fonts/icomoon/icomoon.eot?#iefix') format('embedded-opentype'),
-		url('../fonts/icomoon/icomoon.woff') format('woff'),
-		url('../fonts/icomoon/icomoon.ttf') format('truetype'),
-		url('../fonts/icomoon/icomoon.svg#icomoon') format('svg');
-	font-weight: normal;
-	font-style: normal;
+.tfree thead th {
+	padding: 10px;
+    font-weight: bold;
+    vertical-align: top;
+    color: #369;
+    border-bottom: 3px solid #036;
 }
 .tfree tbody td { 
 	width: 150px;
@@ -18,7 +15,6 @@
     border-bottom: 1px solid #ccc;   
     
 }
-
 .tfree tbody tr:hover{
 	background-color : #f3f6f7;
 }
@@ -151,7 +147,7 @@ ul.mVertical-menu {
 	padding: 25px 80px;
 	display: inline-block;
 	margin: 15px 30px;
-	text-transform: uppercase;
+	text-align: center;
 	letter-spacing: 1px;
 	font-weight: 700;
 	outline: none;
@@ -166,15 +162,6 @@ ul.mVertical-menu {
 	background: #58B19F;
 	color: #fff;
 }
-
-.btn-3:hover {
-	background: #088A85;
-}
-
-.btn-3:active {
-	background: #58B19F;
-	top: 2px;
-}
 .tfree {
 	position: relative;
 	left: 30%;
@@ -188,18 +175,11 @@ ul.mVertical-menu {
 	font-size: 140%;
 	width: 60px;
 }
-/* Button 3b */
-
 .btn-3c {
-	padding: 80px 20px 20px 20px;
+	padding: 20px 20px 20px 20px;
 	border-radius: 10px;
-	box-shadow: 0 3px #04B4AE;
+	box-shadow: 0 3px #43A589;
 }
-
-.btn-3c:active {
-	box-shadow: 0 3px #58B19F;
-}
-
 .btn-3c:before {
 	height: 60px;
 	width: 100%;

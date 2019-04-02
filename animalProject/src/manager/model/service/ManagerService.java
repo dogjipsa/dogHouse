@@ -49,9 +49,9 @@ public class ManagerService {
 		return result;
 	}
 	
-	public int tipboardListCount() {
+	public int tipboardListCount(String option, String word) {
 		Connection conn = getConnection();
-		int result = manDao.tipboardListCount(conn);
+		int result = manDao.tipboardListCount(conn, option, word);
 		if(result > 0)
 			commit(conn);
 		else
@@ -68,9 +68,9 @@ public class ManagerService {
 		return fList;
 	}
 
-	public ArrayList<TipBoard> selectTipBoardList(int currentPage, int pageList) {
+	public ArrayList<TipBoard> selectTipBoardList(int currentPage, int pageList, String option, String word) {
 		Connection conn = getConnection();
-		ArrayList<TipBoard> tList = manDao.selectTipBoardList(conn, currentPage, pageList);
+		ArrayList<TipBoard> tList = manDao.selectTipBoardList(conn, currentPage, pageList, option, word);
 		close(conn);
 		
 		return tList;
@@ -136,6 +136,17 @@ public class ManagerService {
 			rollback(conn);
 		return result;
 	}
+	public int managerDeleteTipBoard(String delNo) {
+		Connection conn = getConnection();
+		int result = manDao.managerDeleteTipBoard(conn, delNo);
+		if(result > 0)
+			commit(conn);
+		else
+			rollback(conn);
+		return result;
+	}
+	
+	
 
 	public ArrayList<FreeBoard> selectReadCountTop5() {
 		Connection conn = getConnection();
@@ -143,6 +154,13 @@ public class ManagerService {
 		close(conn);
 		
 		return flist;
+	}
+	public ArrayList<TipBoard> selectReadCountTBTop5() {
+		Connection conn = getConnection();
+		ArrayList<TipBoard> tlist = manDao.selectReadCountTBTop5(conn);
+		close(conn);
+		
+		return tlist;
 	}
 	
 	public int getReportCount(String userId) {

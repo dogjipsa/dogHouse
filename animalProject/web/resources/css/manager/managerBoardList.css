@@ -4,13 +4,6 @@
     line-height: 1.5;
     width: 80%;
     left: 250px;
-   /* position: relative;
-   left : 250px;
-   width: 50%;
-   border-collapse: collapse;
-   text-align: left;
-   line-height: 1.5;
-   table-layout:fixed;     */
 }
 #searchDate {
 	display: none;
@@ -45,6 +38,7 @@ ul.tabs li.current{
 }
 .mcontainer .t {
 	font-size: 13px;
+	
 }
 .mcontainer thead th {
     padding: 10px;
