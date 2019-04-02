@@ -3,7 +3,7 @@
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     grid-template-rows:0.1fr 1fr 1fr;
-    background-color: #fafafc;
+    background-color: rgba(246, 229, 141,0.5);
     margin-left: 200px;
     grid-gap: 20px;
     box-sizing: border-box;
@@ -11,7 +11,7 @@
 }
 
 .member{
-    background-color: rgba(30, 144, 255,0.2);
+    background-color:#7ed6df;
     border-radius: 5px;
     box-shadow: 0 10px 35px rgba(0, 0, 0, 0.1), 0 6px 6px rgba(0, 0, 0, 0.2);
     display: flex;
@@ -74,7 +74,7 @@
 }
 
 .member__box p {
-    font-size: 15px;
+    font-size: 13px;
     font-weight: 500;
     margin-bottom: 3px;
 }
