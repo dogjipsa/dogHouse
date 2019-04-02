@@ -7,7 +7,6 @@
 	Answer answer = (Answer)request.getAttribute("answer");
 
 	int listCount = ((Integer)request.getAttribute("listCount")).intValue();
-
 	int startPage = ((Integer)request.getAttribute("startPage")).intValue();
 	int endPage = ((Integer)request.getAttribute("endPage")).intValue();
 	int maxPage = ((Integer)request.getAttribute("maxPage")).intValue();
@@ -51,7 +50,7 @@
 <%@ include file="../common/menu.jsp" %>
 <div id="wrap">
 <div id="cotent">
-	<h2 align="center" style="color:white;">나의 문의내역</h2>
+	<h1 align="center" style="color:white;">나의 문의내역</h1>
 	<!-- <hr style="clear:both;"> -->
 
 <hr style="width:600px">
@@ -80,7 +79,7 @@
 			<% }else{ %>
 				<%= question.getQuestionTitle() %>
 
-			<% } %> &nbsp; &nbsp; &nbsp;</td>
+			<% } %> &nbsp;&nbsp;</td>
  			
 		<td align="center"><%= question.getQuestionDate() %>&nbsp;&nbsp;&nbsp;&nbsp;</td>
 		
@@ -102,7 +101,6 @@
 <%-- 페이징 처리 --%>
 <div style="text-align:center;">
 <% if(currentPage <= 1){ %>
-
 	[처음]&nbsp;&nbsp;
 <% }else{ %>
 	<a href="/doggybeta/qlist?page=1">[처음]</a>&nbsp;
@@ -111,13 +109,11 @@
 	<a href="/doggybeta/qlist?page=<%= startPage - 10 %>">[이전]</a>
 <% }else{ %>
 	[이전]
-
 <% } %>
-<%-- 현재 페이지가 포함된 페이지 그룹 숫자 출력 처리 --%>
 <% for(int p = startPage; p <= endPage; p++){ 
 		if(p == currentPage){
 %>
-	<font color="magenta" size="4"><b>[<%= p %>]</b></font>
+	<font color="grey" size="4"><b>[<%= p %>]</b></font>
 	<% }else{ %>
 	<a href="/doggybeta/qlist?page=<%= p %>"><%= p %></a>
 <% }} %>&nbsp;&nbsp;
@@ -133,8 +129,9 @@
 <% } %>
 </div>
 </div>
-</div>
-<br><br><br><br>
-<%-- <div id="footer"><%@ include file="../common/footer.jsp"%></div> --%>
+
+<br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br>
+<div align="center" id="footer"><%@ include file="../common/footer.jsp"%></div></div>
 </body>
 </html>
