@@ -34,6 +34,7 @@ public class ReviewInsertServlet extends HttpServlet {
 		System.out.println(request.getParameter("userid"));
 		//booking_no를 넘겨받아야 함
 		Review review = new Review();
+		
 		review.setReviewContent(request.getParameter("reviewcontent"));
 		review.setPoint(request.getParameter("star-input"));
 		review.setUserId(request.getParameter("userid"));

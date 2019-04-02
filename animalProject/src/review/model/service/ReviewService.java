@@ -8,6 +8,7 @@ import static common.JDBCTemplate.rollback;
 import java.sql.Connection;
 import java.util.ArrayList;
 
+import member.model.vo.Member;
 import review.model.dao.ReviewDao;
 import review.model.vo.Review;
 import tipboard.model.vo.TipBoard;
@@ -52,6 +53,13 @@ public class ReviewService {
 			rollback(conn);
 		close(conn);
 		return result;
+	}
+
+	public double selectStarAvg(String petSitterId) {
+		Connection conn = getConnection();
+		double startAvg = rdao.selectStartAvg(conn, petSitterId);
+		close(conn);
+		return startAvg;
 	}
 
 }

@@ -124,9 +124,21 @@ input[type=submit]:hover {
 <input type="submit" value="작성">
 </form>
 </div> -->
-<script src="/doggybeta/resources/js/jquery-1.11.3.min.js"></script>
+<script src="/doggybeta/resources/js/jquery-3.3.1.min.js"></script>
 <script src="/doggybeta/resources/js/star.js"></script>
+<script language="javascript">  
+  
+     function closeWindow() {  
+    	/* console.log($("input[name=star-input]").val(); */
+       	alert('후기작성이 완료되었습니다');
+        window.close();  
+           
+     }   
 
+     
+</script>  
+
+<!-- <a href="#" onClick="javascript:window.close();">닫기</a> -->  
 <div class="container">
   <form action="/doggybeta/rinsert">
   <input type="hidden" name="userid" value="<%=loginUser.getUserId()%>">
@@ -174,11 +186,11 @@ input[type=submit]:hover {
       <label for="subject">후기 작성</label>
     </div>
     <div class="col-75">
-      <textarea id="reviewcontent" name="reviewcontent" placeholder="후기작성.." style="height:200px"></textarea>
+      <textarea id="reviewcontent" class="DOC_TEXT" name="reviewcontent" placeholder="후기작성.." style="height:200px"></textarea>
     </div>
   </div>
   <div class="row">
-    <input type="submit" value="작성하기">
+    <input type="submit" value="작성하기" onclick="closeWindow();">
   </div>
   </form>
 </div>
