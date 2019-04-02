@@ -231,7 +231,7 @@
 			<p>프로필 사진 추가</p>
 			<div class="image_box">
 				<img class="image_box_pic" />
-				<input type="file" id="real-file" name="pic" hidden="hidden" required />
+				<input type="file" id="real-file" name="pic" hidden="hidden" />
 				<span>
 					<button id="fake-file-btn">Choose a File</button>&nbsp;
 					<span id="file-text"></span>
@@ -252,7 +252,7 @@
 				<img class="pp2" />
 				<img class="pp3" />
 			</div>
-				<input type="file" name="placepics" id="place_pics" multiple required>
+				<input type="file" name="placepics" id="place_pics" multiple>
 				<input type="hidden" name="fileList" id="fileList">
 			<button id="ppics_upload">Upload Files</button>
 			<span id="ppics-text"></span>

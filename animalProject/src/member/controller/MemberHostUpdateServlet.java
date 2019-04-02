@@ -78,35 +78,39 @@ public class MemberHostUpdateServlet extends HttpServlet {
 		String renameFileName = renameFile(originFileName, savePath);
 		m.setUseroriginfile(originFileName);
 		m.setUserrefile(renameFileName);
-		
+
 		String fileList = mrequest.getParameter("fileList");
 		String[] listArr = fileList.split("/");
 		ArrayList<SitterImage> list = new ArrayList<>();
-		for(String e : listArr) {
+		for (String e : listArr) {
 			String rname = renameFile(e, savePath);
 			SitterImage si = new SitterImage();
 			si.setOriginFile(e);
 			si.setRenameFile(rname);
 			si.setUserId(userid);
-			
+
 			list.add(si);
 		}
-		
-			int result = new MemberService().updateHost(m);
-			int result2 = new MemberService().insertSitterImages(list);
-			if(result2 > 0)
-				System.out.println("성공!!");
-			else
-				System.out.println("실패!!");
-			
-			if (result > 0)
-				System.out.println("성공");
-			else
-				System.out.println("실패");
 
-			response.sendRedirect("/doggybeta/index.jsp");
+		ArrayList<SitterImage> dlist = new MemberService().handleOldImages(userid);
+		if(dlist.size() > 0) {
+			for(SitterImage e : dlist) {
+				File file = new File(savePath+"/"+e.getRenameFile());
+				if(file.exists()) file.delete();
+			}
+		}
+		int result = new MemberService().updateHost(m);
+		int result2 = new MemberService().insertSitterImages(list);
+		if (result > 0 && result2 > 0)
+			System.out.println("성공!!");
+		else
+			System.out.println("실패!!");
+
+
+		response.sendRedirect("/doggybeta/index.jsp");
 
 	}
+
 	private String renameFile(String originFileName, String savePath) throws IOException {
 		if (originFileName != null) {
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmssSSS");
@@ -136,6 +140,7 @@ public class MemberHostUpdateServlet extends HttpServlet {
 		}
 		return "";
 	}
+
 	/**
 	 * 
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse

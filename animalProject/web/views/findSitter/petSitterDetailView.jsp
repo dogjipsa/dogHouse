@@ -281,7 +281,13 @@ function showSlides(n) {
 <div style="height:800px; width:700px">
 <table class="board" >
 <thead><tr><th>인적사항</th><th></th><th></th></tr></thead>
-<tbody><tr><td rowspan=3><img src="/doggybeta/files/profile/<%=petSitter.getUserrefile()%>" width=100%></td><td>이름 : <%=petSitter.getUserName() %></td><td></td></tr>
+<tbody>
+<tr>
+<% if(petSitter.getUserrefile() != null){ %>
+<td rowspan=3><img src="/doggybeta/files/profile/<%=petSitter.getUserrefile()%>" width=100%></td>
+<% } %>
+<td>이름 : <%=petSitter.getUserName() %></td><td></td>
+</tr>
 <tr><td>나이 : <%=String.valueOf((petSitter.getUserDate())).substring(0, 4) %> 년생</td><td></td></tr>
 <tr><td>평점 : </td><td></td></tr></tbody>
 </table>
@@ -363,12 +369,7 @@ geocoder.addressSearch('<%=petSitter.getAddress()%>', function(result, status) {
          </tr>   
       </thead>
       <tbody>
-      	<tr>
-      	<td>아이디</td>
-      	<td>별점</td>
-      	<td>내용</td>
-      	<td>날짜</td>
-      	</tr>
+      	
       </tbody>
       <%-- <tbody>      
        <%   for(Notice notice : list){ %>
@@ -396,9 +397,10 @@ geocoder.addressSearch('<%=petSitter.getAddress()%>', function(result, status) {
    <% } %>     
    </tbody>    --%>
 </table>
-<p id="p5" style="width:500px;height:300px;border:1px solid red;"></p>
-<textarea rows="" cols="" class='row'></textarea>
+<p id="test"></p>
+
 <script type="text/javascript">
+function(){
 $(function() {
 	console.log($('#petSitterId').val());
 	$.ajax({
@@ -433,7 +435,37 @@ $(function() {
 				 
 		}
 	});
+		
+		$.ajax({
+			url: '/doggybeta/rlist',
+			type: 'post',
+			dataType: 'json',
+			data : {petSitterId : $('#petSitterId').val(),
+				    currentPage : page},
+			success: function(data){
+					 console.log('성공!');
+					 var jsonStr = JSON.stringify(data);
+					 var json = JSON.parse(jsonStr); 
+					 for(var i in json.list){
+						$("#reviewboard").append("<tr><td>"+json.list[i].reviewno+"</td><td>"+json.list[i].point+"</td><td>"+decodeURIComponent(json.list[i].reviewcontent)+"</td><td>"+json.list[i].reviewdate+"</tr>");
+					 }
+					 $("#test").append("리스트카운트 ; "+data.listCount);
+					 $("#test").append("<br>startPage : "+data.startPage);
+					 $("#test").append("<br>endPage : "+data.endPage);
+					 $("#test").append("<br>maxPage : "+data.maxPage);
+					 $("#test").append("<br>currentPage : "+data.currentPage);
+					 for(var i=1; i<=data.maxPage;i++){
+					 	/* $("#paging").append(i); */
+					 	$("#paging").append("<a href='#' onclick='this("+i+")'>"+i+"</a>");
+					 }
+					 /* 페이징 개 빡친다 그냥 팁게시판 페이징 처리처럼 해야할듯  */
+						
+					 
+			}
+		});
+	
 });
+}
 /* success: function(data){
 console.log('성공!');
  var jsonStr = JSON.stringify(data);
@@ -487,8 +519,10 @@ $.ajax({
 
 
 </script>
-페이징처리
+
+<br><br><div id="paging"></div>
 </div>
+페이징처리2
 
 </div><!-- 가운데 영역  끝-->
 <div style="float:left;padding-top:100px"><!-- 오른쪽 영역  --> 

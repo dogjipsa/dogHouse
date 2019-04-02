@@ -1,4 +1,4 @@
-package review.controller;
+﻿package review.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -43,10 +43,11 @@ public class ReviewListViewServlet extends HttpServlet {
 		ReviewService rservice = new ReviewService();
 		System.out.println("리뷰조회를 위한 펫 아이디 : " + petSitterId);
 		
-		
+		System.out.println("테스트 페이지 : " + request.getParameter("currentPage"));
 		int currentPage = 1;
-		if(request.getParameter("page") != null) {
-			currentPage = Integer.parseInt(request.getParameter("page"));
+		if(request.getParameter("currentPage") != null) {
+			//currentPage = Integer.parseInt(request.getParameter("currentPage"));
+			
 		}
 		
 		int limit = 10;
@@ -68,19 +69,26 @@ public class ReviewListViewServlet extends HttpServlet {
 		
 		for(Review review :  list) {
 			JSONObject reviewJson = new JSONObject();
-			reviewJson.put("reviewno", String.valueOf(review.getReviewNo()));
+			reviewJson.put("reviewno", review.getReviewNo());
 			reviewJson.put("userid", review.getUserId());
-			reviewJson.put("bookingno", String.valueOf(review.getReviewNo()));
+			reviewJson.put("bookingno", review.getBookingNo());
 			reviewJson.put("point", review.getPoint());
 			reviewJson.put("reviewcontent", URLEncoder.encode(review.getReviewContent(), "UTF-8"));
 			reviewJson.put("revieworiginal", review.getReviewOriginFile());
 			reviewJson.put("reviewre", review.getReviewReFile());
-			reviewJson.put("reviewdate", review.getReviewDate());
+			reviewJson.put("reviewdate", String.valueOf(review.getReviewDate()));
 			
 			jsonArr.add(reviewJson);
 		}
 		
-		sendjson.put("rvlist", jsonArr);
+		sendjson.put("list", jsonArr);
+		sendjson.put("listCount", listCount);
+		sendjson.put("startPage", startPage);
+		sendjson.put("endPage", endPage);
+		sendjson.put("maxPage", maxPage);
+		sendjson.put("currentPage", currentPage);
+		
+
 		System.out.println("리뷰 리스트 서블릿에서 제이슨 테스트 : " + sendjson.toJSONString());
 		
 		response.setContentType("application/json; charset=utf-8");

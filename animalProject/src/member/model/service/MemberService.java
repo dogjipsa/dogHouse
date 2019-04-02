@@ -228,6 +228,14 @@ public class MemberService {
 		return member;
 	}
 
+	public ArrayList<SitterImage> handleOldImages(String userid) {
+		Connection conn = getConnection();
+		ArrayList<SitterImage> dlist = mdao.handleOldImages(conn, userid);
+		close(conn);
+		return dlist;
+	}
+
+
 	
 
 }

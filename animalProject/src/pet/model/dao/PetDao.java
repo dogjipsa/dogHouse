@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import static common.JDBCTemplate.*;
 
 import pet.model.vo.Pet;
+import pet.model.vo.SubInfo;
 
 public class PetDao {
 
@@ -213,29 +214,22 @@ public class PetDao {
 		return pet;
 	}
 
-	public Pet selectOnePet(Connection conn, String userid) {
-		Pet pet = new Pet();
+	public SubInfo selectOnePet(Connection conn, String userid, int pno) {
+		SubInfo sub = new SubInfo();
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
-		String query = "SELECT * FROM PET WHERE USER_ID = ?";
+		String query = "SELECT P.PET_NAME, P.PET_BREADS, P.PET_DATE, M.PHONE, P.PET_REFILE FROM PET P JOIN MEMBER M ON(P.USER_ID = M.USER_ID) WHERE P.USER_ID = ? AND P.PET_NO = ?";
 		try {
 			pstmt = conn.prepareStatement(query);
 			pstmt.setString(1, userid);
-			
+			pstmt.setInt(2, pno);
 			rset = pstmt.executeQuery();
 			if(rset.next()) {
-				pet.setPetNo(rset.getInt("PET_NO"));
-				pet.setPetName(rset.getString("PET_NAME"));
-				pet.setBreeds(rset.getString("PET_BREADS"));
-				pet.setPetDate(rset.getDate("PET_DATE"));
-				pet.setPetSize(rset.getString("PET_SIZE"));
-				pet.setPetGender(rset.getString("PET_GENDER"));
-				pet.setPetNeutralize(rset.getString("PET_NEUTRALIZE"));
-				pet.setPetCharater(rset.getString("PET_CHARATER"));
-				pet.setUserId(userid);
-				pet.setOriginFileName(rset.getString("PET_ORIGINFILE"));
-				pet.setRenameFileName(rset.getString("PET_REFILE"));
-				
+				sub.setPetName(rset.getString(1));
+				sub.setBreeds(rset.getString(2));
+				sub.setPetDate(rset.getDate(3));
+				sub.setPhone(rset.getString(4));
+				sub.setRenameFileName(rset.getString(5));
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -243,7 +237,7 @@ public class PetDao {
 			close(rset);
 			close(pstmt);
 		}
-		return pet;
+		return sub;
 	}
 
 
