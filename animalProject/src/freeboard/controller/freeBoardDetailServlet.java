@@ -73,7 +73,7 @@ public class freeBoardDetailServlet extends HttpServlet {
 		map.put("freeBoardNo", freeBoardNo);
 		map.put("startRow", currentPage*10-9);// 1, 11, 21, 31....
 				
-		ArrayList<FreeBoardReply> flist = frservice.selectReplyList(map);
+		ArrayList<FreeBoardReply> replyList = frservice.selectReplyList(map);
 				
 		
 		//한 페이지에 출력할 목록 갯수 지정
@@ -106,7 +106,7 @@ public class freeBoardDetailServlet extends HttpServlet {
 		if(freeboard != null) {
 			view = request.getRequestDispatcher("views/freeBoard/freeBoardDetailView.jsp");
 			request.setAttribute("freeboard", freeboard);
-			request.setAttribute("replyList", flist);
+			request.setAttribute("replyList", replyList);
 			request.setAttribute("currentPage", currentPage);
 			request.setAttribute("listCount", listCount);
 			request.setAttribute("maxPage", maxPage);

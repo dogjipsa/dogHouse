@@ -8,7 +8,6 @@
 	int endPage = ((Integer)request.getAttribute("endPage")).intValue();
 	int maxPage = ((Integer)request.getAttribute("maxPage")).intValue();
 	int currentPage = ((Integer)request.getAttribute("currentPage")).intValue();
-	int reportCount = ((Integer)request.getAttribute("reportCount")).intValue();
    
 	String opt = null;
 	String inputdata = null;
@@ -28,21 +27,7 @@
 <meta charset="UTF-8">
 <title></title>
 <link href="/doggybeta/resources/css/manager/managerBoardList.css" rel="stylesheet" type="text/css">
-<script type="text/javascript" src="/doggybeta/resources/js/jquery-3.3.1.min.js"></script>
-<script type="text/javascript">
 
-$(function(){
-		$.ajax({
-			url: "/doggybeta/mmsearch",
-			data: {userid : $("#userid").val()}, 
-			type: "post",
-			success: function(data){
-				
-			}
-		});  //ajax
-});
-
-</script>
 </head>
 <body>
 <%@ include file="../../../managerMainPage.jsp" %>
@@ -67,12 +52,12 @@ $(function(){
 				</tr>
 			</thead>
 			<% for(Member m : memberList) { %>
+			
 			<tbody>
 				<tr>
 					<td class='ban'><input type='checkbox'/>삭제</td>
-					<td><%= reportCount %></td>
+					<td><%= m.getReportAdd() %>
 					<td><%= m.getUserId() %></td>
-					<input type="hidden" name="userid" value="<%= m.getUserId() %>">
 					<td><%= m.getEmail() %></td>
 					<td><%= m.getUserName() %></td>
 					<td><%= m.getPhone() %></td>

@@ -47,7 +47,7 @@
 <tr><td>신고자</td><td><input type="text" style="width:766px" readonly value="<%= loginUser.getUserId()%>"></td></tr>
 <tr><td>신고게시물 등록자</td><td><input type="text" name="rtwriter" style="width:766px" readonly value="<%= tipboard.getUserId() %>"></td></tr>
 <tr><td>신고종류</td><td><input type="text" name="rtcategory" style="width:766px" placeholder="비방/욕설/광고"></td></tr>
-<tr><td>게시판 종류</td><td><input type="text" style="width:766px" readonly value="자유게시판 <%= tipboard.getTipBoardNo() %>번 게시글"></td></tr>
+<tr><td>게시판 종류</td><td><input type="text" style="width:766px" readonly value="팁게시판 <%= tipboard.getTipBoardNo() %>번 게시글"></td></tr>
 <input type="hidden" name="rtboard" value="<%= tipboard.getTipBoardNo() %>"></input>
 <tr><th>신고내용</th>
 <td><textarea name="rtcontent" id="" rows="10" cols="100" style="width:766px; height:412px;"></textarea></td></tr>
