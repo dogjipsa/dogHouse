@@ -144,5 +144,12 @@ public class ManagerService {
 		
 		return flist;
 	}
-
+	
+	public int getReportCount(String userId) {
+		Connection conn = getConnection();
+		int reportCount = manDao.getReportCount(conn, userId);
+		close(conn);
+		
+		return reportCount;
+	}
 }

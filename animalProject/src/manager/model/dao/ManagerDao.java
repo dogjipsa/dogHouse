@@ -883,4 +883,30 @@ public class ManagerDao {
 		return flist;
 	}
 	
+	public int getReportCount(Connection conn, String userId) {
+		int reportCount = 0;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String query = "select count(*) from report where user_id = ?";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				reportCount = rset.getInt(1);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return reportCount;
+		
+	}
+	
+	
 }
