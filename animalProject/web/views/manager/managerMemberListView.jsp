@@ -7,7 +7,8 @@
 	int startPage = ((Integer)request.getAttribute("startPage")).intValue();
 	int endPage = ((Integer)request.getAttribute("endPage")).intValue();
 	int maxPage = ((Integer)request.getAttribute("maxPage")).intValue();
-	int currentPage = ((Integer)request.getAttribute("currentPage")).intValue(); 
+	int currentPage = ((Integer)request.getAttribute("currentPage")).intValue();
+	int reportCount = ((Integer)request.getAttribute("reportCount")).intValue();
    
 	String opt = null;
 	String inputdata = null;
@@ -27,6 +28,21 @@
 <meta charset="UTF-8">
 <title></title>
 <link href="/doggybeta/resources/css/manager/managerBoardList.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="/doggybeta/resources/js/jquery-3.3.1.min.js"></script>
+<script type="text/javascript">
+
+$(function(){
+		$.ajax({
+			url: "/doggybeta/mmsearch",
+			data: {userid : $("#userid").val()}, 
+			type: "post",
+			success: function(data){
+				
+			}
+		});  //ajax
+});
+
+</script>
 </head>
 <body>
 <%@ include file="../../../managerMainPage.jsp" %>
@@ -38,6 +54,7 @@
 			<thead>
 				<tr>
 					<th style="background-color: #eeeeee; text-align: center;">추방</th>
+					<th style="background-color: #eeeeee; text-align: center;">신고당한횟수</th>
 					<th style="background-color: #eeeeee; text-align: center;">아이디</th>
 					<th style="background-color: #eeeeee; text-align: center;">이메일</th>
 					<th style="background-color: #eeeeee; text-align: center;">성명</th>
@@ -46,21 +63,24 @@
 					<th style="background-color: #eeeeee; text-align: center;">직업</th>
 					<th style="background-color: #eeeeee; text-align: center;">가입날짜</th>
 					<th style="background-color: #eeeeee; text-align: center;">첨부파일</th>
+					<th style="background-color: #eeeeee; text-align: center;">강퇴여부</th>
 				</tr>
 			</thead>
 			<% for(Member m : memberList) { %>
 			<tbody>
 				<tr>
 					<td class='ban'><input type='checkbox'/>삭제</td>
+					<td><%= reportCount %></td>
 					<td><%= m.getUserId() %></td>
+					<input type="hidden" name="userid" value="<%= m.getUserId() %>">
 					<td><%= m.getEmail() %></td>
 					<td><%= m.getUserName() %></td>
 					<td><%= m.getPhone() %></td>
 					<td><%= m.getAddress() %></td>
 					<td><%= m.getJob() %></td>
 					<td><%= m.getUserDate() %></td>
-					<td><%= m.getUseroriginfile() %>			
-					</td>
+					<td><%= m.getUseroriginfile() %></td>			
+					<td><%= m.getUserDelete() %></td>
 				</tr>
 			</tbody>
 			<% } %> <%-- for each --%>
