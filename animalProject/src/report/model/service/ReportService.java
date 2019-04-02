@@ -14,13 +14,13 @@ import report.model.vo.Report;
 
 
 public class ReportService {
-	ReportDao rfdao = new ReportDao();
+	ReportDao repdao = new ReportDao();
 	
 	public ReportService() {}
 
 	public int insertReportFreeBoard(Report rfreport) {
 		Connection conn = getConnection();
-		int result = rfdao.insertReportFreeBoard(conn, rfreport);
+		int result = repdao.insertReportFreeBoard(conn, rfreport);
 		if(result > 0)
 			commit(conn);
 		else
@@ -31,7 +31,7 @@ public class ReportService {
 
 	public int insertReportTipBoard(Report rtreport) {
 		Connection conn = getConnection();
-		int result = rfdao.insertReportTipBoard(conn, rtreport);
+		int result = repdao.insertReportTipBoard(conn, rtreport);
 		if(result > 0)
 			commit(conn);
 		else

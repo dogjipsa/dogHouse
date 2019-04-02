@@ -45,13 +45,14 @@
 				console.log(data.img);
 				$("#pet").html($("#pet").text() 
 						+ "<table id='petinfotable'>"
-						+ "<tr><th>강아지이름</th><td>" + decodeURIComponent(data.petname) + "</td></tr>"  
-						+ "<tr><th>강아지나이</th><td>" + data.petage + "살</td></tr>"
+						+ "<tr><th>강아지 이름</th><td>" + decodeURIComponent(data.petname) + "</td></tr>"  
+						+ "<tr><th>강아지 나이</th><td>" + data.petage + "살</td></tr>"
 						+ "<tr><th>강아지 크기</th><td>" + decodeURIComponent(data.petsize) + "</td></tr>"
 						+ "<tr><th>견종</th><td>" + decodeURIComponent(data.breads) + "</td></tr>"
 						+ "<tr><th>성별</th><td>" + data.gender + "</td></tr>"
-						+ "<tr><th>중성화여부</th><td>" + data.yesorno + "</td></tr></table>"
-						+ "<img src='/doggybeta/files/pet/" + decodeURIComponent(data.img) + "'>" )
+						+ "<tr><th>중성화여부</th><td>" + data.yesorno + "</td></tr>"
+						+ "<tr><td colspan='2' align='center'>" + "<img src='/doggybeta/files/pet/" + decodeURIComponent(data.img) + "'style='width: 100px; height: auto; border-radius:70px; border: 3px solid gold;'>" + "</td></tr></table>"
+						 )
 
 			}  //success
 			
@@ -131,7 +132,9 @@ margin: 10px 10px;
 border-radius: 10px;
 display: inline-block;
 position: absolute;
+top: -30px;
 left: 650px;
+font-size: 12px;
 }
  #detail table{`
 	margin: 8px;
@@ -156,6 +159,7 @@ left: 650px;
 
 </p>
 
+<br>
 <form name="petinfo" method="post" action="/doggybeta/fplist">
 	<!-- 조건 검색 테이블  -->	
 		
@@ -236,7 +240,7 @@ left: 650px;
 					</select>
 					</td>
 					<td>
-					<input type="submit" value="펫시터 찾기" style="width:80px; height:30px;">					
+					<input type="submit" value="펫시터 찾기" style="width:90px; height:30px;">					
 					</td>
 				</tr>
 			</table>
@@ -304,7 +308,7 @@ left: 650px;
 var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
     mapOption = { 
         center: new daum.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
-        level: 7 // 지도의 확대 레벨
+        level: 9 // 지도의 확대 레벨
     };
 
 // 지도를 표시할 div와  지도 옵션으로  지도를 생성합니다

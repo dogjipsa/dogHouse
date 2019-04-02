@@ -13,18 +13,14 @@
 
 <link href="/doggybeta/resources/css/footer.css" rel="stylesheet" type="text/css"></link>
 </head>
-<body background="/doggybeta/resources/images/puppies_1.1.jpg">
+<body background="/doggybeta/resources/images/puppies_1.2.jpg">
 
 <%@ include file="../common/menu.jsp" %>
 <div id="wrap">
 <div id="cotent">
-
-
-<h2 align="center" style=color:white;>1:1 문의 상세정보 입력</h2>
-<hr>
-<h3 style=color:white;>문의 정보</h3>
-
-<br>
+<h1 align="left" style="color:white;">1:1문의 상세정보 입력 </h1>
+<hr align="left" style="width:600px">
+<br><br>
 <form action="/doggybeta/qinsert" method="post" enctype="multipart/form-data">
 <table>
 	<tr>
@@ -70,6 +66,5 @@
 </div></div>
 
 <div id="footer"><%@ include file="../common/footer.jsp"%></div>
-
 </body>
 </html>

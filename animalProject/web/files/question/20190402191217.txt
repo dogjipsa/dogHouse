@@ -1,0 +1,48 @@
+public ArrayList<Question> selectList(Connection conn, int currentPage, int limit) {
+		ArrayList<Question> list = new ArrayList<Question>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		int startRow = (currentPage - 1) * limit + 1;
+		int endRow = startRow + limit - 1;
+
+		String query = "SELECT * " + "FROM (SELECT ROWNUM RNUM, QUESTION_NO, USER_ID,"
+				+ "QUESTION_TITLE, QUESTION_CONTENT, " + "QUESTION_ORIGINAL_FILENAME, " + "QUESTION_RENAME_FILENAME, QUESTION_REF, "
+				+ "QUESTION_REPLY_REF, QUESTION_REPLY_LEV, " + "QUESTION_REPLY_SEQ, QUESTION_READCOUNT, " + "QUESTION_DATE "
+				+ "FROM (SELECT * FROM QUESTION\r\n" + "ORDER BY QUESTION_REF DESC, QUESTION_REPLY_REF ASC, "
+				+ "QUESTION_REPLY_LEV ASC, QUESTION_REPLY_SEQ ASC)) " + "WHERE RNUM >= ? AND RNUM <= ?";
+
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, startRow);
+			pstmt.setInt(2, endRow);
+			rset = pstmt.executeQuery();
+
+			while (rset.next()) {
+				Question question = new Question();
+
+				question.setQuestionNum(rset.getInt("question_no"));
+				question.setQuestionWriter(rset.getString("user_id"));
+				question.setQuestionTitle(rset.getString("question_title"));
+				question.setQuestionContent(rset.getString("question_content"));
+				question.setQuestionDate(rset.getDate("question_date"));
+				question.setQuestionOriginalFileName(rset.getString("question_original_filename"));
+				question.setQuestionRenameFileName(rset.getString("question_rename_filename"));
+				question.setQuestionRef(rset.getInt("question_ref"));
+				question.setQuestionReplyRef(rset.getInt("question_reply_ref"));
+				question.setQuestionReplyLev(rset.getInt("question_reply_lev"));
+				question.setQuestionReplySeq(rset.getInt("question_reply_seq"));
+				question.setQuestionReadCount(rset.getInt("question_readcount"));
+				question.setQuestionDate(rset.getDate("question_date"));
+
+				list.add(question);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+			close(rset);
+		}
+
+		return list;
+	}

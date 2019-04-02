@@ -17,7 +17,7 @@ import javax.servlet.http.HttpServletResponse;
  */
 @WebServlet("/qfdown")
 public class questionFileDownServlet extends HttpServlet {
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1223232L;
        
     /**
      * @see HttpServlet#HttpServlet()

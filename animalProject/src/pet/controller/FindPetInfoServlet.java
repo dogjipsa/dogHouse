@@ -39,9 +39,9 @@ public class FindPetInfoServlet extends HttpServlet {
 		String petuserid = request.getParameter("petuserid");
 		System.out.println("강아지 확인 : " + petuserid);
 		JSONObject job = new JSONObject();
-		
+		PrintWriter out = response.getWriter();
 		Pet pet = new PetService().findPetInfo(petuserid);
-
+		
 		//job.put("petimg", URLEncoder.encode(pet.getRenameFileName(), "UTF-8"));	
 		job.put("petname", URLEncoder.encode(pet.getPetName(), "UTF-8"));
 		job.put("petsize", URLEncoder.encode(pet.getPetSize(), "UTF-8"));
@@ -50,12 +50,13 @@ public class FindPetInfoServlet extends HttpServlet {
 		job.put("yesorno", pet.getPetNeutralize());
 		job.put("petage", pet.getAge());
 		job.put("etc", URLEncoder.encode(pet.getPetCharater(), "UTF-8"));
+		job.put("img", URLEncoder.encode(pet.getRenameFileName(), "UTF-8"));
 
 
 		System.out.println("job : " + job.toJSONString()); 
 		//요청한 클라이언트쪽으로 json 객체 전송함
 		response.setContentType("application/json; charset=utf-8");
-		PrintWriter out = response.getWriter();
+		
 		out.println(job.toJSONString());
 		out.flush();
 		out.close();

@@ -106,4 +106,25 @@ public class ReviewDao {
 		return 0;
 	}
 
+	public double selectStartAvg(Connection conn, String petSitterId) {
+		double starAvg = 0;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String query = "select trunc(avg(point),1) from review where booking_no in(select booking_no from booking where puser_id = ?)";
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, petSitterId);
+			rset = pstmt.executeQuery();
+			if(rset.next()) {
+				starAvg = rset.getDouble(1);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+			close(rset);
+		}
+		return starAvg;
+	}
+
 }

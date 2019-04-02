@@ -83,6 +83,7 @@ public class PetSitterListServlet extends HttpServlet {
 
 		//list.get(i).setTitleImg(imglist.get(i).getRenameFile());
 		//System.out.println("컬럼 추가한 이미지 이름 : " + list.get(i).getTitleImg());
+
 		}
 		}
 		

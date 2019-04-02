@@ -18,8 +18,8 @@ function moveList(){
 </head>
 <style type="text/css">
 .board{
-	position: relative;
-   left : 300px;
+ position: relative;
+   left : auto;
    top: 50px;
    
 }
