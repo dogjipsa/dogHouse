@@ -12,8 +12,6 @@
 	int currentPage = ((Integer) request.getAttribute("currentPage")).intValue();
 	//String search = null, keyword = null;
 	//java.sql.Date begin = null, end = null;
-	System.out.println("list에서 endPage : "+endPage);
-	System.out.println("list에서 currentPage : " + currentPage);
 	String search = null;
 	String keyword = null;
 	if (request.getAttribute("search") != null) {

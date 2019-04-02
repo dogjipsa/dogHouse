@@ -8,7 +8,6 @@
 	int endPage = ((Integer)request.getAttribute("endPage")).intValue();
 	int maxPage = ((Integer)request.getAttribute("maxPage")).intValue();
 	int currentPage = ((Integer)request.getAttribute("currentPage")).intValue();
-	int reportCount = ((Integer)request.getAttribute("reportCount")).intValue();
    
 	String opt = null;
 	String inputdata = null;
@@ -28,20 +27,45 @@
 <meta charset="UTF-8">
 <title></title>
 <link href="/doggybeta/resources/css/manager/managerBoardList.css" rel="stylesheet" type="text/css">
-<script type="text/javascript" src="/doggybeta/resources/js/jquery-3.3.1.min.js"></script>
-<script type="text/javascript">
-
 $(function(){
-		$.ajax({
-			url: "/doggybeta/mmsearch",
-			data: {userid : $("#userid").val()}, 
-			type: "post",
-			success: function(data){
-				
-			}
-		});  //ajax
+    //최상단 체크박스 클릭
+    $("#checkAll").click(function(){
+        //클릭되었으면
+        if($("#checkAll").prop("checked")){
+            //input태그의 name이 chk인 태그들을 찾아서 checked옵션을 true로 정의
+            $("input[class=checkDel]").prop("checked",true);
+            //클릭이 안되있으면
+        }else{
+            //input태그의 name이 chk인 태그들을 찾아서 checked옵션을 false로 정의
+            $("input[class=checkDel]").prop("checked",false);
+        }
+    }); //전체선택 click fx
+    
+    var chkBoxArray = [];
+    var cBox = $('.checkDel');
+    
+    $('#del').click(function() {
+    	$('input[name=delId]:checked').each(function(i){
+    		chkBoxArray.push($(this).val());
+    	});
+    	
+    	console.log(chkBoxArray);
+    	alert(chkBoxArray);
+    	if(confirm('정말 삭제하시겠습니까?')) {
+    		$.ajax({
+    			url: '/doggybeta/mandelete',
+    			datatype: 'text',
+    			data: { delId: chkBoxArray },
+    			type: 'post',
+    			cache: false,
+    			success: function(data) {
+    				chageVal(data);
+    				alert('변경이 완료되었습니다!');
+    			} //success
+    		});//ajax
+        } //if confirm
+    }); //delete click
 });
-
 </script>
 </head>
 <body>
@@ -67,12 +91,12 @@ $(function(){
 				</tr>
 			</thead>
 			<% for(Member m : memberList) { %>
+			
 			<tbody>
 				<tr>
 					<td class='ban'><input type='checkbox'/>삭제</td>
-					<td><%= reportCount %></td>
+					<td><%= m.getReportAdd() %>
 					<td><%= m.getUserId() %></td>
-					<input type="hidden" name="userid" value="<%= m.getUserId() %>">
 					<td><%= m.getEmail() %></td>
 					<td><%= m.getUserName() %></td>
 					<td><%= m.getPhone() %></td>

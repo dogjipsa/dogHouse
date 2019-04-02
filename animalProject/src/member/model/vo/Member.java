@@ -22,13 +22,15 @@ public class Member implements Serializable {
 	private String userrefile;
 	private String naverCode;
 	private String TitleImg;
+	private int reportAdd;
 
 	public Member() {
 	}
 
 	public Member(String userId, String userPwd, String email, String userName, String phone, String address,
 			String job, String petSitter, int price, Date userDate, String userDelete, String useroriginfile,
-			String userrefile, String naverCode, String titleImg) {
+			String userrefile, String naverCode, String titleImg, int reportAdd) {
+		
 		super();
 		this.userId = userId;
 		this.userPwd = userPwd;
@@ -45,6 +47,15 @@ public class Member implements Serializable {
 		this.userrefile = userrefile;
 		this.naverCode = naverCode;
 		TitleImg = titleImg;
+		this.reportAdd = reportAdd;
+	}
+
+	public int getReportAdd() {
+		return reportAdd;
+	}
+
+	public void setReportAdd(int reportAdd) {
+		this.reportAdd = reportAdd;
 	}
 
 	public String getUserId() {
@@ -176,7 +187,7 @@ public class Member implements Serializable {
 		return "Member [userId=" + userId + ", userPwd=" + userPwd + ", email=" + email + ", userName=" + userName
 				+ ", phone=" + phone + ", address=" + address + ", job=" + job + ", petSitter=" + petSitter + ", price="
 				+ price + ", userDate=" + userDate + ", userDelete=" + userDelete + ", useroriginfile=" + useroriginfile
-				+ ", userrefile=" + userrefile + ", naverCode=" + naverCode + ", TitleImg=" + TitleImg + "]";
+				+ ", userrefile=" + userrefile + ", naverCode=" + naverCode + ", TitleImg=" + TitleImg + ", reportAdd " + "]";
 	}
 	
 	

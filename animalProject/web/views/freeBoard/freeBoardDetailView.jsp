@@ -6,7 +6,6 @@
 	FreeBoard freeboard = (FreeBoard)request.getAttribute("freeboard");
 	ArrayList<FreeBoardReply> replyList = (ArrayList<FreeBoardReply>)request.getAttribute("replyList"); 
 	
-	
 	int listCount = ((Integer)request.getAttribute("listCount")).intValue(); 
 	int startPage = ((Integer)request.getAttribute("startPage")).intValue();
 	int endPage = ((Integer)request.getAttribute("endPage")).intValue();
@@ -46,8 +45,8 @@ $(function(){
 	$("#replyUpdate").click(function(){
 		$.ajax({
 			url: "/doggybeta/freplyup",
-			data: {fnum : $("fnum").val(), 
-				   frnum : $("frnum").val()},
+			data: {fnum : $("#fnum").val(), 
+				   frnum : $("#frnum").val()},
 			type: "post",
 			dataType: "json",
 			success: function(data){

@@ -75,7 +75,7 @@ $(function() {
 <input type='text' id='cntvisit' class='btn btn-3 btn-3c' readonly/>
 <input type='text' id='cntvisit2' class='btn btn-3 btn-3c' readonly/>
 <input type='text' id='cntvisit3' class='btn btn-3 btn-3c' readonly/>
-<%@ include file="../views/manager/managerBoardsTop5.jsp"%>
+<%-- <%@ include file="../views/manager/managerBoardsTop5.jsp"%> --%>
 <!-- <div style="float:left;border:1px solid navy;padding:5px;margin:5px">
 	<h4>인기 게시글</h4>
 	<table id="toplist" border="1" cellspacing="0">
