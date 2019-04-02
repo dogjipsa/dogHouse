@@ -80,8 +80,8 @@ public class PetSitterListServlet extends HttpServlet {
 		address.add(list.get(i).getAddress());
 			//System.out.println("주소 : " + address);
 		if(imglist != null) {
-		list.get(i).setTitleImg(imglist.get(i).getRenameFile());
-		System.out.println("컬럼 추가한 이미지 이름 : " + list.get(i).getTitleImg());
+		/*list.get(i).setTitleImg(imglist.get(i).getRenameFile());
+		System.out.println("컬럼 추가한 이미지 이름 : " + list.get(i).getTitleImg());*/
 		}
 		}
 		

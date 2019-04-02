@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.Date;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -67,10 +68,9 @@ public class ReviewListViewServlet extends HttpServlet {
 		
 		for(Review review :  list) {
 			JSONObject reviewJson = new JSONObject();
-			
-			reviewJson.put("reviewno", review.getReviewNo());
+			reviewJson.put("reviewno", String.valueOf(review.getReviewNo()));
 			reviewJson.put("userid", review.getUserId());
-			reviewJson.put("bookingno", review.getReviewNo());
+			reviewJson.put("bookingno", String.valueOf(review.getReviewNo()));
 			reviewJson.put("point", review.getPoint());
 			reviewJson.put("reviewcontent", URLEncoder.encode(review.getReviewContent(), "UTF-8"));
 			reviewJson.put("revieworiginal", review.getReviewOriginFile());
@@ -80,7 +80,7 @@ public class ReviewListViewServlet extends HttpServlet {
 			jsonArr.add(reviewJson);
 		}
 		
-		sendjson.put("list", jsonArr);
+		sendjson.put("rvlist", jsonArr);
 		System.out.println("리뷰 리스트 서블릿에서 제이슨 테스트 : " + sendjson.toJSONString());
 		
 		response.setContentType("application/json; charset=utf-8");

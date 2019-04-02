@@ -406,15 +406,30 @@ $(function() {
 		type: 'post',
 		dataType: 'json',
 		data : {petSitterId : $('#petSitterId').val()},
+		
+		/* reviewJson.put("reviewno", String.valueOf(review.getReviewNo()));
+		reviewJson.put("userid", review.getUserId());
+		reviewJson.put("bookingno", String.valueOf(review.getReviewNo()));
+		reviewJson.put("point", review.getPoint());
+		reviewJson.put("reviewcontent", URLEncoder.encode(review.getReviewContent(), "UTF-8"));
+		reviewJson.put("revieworiginal", review.getReviewOriginFile());
+		reviewJson.put("reviewre", review.getReviewReFile());
+		reviewJson.put("reviewdate", review.getReviewDate()); */
 		success: function(data){
+			console.log(data);
 				 console.log('성공!');
 				 var jsonStr = JSON.stringify(data);
 				 var json = JSON.parse(jsonStr); 
 				 var values = "";
 				 for(var i in json.list){
-					$("#reviewboard").append("<tr><td>"+json.list[i].reviewno+"</td><td>"+json.list[i].point+"</td><td>"+decodeURIComponent(json.list[i].reviewcontent)+"</td><td>"+json.list[i].+"</td></tr>");
+					$("#reviewboard")
+					.append("<tr><td>"
+							+json.list[i].reviewno
+							+"</td><td>"+json.list[i].point
+							+"</td><td>"+decodeURIComponent(json.list[i].reviewcontent)
+							);
 				 }
-				 $("#p5").html(values);
+				 $("#reviewboard").html(values);
 				 
 		}
 	});
@@ -472,7 +487,6 @@ $.ajax({
 
 
 </script>
-
 페이징처리
 </div>
 
