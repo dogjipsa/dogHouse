@@ -18,7 +18,7 @@
 <script type="text/javascript" src="/doggybeta/resources/js/jquery-3.3.1.min.js"></script>
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
 <script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=b9810167e43ee638a44b19264113db0d&libraries=services"></script>
-<script src="/doggybeta/resources/js/addr.js"></script>
+<script src="/doggybeta/resources/js/addrUpdate.js"></script>
 <script type="text/javascript">
 function okbtn(){
 	alert("확인!!")
@@ -231,20 +231,20 @@ header{
             <th id="title">주소</th>
             <th id="write">
             
-            <div id="reg_map_box">
+            <div id="addrUpdate">
             <%if(loginUser.getAddress() == null) {%>
-         <input name="postcode" id="sample6_postcode" class="ps_input" placeholder="우편번호" required>
-         <input type="button" onclick="sample6_execDaumPostcode()" id="post-search" value="우편번호 찾기">
-         <input name="addr" id="sample6_address" class="ps_input input_addr" placeholder="주소" required>
-         <input name="daddr" id="sample6_detailAddress" class="ps_input" placeholder="상세주소" required>
-         <input name="extra" id="sample6_extraAddress" class="ps_input" placeholder="참고항목" readonly>
+         <input name="postcode" id="info_postcode" class="ps_input" placeholder="우편번호" required>
+         <input type="button" onclick="info_execDaumPostcode()" id="post-search" value="우편번호 찾기">
+         <input name="addr" id="info_address" class="ps_input input_addr" placeholder="주소" required>
+         <input name="daddr" id="info_detailAddress" class="ps_input" placeholder="상세주소" required>
+         <input name="extra" id="info_extraAddress" class="ps_input" placeholder="참고항목" readonly>
          <%}else{ %>
          <%=loginUser.getAddress() %>
-         <input name="postcode" id="sample6_postcode" class="ps_input" placeholder="우편번호" >
-         <input type="button" onclick="sample6_execDaumPostcode()" id="post-search" value="주소 다시 등록하기">
-         <input name="addr" id="sample6_address" class="ps_input input_addr" placeholder="주소" >
-         <input id="sample6_detailAddress" class="ps_input" placeholder="상세주소" >
-         <input id="sample6_extraAddress" class="ps_input" placeholder="참고항목" >
+         <input name="postcode" id="info_postcode" class="ps_input" placeholder="우편번호" >
+         <input type="button" onclick="info_execDaumPostcode()" id="post-search" value="주소 다시 등록하기">
+         <input name="addr" id="info_address" class="ps_input input_addr" placeholder="주소" >
+         <input name="daddr" id="info_detailAddress" class="ps_input" placeholder="상세주소" >
+         <input name="extra" id="info_extraAddress" class="ps_input" placeholder="참고항목" >
          <%} %>
             </div>
          
