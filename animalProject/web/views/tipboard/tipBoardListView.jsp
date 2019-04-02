@@ -12,8 +12,6 @@
 	int currentPage = ((Integer) request.getAttribute("currentPage")).intValue();
 	//String search = null, keyword = null;
 	//java.sql.Date begin = null, end = null;
-	System.out.println("list에서 endPage : "+endPage);
-	System.out.println("list에서 currentPage : " + currentPage);
 	String search = null;
 	String keyword = null;
 	if (request.getAttribute("search") != null) {
@@ -147,6 +145,7 @@ h2{
 
 			<h2 align="center">게시글 목록</h2>
 			<a href="/doggybeta/sitterdetail">디테일로 고고</a>
+			<a href="/doggybeta/views/review/reviewWriteForm.jsp">리뷰작성</a>
 			<h4 align="center">
 				총 게시글 갯수 :<%=listCount%></h4>
 			

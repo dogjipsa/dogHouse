@@ -37,9 +37,10 @@ public class ManagerMemberSearchServlet extends HttpServlet {
 		
 		int currentPage = 1;
 		
+		
 		String opt = request.getParameter("opt");
 		String inputdata = request.getParameter("inputdata");
-	
+		
 		if(request.getParameter("page") != null) 
 			currentPage = Integer.parseInt(request.getParameter("page"));
 			
@@ -52,7 +53,6 @@ public class ManagerMemberSearchServlet extends HttpServlet {
 		ManagerService mservice = new ManagerService();
 		
 		ArrayList<Member> memberList = mservice.selectMemberList(listOpt);
-		
 		
 		//한 페이지에 출력할 목록 갯수 지정
 		int limit = 10;
