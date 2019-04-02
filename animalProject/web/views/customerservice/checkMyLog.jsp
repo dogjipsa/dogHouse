@@ -236,6 +236,7 @@
 	<script src="/doggybeta/resources/js/hmap.js"></script>
 	<script src="https://cdn.bootpay.co.kr/js/bootpay-3.0.0.min.js" type="application/javascript"></script>
 	<script src="/doggybeta/resources/js/npay.js"></script>
+	<script src="/doggybeta/resources/js/popup.js"></script>
 </body>
 
 </html>

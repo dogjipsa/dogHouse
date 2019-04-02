@@ -128,7 +128,8 @@ input[type=submit]:hover {
 <script src="/doggybeta/resources/js/star.js"></script>
 
 <div class="container">
-  <form action="/doggybeta/rinsert">
+  <%System.out.println("뷰단에서 bookingNo 가져오는지 : " + request.getParameter("bookingNo")); %>
+  <form action="/doggybeta/rinsert?bookingNo=<%=request.getParameter("bookingNo")%>">
   <input type="hidden" name="userid" value="<%=loginUser.getUserId()%>">
   <h3 align="center">후기작성</h3>
  <!--  <div class="row">
