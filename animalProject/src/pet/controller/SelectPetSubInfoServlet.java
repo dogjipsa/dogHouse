@@ -54,6 +54,7 @@ public class SelectPetSubInfoServlet extends HttpServlet {
 			j.put("age", age);
 			j.put("phone", sub.getPhone());
 			j.put("breeds", sub.getBreeds());
+			if(sub.getRenameFileName() != null)
 			j.put("img", sub.getRenameFileName());
 			
 			response.setContentType("application/json; charset=utf-8");

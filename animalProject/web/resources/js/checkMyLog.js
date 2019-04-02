@@ -563,7 +563,8 @@ function initSubInfo(userid, pno) {
     xhr.onload = ()=>{
         if(xhr.responseText){
             const json = JSON.parse(xhr.responseText);
-            if(json.img !== null){
+            
+            if(json.img){
                 showboxImage.setAttribute('src','/doggybeta/files/pet/'+json.img);
             }
             document.querySelector('.showbox_info input[name="pname"]').value = decodeURIComponent(json.pname);
