@@ -564,7 +564,7 @@ function initSubInfo(userid, pno) {
         if(xhr.responseText){
             const json = JSON.parse(xhr.responseText);
             if(json.img !== null){
-                showboxImage.setAttribute('src','.doggybeta/files/pet/'+json.img);
+                showboxImage.setAttribute('src','/doggybeta/files/pet/'+json.img);
             }
             document.querySelector('.showbox_info input[name="pname"]').value = decodeURIComponent(json.pname);
             document.querySelector('.showbox_info input[name="age"]').value = json.age+"살";
