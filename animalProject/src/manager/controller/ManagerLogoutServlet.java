@@ -8,6 +8,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import manager.model.service.ManagerService;
+import manager.model.vo.Manager;
+
 /**
  * Servlet implementation class ManagerLogoutServlet
  */

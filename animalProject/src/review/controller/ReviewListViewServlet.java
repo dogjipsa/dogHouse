@@ -1,9 +1,10 @@
-package review.controller;
+﻿package review.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.Date;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -68,7 +69,6 @@ public class ReviewListViewServlet extends HttpServlet {
 		
 		for(Review review :  list) {
 			JSONObject reviewJson = new JSONObject();
-			
 			reviewJson.put("reviewno", review.getReviewNo());
 			reviewJson.put("userid", review.getUserId());
 			reviewJson.put("bookingno", review.getBookingNo());
@@ -88,6 +88,7 @@ public class ReviewListViewServlet extends HttpServlet {
 		sendjson.put("maxPage", maxPage);
 		sendjson.put("currentPage", currentPage);
 		
+
 		System.out.println("리뷰 리스트 서블릿에서 제이슨 테스트 : " + sendjson.toJSONString());
 		
 		response.setContentType("application/json; charset=utf-8");

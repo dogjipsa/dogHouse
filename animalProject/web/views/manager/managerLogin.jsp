@@ -2,7 +2,7 @@
     pageEncoding="UTF-8" errorPage="managerError.jsp"%>
 <%@ page import='manager.model.vo.Manager' %>
 <%
-
+	Manager loginManager = (Manager)session.getAttribute("loginmanager"); 
 %>
 <!DOCTYPE html>
 <html id='loginPageCss'>
@@ -14,15 +14,23 @@
 <script type="text/javascript">
 </script>
 </head>
-<h1>로그인페이지</h1>
 <body>
-<div>
-<form action='/doggybeta/dhMLogin'>
+<div class='lnwrapper'>
+<% if(loginManager == null) { %>
+<div class='lncon'>
+<h1>로그인페이지</h1>
+<form action='/doggybeta/dhMLogin' class='lnform'>
 아이디 : <input type='text' name='managerid' required placeholder='ID'/>
 비밀번호 : <input type='password' name='managerpwd' required placeholder='PASSWORD'/>
 	<a href='/doggybeta/dhMLogin'>
 	<input type="submit" name="Login" value="Login" class="login-submit" id='btnLogin' /></a><br>
 </form>
+</div>
+<% 
+	} else {
+		 response.sendRedirect("/doggybeta/views/manager/managerLogin.jsp");
+	}
+%>
 </div>
 </body>
 </html>

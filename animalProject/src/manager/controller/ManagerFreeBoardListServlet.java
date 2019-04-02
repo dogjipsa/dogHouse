@@ -29,13 +29,13 @@ import tipboard.model.vo.TipBoard;
  * Servlet implementation class ManagerBoardListServlet
  */
 @WebServlet("/manboard")
-public class ManagerBoardListServlet extends HttpServlet {
+public class ManagerFreeBoardListServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ManagerBoardListServlet() {
+    public ManagerFreeBoardListServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
