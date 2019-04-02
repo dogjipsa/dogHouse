@@ -47,7 +47,7 @@ $(function(){
     var cBox = $('.checkDel');
     
     $('#del').click(function() {
-    	$('input[name=delNo]:checked').each(function(i){
+    	$('input[name=delId]:checked').each(function(i){
     		chkBoxArray.push($(this).val());
     	});
     	
@@ -57,7 +57,7 @@ $(function(){
     		$.ajax({
     			url: '/doggybeta/mandelete',
     			datatype: 'text',
-    			data: { delNo: chkBoxArray },
+    			data: { delId: chkBoxArray },
     			type: 'post',
     			cache: false,
     			success: function(data) {
@@ -80,7 +80,7 @@ $(function(){
 			<thead>
 				<tr>
 					<th style="background-color: #eeeeee; text-align: center;">추방</th>
-					<th style="background-color: #eeeeee; text-align: center;">추방여부</th>
+					<th style="background-color: #eeeeee; text-align: center;">신고받은횟수</th>
 					<th style="background-color: #eeeeee; text-align: center;">아이디</th>
 					<th style="background-color: #eeeeee; text-align: center;">이메일</th>
 					<th style="background-color: #eeeeee; text-align: center;">성명</th>
@@ -89,14 +89,15 @@ $(function(){
 					<th style="background-color: #eeeeee; text-align: center;">직업</th>
 					<th style="background-color: #eeeeee; text-align: center;">가입날짜</th>
 					<th style="background-color: #eeeeee; text-align: center;">첨부파일</th>
+					<th style="background-color: #eeeeee; text-align: center;">추방여부</th>
 					<th style="background-color: #eeeeee; text-align: center;">펫시터승인여부</th>
 				</tr>
 			</thead>
 			<% for(Member m : petsitterList) { %>
 			<tbody>
 				<tr>
-					<td class='firstTd'><input type='checkbox' class='checkDel' value='<%= m.getUserId() %>' name='delNo'/>추방</td>
-					<td><%= m.getUserDelete() %></td>
+					<td class='firstTd'><input type='checkbox' class='checkDel' value='<%= m.getUserId() %>' name='delId'/>추방</td>
+					<td><%= m.getReportAdd() %></td>
 					<td><%= m.getUserId() %></td>
 					<td><%= m.getEmail() %></td>
 					<td><%= m.getUserName() %></td>
@@ -105,11 +106,12 @@ $(function(){
 					<td><%= m.getJob() %></td>
 					<td><%= m.getUserDate() %></td>
 					<td><%= m.getUseroriginfile() %></td>
+					<td><%= m.getUserDelete() %></td>
 					<td>
 					<% if(m.getPetSitter().equals("2")){ %>
 					 <b>승인완료</b>
 					<% }else{ %>
-					 <a href="/doggybeta/mpupdate?userid=<%= m.getUserId() %>">승인하기</a>
+					 <a href="/doggybeta/mpupdate?userid=<%= m.getUserId() %>"><button>승인하기</button></a>
 					<% } %>			
 					</td>
 				</tr>

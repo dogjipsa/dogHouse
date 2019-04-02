@@ -45,7 +45,7 @@ public class questionListServlet extends HttpServlet {
 		
 		int listCount = qservice.getListCount();
 		
-		ArrayList<Question> list = qservice.selectList();
+		ArrayList<Question> list = qservice.selectList(currentPage, limit);
 				
 		int maxPage = (int)((double)listCount	/	limit + 0.9);
 		
@@ -67,14 +67,12 @@ public class questionListServlet extends HttpServlet {
 			request.setAttribute("maxPage", maxPage);
 			request.setAttribute("startPage", startPage);
 			request.setAttribute("endPage", endPage);
-
 			request.setAttribute("listCount", listCount);
-
 			
 			view.forward(request, response);
 		}else {
 			view = request.getRequestDispatcher("views/question/questionError.jsp");
-			request.setAttribute("message", "1:1문의 조회 실패!");
+			request.setAttribute("message", currentPage + "1:1문의 조회 실패!");
 			view.forward(request, response);
 		}
 	}	

@@ -145,4 +145,14 @@ public class ManagerService {
 		return flist;
 	}
 
+	public int managerDeleteMember(String delId) {
+		Connection conn = getConnection();
+		int result = manDao.managerDeleteMember(conn, delId);
+		if(result > 0)
+		commit(conn);
+			else
+		rollback(conn);
+		return result;
+	}
+	
 }

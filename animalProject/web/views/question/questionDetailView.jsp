@@ -26,16 +26,16 @@ function deleteQuestion(){
 }
 </script>
 </head>
-<body>
+<body background="/doggybeta/resources/images/puppies_1.2.jpg">
 <%@ include file="../common/menu.jsp" %>
 <div id="wrap">
 <div id="cotent">
-
-<h2 align="center">해당글 상세보기</h2>
-<hr style="clear:both;">
+<br>
+<h1 align="center" style="color:white;">해당글 상세보기</h1>
+<hr align="center" style="width:600px">
 
 <br><br><br>
-<table align="center" cellpadding="10" cellspacing="0" border="1" width="600">
+<table align="center" cellpadding="10" cellspacing="0" border="1" width="600" bgcolor=oldlace>
 	<tr>
 		<th>제목</th>
 		<td><%=question.getQuestionTitle() %></td>
@@ -44,9 +44,9 @@ function deleteQuestion(){
 		<th>첨부파일</th>
 		<td>
 			<% if(question.getQuestionOriginalFileName() != null){ %>
-				<a href="/doggybeta/qfdown?qfile=<%=question.getQuestionOriginalFileName()%>&rfile<%=question.getQuestionRenameFileName() %>"><%=question.getQuestionRenameFileName()%></a>	
+				<a href="/doggybeta/qfdown?ofile=<%=question.getQuestionOriginalFileName()%>&rfile<%=question.getQuestionRenameFileName() %>"><%=question.getQuestionOriginalFileName() %></a>	
 			<% }else{ %>
-				첨부파일 없음
+				&nbsp; 첨부파일 없음
 			<% } %>
 		</td>
 	</tr>
@@ -62,19 +62,23 @@ function deleteQuestion(){
     	</th>    	
     </tr>
 </table>
-<br><br><br>
-
-
-<h2 align="center">운영자 답변</h2>
-<table align="center" cellpadding="10" cellspacing="0" border="1" width="600">	
+<br><br>
+<% if(answer.getAnswerContent() != null){ %>
+<%-- <% if(question.getQuestionReplyYn() != null){ %> --%>
+<h1 align="center" style=color:ghostwhite>운영자 답변</h1>
+<hr align="center" style="width:600px">
+<br><br>
+<table align="center" border=1 width=600 height=100 bgcolor=oldlace>
 	<tr>
 		<th>답변내용</th>
 		<td><%= answer.getAnswerContent() %></td>
     </tr>   	
     </div></div>	
 </table>
+<% } %>
+<%-- <% } %> --%>
 <br><br><br><br><br><br><br><br><br><br>
-
+</div></div>	
 <hr>
 <div id="footer"><%@ include file="../common/footer.jsp"%></div>
 </body>

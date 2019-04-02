@@ -75,6 +75,7 @@ public class BookingHostServiceServlet extends HttpServlet {
 				String outdate = sdf.format(b.getCheckOutDate());
 				job.put("indate", indate);
 				job.put("outdate", outdate);
+				job.put("pno", b.getPetNo());
 				int price = b.getPrice();
 				if(b.getServiceKind().equals("0") || b.getServiceKind().equals("2")) {
 					price *= 0.8; // 당일 상품 20% 낮은 가격

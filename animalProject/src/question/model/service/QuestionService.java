@@ -25,9 +25,9 @@ public class QuestionService {
 		return listCount;
 	}
 	
-	public ArrayList<Question> selectList() {
+	public ArrayList<Question> selectList(int currentPage, int limit) {
 		Connection conn = getConnection();
-		ArrayList<Question> list = qdao.selectList(conn);
+		ArrayList<Question> list = qdao.selectList(conn, currentPage, limit);
 		close(conn);
 		return list;
 	}

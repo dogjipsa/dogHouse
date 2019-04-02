@@ -38,7 +38,55 @@ public class QuestionDao {
 		return listCount;
 	}
 	
+	public ArrayList<Question> selectList(Connection conn, int currentPage, int limit) {
+		ArrayList<Question> list = new ArrayList<Question>();
+		ResultSet rset = null;
+		
+		int startRow = (currentPage - 1) * limit + 1;
+		int endRow = startRow + limit - 1;
 
+		String query = "SELECT * FROM (SELECT ROWNUM RNUM, QUESTION_NO, QUESTION_TITLE, "
+				+ "QUESTION_CONTENT, QUESTION_DATE, REPLY_YN, " + "USER_ID, QUESTION_ORIGINAL_FILENAME, " 
+				+ "QUESTION_RENAME_FILENAME, QUESTION_REF, "
+				+ "QUESTION_REPLY_REF, QUESTION_REPLY_LEV, " 
+				+ "QUESTION_REPLY_SEQ "
+				+ "FROM (SELECT * FROM QUESTION ORDER BY QUESTION_REF DESC, QUESTION_REPLY_REF ASC, "
+				+ "QUESTION_REPLY_LEV ASC, QUESTION_REPLY_SEQ ASC)) WHERE RNUM >= ? AND RNUM <= ?";
+
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, startRow);
+			pstmt.setInt(2, endRow);
+			rset = pstmt.executeQuery();
+
+			while (rset.next()) {
+				Question question = new Question();
+
+				question.setQuestionNo(rset.getInt("question_no"));
+				question.setQuestionTitle(rset.getString("question_title"));
+				question.setQuestionContent(rset.getString("question_content"));
+				question.setQuestionDate(rset.getDate("question_date"));
+				question.setQuestionReplyYn(rset.getString("reply_yn"));
+				question.setUserId(rset.getString("user_id"));				
+				question.setQuestionOriginalFileName(rset.getString("question_original_filename"));
+				question.setQuestionRenameFileName(rset.getString("question_rename_filename"));
+				question.setQuestionRef(rset.getInt("question_ref"));
+				question.setQuestionReplyRef(rset.getInt("question_reply_ref"));
+				question.setQuestionReplyLev(rset.getInt("question_reply_lev"));
+				question.setQuestionReplySeq(rset.getInt("question_reply_seq"));
+
+				list.add(question);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+			close(rset);
+		}
+
+		return list;
+	} 
+	
 	public int addReadCount(Connection conn, int questionNo) {
 		int result = 0;
 		PreparedStatement pstmt = null;
@@ -53,49 +101,8 @@ public class QuestionDao {
 			close(pstmt);
 		}
 		return result;
-	}
+	}	
 	
-	public ArrayList<Question> selectList(Connection conn) {
-		ArrayList<Question> list = new ArrayList<Question>();
-		Statement stmt = null;
-		ResultSet rset = null;	
-	      
-	    String query = "SELECT * from question order by question_no desc";
-	      
-	      try {
-	         stmt = conn.createStatement();	         
-	         rset = stmt.executeQuery(query);
-	         
-	         while(rset.next()) {
-	            Question question = new Question();
-	            
-	            question.setQuestionNo(rset.getInt("question_no"));
-	            question.setQuestionTitle(rset.getString("question_title"));
-	            question.setQuestionContent(rset.getString("question_content"));
-	            question.setQuestionDate(rset.getDate("question_date"));
-	            question.setQuestionReplyYn(rset.getString("reply_yn"));
-	            question.setUserId(rset.getString("user_id"));
-	            question.setQuestionOriginalFileName(rset.getString("question_original_fileName"));
-	            question.setQuestionRenameFileName(rset.getString("question_rename_fileName"));
-	            question.setQuestionRef(rset.getInt("question_ref"));
-	            question.setQuestionReplyRef(rset.getInt("question_reply_ref"));
-	            question.setQuestionReplyLev(rset.getInt("question_reply_lev"));
-	            question.setQuestionReplySeq(rset.getInt("question_reply_seq"));
-	            	       	            
-	            list.add(question);
-	         }
-     	         
-	      } catch (Exception e) {
-	         e.printStackTrace();
-	      }finally {
-	    	 close(rset);
-	    	 close(stmt);		    	 
-	      }
-	      
-	      return list;
-		
-	}
-
 	public Question selectQuestion(Connection conn, int questionNo) {
 		Question question = new Question();
 		PreparedStatement pstmt = null;
@@ -136,7 +143,7 @@ public class QuestionDao {
 		int result = 0;
 		PreparedStatement pstmt = null;
 		
-		String query = "insert into question values (seq_QUESTIONno.nextval, ?, ?, sysdate, 'n', 'user01', ?, ?, seq_QUESTIONno.nextval, 0, 0, 0)";
+		String query = "insert into question values (seq_QUESTIONno.nextval, ?, ?, sysdate, '대기중', 'user01', ?, ?, seq_QUESTIONno.nextval, 0, 0, 0)";
 		
 		try {
 			pstmt = conn.prepareStatement(query);

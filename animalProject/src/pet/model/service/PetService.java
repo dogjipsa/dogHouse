@@ -5,6 +5,8 @@ import java.util.ArrayList;
 
 import pet.model.dao.PetDao;
 import pet.model.vo.Pet;
+import pet.model.vo.SubInfo;
+
 import static common.JDBCTemplate.*;
 
 public class PetService {
@@ -76,11 +78,11 @@ public class PetService {
   }
 		
 
-	public Pet selectOnePet(String userid) {
+	public SubInfo selectOnePet(String userid, int pno) {
 		Connection conn = getConnection();
-		Pet pet = pdao.selectOnePet(conn, userid);
+		SubInfo sub = pdao.selectOnePet(conn, userid, pno);
 		close(conn);
-		return pet;
+		return sub;
 	}
 
 }

@@ -70,9 +70,9 @@ public class questionOriginUpdateServlet extends HttpServlet {
 				// 전송 온 값 꺼내서 객체에 저장
 				Question question = new Question();
 
-				question.setQuestionNo(Integer.parseInt(mrequest.getParameter("no")));
-				question.setQuestionTitle(mrequest.getParameter("title"));
-				question.setQuestionContent(mrequest.getParameter("content"));
+				question.setQuestionNo(Integer.parseInt(mrequest.getParameter("question_no")));
+				question.setQuestionTitle(mrequest.getParameter("question_title"));
+				question.setQuestionContent(mrequest.getParameter("question_content"));
 				
 				
 				//hidden 에 담겨서 전송온 원파일명과 바뀐파일명 꺼내서 저장
