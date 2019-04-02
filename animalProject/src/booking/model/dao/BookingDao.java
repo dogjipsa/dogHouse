@@ -258,5 +258,60 @@ public class BookingDao {
 		
 		return result;
 	}
+
+	public ArrayList<Booking> bookingAlert(Connection conn, String puserid) {
+		ArrayList<Booking> list = new ArrayList<Booking>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String query = "SELECT BOOKING_NO, USER_ID, BOOKING_PROGRESS, PUSER_ID FROM BOOKING WHERE PUSER_ID = ? AND BOOKING_PROGRESS = '1'";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, puserid);
+			rset = pstmt.executeQuery();
+			if(rset.next()) {
+				Booking booking = new Booking();
+				booking.setBookingNo(rset.getInt("BOOKING_NO"));
+				booking.setUserId(rset.getString("USER_ID"));
+				booking.setBookingProgress(rset.getString("BOOKING_PROGRESS"));
+				booking.setPuserId(puserid);
+				list.add(booking);
+			}
+			System.out.println("dao 단에서 " + list);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return list;
+	}
+
+	public int bookingCount(Connection conn, String puserid) {
+		int count = 0;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String query = "SELECT count(*) FROM BOOKING WHERE PUSER_ID = ? AND BOOKING_PROGRESS = '1'";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, puserid);
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				count = rset.getInt(1);
+				
+			}
+			System.out.println("dao 단에서 예약 건수 : " + count);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		return count;
+	}
 	
 }

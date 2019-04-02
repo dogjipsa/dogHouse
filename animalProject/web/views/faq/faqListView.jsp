@@ -47,24 +47,36 @@ $(function(){
 h2{
    position: relative;
    top: 20px;
-   left : 200px;
+   left : 0px;
    width: 70%;
+   padding: 2rem 0px;
 }
 .board { 
-   position: relative;
-   left : 250px;
-   top : 100px;
+  position: relative;
+   left : 150px;
    width: 60%;
+   top: -50px;
    border-collapse: collapse;
    text-align: left;
    line-height: 1.5;
-   table-layout:fixed;    
+   table-layout:fixed;   
 }
+.board tr{
+	line-height : 2em;
 
+}
+#search{ 
+	text-align:center;	
+	}
 .button{
    position: relative;
-   left : 200px;
-   top: 50px;  
+   left : 650px;
+   width: 60%;
+   top: -150px;
+   border-collapse: collapse;
+   text-align: left;
+   line-height: 1.5;
+   table-layout:fixed;   
 }
 
 /* list_table 에서 사용되는 thead */
@@ -86,24 +98,28 @@ h2{
 
 #faqpage{
 	position: relative;
-	left: 500px;
-	text-align: center;
+   left : 100px;
+   width: 60%;
+   top: -150px;
+   border-collapse: collapse;
+   text-align: left;
+   line-height: 1.5;
+   table-layout:fixed;
 }
-header{
-	text-align: center;
-	
-}
-.search{
-	display: flex;
-	justify-content: center;
 
+.search{
+position: relative;
+   left : 100px;
+   width: 60%;
+   top: -150px;
+   border-collapse: collapse;
+   text-align: left;
+   line-height: 1.5;
+   table-layout:fixed;  
 }
-.insert{
-	padding: 0 2rem;
-}
+
 #wrap{
 	left: 200px;
-	border: 1px solid red;
 	margin: 0 auto;
 }
 </style>
@@ -115,29 +131,7 @@ header{
 		  <div id="content">
 
 <h2 align="center">FAQ</h2>
-
-
-<%-- 검색기능 --%>
-<header>
-<div class="search">
-	<form action="/doggybeta/faqsearch" method="post">
-	<input type="hidden" name="search" value="title">
-	<label style="background-color : "><input type="text" name="keyword"></label>
-	<input type="submit" value="검색">
-	</form>
-	
-	<div class="insert">
-<% if(loginUser != null){ %>
-	<input type="button" onclick="showWriteForm();" value="글쓰기">
-<%} %>
-	</div>
-</div>
-
-
-
-</header>
-
-<br>
+<br><br><br>
 <!-- 테이블 시작 -->
    <table class="board">
       <thead>
@@ -174,14 +168,28 @@ header{
    </tbody>   
    <% } %>
 </table>
-<br>    
-   
+<br><br><br><br><br><br>   
 <!-- 테이블 종료 -->
+
+<div class="search" align="center" id="search">
+	<form action="/doggybeta/faqsearch" method="post">
+	<input type="hidden" name="search" value="title">
+	<label style="background-color : "><input type="text" name="keyword"></label>
+	<input type="submit" value="검색">
+	<% if(loginUser != null){ %>
+	<input type="button" onclick="showWriteForm();" value="글쓰기">
+<%} %>
+	</form>
+	
+
+</div>
+
+
 
 <%-- 페이징 처리 --%>
 <br><br><br>
 <br><br><br>
-<div id="faqPage" >
+<div id="faqPage" style="text-align:center;">
 <% if(currentPage <= 1){ %>
 	[맨처음]&nbsp;
 <% }else{ %>
@@ -213,6 +221,7 @@ header{
 <% }else{ %>
 	<a href="/doggybeta/faqlist?page=<%= maxPage %>">[맨끝]</a>
 <% } %>
+</div>
 </div>
 
 </div>

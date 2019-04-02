@@ -162,7 +162,6 @@
 		<% } else { %>
 			<%= loginUser.getUserName() %> 님 환영합니다
 		<% } %>
-
 		<!-- -------------------------------------------------------------------------  -->
 		<ul class='icon' id='icon'>
 			<li><a href='/doggybeta' id='icon1'> <span>&nbsp;&nbsp;&nbsp;홈</span>
@@ -196,7 +195,12 @@
 				</ul>
 			</li>
 
-			<li class="m1"><a href="#" id='icon6'><span>&nbsp;&nbsp;&nbsp;마이페이지</span></a>
+			<li class="m1"><a href="#" id='icon6'>
+			<span id="bookingalert">
+			&nbsp;&nbsp;&nbsp;마이페이지
+			</span>
+			</a>
+			<input type="hidden" id=puserid name=puserid value=<%=loginUser.getUserId() %>>
 				<ul class="m2">
 					<li><a href='/doggybeta/views/member/reconfirmPassword.jsp'>정보수정</a></li>
 					<li><a href='/doggybeta/views/customerservice/checkMyLog.jsp'>이용내역/예약확인</a></li>
@@ -205,6 +209,7 @@
 				</ul>
 			</li>
 		</ul>
+
 	</nav>
 
 	<!-- 펫시터 신청 버튼 클릭시 생성 보여지는 HTML 부분. 로그인 부분 구현시 인풋에 세션으로 값 넣어놓고 readonly 처리할 것  -->
@@ -266,7 +271,36 @@
 	<script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=b9810167e43ee638a44b19264113db0d&libraries=services"></script>
 	<script src="/doggybeta/resources/js/addr.js"></script>
 	<script type="text/javascript">
+	 $(function(){ 
+		 console.log($("#puserid").val());
+			$.ajax({
+				type : 'post',
+				cache: false,
+				datatype: 'json',
+				data : {puserid : $("#puserid").val()},
+				url : '/doggybeta/balert',
+				success:function(data){
+					console.log("hi");
+					console.log(data.count);
+					if(data.count != 0){
+					$("#bookingalert").html($("#bookingalert").text()
+							+ "<img src='/doggybeta/resources/images/alarm.png' style='width: 20px;'>" 
+							+ "(" + data.count + ")")
+							
+					}		
+			
+				},  //success
+				error :  function( jqXHR, textStatus, errorThrown ) {
+					alert( jqXHR.status );
+					alert( jqXHR.statusText );
+					alert( jqXHR.responseText );
+					alert( jqXHR.readyState );
 
+					}	//error
+				
+			});			 
+	 });
+	 
 		$('.m1').click(function () {
 			if ($(this).children('.m2').is(':visible')) {
 				$(this).children('.m2').slideUp(200);
@@ -274,7 +308,9 @@
 				$(this).children('.m2').slideDown(200);
 			}
 		});
+
 	</script>
+	
 	<% } %>
 </body>
 
