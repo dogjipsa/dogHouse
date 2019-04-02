@@ -138,6 +138,16 @@ h2{
 	 
 	 
 </style>
+<script type="text/javascript">
+
+function popupOpen(){
+	var url= "/doggybeta/views/review/reviewWriteForm.jsp";    //팝업창 페이지 URL
+	var winWidth = 700;
+    var winHeight = 600;
+    var popupOption= "width="+winWidth+", height="+winHeight;    //팝업창 옵션(optoin)
+	window.open(url,"",popupOption+",left=500, top=250");
+}
+</script>
 </head>
 <body>
 	<%@ include file="..//common/menu.jsp"%>
@@ -147,7 +157,9 @@ h2{
 
 			<h2 align="center">게시글 목록</h2>
 			<a href="/doggybeta/sitterdetail">디테일로 고고</a>
-			<a href="/doggybeta/views/review/reviewWriteForm.jsp">리뷰작성</a>
+			<a href="/doggybeta/views/tipboard/test.html">테스트하러 ㄱㄱ</a>
+			<input type="button" onclick="popupOpen();" value="확인">
+			<!-- <a href="/doggybeta/views/review/reviewWriteForm.jsp">리뷰작성</a> -->
 			<h4 align="center">
 				총 게시글 갯수 :<%=listCount%></h4>
 			

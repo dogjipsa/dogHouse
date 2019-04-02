@@ -6,7 +6,7 @@
 	ArrayList<SitterImage> sitterFacilityImg = (ArrayList<SitterImage>)request.getAttribute("sitterFacilityImg");
 	String service = (String)request.getAttribute("service");
 	String[] location = (petSitter.getAddress()).split(",");//상세주소가 다 나오지 않게 ,로 구분
-	
+	double starAvg = (Double)request.getAttribute("starAvg");
 
 %>
 <!DOCTYPE html>
@@ -188,6 +188,19 @@ img {
 .demo:hover {
   opacity: 1;
 }
+
+/* 평균 별점 css  */
+span.star-prototype, span.star-prototype > * {
+    height: 16px; 
+    background: url(http://i.imgur.com/YsyS5y8.png) 0 -16px repeat-x;
+    width: 80px;
+    display: inline-block;
+}
+ 
+span.star-prototype > * {
+    background-position: 0 0;
+    max-width:80px; 
+}
 </style>
 
 </head>
@@ -289,8 +302,18 @@ function showSlides(n) {
 <td>이름 : <%=petSitter.getUserName() %></td><td></td>
 </tr>
 <tr><td>나이 : <%=String.valueOf((petSitter.getUserDate())).substring(0, 4) %> 년생</td><td></td></tr>
-<tr><td>평점 : </td><td></td></tr></tbody>
+<tr><td>평점 :  <span class="star-prototype"><%= starAvg %></span> (<%=starAvg %>)</td><td></td></tr></tbody>
 </table>
+<script type="text/javascript">
+/* 별점처리 jquery  */
+ $.fn.generateStars = function() {
+	    return this.each(function(i,e){$(e).html($('<span/>').width($(e).text()*16));});
+ };
+
+ // 숫자 평점을 별로 변환하도록 호출하는 함수
+ $('.star-prototype').generateStars();
+ 
+</script>
 <br>
 <!-- 펫시터 조회  -->
 <table class="board" >
@@ -371,6 +394,7 @@ geocoder.addressSearch('<%=petSitter.getAddress()%>', function(result, status) {
       <tbody>
       	
       </tbody>
+      
       <%-- <tbody>      
        <%   for(Notice notice : list){ %>
    <tr>
@@ -397,10 +421,11 @@ geocoder.addressSearch('<%=petSitter.getAddress()%>', function(result, status) {
    <% } %>     
    </tbody>    --%>
 </table>
-<p id="test"></p>
 
+<p id="test"></p>
+<input id="currentpage" value="1">
 <script type="text/javascript">
-function(){
+
 $(function() {
 	console.log($('#petSitterId').val());
 		
@@ -409,13 +434,16 @@ $(function() {
 			type: 'post',
 			dataType: 'json',
 			data : {petSitterId : $('#petSitterId').val(),
-				    currentPage : page},
+				    currentPage : $('#currentpage').val()},
 			success: function(data){
 					 console.log('성공!');
 					 var jsonStr = JSON.stringify(data);
 					 var json = JSON.parse(jsonStr); 
 					 for(var i in json.list){
-						$("#reviewboard").append("<tr><td>"+json.list[i].reviewno+"</td><td>"+json.list[i].point+"</td><td>"+decodeURIComponent(json.list[i].reviewcontent)+"</td><td>"+json.list[i].reviewdate+"</tr>");
+						 if(json.list[i].point==3){
+							$("#reviewboard").append("<tr><td>"+json.list[i].reviewno+"</td><td><span class='star-prototype'>3</span></td><td>"+decodeURIComponent(json.list[i].reviewcontent)+"</td><td>"+json.list[i].reviewdate+"</tr>");
+						 }
+						<%-- <span class="star-prototype"><%= starAvg %></span> --%>
 					 }
 					 $("#test").append("리스트카운트 ; "+data.listCount);
 					 $("#test").append("<br>startPage : "+data.startPage);
@@ -424,8 +452,10 @@ $(function() {
 					 $("#test").append("<br>currentPage : "+data.currentPage);
 					 for(var i=1; i<=data.maxPage;i++){
 					 	/* $("#paging").append(i); */
-					 	$("#paging").append("<a href='#' onclick='this("+i+")'>"+i+"</a>");
+					 	$("#paging").append("<a href='#' onclick='check();'>"+i+"</a>");
 					 }
+					 $('#currentpage').val(data.currentPage);
+					 /* $("#currentpage").val(data.currentPage); */
 					 /* 페이징 개 빡친다 그냥 팁게시판 페이징 처리처럼 해야할듯  */
 						
 					 
@@ -433,7 +463,7 @@ $(function() {
 		});
 	
 });
-}
+
 /* success: function(data){
 console.log('성공!');
  var jsonStr = JSON.stringify(data);
@@ -490,7 +520,8 @@ $.ajax({
 
 <br><br><div id="paging"></div>
 </div>
-페이징처리2
+페이징처리2<br>
+<span class="star-prototype"><%= starAvg %></span>
 
 </div><!-- 가운데 영역  끝-->
 <div style="float:left;padding-top:100px"><!-- 오른쪽 영역  --> 
