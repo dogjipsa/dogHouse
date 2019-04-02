@@ -11,6 +11,7 @@ import java.util.HashMap;
 
 import faq.model.vo.Faq;
 import freeboard.model.vo.FreeBoard;
+import manager.model.service.ManagerService;
 import manager.model.vo.Manager;
 import member.model.vo.Member;
 import notice.model.vo.Notice;
@@ -827,11 +828,13 @@ public class ManagerDao {
 	public int updatePetsitter(Connection conn, String userId) {
 		int result = 0;
 		PreparedStatement pstmt = null;
+		System.out.println("dao userId : " + userId);
+		String query = "update member set petsitter = 2 where user_id = ? and user_delete in('n', 'N', null) and petsitter = 1"; 
 		
-		String query = "update member set petsitter = '2' where user_id like ? and user_delete in('n', 'N', null)"; 
 		
 		try {
 			pstmt = conn.prepareStatement(query);
+			
 			pstmt.setString(1, userId);
 			
 			result = pstmt.executeUpdate();
@@ -843,6 +846,8 @@ public class ManagerDao {
 			close(pstmt);
 			close(conn);
 		}
+		
+		
 		return result;
 	}
 

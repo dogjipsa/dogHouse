@@ -18,9 +18,9 @@ public class ReviewService {
 	
 	public ReviewService() {}
 	
-	public int getListCount() {
+	public int getListCount(String petSitterId) {
 		Connection conn = getConnection();
-		int listCount = rdao.getListCount(conn);
+		int listCount = rdao.getListCount(conn, petSitterId);
 		close(conn);
 		return listCount;
 	}

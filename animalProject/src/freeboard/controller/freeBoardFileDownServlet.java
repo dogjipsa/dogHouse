@@ -35,14 +35,17 @@ public class freeBoardFileDownServlet extends HttpServlet {
 		// 게시글 첨부파일 다운로드 처리용 컨트롤러
 		// 1.
 		request.setCharacterEncoding("utf-8");
-
+		//String renameFileName = null;
+		
 		// 2.
 		String originalFileName = request.getParameter("fofile");
 		String renameFileName = request.getParameter("frfile");
 
 		// 3. 웹프로젝트 내의 저장폴더 지정
 		String readFolder = request.getSession().getServletContext().getRealPath("/files/freeBoard");
-
+		System.out.println("리드폴더 : " + readFolder);
+		
+		
 		// 4. 클라이언트로 내보낼 출력 스트림 생성
 		ServletOutputStream downOut = response.getOutputStream();
 

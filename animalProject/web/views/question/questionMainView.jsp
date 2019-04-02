@@ -23,6 +23,7 @@
 	function moveFAQPage(){
 		location.href="/doggybeta/faqlist";
 	}
+
 	
 	/* function moveFindPwd(){
 		location.href="/doggybeta/jipsafindpwd";
@@ -32,9 +33,11 @@
 </head>
 <body background="/doggybeta/resources/images/puppies_1.1.jpg">
 
+
 <%@ include file="../common/menu.jsp" %>
 <div id="wrap">
 <div id="cotent">
+
 
 <h1 align="center" style="color:white;">1:1 문의</h1>
 <hr style="clear:both;">
@@ -79,6 +82,7 @@
 </div></div>
 <% } %><br><br><br><br>
 <div id="footer"><%@ include file="../common/footer.jsp"%></div><br></div>
+
 
 
 </body>

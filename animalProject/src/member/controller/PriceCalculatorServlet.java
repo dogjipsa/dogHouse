@@ -36,6 +36,12 @@ public class PriceCalculatorServlet extends HttpServlet {
 		//String date = request.getParameter("datetimes");
 		//System.out.println("ajax 확인 : "+date);
 		int price = Integer.parseInt(request.getParameter("price"));
+		String service = request.getParameter("service");
+		if(service.equals("0")||service.equals("2")) {
+			price = (int) ((price*0.8)/1000) *1000;
+		}
+		System.out.println("서비스 체크 : " + service);
+		System.out.println("가격체크 : " + price);
 		String[] date = request.getParameter("datetimes").split(" - ");
 		String checkin = date[0];
 		String checkout = date[1];

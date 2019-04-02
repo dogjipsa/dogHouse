@@ -21,6 +21,7 @@ import freeboard.model.service.FreeBoardService;
 import freeboard.model.vo.FreeBoard;
 
 import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
 
 /**
  * Servlet implementation class freeBoardInsertServlet
@@ -62,8 +63,11 @@ public class freeBoardInsertServlet extends HttpServlet {
 				//현재 웹 컨테이너에서 구동중인 웹 에플리케이션의 
 				//루트 폴더에 대한 경로 알아냄
 				String root = request.getSession().getServletContext().getRealPath("/");
+				ServletContext context = getServletContext();
+							
+				
 				//업로드되는 파일의 저장 폴더를 루트와 연결함
-				String savePath = root + "files/freeBoard";
+				String savePath = context.getRealPath("files/freeBoard");
 				
 				//request 를 MultipartRequest 객체로 변환함
 				MultipartRequest mrequest = new MultipartRequest(
@@ -73,13 +77,10 @@ public class freeBoardInsertServlet extends HttpServlet {
 				//전송 온 값 꺼내서 객체에 저장
 				FreeBoard freeboard = new FreeBoard();
 				
-				String title = request.getParameter("ir1");
-				
 				freeboard.setFreeboardTitle(mrequest.getParameter("ftitle"));
 				freeboard.setUserId(mrequest.getParameter("fwriter"));
 				freeboard.setFreeboardContent(mrequest.getParameter("ir1"));
 				
-				System.out.println(freeboard);
 				//전송온 파일의 파일명만 추출하고, 이름바꾸기 처리
 				String originalFileName = mrequest.getFilesystemName("fupfile");
 				
@@ -87,8 +88,7 @@ public class freeBoardInsertServlet extends HttpServlet {
 				if(originalFileName != null) {
 					//바꿀 파일명 만들기
 					//"년월일시분초.확장자"
-					SimpleDateFormat sdf = 
-						new SimpleDateFormat("yyyyMMddHHmmss");
+					SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
 					String renameFileName = sdf.format(new java.sql.Date(System.currentTimeMillis()))
 							+ "." + originalFileName.substring(originalFileName.lastIndexOf(".") + 1);
 					
@@ -103,10 +103,8 @@ public class freeBoardInsertServlet extends HttpServlet {
 						int read = -1;
 						byte[] buf = new byte[1024];
 						
-						FileInputStream fin = 
-								new FileInputStream(originFile);
-						FileOutputStream fout = 
-								new FileOutputStream(renameFile);
+						FileInputStream fin = new FileInputStream(originFile);
+						FileOutputStream fout = new FileOutputStream(renameFile);
 						
 						while((read = fin.read(buf, 0, buf.length)) != -1) {
 							fout.write(buf, 0, read);

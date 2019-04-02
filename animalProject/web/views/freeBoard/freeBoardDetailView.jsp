@@ -12,11 +12,6 @@
 	int endPage = ((Integer)request.getAttribute("endPage")).intValue();
 	int maxPage = ((Integer)request.getAttribute("maxPage")).intValue();
 	int currentPage = ((Integer)request.getAttribute("currentPage")).intValue(); 
-	System.out.println("count : " + listCount);
-	System.out.println("start페이지 : " + startPage);
-	System.out.println("end페이지 : " + endPage);
-	System.out.println("max페이지 : " + maxPage);
-	System.out.println("current페이지 : " + currentPage);
 	
 %>    
 <!DOCTYPE html>

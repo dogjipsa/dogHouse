@@ -38,6 +38,7 @@ public class QuestionDao {
 		return listCount;
 	}
 	
+
 	public int addReadCount(Connection conn, int questionNo) {
 		int result = 0;
 		PreparedStatement pstmt = null;
