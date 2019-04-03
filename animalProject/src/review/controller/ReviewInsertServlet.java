@@ -33,12 +33,10 @@ public class ReviewInsertServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		//booking_no를 넘겨받아야 함
 		Review review = new Review();
 		review.setReviewContent(request.getParameter("reviewcontent"));
 		review.setPoint(request.getParameter("star-input"));
 		review.setUserId(request.getParameter("userid"));
-		//System.out.println("bookingno 확인 : "+request.getParameter("bookingno"));
 		review.setBookingNo(Integer.parseInt(request.getParameter("bookingno")));
 		int result = new ReviewService().insertReview(review);
 		if(result <=0) {
