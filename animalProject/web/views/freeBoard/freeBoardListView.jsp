@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" import="freeboard.model.vo.FreeBoard, java.util.ArrayList"%>
+  
    <%
+   
    ArrayList<FreeBoard> slist = (ArrayList<FreeBoard>)request.getAttribute("slist"); 
    
 	int listCount = ((Integer)request.getAttribute("listCount")).intValue(); 
@@ -19,10 +21,8 @@
 				inputdata = request.getAttribute("inputdata").toString();	 
 			}}
 		
-		 
    %>
   
-
 <!DOCTYPE html>
 <html id='fbhtml'>
 <head>
@@ -174,6 +174,7 @@ h2{
 	</tr>
 	<% } %>
 	</tobody>
+	
 </table>
 <br><br><br><br><br><br>
 <%-- 글쓰기 --%>
@@ -240,7 +241,6 @@ h2{
 <% } %>
 </div> 	  
 	
-
 		</div>
 		<div id="footer"><%@ include file="..//common/footer.jsp"%></div>
 	</div>

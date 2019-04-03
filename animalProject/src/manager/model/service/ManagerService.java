@@ -39,6 +39,7 @@ public class ManagerService {
 			rollback(conn);
 		return result;
 	}
+	
 	public int faqboardListCount() {
 		Connection conn = getConnection();
 		int result = manDao.faqboardListCount(conn);
@@ -125,7 +126,6 @@ public class ManagerService {
 		
 		return result;
 	}
-		
 	
 	public int managerDeleteFreeBoard(String delNo) {
 		Connection conn = getConnection();
@@ -173,6 +173,38 @@ public class ManagerService {
 			else
 		rollback(conn);
 		return result;
+	}
+
+	public ArrayList<Notice> searchNoticeList(HashMap<String, Object> listOpt) {
+		Connection conn = getConnection();
+		ArrayList<Notice> mlist = manDao.searchNoticeList(conn, listOpt);
+		close(conn);
+		return mlist;
+	}
+
+	public int getNoticeListCount(HashMap<String, Object> listOpt) {
+		Connection conn = getConnection();
+		int listCount = manDao.getNoticeListCount(conn, listOpt);
+		close(conn);
+		return listCount;
+	}
+
+	public void addReadCount(int noticeNo) {
+		Connection conn = getConnection();
+		int result = manDao.addReadCount(conn, noticeNo);
+		if(result > 0)
+			commit(conn);
+		else
+			rollback(conn);
+		close(conn);
+		
+	}
+
+	public Notice selectNoitce(int noticeNo) {
+		Connection conn = getConnection();
+		Notice notice = manDao.selectNotice(conn, noticeNo);
+		close(conn);
+		return notice;
 	}
 	
 }

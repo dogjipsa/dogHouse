@@ -53,25 +53,30 @@ $(function(){
     	
     	console.log(chkBoxArray);
     	alert(chkBoxArray);
-    	if(confirm('정말 삭제하시겠습니까?')) {
+    	if(confirm('정말 강퇴하시겠습니까?')) {
     		$.ajax({
-    			url: '/doggybeta/mandelete',
+    			url: '/doggybeta/manpdelete',
     			datatype: 'text',
     			data: { delId: chkBoxArray },
     			type: 'post',
     			cache: false,
     			success: function(data) {
     				chageVal(data);
-    				alert('변경이 완료되었습니다!');
+    				alert('강퇴하였습니다!');
+					refresh();    				
     			} //success
     		});//ajax
         } //if confirm
     }); //delete click
+    
+ function refresh(){
+	   document.reload(); 
+    } 
 });
 </script>
 </head>
 <body>
-<%@ include file="../../../managerMainPage.jsp" %>
+<%@ include file="../../views/common/managerMenu.jsp" %>
 <section>
 <div class="mcontainer">
 	<h3>펫시터회원 관리</h3>
@@ -79,7 +84,7 @@ $(function(){
 		<table class='t' style="text-align:center; border:1px solid #dddddd"> 
 			<thead>
 				<tr>
-					<th style="background-color: #eeeeee; text-align: center;">추방</th>
+					<th style="background-color: #eeeeee; text-align: center;">강퇴</th>
 					<th style="background-color: #eeeeee; text-align: center;">신고받은횟수</th>
 					<th style="background-color: #eeeeee; text-align: center;">아이디</th>
 					<th style="background-color: #eeeeee; text-align: center;">이메일</th>
@@ -96,7 +101,7 @@ $(function(){
 			<% for(Member m : petsitterList) { %>
 			<tbody>
 				<tr>
-					<td class='firstTd'><input type='checkbox' class='checkDel' value='<%= m.getUserId() %>' name='delId'/>추방</td>
+					<td class='firstTd'><input type='checkbox' class='checkDel' value='<%= m.getUserId() %>' name='delId'/>강퇴</td>
 					<td><%= m.getReportAdd() %></td>
 					<td><%= m.getUserId() %></td>
 					<td><%= m.getEmail() %></td>
@@ -175,10 +180,10 @@ $(function(){
 <% } %>
 </div> 	  
 	
-	</div>
+	<div>
 		<input type="checkbox" id="checkAll" class='styled-checkbox'/>전체선택
-		<input type='button' id='del' value='추방하기'/>
-</div>
+		<input type='button' id='del' value='강퇴하기'/>
+	</div>
 
 <div id="footer"><%@ include file="..//common/footer.jsp"%></div>
 </body>

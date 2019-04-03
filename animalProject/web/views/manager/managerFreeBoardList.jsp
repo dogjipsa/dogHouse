@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" errorPage="managerError.jsp"%>
-<%@page import='freeboard.model.vo.FreeBoard, java.util.ArrayList, '%>
+<%@page import='freeboard.model.vo.FreeBoard, java.util.ArrayList '%>
 
 <%
 	ArrayList<FreeBoard> list = (ArrayList<FreeBoard>)request.getAttribute("flist");
@@ -117,11 +117,7 @@ $(function(){
     		});//ajax
         } //if confirm
     }); //delete click
-    $('#days').click(function(){
-    	$('#searchDate').show();
-    	$('input[id=keyw]').hide();
     });
-});
 </script>
 <style type="text/css">
 	#formDialogDiv {
