@@ -8,6 +8,7 @@
 <link rel="shortcut icon" href="/doggybeta/resources/images/favicon.ico">
 <link href="/doggybeta/resources/css/footer.css" rel="stylesheet" type="text/css">
 <link href="/doggybeta/resources/css/history.css" rel="stylesheet" type="text/css">
+<link href="https://fonts.googleapis.com/css?family=Sunflower:300,500,700&amp;subset=korean" rel="stylesheet" type="text/css">
 <script type="text/javascript" src="/doggybeta/resources/js/jquery-3.3.1.min.js"></script>
 <style>
 * {
@@ -22,7 +23,7 @@ body {
 /* The actual timeline (the vertical ruler) */
 .timeline {
   position: relative;
-  max-width: 1200px;
+  max-width: 700px;
   margin: 0 auto;
 }
 
@@ -54,7 +55,7 @@ body {
   height: 25px;
   right: -17px;
   background-color: white;
-  border: 4px solid #FF9F55;
+  border: 4px solid #2ec4b6;
   top: 15px;
   border-radius: 50%;
   z-index: 1;
@@ -109,6 +110,9 @@ body {
   background-color: white;
   position: relative;
   border-radius: 6px;
+  font-family: 'Sunflower', 'sans-serif';
+  font-size: 13pt;
+  font-weight: 200;
 }
 
 /* Media queries - Responsive timeline on screens less than 600px wide */
@@ -146,52 +150,45 @@ body {
 </style>
 </head>
 <body>
-<%@ include file="../common/menu.jsp"%>
-	<div id="wrap">
-		  <div id="content">
+<%@ include file="../common/menu.jsp" %>
+   <div id="wrap">
+        <div id="content">
 <div class="timeline">
   <div class="container left">
     <div class="content">
-      <h2>2017</h2>
-      <p>Lorem ipsum dolor sit amet, quo ei simul congue exerci, ad nec admodum perfecto mnesarchum, vim ea mazim fierent detracto. Ea quis iuvaret expetendis his, te elit voluptua dignissim per, habeo iusto primis ea eam.</p>
+      <h2>2019.04</h2>
+      <p>도그하우스 웹 사이트가 런칭되었습니다. <br>대한민국 애견인에게 양질의 펫시터 매칭 서비스를 제공합니다.</p>
     </div>
   </div>
   <div class="container right">
     <div class="content">
-      <h2>2016</h2>
-      <p>Lorem ipsum dolor sit amet, quo ei simul congue exerci, ad nec admodum perfecto mnesarchum, vim ea mazim fierent detracto. Ea quis iuvaret expetendis his, te elit voluptua dignissim per, habeo iusto primis ea eam.</p>
+      <h2>2019.02</h2>
+      <p>도그하우스 사이트 설계 및 기능 구현</p>
     </div>
   </div>
   <div class="container left">
     <div class="content">
-      <h2>2015</h2>
-      <p>Lorem ipsum dolor sit amet, quo ei simul congue exerci, ad nec admodum perfecto mnesarchum, vim ea mazim fierent detracto. Ea quis iuvaret expetendis his, te elit voluptua dignissim per, habeo iusto primis ea eam.</p>
+           <h2>2019.02</h2>
+      <p>팀 도그집사 탄생!</p>
     </div>
   </div>
-  <div class="container right">
+  <div class="container right" style="visibility:hidden;">
     <div class="content">
-      <h2>2012</h2>
-      <p>Lorem ipsum dolor sit amet, quo ei simul congue exerci, ad nec admodum perfecto mnesarchum, vim ea mazim fierent detracto. Ea quis iuvaret expetendis his, te elit voluptua dignissim per, habeo iusto primis ea eam.</p>
+      <h2>2019.02</h2>
+      <p>도그하우스 사이트 설계 및 기능 구현</p>
     </div>
-  </div>
-  <div class="container left">
+  </div> 
+  <div class="container left" style="visibility:hidden;">
     <div class="content">
-      <h2>2011</h2>
-      <p>Lorem ipsum dolor sit amet, quo ei simul congue exerci, ad nec admodum perfecto mnesarchum, vim ea mazim fierent detracto. Ea quis iuvaret expetendis his, te elit voluptua dignissim per, habeo iusto primis ea eam.</p>
-    </div>
-  </div>
-  <div class="container right">
-    <div class="content">
-      <h2>2007</h2>
-      <p>Lorem ipsum dolor sit amet, quo ei simul congue exerci, ad nec admodum perfecto mnesarchum, vim ea mazim fierent detracto. Ea quis iuvaret expetendis his, te elit voluptua dignissim per, habeo iusto primis ea eam.</p>
+           <h2>2019.02</h2>
+      <p>팀 도그집사 탄생!</p>
     </div>
   </div>
 </div>
 
 
-		  
 </div>
-		<div id="footer"><%@ include file="..//common/footer.jsp"%></div>
-</div>	
+<%-- <div id="footer"><%@ include file="..//common/footer.jsp"%></div> --%>   
+</div>   
 </body>
 </html>

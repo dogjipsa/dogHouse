@@ -43,8 +43,16 @@ $(function(){
 });
 </script>
 <style type="text/css">
+body{
+	font-family: 'Sunflower', 'sans-serif';
+	font-size: 15pt;
+}
 
-h2{
+#search{ 
+	text-align:center;	
+	}
+	
+h1{
    position: relative;
    top: 20px;
    left : 0px;
@@ -65,9 +73,15 @@ h2{
 	line-height : 2em;
 
 }
-#search{ 
-	text-align:center;	
-	}
+
+/* list_table 에서 사용되는 thead */
+.board thead th{ 
+	padding: 10px;
+    font-weight: bold;
+    vertical-align: top;
+    color: #369;
+    border-bottom: 3px solid #036;}
+
 .button{
    position: relative;
    left : 650px;
@@ -79,13 +93,7 @@ h2{
    table-layout:fixed;   
 }
 
-/* list_table 에서 사용되는 thead */
-.board thead th{ 
-	padding: 10px;
-    font-weight: bold;
-    vertical-align: top;
-    color: #369;
-    border-bottom: 3px solid #036;}
+
 
 /* list_table 에서 사용되는 tbody * /
 .board tbody td { 
@@ -130,7 +138,7 @@ position: relative;
 	<div id="wrap">
 		  <div id="content">
 
-<h2 align="center">FAQ</h2>
+<h1 align="center">FAQ</h1>
 <br><br><br>
 <!-- 테이블 시작 -->
    <table class="board">
@@ -155,10 +163,11 @@ position: relative;
    <br>
    <br>
    <br>
+   <%if(loginUser.getUserId() == faq.getManagerId()){ %>
    <button onclick="location.href='/doggybeta/faqupview?fnum=<%= faq.getFaqNo()%>&page=<%= currentPage%>'">수정</button>
    &nbsp;
    <button onclick="location.href='/doggybeta/faqdel?fnum=<%= faq.getFaqNo()%>'">삭제</button>
-   <%}else{ %>
+   <%}}else{ %>
    <%= faq.getFaqTitle() %>
    <%} %>
    
@@ -176,7 +185,7 @@ position: relative;
 	<input type="hidden" name="search" value="title">
 	<label style="background-color : "><input type="text" name="keyword"></label>
 	<input type="submit" value="검색">
-	<% if(loginUser != null){ %>
+	<% if(loginUser.equals("manager")){ %>
 	<input type="button" onclick="showWriteForm();" value="글쓰기">
 <%} %>
 	</form>

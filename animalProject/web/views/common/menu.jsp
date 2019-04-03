@@ -154,8 +154,9 @@
 
 	<nav>
 		<ul class='doghouse'>
-			<li><a><span><img src="/doggybeta/resources/images/로고test2.png"
-							style="margin-left: 50px; padding: 10px 10px;" width="80px"></span></a></li>
+			<li>
+			<img src="/doggybeta/resources/images/로고test2.png" style="margin: 0px 30px; width:70%">
+			</li>
 		</ul>
 
 		<a href='/doggybeta/jipsalogout'><span class='btn btn-1 btn-sign'>로그아웃</span></a>
@@ -306,6 +307,10 @@
 						location.href="/doggybeta/views/customerservice/checkMyLog.jsp";
 						})
 						 
+					}else{
+						$("#bookingalert").html($("#bookingalert").text()
+						+"<img src='/doggybeta/resources/images/cutepaw.png' style='width: 30px;'>")
+						
 					}
 
 			
