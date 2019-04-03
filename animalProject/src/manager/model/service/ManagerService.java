@@ -40,16 +40,6 @@ public class ManagerService {
 		return result;
 	}
 	
-	public int faqboardListCount() {
-		Connection conn = getConnection();
-		int result = manDao.faqboardListCount(conn);
-		if(result > 0)
-			commit(conn);
-		else
-			rollback(conn);
-		return result;
-	}
-	
 	public int tipboardListCount(String option, String word) {
 		Connection conn = getConnection();
 		int result = manDao.tipboardListCount(conn, option, word);
@@ -77,13 +67,7 @@ public class ManagerService {
 		return tList;
 	}
 
-	public ArrayList<Faq> selectFAQList(int currentPage, int pageList) {
-		Connection conn = getConnection();
-		ArrayList<Faq> faqList = manDao.selectFAQList(conn, currentPage, pageList);
-		close(conn);
-		
-		return faqList;
-	}
+
 
 
 	public ArrayList<Member> selectMemberList(HashMap<String, Object> listOpt) {
@@ -195,6 +179,15 @@ public class ManagerService {
 		return result;
 	}
 
+
+	public boolean checkLogoutManager(String managerId) {
+		Connection conn = getConnection();
+		boolean result = manDao.checkLogoutManager(conn, managerId);
+		close(conn);
+		
+		return result;
+  }
+
 	public ArrayList<Notice> searchNoticeList(HashMap<String, Object> listOpt) {
 		Connection conn = getConnection();
 		ArrayList<Notice> mlist = manDao.searchNoticeList(conn, listOpt);
@@ -225,6 +218,7 @@ public class ManagerService {
 		Notice notice = manDao.selectNotice(conn, noticeNo);
 		close(conn);
 		return notice;
+
 	}
 	
 }

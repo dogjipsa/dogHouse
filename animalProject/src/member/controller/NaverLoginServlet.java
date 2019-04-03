@@ -3,11 +3,9 @@ package member.controller;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.PrintWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
-import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -15,13 +13,10 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
-import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
-import member.model.dao.MemberDao;
 import member.model.service.MemberService;
 import member.model.vo.MakeNaverId;
 import member.model.vo.Member;
@@ -136,14 +131,17 @@ public class NaverLoginServlet extends HttpServlet {
 		    Member member = new Member();
 		    /*member.setUserId(id); 고유식별자*/
 		    int re = mService.selectCheckNaverCode(email); //토큰으로 하면 안됨. 1시간마다 갱신되니까.
-		    /*System.out.println("nls re : " + re);*/ //조회제대로 됐는지 확인하는 코드
+		    System.out.println("nls re : " + re); //조회제대로 됐는지 확인하는 코드
 		    if(re <= 0) { // db에 값이 없다면 인서트
 		    	String splitToken = access_token.substring(2, 15) + access_token.substring(32, 43);
 		    	/*System.out.println(splitToken + "<- 토큰나누기");*/ //제대로 섭스트링됐는지 확인용
-		    	member.setUserId(naverCode);
+		    	member.setUserId(naverRanId);
 		    	member.setEmail(email);
+		    	if(name != null)
+		    		member.setUserName(name);
+		    	else
+		    		member.setUserName(nickName);
 		    	member.setNaverCode(splitToken);
-		    	member.setUserName(naverRanId);
 		    	System.out.println("member : " + member.toString());
 		    	int result = mService.insertMember(member);
 		    	System.out.println("인서트 완료");
@@ -166,10 +164,14 @@ public class NaverLoginServlet extends HttpServlet {
 		    	Member mb = new Member();
 		    	String splitToken = access_token.substring(2, 15) + access_token.substring(32, 43);
 		    	/*System.out.println(splitToken + "<- 토큰나누기");*/ //제대로 섭스트링됐는지 확인용
-		    	mb.setUserId(naverCode);
+		    	mb.setUserId(naverRanId);
 		    	mb.setEmail(email);
 		    	mb.setNaverCode(splitToken);
-		    	mb.setUserName(naverRanId);
+		    	if(name != null)
+		    		member.setUserName(name);
+		    	else
+		    		member.setUserName(nickName);
+		    	
 		    	System.out.println("mb : " + mb.toString());
 		    	int result = mService.updateNaverMember(mb);
 		    	
