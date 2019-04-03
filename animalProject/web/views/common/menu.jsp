@@ -241,6 +241,8 @@
 					<span id="file-text"></span>
 				</span>
 			</div>
+			<p>자기 소개</p>
+			<textarea name="" id="" cols="20" rows="6"></textarea>
 			<p>펫시팅 장소</p>
 			<input name="postcode" id="sample6_postcode" class="ps_input" placeholder="우편번호" required>
 			<input type="button" onclick="sample6_execDaumPostcode()" id="post-search" value="우편번호 찾기">
