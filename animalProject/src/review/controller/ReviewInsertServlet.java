@@ -1,12 +1,15 @@
 package review.controller;
 
 import java.io.IOException;
+
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import booking.model.service.BookingService;
 import review.model.service.ReviewService;
 import review.model.vo.Review;
 
@@ -30,15 +33,25 @@ public class ReviewInsertServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		//booking_no를 넘겨받아야 함
 		Review review = new Review();
-		
 		review.setReviewContent(request.getParameter("reviewcontent"));
 		review.setPoint(request.getParameter("star-input"));
 		review.setUserId(request.getParameter("userid"));
-		System.out.println("bookingno 확인 : "+request.getParameter("bookingNo"));
-		review.setBookingNo(Integer.parseInt(request.getParameter("bookingNo")));
+		review.setBookingNo(Integer.parseInt(request.getParameter("bookingno")));
 		int result = new ReviewService().insertReview(review);
+		if(result <=0) {
+			RequestDispatcher view = request.getRequestDispatcher("views/review/reviewError.jsp");
+			request.setAttribute("message", "리뷰 등록 실패");
+			view.forward(request, response);
+		}
+		result = new BookingService().updateBookingStatusFour(review.getBookingNo());
+		if(result>0) {
+			response.sendRedirect("views/review/close.jsp");
+		}else {
+			RequestDispatcher view = request.getRequestDispatcher("views/review/reviewError.jsp");
+			request.setAttribute("message", "리뷰 수정 실패");
+			view.forward(request, response);
+		}
 		//후기작성이 완료 되면 "등록되었습니다" alert 
 	}
 

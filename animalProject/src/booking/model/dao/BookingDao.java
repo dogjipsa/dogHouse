@@ -314,5 +314,23 @@ public class BookingDao {
 		}
 		return count;
 	}
+
+	public int updateBookingStatusFour(Connection conn, int bookingNo) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String query = "UPDATE BOOKING SET BOOKING_PROGRESS = '4' WHERE BOOKING_NO = ?";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, bookingNo);
+		
+			result = pstmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}		
+		return result;
+	}
 	
 }
