@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" errorPage="questionError.jsp" %>
+    pageEncoding="UTF-8" errorPage="managerError.jsp" %>
 <%@ page import="member.model.vo.Member, question.model.vo.Question, answer.model.vo.Answer, java.util.ArrayList" %>
 <%
 	ArrayList<Question> list = (ArrayList<Question>)request.getAttribute("list");	
@@ -11,27 +11,28 @@
 	int endPage = ((Integer)request.getAttribute("endPage")).intValue();
 	int maxPage = ((Integer)request.getAttribute("maxPage")).intValue();
 	int currentPage = ((Integer)request.getAttribute("currentPage")).intValue();
+	
+	System.out.println("qList view : " + list);
 %>	    
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>doghouse</title>
-<link href="/doggybeta/resources/css/manager/managerQuestionList.css" rel="stylesheet" type="text/css">
+<link href="/doggybeta/resources/css/manager/managerBoardList.css" rel="stylesheet" type="text/css">
 <script type="text/javascript" src="/doggybeta/resources/js/jquery-3.3.1.min.js"></script>
 </head>
 <body>
-<%@ include file="../../../managerMainPage.jsp" %>
-<h1 align="center" style="color:white;">유저 문의내역  답변 시스템</h1>
+<%@ include file="../../views/common/managerMenu.jsp" %>
+<h2 align="center">유저 문의내역  답변 시스템</h2>
 <hr style="width:600px">
 <br>
 <div align="center">
 	<table style="text-align:center; border:1px; solid #dddddd">
 		<thead>
 		<tr>
-			<th style="background-color:#eeeee; text-align:center; color:white;">제목</th>
-			<th style="background-color:#eeeee; text-align:center; color:white;">날짜 </th>
-			<th style="background-color:#eeeee; text-align:center; color:white;">답변유무</th>		
+			<th style="background-color:#eeeee; text-align:center; color:magenta;">제목</th>
+			<th style="background-color:#eeeee; text-align:center; color:magenta;">날짜 </th>
 		</tr>
 		</thead>
 <% 
@@ -39,21 +40,14 @@
 %>
 <input type="hidden" name="qnum" id="qnum" value="<%= question.getQuestionNo() %>"> 
 	<tr>
-		<td align="left"><a href="/doggybeta/qdetail?no=<%= question.getQuestionNo() %>"><%= question.getQuestionTitle() %></a>
-		<td align="center"><%= question.getQuestionDate() %>&nbsp;&nbsp;&nbsp;&nbsp;</td>
-		<td align="center"> <%-- <% if(answer.getAnswerContent() != null){ %>
-									답변완료
-								<% }else{ %>
-									답변대기중..
-								<% } %> - --%>
-							<%= question.getQuestionReplyYn() %>
-								</td>
+		<td align="left"><a href="/doggybeta/manqdetail?qnum=<%= question.getQuestionNo() %>&page=<%= currentPage %>"><%= question.getQuestionTitle() %></a></td>
+		<td align="center"><%= question.getQuestionDate() %></td>
 	</tr>
 	<% } %>
 </table>	
 </div>
 <br>
-<%-- 페이징 처리 --%>
+<%-- <%-- 페이징 처리 --%>
 <div style="text-align:center;">
 	<% if(currentPage <= 1){ %>
 		[처음]&nbsp;&nbsp;
@@ -82,6 +76,6 @@
 	<% }else{ %>
 		<a href="/doggybeta/mansquestion?page=<%= maxPage %>">[마지막]</a>
 	<% } %>
-</div>	
+</div>	 --%>
 </body>
 </html>

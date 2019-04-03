@@ -4,6 +4,7 @@
 <%
 	ArrayList<Question> list = (ArrayList<Question>)request.getAttribute("list");	
 	
+
 	Answer answer = (Answer)request.getAttribute("answer");
 
 	int listCount = ((Integer)request.getAttribute("listCount")).intValue();
@@ -47,15 +48,17 @@
 </head>
 
 <body background="/doggybeta/resources/images/puppies_1.2.jpg">
+
 <%@ include file="../common/menu.jsp" %>
 <div id="wrap">
 <div id="cotent">
-	<h1 align="center" style="color:white;">나의 문의내역</h1>
-	<!-- <hr style="clear:both;"> -->
-
-<hr style="width:600px">
-<br>
+<br><br>
+	<h1 align="center" style="color:ghostWhite;"><%= loginUser.getUserId() %>&nbsp;의 문의내역</h1>
+	<hr align="center" style="width:600px">
+<br><br>
 <div align="center">
+
+
 <table style="text-align:center; border:1px; solid #dddddd">
 	<thead>
 	<tr>
@@ -68,22 +71,12 @@
 <% 
 	for(Question question : list){
 %>
+	<% if(loginUser.getUserId().equals(question.getUserId())){ %> 
 <input type="hidden" name="qnum" id="qnum" value="<%= question.getQuestionNo() %>"> 
-	<tr>		
-	<%-- <td><input type='text' value='<%= question.getQuestionNo()%>'></td> --%>
-
-	<td align="left">
-
-			<% if(loginUser != null){ %>
-				<a href="/doggybeta/qdetail?no=<%= question.getQuestionNo() %>"><%= question.getQuestionTitle() %></a>
-			<% }else{ %>
-				<%= question.getQuestionTitle() %>
-
-			<% } %> &nbsp;&nbsp;</td>
- 			
+	<tr>
+		<td align="left"><a href="/doggybeta/qdetail?no=<%= question.getQuestionNo() %>"><%= question.getQuestionTitle() %></a>&nbsp;&nbsp;&nbsp;&nbsp;</td>
 		<td align="center"><%= question.getQuestionDate() %>&nbsp;&nbsp;&nbsp;&nbsp;</td>
-		
-	 	<td align="center"> <%-- <% if(answer.getAnswerContent() != null){ %>
+		<td align="center"> <%-- <% if(answer.getAnswerContent() != null){ %>
 								답변완료
 							<% }else{ %>
 								답변대기중..
@@ -91,9 +84,7 @@
 						<%= question.getQuestionReplyYn() %>
 							</td>
 	</tr>
-
-
-<% } %>
+<% } }%>
 </table>
 </div>
 
@@ -127,6 +118,7 @@
 <% }else{ %>
 	<a href="/doggybeta/qlist?page=<%= maxPage %>">[마지막]</a>
 <% } %>
+
 </div>
 </div>
 

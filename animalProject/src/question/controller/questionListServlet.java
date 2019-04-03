@@ -73,7 +73,7 @@ public class questionListServlet extends HttpServlet {
 			view.forward(request, response);
 		}else {
 			view = request.getRequestDispatcher("views/question/questionError.jsp");
-			request.setAttribute("message", currentPage + "1:1문의 조회 실패!");
+			request.setAttribute("message", currentPage + "유저 1:1문의 조회 실패!");
 			view.forward(request, response);
 		}
 	}	

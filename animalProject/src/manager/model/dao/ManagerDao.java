@@ -974,14 +974,13 @@ public class ManagerDao {
 		return flist;
 	}
 
-
 	public ArrayList<Question> selectQuestionList(Connection conn, int limit, int currentPage) {
 		ArrayList<Question> list = new ArrayList<Question>();
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		
 		int startRow = 1;//(currentPage - 1) * limit + 1;
-		int endRow = startRow + limit - 1;
+		int endRow = startRow + limit;
 		System.out.println("디에오"+startRow + "=" + endRow);
 		String query = "SELECT * FROM (SELECT ROWNUM RNUM, QUESTION_NO, QUESTION_TITLE, "
 				+ "QUESTION_CONTENT, QUESTION_DATE, REPLY_YN, " 
@@ -1039,13 +1038,13 @@ public class ManagerDao {
 			if (rset.next()) {
 				result = rset.getInt(1);
 			}
-    }catch (Exception e) {
+		}catch (Exception e) {
 			e.printStackTrace();
 		} finally {
 			close(pstmt);
 			close(rset);
 		}
-    return result;
+		return result;
   }
   
 
