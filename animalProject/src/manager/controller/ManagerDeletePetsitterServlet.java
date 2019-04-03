@@ -12,16 +12,16 @@ import javax.servlet.http.HttpServletResponse;
 import manager.model.service.ManagerService;
 
 /**
- * Servlet implementation class ManagerMemberDeleteServlet
+ * Servlet implementation class ManagerDeletePetsitterServlet
  */
-@WebServlet("/manmdelete")
-public class ManagerMemberDeleteServlet extends HttpServlet {
+@WebServlet("/manpdelete")
+public class ManagerDeletePetsitterServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ManagerMemberDeleteServlet() {
+    public ManagerDeletePetsitterServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -30,25 +30,27 @@ public class ManagerMemberDeleteServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
 		//멤버 강퇴 처리용 컨트롤러
 		request.setCharacterEncoding("utf-8");
 		response.setContentType("text/html;charset=utf-8");
 		String []delId = request.getParameterValues("delId[]");
 		System.out.println(delId);
 		int result = 0;
-				
+						
 		for(int i = 0; i < delId.length; i ++) {
 			result = new ManagerService().managerDeleteMember(delId[i]);
-				}
+						}
 			PrintWriter out = response.getWriter();
 				if(result > 0) {
 					out.println("y");
 				} else {
 					out.print("n");
-				}
-			}
-	
+						}
+					}
+			
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doGet(request, response);

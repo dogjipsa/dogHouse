@@ -43,7 +43,6 @@ public class freeBoardDetailServlet extends HttpServlet {
 		if(request.getParameter("page") != null) {
 			currentPage = Integer.parseInt(request.getParameter("page"));}
 		
-		
 		int freeBoardNo = Integer.parseInt(request.getParameter("fnum"));
 		String freeBoardWriter = request.getParameter("fwriter");
 		String freeBoardContent = request.getParameter("fcontent");	

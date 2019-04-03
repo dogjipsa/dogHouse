@@ -586,7 +586,7 @@ public class ManagerDao {
 						   "FROM (SELECT ROWNUM RNUM, USER_ID, EMAIL, USER_NAME, ADDRESS, " + 
 						   "PHONE, JOB, PETSITTER, PRICE, USER_DATE, PASSWORD, USER_DELETE, " + 
 						   "USER_ORIGINFILE, USER_REFILE, NAVER_CODE, TITLE_IMG, REPORT_ADD " + 
-						   "FROM (SELECT * FROM MEMBER WHERE USER_DELETE IN('N', 'n', null) and petsitter = '0' " + 
+						   "FROM (SELECT * FROM MEMBER WHERE petsitter = '0' " + 
 						   "ORDER BY USER_ID DESC)) " + 
 						   "WHERE RNUM >= ? AND RNUM <= ?";
 			
@@ -636,7 +636,7 @@ public class ManagerDao {
 					   "FROM (SELECT ROWNUM RNUM, USER_ID, EMAIL, USER_NAME, ADDRESS, " + 
 					   "PHONE, JOB, PETSITTER, PRICE, USER_DATE, PASSWORD, USER_DELETE, " + 
 					   "USER_ORIGINFILE, USER_REFILE, NAVER_CODE, TITLE_IMG, REPORT_ADD " + 
-					   "FROM (SELECT * FROM MEMBER WHERE USER_ID LIKE ? and USER_DELETE IN('N', 'n', null) and petsitter = '0' " + 
+					   "FROM (SELECT * FROM MEMBER WHERE USER_ID LIKE ? and petsitter = '0' " + 
 					   "ORDER BY USER_ID DESC)) " + 
 					   "WHERE RNUM >= ? AND RNUM <= ?";
 			
@@ -686,7 +686,7 @@ public class ManagerDao {
 					   "FROM (SELECT ROWNUM RNUM, USER_ID, EMAIL, USER_NAME, ADDRESS, " + 
 					   "PHONE, JOB, PETSITTER, PRICE, USER_DATE, PASSWORD, USER_DELETE, " + 
 					   "USER_ORIGINFILE, USER_REFILE, NAVER_CODE, TITLE_IMG, REPORT_ADD  " + 
-					   "FROM (SELECT * FROM MEMBER WHERE USER_NAME LIKE ? and USER_DELETE IN('N', 'n', null)  and petsitter = '0' " + 
+					   "FROM (SELECT * FROM MEMBER WHERE USER_NAME LIKE ? and petsitter = '0' " + 
 					   "ORDER BY USER_ID DESC)) " + 
 					   "WHERE RNUM >= ? AND RNUM <= ?";
 			
@@ -747,7 +747,7 @@ public class ManagerDao {
 						   "FROM (SELECT ROWNUM RNUM, USER_ID, EMAIL, USER_NAME, ADDRESS, " + 
 						   "PHONE, JOB, PETSITTER, PRICE, USER_DATE, PASSWORD, USER_DELETE, " + 
 						   "USER_ORIGINFILE, USER_REFILE, NAVER_CODE ,TITLE_IMG, REPORT_ADD " + 
-						   "FROM (SELECT * FROM MEMBER WHERE USER_DELETE IN('N', 'n', null) and petsitter = '1' or petsitter = '2' " + 
+						   "FROM (SELECT * FROM MEMBER WHERE petsitter = '1' or petsitter = '2' " + 
 						   "ORDER BY USER_ID DESC)) " + 
 						   "WHERE RNUM >= ? AND RNUM <= ?";
 			
@@ -797,7 +797,7 @@ public class ManagerDao {
 					   "FROM (SELECT ROWNUM RNUM, USER_ID, EMAIL, USER_NAME, ADDRESS, " + 
 					   "PHONE, JOB, PETSITTER, PRICE, USER_DATE, PASSWORD, USER_DELETE, " + 
 					   "USER_ORIGINFILE, USER_REFILE, NAVER_CODE, TITLE_IMG, REPORT_ADD  " + 
-					   "FROM (SELECT * FROM MEMBER WHERE USER_ID LIKE ? and USER_DELETE IN('N', 'n', null) and petsitter = '1' or petsitter = '2' " + 
+					   "FROM (SELECT * FROM MEMBER WHERE USER_ID = ? and petsitter = '1' or petsitter = '2' " + 
 					   "ORDER BY USER_ID DESC)) " + 
 					   "WHERE RNUM >= ? AND RNUM <= ?";
 			
@@ -847,7 +847,7 @@ public class ManagerDao {
 					   "FROM (SELECT ROWNUM RNUM, USER_ID, EMAIL, USER_NAME, ADDRESS, " + 
 					   "PHONE, JOB, PETSITTER, PRICE, USER_DATE, PASSWORD, USER_DELETE, " + 
 					   "USER_ORIGINFILE, USER_REFILE, NAVER_CODE, TITLE_IMG, REPORT_ADD  " + 
-					   "FROM (SELECT * FROM MEMBER WHERE USER_NAME LIKE ? and USER_DELETE IN('N', 'n', null)  and petsitter = '1' or petsitter = '2' " + 
+					   "FROM (SELECT * FROM MEMBER WHERE USER_ID = ? and petsitter = '1' or petsitter = '2' " + 
 					   "ORDER BY USER_ID DESC)) " + 
 					   "WHERE RNUM >= ? AND RNUM <= ?";
 			
@@ -1100,11 +1100,11 @@ public class ManagerDao {
 		int result = 0;
 		PreparedStatement pstmt = null;
 		
-		String query = "update member set member_delete = 'y' where user_id = ?";
+		String query = "update member set user_delete = 'y' where user_id = ?";
 		
 		try {
 			pstmt = conn.prepareStatement(query);				
-			pstmt.setInt(1, Integer.parseInt(delId));
+			pstmt.setString(1, delId);
 			
 			result = pstmt.executeUpdate();
 
@@ -1149,6 +1149,274 @@ public class ManagerDao {
 
 		}
 		return tlist;
+	}
+
+	public ArrayList<Notice> searchNoticeList(Connection conn, HashMap<String, Object> listOpt) {
+		ArrayList<Notice> list = new ArrayList<>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String opt = (String)listOpt.get("opt");
+		String inputdata = (String)listOpt.get("inputdata");
+		int startRow = (Integer)listOpt.get("startRow");
+		
+		
+		if(opt == null){
+			
+			String query = "SELECT * " + 
+						   "FROM (SELECT ROWNUM RNUM, NOTICE_NO, NOTICE_TITLE, NOTICE_CONTENT, NOTICE_DATE, " + 
+						   "NOTICE_ORIGINFILE, NOTICE_VIEWS, MANAGER_ID, NOTICE_DELETE, NOTICE_REFILE " + 
+						   "FROM (SELECT * FROM NOTICE " + 
+						   "ORDER BY NOTICE_NO ASC)) " + 
+						   "WHERE RNUM >= ? AND RNUM <= ?";
+			
+			try {
+				pstmt = conn.prepareStatement(query);
+				pstmt.setInt(1, startRow);
+				pstmt.setInt(2, startRow+9);
+				
+				rset = pstmt.executeQuery();
+							
+				while(rset.next()) {
+					
+					Notice notice = new Notice();
+					
+					notice.setNoticeNo(rset.getInt("NOTICE_NO"));
+					notice.setNoticeTitle(rset.getString("NOTICE_TITLE"));
+					notice.setNoticeContent(rset.getString("NOTICE_CONTENT"));
+					notice.setNoticeDate(rset.getDate("NOTICE_DATE"));
+					notice.setNoticeOriginFile(rset.getString("NOTICE_ORIGINFILE"));
+					notice.setNoticeViews(rset.getInt("NOTICE_VIEWS"));
+					notice.setManagerId(rset.getString("MANAGER_ID"));
+					notice.setNoticeDelete(rset.getString("NOTICE_DELETE"));
+					notice.setNoticeReFile(rset.getString("NOTICE_REFILE"));
+					
+					list.add(notice);
+					
+					}
+		
+			} catch (Exception e) {
+				e.printStackTrace();
+			}finally {
+				close(rset);
+				close(pstmt);
+			}	
+			
+			
+		}else if(opt.equals("0")) {
+			
+			String query = "SELECT * " + 
+					   "FROM (SELECT ROWNUM RNUM, NOTICE_NO, NOTICE_TITLE, NOTICE_CONTENT, NOTICE_DATE, " + 
+					   "NOTICE_ORIGINFILE, NOTICE_VIEWS, MANAGER_ID, NOTICE_DELETE, NOTICE_REFILE " + 
+					   "FROM (SELECT * FROM NOTICE WHERE NOTICE_TITLE = ? " + 
+					   "ORDER BY NOTICE_NO ASC)) " + 
+					   "WHERE RNUM >= ? AND RNUM <= ?";
+			
+			try {
+				pstmt = conn.prepareStatement(query);
+				pstmt.setString(1, "%" + inputdata + "%");
+				pstmt.setInt(2, startRow);
+				pstmt.setInt(3, startRow+9);
+								
+				rset = pstmt.executeQuery();
+				
+					while(rset.next()) {					
+						Notice notice = new Notice();
+						
+						notice.setNoticeNo(rset.getInt("NOTICE_NO"));
+						notice.setNoticeTitle(rset.getString("NOTICE_TITLE"));
+						notice.setNoticeContent(rset.getString("NOTICE_CONTENT"));
+						notice.setNoticeDate(rset.getDate("NOTICE_DATE"));
+						notice.setNoticeOriginFile(rset.getString("NOTICE_ORIGINFILE"));
+						notice.setNoticeViews(rset.getInt("NOTICE_VIEWS"));
+						notice.setManagerId(rset.getString("MANAGER_ID"));
+						notice.setNoticeDelete(rset.getString("NOTICE_DELETE"));
+						notice.setNoticeReFile(rset.getString("NOTICE_REFILE"));
+						
+						list.add(notice);
+						}
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+			}finally {
+				close(rset);
+				close(pstmt);
+			}
+			
+			
+			
+		}else if(opt.equals("1")) {
+			
+			String query = "SELECT * " + 
+					   "FROM (SELECT ROWNUM RNUM, NOTICE_NO, NOTICE_TITLE, NOTICE_CONTENT, NOTICE_DATE, " + 
+					   "NOTICE_ORIGINFILE, NOTICE_VIEWS, MANAGER_ID, NOTICE_DELETE, NOTICE_REFILE " + 
+					   "FROM (SELECT * FROM NOTICE WHERE NOTICE_CONTENT = ? " + 
+					   "ORDER BY NOTICE_NO ASC)) " + 
+					   "WHERE RNUM >= ? AND RNUM <= ?";
+			
+			try {
+				pstmt = conn.prepareStatement(query);
+				pstmt.setString(1, "%" + inputdata + "%");
+				pstmt.setInt(2, startRow);
+				pstmt.setInt(3, startRow+9);
+				
+				
+				rset = pstmt.executeQuery();
+				
+					while(rset.next()) {
+						Notice notice = new Notice();
+						
+						notice.setNoticeNo(rset.getInt("NOTICE_NO"));
+						notice.setNoticeTitle(rset.getString("NOTICE_TITLE"));
+						notice.setNoticeContent(rset.getString("NOTICE_CONTENT"));
+						notice.setNoticeDate(rset.getDate("NOTICE_DATE"));
+						notice.setNoticeOriginFile(rset.getString("NOTICE_ORIGINFILE"));
+						notice.setNoticeViews(rset.getInt("NOTICE_VIEWS"));
+						notice.setManagerId(rset.getString("MANAGER_ID"));
+						notice.setNoticeDelete(rset.getString("NOTICE_DELETE"));
+						notice.setNoticeReFile(rset.getString("NOTICE_REFILE"));
+						
+						list.add(notice);
+						}
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+			}finally {
+				close(rset);
+				close(pstmt);
+			}
+		}
+		return list;
+		
+		
+	}
+
+	
+	public int getNoticeListCount(Connection conn, HashMap<String, Object> listOpt) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String opt = (String)listOpt.get("opt");
+		String inputdata = (String)listOpt.get("inputdata");
+		int listCount = 1;
+		
+		if(opt == null) {
+		
+		String query = "select count(*) from notice";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				listCount = rset.getInt(1);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		}else if(opt.equals("0")) {
+			
+			String query = "select count(*) from notice where notice_title = ?";
+			
+			try {
+				pstmt = conn.prepareStatement(query);
+				pstmt.setString(1, "%" + inputdata + "%");
+				
+				rset = pstmt.executeQuery();
+				
+				if(rset.next()) {
+					listCount = rset.getInt(1);
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}finally {
+				close(rset);
+				close(pstmt);
+			}
+			
+			
+		}else if(opt.equals("1")) {
+			
+			String query = "select count(*) from notice where notice_content = ?";
+			
+			try {
+				pstmt = conn.prepareStatement(query);
+				pstmt.setString(1, "%" + inputdata + "%");
+				
+				rset = pstmt.executeQuery();
+				
+				if(rset.next()) {
+					listCount = rset.getInt(1);
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}finally {
+				close(rset);
+				close(pstmt);
+			}	
+	}
+		return listCount;
+	}
+
+	public int addReadCount(Connection conn, int noticeNo) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		
+		String query = "update notice "
+				+ "set notice_views = notice_views + 1 "
+				+ "where notice_no = ?";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, noticeNo);
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
+	public Notice selectNotice(Connection conn, int noticeNo) {
+		Notice notice = new Notice();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String query = "select * from notice where notice_no = ?";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, noticeNo);
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				notice = new Notice();
+				
+				notice.setNoticeNo(rset.getInt("NOTICE_NO"));
+				notice.setNoticeTitle(rset.getString("NOTICE_TITLE"));
+				notice.setNoticeContent(rset.getString("NOTICE_CONTENT"));
+				notice.setNoticeDate(rset.getDate("NOTICE_DATE"));
+				notice.setNoticeOriginFile(rset.getString("NOTICE_ORIGINFILE"));
+				notice.setNoticeViews(rset.getInt("NOTICE_VIEWS"));
+				notice.setManagerId(rset.getString("MANAGER_ID"));
+				notice.setNoticeDelete(rset.getString("NOTICE_DELETE"));
+				notice.setNoticeReFile(rset.getString("NOTICE_REFILE"));	
+			}		
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+	
+		return notice;
 	}
 	
 }
