@@ -23,13 +23,14 @@ public class Member implements Serializable {
 	private String naverCode;
 	private String TitleImg;
 	private int reportAdd;
+	private String pContent;
 
 	public Member() {
 	}
 
 	public Member(String userId, String userPwd, String email, String userName, String phone, String address,
 			String job, String petSitter, int price, Date userDate, String userDelete, String useroriginfile,
-			String userrefile, String naverCode, String titleImg, int reportAdd) {
+			String userrefile, String naverCode, String titleImg, int reportAdd, String pContent) {
 		
 		super();
 		this.userId = userId;
@@ -46,7 +47,7 @@ public class Member implements Serializable {
 		this.useroriginfile = useroriginfile;
 		this.userrefile = userrefile;
 		this.naverCode = naverCode;
-		TitleImg = titleImg;
+		this.TitleImg = titleImg;
 		this.reportAdd = reportAdd;
 	}
 
@@ -178,17 +179,25 @@ public class Member implements Serializable {
 		TitleImg = titleImg;
 	}
 
+	public String getpContent() {
+		return pContent;
+	}
+
+	public void setpContent(String pContent) {
+		this.pContent = pContent;
+	}
+
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
 
 	@Override
 	public String toString() {
-		return "Member [userId=" + userId + ", userPwd=" + userPwd + ", email=" + email + ", userName=" + userName
-				+ ", phone=" + phone + ", address=" + address + ", job=" + job + ", petSitter=" + petSitter + ", price="
-				+ price + ", userDate=" + userDate + ", userDelete=" + userDelete + ", useroriginfile=" + useroriginfile
-				+ ", userrefile=" + userrefile + ", naverCode=" + naverCode + ", TitleImg=" + TitleImg + ", reportAdd " + "]";
+		return userId + ", " + userPwd + ", " + email + ", " + userName + ", " + phone + ", " + address + ", " + job
+				+ ", " + petSitter + ", " + price + ", " + userDate + ", " + userDelete + ", " + useroriginfile + ", "
+				+ userrefile + ", " + naverCode + ", " + TitleImg + ", " + reportAdd + ", " + pContent;
 	}
+
 	
 	
 	

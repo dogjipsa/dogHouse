@@ -45,6 +45,9 @@ function requestPetListAjax() {
             const json = JSON.parse(xhr.responseText);
 
             for (let i in json.list) {
+                let etc = "";
+                if(json.list[i].etc)
+                    etc = json.list[i].etc.replace(/\+/gi, " ");
                 const petInfo = {
                     'pno': json.list[i].pno,
                     'pname': decodeURIComponent(json.list[i].pname),
@@ -53,7 +56,7 @@ function requestPetListAjax() {
                     'size': decodeURIComponent(json.list[i].size),
                     'gender': json.list[i].gender,
                     'neutral': json.list[i].neutral,
-                    'etc': json.list[i].etc.replace(/\+/gi, " "),
+                    'etc': etc,
                     'userid': json.list[i].userid,
                     'origin': json.list[i].origin,
                     'rename': json.list[i].rename
@@ -547,7 +550,6 @@ function requestHostAjax() {
             tbody.firstChild.click();
     }
     const requestData = 'userid=' + encodeURIComponent(userid.value) + '&page=' + encodeURIComponent(chosenPage);
-
     xhr.open("POST", "/doggybeta/hservice");
     xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
     xhr.send(requestData);
@@ -585,7 +587,6 @@ function requestBkAjax() {
 
     xhr.onload = function () {
         if (xhr.responseText) {
-
             const json = JSON.parse(xhr.responseText);
             while (tbody.firstChild) {
                 tbody.removeChild(tbody.firstChild);
@@ -599,6 +600,7 @@ function requestBkAjax() {
                     case '1': pg = "예약 완료"; break;
                     case '2': pg = "결제 대기"; break;
                     case '3': pg = "결제 완료"; break;
+                    case '4': pg = "결제 완료"; break;
                 }
                 switch (json.list[i].kind) {
                     case '0': kind = "[당일] 펫시터 우리집으로 부르기 서비스"; break;
