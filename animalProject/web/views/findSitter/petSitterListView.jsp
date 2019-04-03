@@ -33,31 +33,34 @@
 
 <script>
  $(function(){
+	 var arr = new Array();
+		$("#detail input[type=hidden]").each(function(index){
+			/* alert($(this).val()); */
+			arr[index] = $(this).val();
+		});
+		alert(arr);
+	 var jsonData = JSON.stringify(arr);
+	 jQuery.ajaxSettings.traditional = true;
+	 console.log(arr);
 	 
 		$.ajax({
 			type : 'post',
 			cache: false,
 			datatype: 'json',
-			data : {petuserid : $("#petuserid").val()},
-			url : '/doggybeta/fpinfo',
+			data : {petsitterid : arr},
+			url : '/doggybeta/ronlist',
 			success:function(data){
-				console.log(data);	
-				console.log(data.img);
-				$("#pet").html($("#pet").text() 
-						+ "<table id='petinfotable'>"
-						+ "<tr><th>강아지 이름</th><td>" + decodeURIComponent(data.petname) + "</td></tr>"  
-						+ "<tr><th>강아지 나이</th><td>" + data.petage + "살</td></tr>"
-						+ "<tr><th>강아지 크기</th><td>" + decodeURIComponent(data.petsize) + "</td></tr>"
-						+ "<tr><th>견종</th><td>" + decodeURIComponent(data.breads) + "</td></tr>"
-						+ "<tr><th>성별</th><td>" + data.gender + "</td></tr>"
-						+ "<tr><th>중성화여부</th><td>" + data.yesorno + "</td></tr>"
-						+ "<tr><td colspan='2' align='center'>" + "<img src='/doggybeta/files/pet/" + decodeURIComponent(data.img) + "'style='width: 100px; height: auto; border-radius:70px; border: 3px solid gold;'>" + "</td></tr></table>"
-						 );
-				$("#petno").val(data.petno);
+				$("#rating").html($("#rating").text() 
+						+ data.rating)
+			},  //success
+			error       : function(request, status, error) {
+		        alert("code: "+request.status+"\n"+"message: "+request.responseText+"\n"+"error: "+error);
+		    },
+		    success     : function(msg) {
+		        alert(msg);        
+		    }//error
 
-			}  //success
-			
-			});
+		});
 		 
  });	
 
@@ -103,7 +106,7 @@ body{
 #searchpettable{
 	background-color: #f3f6f7;
 	padding: 30px 30px;
-	margin: 10px 10px;
+	margin: 10px 50px;
 	height: auto;
 	width: 600px;
 				
@@ -138,7 +141,8 @@ left: 650px;
 font-size: 12px;
 }
  #detail table{`
-	margin: 8px;
+	margin: 8px 50px;
+	
 } 
 
 #detailtable:hover{
@@ -170,56 +174,10 @@ font-size: 12px;
  
 			<table id=searchpettable>
 				<tr>
-					<th width="100">서비스</th>
-					<th width="200">주소</th>
+					<th width="300">주소</th>
 					
 				</tr>		
 				<tr>
-
-					<td>  
-					<%if(service != null){ %>
-					<%if(service.equals("1")) {%>
-						<select name="service" style="width:180px; height:30px;">
-						  <option>선택</option>
-						  <option value="0">[당일]우리집으로 부르기</option>
-						  <option value="1" selected>우리집으로 부르기</option>
-						  <option value="2">[당일]펫시터 집에 맡기기</option>
-						  <option value="3">펫시터 집에 맡기기</option>
-						</select>
-					<%}else if(service.equals("2")) {%>
-					<select name="service" style="width:180px; height:30px;">
-						<option>선택</option>
-						  <option value="0">[당일]우리집으로 부르기</option>
-						  <option value="1" >우리집으로 부르기</option>
-						  <option value="2" selected>[당일]펫시터 집에 맡기기</option>
-						  <option value="3">펫시터 집에 맡기기</option>
-						</select>	
-					<%}else if(service.equals("3")) {%>	
-						<select name="service" style="width:180px; height:30px;">
-						<option>선택</option>
-						  <option value="0">[당일]우리집으로 부르기</option>
-						  <option value="1" >우리집으로 부르기</option>
-						  <option value="2" >[당일]펫시터 집에 맡기기</option>
-						  <option value="3" selected>펫시터 집에 맡기기</option>
-						</select>	
-					<%}else if(service.equals("0")) {%>	
-					<select name="service" style="width:180px; height:30px;">
-					<option>선택</option>
-					  <option value="0" selected>[당일]우리집으로 부르기</option>
-					  <option value="1" >우리집으로 부르기</option>
-					  <option value="2" >[당일]펫시터 집에 맡기기</option>
-					  <option value="3" >펫시터 집에 맡기기</option>
-					</select>
-					<%}} else{%>
-					<select name="service" style="width:180px; height:30px;">
-					<option selected>선택</option>
-						  <option value="0" >[당일]우리집으로 부르기</option>
-						  <option value="1" >우리집으로 부르기</option>
-						  <option value="2" >[당일]펫시터 집에 맡기기</option>
-						  <option value="3">펫시터 집에 맡기기</option>
-						</select>
-					<%} %>					
-					</td>
 					<td>
 					  <select name="jido" onChange="categoryChange(this)" style="width:80px; height:30px;">
 						<option selected>-선택-</option>
@@ -250,18 +208,21 @@ font-size: 12px;
 
 <br><br>
 <!-- 조건에 대한 결과 -->
-<div id="detailmain" style="width:1300px" >
+<div id="detailmain" style="width:1300px; margin: 0px 50px;" >
 <div id="petinfo"  style="float: left; width: 50%">
-검색 결과 : <%=count %> 건  
+검색 결과 : <%=count %> 건  <input type="hidden" id="count" name="count" value="<%=count %>">
 
 <hr>
 <br>
-
+	
 	<div id="detail" style="overflow-x: hidden; overflow-y:scroll; height:550px;">	
 		<%if(list != null) {for(Member m : list){%>
+		
+		<input type="hidden" value="<%=m.getUserId() %>">
+		
 		<div id="detailtable" style="float:left; width: 50%;">
 		<table style="border: 1px solid #d2dee1; width: 300px; height: 350px" 
-		onclick="location.href='/doggybeta/sitterdetail?petSitterId=<%=m.getUserId()%>&service=<%=service%>'">					
+		onclick="location.href='/doggybeta/sitterdetail?petSitterId=<%=m.getUserId()%>&service=<%=service%>'">							
 		<tr>
 		<td>
 		
@@ -283,7 +244,8 @@ font-size: 12px;
          </tr>
          <tr><td><%=m.getUserName() %>에게 서비스를 신청해보세요!</td></tr>
          <tr><td><%=m.getAddress() %></td></tr>
-         <tr><td>가격 : <%=m.getPrice() %>/1일</td></tr>         
+         <tr><td>가격 : <%=m.getPrice() %>/1일 </td></tr>
+         <tr><td id=rating>평점 : </td></tr>         
 		</table>
 		
 		</div>

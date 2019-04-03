@@ -9,6 +9,7 @@
 <head>
 <title>Dog House</title>
 <link rel="shortcut icon" href="/doggybeta/resources/images/favicon.ico">
+<link href="https://fonts.googleapis.com/css?family=Sunflower:300,500,700&amp;subset=korean" rel="stylesheet" type="text/css">
 <link href="/doggybeta/resources/css/footer.css" rel="stylesheet" type="text/css">
 <script type="text/javascript" src="/doggybeta/resources/js/jquery-3.3.1.min.js"></script>
 <script type="text/javascript">
@@ -38,7 +39,10 @@ function showDiv(){
 }
 </script>
 <style type="text/css">
-
+body {
+	font-family: 'Sunflower', 'sans-serif';
+	font-size: 15pt;
+}
 /* 화면에 보여지는 글 목록 테이블 */
 h2{
    position: relative;
@@ -69,8 +73,9 @@ h2{
     vertical-align: top;
     color: #369;
     border-bottom: 3px solid #036;}
+    
 .board tr{
-line-height : 2em;
+	line-height : 2em;
 }
 /* list_table 에서 사용되는 tbody */
 .board tbody td { 
@@ -165,7 +170,7 @@ line-height : 2em;
 	</select>
 	<input type="text" size="20" name="search"> 
 	<input type="submit" value="검색">
-	<% if(loginUser != null){ %>
+	<% if(loginUser.equals("manager")){ %>
 	<input type="button" onclick="showWriteForm();" value="글쓰기">
 <%} %>
 	</form>
