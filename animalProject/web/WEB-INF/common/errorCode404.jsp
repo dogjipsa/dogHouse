@@ -21,7 +21,7 @@ response.setStatus(200);
     입력하신 페이지 주소가 정확한 지 다시 한 번 확인해주시기 바랍니다.</ü>
   <p class="output">로그인 화면으로 돌아가기 <a href="/doggybeta/index.jsp">링크 1</a> 또는 <a href="../doggybeta/index.jsp">링크 2</a></p>
   <br>
-  <p class="output">기타 문의 사항은 dogjipsa@kh.or 로 문의해주시기 바랍니다.</p>
+  <p class="output">기타 문의 사항은 dogjipsa@kh.org 로 문의해주시기 바랍니다.</p>
 </div>
 </body>
 </html>

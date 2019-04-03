@@ -97,7 +97,7 @@ $(function(){
 			<tbody>
 				<tr>
 					<td class='firstTd'><input type='checkbox' class='checkDel' value='<%= tb.getTipBoardNo() %>' name='delNo'/>삭제</td>
-					<td>자유</td>
+					<td>팁</td>
 					<td><%= tb.getTipBoardNo() %></td>
 					<td class='fourthTd'><a href='/doggybeta/mantbdetail?fnum=<%= tb.getTipBoardNo() %>&page=<%= currentPage %>'><%= tb.getTipBoardTitle() %></a></td>
 					<td><%= tb.getUserId() %></td>

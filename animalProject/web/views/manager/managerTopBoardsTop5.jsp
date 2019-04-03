@@ -20,11 +20,11 @@ $(function() {
 			var json = JSON.parse(jsonStr);
 			$.each(data.tipboardlist, function(i) {
 				var items = [];
-				items.push('<td>팁</td>');
-				items.push('<td>' + json.tipboardlist[i].tnum + '</td>');
-				items.push("<td><a href='/doggybeta/mantbdetail?fnum="+ json.tipboardlist[i].tnum +"&page=1'>" 
+				items.push('<td style="width: 100px;">팁</td>');
+				items.push('<td style="width: 100px;">' + json.tipboardlist[i].tnum + '</td>');
+				items.push("<td style='width: 300px'><a href='/doggybeta/mantbdetail?fnum="+ json.tipboardlist[i].tnum +"&page=1'>" 
 						+ decodeURIComponent(json.tipboardlist[i].ttitle).replace(/\+/gi, " ") + '</td>');
-				items.push('<td>' + json.tipboardlist[i].trcount + '</td>');
+				items.push('<td style="width: 100px;">' + json.tipboardlist[i].trcount + '</td>');
 				$('<tr/>', {
 					html: items
 				}).appendTo('#toptb');

@@ -41,7 +41,6 @@ function showWriteForm(){
 
 #fbhtml {
 	font-family: 'Sunflower', 'sans-serif';
-	font-size: 15pt;
 }
 	
 	#searchT{ 
@@ -60,6 +59,7 @@ h2{
    padding: 2rem 0px;
 }
 .fboard { 
+font-size: 15pt;
    position: relative;
    left : 150px;
    width: 60%;

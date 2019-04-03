@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8" errorPage='managerError.jsp'%>
 <%@ page import='manager.model.vo.Manager, java.util.ArrayList, countvisitor.model.vo.CountVisitor'%>
 <%
 	Manager logiManager = (Manager)session.getAttribute("loginmanager"); 
@@ -27,15 +27,22 @@ $(function() {
 			var content = '오늘 방문회원 ['+data.cntToday+']';
 			var contenty = '어제 방문회원 ['+data.cntYesterday+']';
 			var contentt = '전체 방문회원 ['+data.cntTotal+']';
+			
 			$('#cntvisit2').val(contenty)
 			$('#cntvisit').val(content);
 			$('#cntvisit3').val(contentt);
 		}
 	})//ajax
 });//ready
+function isEmpty(str){  
+    if(typeof str == "undefined" || str == null || str == "")
+        return str="0";
+    else
+        return false ;
+}
 </script>
 </head>
-<body>
+<body id='mmbody'>
 <% if(logiManager != null) { %>
 <nav>
 	<ul class='mVertical-menu'>

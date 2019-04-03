@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8" errorPage='memberError.jsp'%>
 <%@ page import="java.net.URLEncoder" %>
 <%@ page import="java.security.SecureRandom" %>
 <%@ page import="java.math.BigInteger" %>
@@ -57,7 +57,7 @@
 
 	<input type='checkbox' id='menu_state' checked />
 	<div id='mask'> </div>
-	<nav>
+	<nav class='leftNav'>
 		<ul class='doghouse'>
 			<li><a><span>doghouse</span></a></li>
 		</ul>
@@ -105,6 +105,14 @@
 			</li>
 
 		</ul>
+		<br><br>
+		<div class='mfooter'>
+		dogjipsa@kh.org <br>
+		2019-03-04<br>
+		대표  김동욱<br>
+		tel) 02-1322-2222 <br> 
+		서울시 강남구 역삼동 777
+		</div>
 	</nav>
 	<!-- Login Form ---------------------------------------------------------------------------- -->
 	<div class='loginbody'>
@@ -152,21 +160,21 @@
 	<% } else { %>
 	<input type='checkbox' id='menu_state' checked />
 
-	<nav>
+	<nav class='leftNav'>
 		<ul class='doghouse'>
 			<li>
 			<img src="/doggybeta/resources/images/로고test2.png" style="margin: 0px 30px; width:70%">
 			</li>
 		</ul>
 
-		<a href='/doggybeta/jipsalogout'><span class='btn btn-1 btn-sign'>로그아웃</span></a>
 		<% if(access_token != null) { %>
 		<!-- 네이버로그인이 제대로 되었음을 확인 -->
-
-			<%= loginUser.getUserId() %> 님 환영합니다
+			<div class='welcomeUser'><%= loginUser.getUserId() %> 님 환영합니다!</div>
 		<% } else { %>
-			<%= loginUser.getUserName() %> 님 환영합니다 <div id="bookingalert"></div>
+			<div class='welcomeUser'><%= loginUser.getUserName() %> 님 환영합니다!<br><br> 
+			<div id="bookingalert"></div></div>
 		<% } %>
+		<a  href='/doggybeta/jipsalogout'><span class='btn btn-1 btn-sign'>로그아웃</span></a>
 		<!-- -------------------------------------------------------------------------  -->
 		<ul class='icon' id='icon'>
 			<li><a href='/doggybeta' id='icon1'> <span>&nbsp;&nbsp;&nbsp;홈</span>
@@ -216,8 +224,14 @@
 				</ul>
 			</li>
 		</ul>
-	
-	</div>
+		<br>
+		<div class='mfooter'>
+		dogjipsa@kh.org <br>
+		2019-03-04<br>
+		대표  김동욱<br>
+		tel) 02-1322-2222 <br> 
+		서울시 강남구 역삼동 777
+		</div>
 	</nav>
 
 	<!-- 펫시터 신청 버튼 클릭시 생성 보여지는 HTML 부분. 로그인 부분 구현시 인풋에 세션으로 값 넣어놓고 readonly 처리할 것  -->
@@ -297,11 +311,11 @@
 				success: function (data) {
 					console.log("hi");
 					console.log(data.count);
-					if (data.count != 0) {
-						$("#bookingalert").html($("#bookingalert").text()
-							+ "<img src='/doggybeta/resources/images/alarm.png' style='width: 20px;'>"
-							+ "(" + data.count + ")")
 
+					if(data.count != 0){
+					$("#bookingalert").html($("#bookingalert").text()
+							+ "<img src='/doggybeta/resources/images/alarm.png' style='width: 20px;'>" 
+							+ "(" + data.count + ")");
 
 					$("#bookingalert").on("click", function(e){
 						location.href="/doggybeta/views/customerservice/checkMyLog.jsp";
@@ -312,7 +326,6 @@
 						+"<img src='/doggybeta/resources/images/cutepaw.png' style='width: 30px;'>")
 						
 					}
-
 			
 				},  //success
 				error :  function( jqXHR, textStatus, errorThrown ) {
