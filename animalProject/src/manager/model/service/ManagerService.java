@@ -3,7 +3,7 @@ package manager.model.service;
 import manager.model.dao.ManagerDao;
 import manager.model.vo.Manager;
 import member.model.vo.Member;
-import notice.model.vo.Notice;
+import question.model.vo.Question;
 import tipboard.model.vo.TipBoard;
 
 import static common.JDBCTemplate.*;
@@ -145,4 +145,22 @@ public class ManagerService {
 		return flist;
 	}
 
+	public ArrayList<Question> selectQuestionList(int currentPage, int limit) {
+		Connection conn = getConnection();
+		ArrayList<Question> list = manDao.selectQuestionList(conn,currentPage,limit);
+		System.out.println("서비스"+currentPage + "=" + limit + "=" + list );
+		close(conn);
+		return list;
+	}
+
+	public int QuestionListCount() {
+		Connection conn = getConnection();
+		int result = manDao.questionListCount(conn);
+		if(result > 0)
+			commit(conn);
+		else
+			rollback(conn);
+		return result;
+	}
+	
 }

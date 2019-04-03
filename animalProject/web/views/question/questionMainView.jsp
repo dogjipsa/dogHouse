@@ -3,6 +3,7 @@
 <%@ page import="question.model.vo.*, java.util.*, question.model.vo.Question" %>
 <% 
 	ArrayList<Question> list = (ArrayList<Question>)request.getAttribute("list");	
+	Member loginUser2 = (Member)session.getAttribute("loginUser");
 %>
  <!DOCTYPE html>
 <html>
