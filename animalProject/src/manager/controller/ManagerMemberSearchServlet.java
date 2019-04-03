@@ -48,8 +48,7 @@ public class ManagerMemberSearchServlet extends HttpServlet {
 		listOpt.put("opt", opt);
 		listOpt.put("inputdata", inputdata);
 		listOpt.put("startRow", currentPage*10-9);// 1, 11, 21, 31....
-		/*System.out.println("listOpt : " + listOpt.get("opt"));
-		*/
+
 		ManagerService mservice = new ManagerService();
 		
 		ArrayList<Member> memberList = mservice.selectMemberList(listOpt);
@@ -76,9 +75,6 @@ public class ManagerMemberSearchServlet extends HttpServlet {
 		if(maxPage < endPage) {
 		endPage = maxPage;
 		}
-		/*for(Member m : memberList) {
-			System.out.println("list : " +  m);
-		}*/
 		
 		response.setContentType("text/html; charset=utf-8");
 		RequestDispatcher view = null;

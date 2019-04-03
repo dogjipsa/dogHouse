@@ -7,6 +7,7 @@
 <title>도그하우스</title>
 </head>
 <body>
+
 <div>
 <%@ include file='../views/common/managerMenu.jsp'%>
 </div>
@@ -16,5 +17,6 @@
 <div>
 <%@ include file="../views/manager/managerTopBoardsTop5.jsp"%>
 </div>
+
 </body>
 </html>

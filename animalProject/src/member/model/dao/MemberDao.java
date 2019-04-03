@@ -19,11 +19,9 @@ public class MemberDao {
 		Member member = null;
 		PreparedStatement pstat = null;
 		ResultSet rSet = null;
-
+		
 		StringBuffer query = new StringBuffer();
 		query.append("select * from member where user_id = ? and password = ?");
-		/*System.out.println(userid +", "+userpwd);*/ //값 잘 받는지 확인
-
 		try {
 			pstat = conn.prepareStatement(query.toString());
 			pstat.setString(1, userid);
@@ -54,6 +52,84 @@ public class MemberDao {
 		}
 		
 		return member;
+	}
+	public boolean checkLogoutUser(Connection conn, String userid) {
+		boolean result = false;
+		Member member = null;
+		PreparedStatement pstat = null;
+		ResultSet rSet = null;
+		
+		StringBuffer query = new StringBuffer();
+		query.append("select * from member where user_id = ?");
+		try {
+			pstat = conn.prepareStatement(query.toString());
+			pstat.setString(1, userid);
+			rSet = pstat.executeQuery();
+			
+			if(rSet.next()) {
+				member = new Member();
+				member.setUserId(userid);
+				member.setEmail(rSet.getString("email"));
+				member.setUserName(rSet.getString("user_name"));
+				member.setAddress(rSet.getString("address"));
+				member.setPhone(rSet.getString("phone"));
+				member.setJob(rSet.getString("job"));
+				member.setPetSitter(rSet.getString("petsitter"));
+				member.setPrice(rSet.getInt("price"));
+				member.setUserDate(rSet.getDate("user_date"));
+				member.setUserPwd(rSet.getString("password"));
+				member.setUserDelete(rSet.getString("user_delete"));
+				member.setNaverCode(rSet.getString("NAVER_CODE"));
+			}
+			if(member != null)
+				result = true;
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(rSet);
+			close(pstat);
+		}
+		
+		return result;
+	}
+	public boolean checkLogoutNUser(Connection conn, String userid) {
+		boolean result = false;
+		Member member = null;
+		PreparedStatement pstat = null;
+		ResultSet rSet = null;
+		
+		StringBuffer query = new StringBuffer();
+		query.append("select * from member where email = ?");
+		try {
+			pstat = conn.prepareStatement(query.toString());
+			pstat.setString(1, userid);
+			rSet = pstat.executeQuery();
+			
+			if(rSet.next()) {
+				member = new Member();
+				member.setUserId(userid);
+				member.setEmail(rSet.getString("email"));
+				member.setUserName(rSet.getString("user_name"));
+				member.setAddress(rSet.getString("address"));
+				member.setPhone(rSet.getString("phone"));
+				member.setJob(rSet.getString("job"));
+				member.setPetSitter(rSet.getString("petsitter"));
+				member.setPrice(rSet.getInt("price"));
+				member.setUserDate(rSet.getDate("user_date"));
+				member.setUserPwd(rSet.getString("password"));
+				member.setUserDelete(rSet.getString("user_delete"));
+				member.setNaverCode(rSet.getString("NAVER_CODE"));
+			}
+			if(member != null)
+				result = true;
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(rSet);
+			close(pstat);
+		}
+		
+		return result;
 	}
 	public Member loginNaverCheck(Connection conn, String userid, String token) {
 		// 네이버으로 가입한 회원 로그인 확인
@@ -149,7 +225,7 @@ public class MemberDao {
 		PreparedStatement pstat = null;
 		StringBuffer query = new StringBuffer();
 		query.append("insert into member values ( ")
-			 .append("?,?,?,?,?,?,default,?,sysdate,?,default,?,?,?)");
+		 	 .append("?,?,?,?,?,?,default,?,?,?,default,?,?,?,?,0)");
 		
 		try {
 			
@@ -162,10 +238,12 @@ public class MemberDao {
 			pstat.setString(5, member.getPhone());
 			pstat.setString(6, member.getJob());
 			pstat.setInt(7, member.getPrice());
-			pstat.setString(8, member.getUserPwd());
-			pstat.setString(9, member.getUseroriginfile());
-			pstat.setString(10, member.getUserrefile());
-			pstat.setString(11, member.getNaverCode());
+			pstat.setDate(8, member.getUserDate());
+			pstat.setString(9, member.getUserPwd());
+			pstat.setString(10, member.getUseroriginfile());
+			pstat.setString(11, member.getUserrefile());
+			pstat.setString(12, member.getNaverCode());
+			pstat.setString(13, member.getTitleImg());
 			
 			result = pstat.executeUpdate();
 			System.out.println("DAO : " + result);
@@ -263,14 +341,14 @@ public class MemberDao {
 		PreparedStatement pstat = null;
 		
 		StringBuffer query = new StringBuffer();
-		query.append("update member set ");
-		query.append("naver_code = ?, user_name = ? ");
-		query.append("where user_id = ?");
+		query.append("update member set ")
+			 .append("naver_code = ?, user_id = ? ")
+		     .append("where email = ?");
 		try {
 			pstat = conn.prepareStatement(query.toString());
 			pstat.setString(1, member.getNaverCode());
-			pstat.setString(2, member.getUserName());
-			pstat.setString(3, member.getUserId());
+			pstat.setString(2, member.getUserId());
+			pstat.setString(3, member.getEmail());
 			
 			result = pstat.executeUpdate();
 			System.out.println("naver update dao : " + result);

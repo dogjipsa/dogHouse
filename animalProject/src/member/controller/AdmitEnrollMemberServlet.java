@@ -94,7 +94,7 @@ public class AdmitEnrollMemberServlet extends HttpServlet {
 			byte[] anon = "토론토에 갔다가 남극세종기지에도 갔다. 심해생물. welcome!".getBytes();
 			buffer.append(anon + "\n");
 			buffer.append("회원가입 인증메일입니다." +"\n");
-			buffer.append("회원가입 절차를 계속 진행해주시기 바랍니다");
+			buffer.append("회원가입 절차를 계속 진행해주시기 바랍니다" + "\n");
 			buffer.append("인증번호 : [ " + admitNum + " ] ");
 			msg.setText(buffer.toString()); // 잘 됨.
 			
@@ -110,7 +110,6 @@ public class AdmitEnrollMemberServlet extends HttpServlet {
 			out.println(job.toJSONString());
 			out.flush();
 			out.close();
-			
 			//System.out.println(job.toJSONString() + " <- job"); 제대로 넘어오는지 확인
 			
 		} catch (Exception e) {

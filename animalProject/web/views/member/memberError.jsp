@@ -10,17 +10,32 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<link href="/doggybeta/resources/css/svErrorStyle.css" rel="stylesheet" type="text/css">
 </head>
-<body>
-
-<h1>회원서비스 오류</h1>
+<body id='erbody'>
 <% if(exception != null) { %>
-JSP예외발생 : <%= exception.getMessage() %> <br>
+	<div class="notfound">
+		<div class="notfound">
+			<div class="notfound-404">
+				<h1>:(</h1>
+			</div>
+			<h2>회원서비스에 문제가 발생하였습니다</h2>
+			<p><%= exception.getMessage() %></p>
+			<a href="/doggybeta/index.jsp">홈으로</a>
+		</div>
+	</div>
 <% } else { %>
-서블릿이 전달한 메세지 : <%= message %>    <br>
+<div class="notfound">
+		<div class="notfound">
+			<div class="notfound-404">
+				<h1>:(</h1>
+			</div>
+			<h2>회원서비스에 문제가 발생하였습니다</h2>
+			<p><%= message %></p>
+			<a href="/doggybeta/index.jsp">홈으로</a>
+		</div>
+	</div>
 <% } %>
-<br>
-<a href=/doggybeta/index.jsp> 메인페이지로 이동 </a>
-
+</body>
 </body>
 </html>

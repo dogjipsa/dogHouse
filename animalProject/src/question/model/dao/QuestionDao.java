@@ -40,6 +40,7 @@ public class QuestionDao {
 	
 	public ArrayList<Question> selectList(Connection conn, int currentPage, int limit) {
 		ArrayList<Question> list = new ArrayList<Question>();
+		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		
 		int startRow = (currentPage - 1) * limit + 1;
@@ -143,7 +144,7 @@ public class QuestionDao {
 		int result = 0;
 		PreparedStatement pstmt = null;
 		
-		String query = "insert into question values (seq_QUESTIONno.nextval, ?, ?, sysdate, '대기중', 'user01', ?, ?, seq_QUESTIONno.nextval, 0, 0, 0)";
+		String query = "insert into question values (seq_QUESTIONno.nextval, ?, ?, sysdate, '대기중', ?, ?, ?, seq_QUESTIONno.nextval, 0, 0, 0)";
 		
 		try {
 			pstmt = conn.prepareStatement(query);
@@ -151,9 +152,9 @@ public class QuestionDao {
 			pstmt.setString(1, question.getQuestionTitle());			
 			pstmt.setString(2, question.getQuestionContent());
 			/*pstmt.setString(3, question.getQuestionReplyYn());*/
-			/*pstmt.setString(4, question.getUserId());*/
-			pstmt.setString(3, question.getQuestionOriginalFileName());
-			pstmt.setString(4, question.getQuestionRenameFileName());			
+			pstmt.setString(3, question.getUserId());
+			pstmt.setString(4, question.getQuestionOriginalFileName());
+			pstmt.setString(5, question.getQuestionRenameFileName());			
 			/*pstmt.setInt(8, question.getQuestionRef());*/
 			/*pstmt.setInt(5, question.getQuestionReplyRef());*/
 			/*pstmt.setInt(6, question.getQuestionReplyLev());*/

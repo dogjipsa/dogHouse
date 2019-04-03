@@ -27,6 +27,8 @@
 <meta charset="UTF-8">
 <title></title>
 <link href="/doggybeta/resources/css/manager/managerBoardList.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="/doggybeta/resources/js/jquery-3.3.1.min.js"></script>
+<script type="text/javascript">
 $(function(){
     //최상단 체크박스 클릭
     $("#checkAll").click(function(){
@@ -51,25 +53,27 @@ $(function(){
     	
     	console.log(chkBoxArray);
     	alert(chkBoxArray);
-    	if(confirm('정말 삭제하시겠습니까?')) {
+    	if(confirm('정말 강퇴하시겠습니까?')) {
     		$.ajax({
-    			url: '/doggybeta/mandelete',
+    			url: '/doggybeta/manmdelete',
     			datatype: 'text',
     			data: { delId: chkBoxArray },
     			type: 'post',
     			cache: false,
     			success: function(data) {
     				chageVal(data);
-    				alert('변경이 완료되었습니다!');
+    				alert('강퇴하였습니다!');
     			} //success
     		});//ajax
+    		/* document.location.reload(); */
         } //if confirm
     }); //delete click
+    
 });
 </script>
 </head>
 <body>
-<%@ include file="../../../managerMainPage.jsp" %>
+<%@ include file="../../views/common/managerMenu.jsp" %>
 <section>
 <div class="mcontainer">
 	<h3>일반회원 관리</h3>
@@ -77,7 +81,7 @@ $(function(){
 		<table class='t' style="text-align:center; border:1px solid #dddddd"> 
 			<thead>
 				<tr>
-					<th style="background-color: #eeeeee; text-align: center;">추방</th>
+					<th style="background-color: #eeeeee; text-align: center;">강퇴</th>
 					<th style="background-color: #eeeeee; text-align: center;">신고당한횟수</th>
 					<th style="background-color: #eeeeee; text-align: center;">아이디</th>
 					<th style="background-color: #eeeeee; text-align: center;">이메일</th>
@@ -94,7 +98,7 @@ $(function(){
 			
 			<tbody>
 				<tr>
-					<td class='ban'><input type='checkbox'/>삭제</td>
+					<td class='firstTd'><input type='checkbox' class='checkDel' value='<%= m.getUserId() %>' name='delId'/>강퇴</td>
 					<td><%= m.getReportAdd() %>
 					<td><%= m.getUserId() %></td>
 					<td><%= m.getEmail() %></td>
@@ -165,6 +169,11 @@ $(function(){
 <%  } %>
 <% } %>
 </div> 	  
+
+	<div>
+		<input type="checkbox" id="checkAll" class='styled-checkbox'/>전체선택
+		<input type='button' id='del' value='강퇴하기'/></div>
+	</div>
 
 <div id="footer"><%@ include file="..//common/footer.jsp"%></div>
 </body>
