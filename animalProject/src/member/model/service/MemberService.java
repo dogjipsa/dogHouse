@@ -235,6 +235,18 @@ public class MemberService {
 		return dlist;
 	}
 
+	public boolean checkLogoutUser(String userId) {
+		Connection conn = getConnection();
+		boolean result = mdao.checkLogoutUser(conn, userId);
+		return result;
+	}
+
+	public boolean checkLogoutNUser(String userId) {
+		Connection conn = getConnection();
+		boolean result = mdao.checkLogoutNUser(conn, userId);
+		return result;
+	}
+
 
 	
 

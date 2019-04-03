@@ -3,7 +3,7 @@ package manager.model.service;
 import manager.model.dao.ManagerDao;
 import manager.model.vo.Manager;
 import member.model.vo.Member;
-import notice.model.vo.Notice;
+import question.model.vo.Question;
 import tipboard.model.vo.TipBoard;
 
 import static common.JDBCTemplate.*;
@@ -40,16 +40,6 @@ public class ManagerService {
 		return result;
 	}
 	
-	public int faqboardListCount() {
-		Connection conn = getConnection();
-		int result = manDao.faqboardListCount(conn);
-		if(result > 0)
-			commit(conn);
-		else
-			rollback(conn);
-		return result;
-	}
-	
 	public int tipboardListCount(String option, String word) {
 		Connection conn = getConnection();
 		int result = manDao.tipboardListCount(conn, option, word);
@@ -77,13 +67,7 @@ public class ManagerService {
 		return tList;
 	}
 
-	public ArrayList<Faq> selectFAQList(int currentPage, int pageList) {
-		Connection conn = getConnection();
-		ArrayList<Faq> faqList = manDao.selectFAQList(conn, currentPage, pageList);
-		close(conn);
-		
-		return faqList;
-	}
+
 
 
 	public ArrayList<Member> selectMemberList(HashMap<String, Object> listOpt) {
@@ -156,6 +140,26 @@ public class ManagerService {
 		return flist;
 	}
 
+
+	public ArrayList<Question> selectQuestionList(int currentPage, int limit) {
+		Connection conn = getConnection();
+		ArrayList<Question> list = manDao.selectQuestionList(conn,currentPage,limit);
+		System.out.println("서비스"+currentPage + "=" + limit + "=" + list );
+		close(conn);
+		return list;
+	}
+
+	public int QuestionListCount() {
+		Connection conn = getConnection();
+		int result = manDao.questionListCount(conn);
+		if(result > 0)
+			commit(conn);
+		else
+			rollback(conn);
+    close(conn);
+    return result;
+  }
+
 	public ArrayList<TipBoard> selectReadCountTBTop5() {
 		Connection conn = getConnection();
 		ArrayList<TipBoard> tlist = manDao.selectReadCountTBTop5(conn);
@@ -174,6 +178,15 @@ public class ManagerService {
 		rollback(conn);
 		return result;
 	}
+
+
+	public boolean checkLogoutManager(String managerId) {
+		Connection conn = getConnection();
+		boolean result = manDao.checkLogoutManager(conn, managerId);
+		close(conn);
+		
+		return result;
+  }
 
 	public ArrayList<Notice> searchNoticeList(HashMap<String, Object> listOpt) {
 		Connection conn = getConnection();
@@ -205,6 +218,7 @@ public class ManagerService {
 		Notice notice = manDao.selectNotice(conn, noticeNo);
 		close(conn);
 		return notice;
+
 	}
 	
 }

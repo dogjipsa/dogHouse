@@ -11,10 +11,10 @@ import java.util.HashMap;
 
 import faq.model.vo.Faq;
 import freeboard.model.vo.FreeBoard;
-import manager.model.service.ManagerService;
 import manager.model.vo.Manager;
 import member.model.vo.Member;
 import notice.model.vo.Notice;
+import question.model.vo.Question;
 import tipboard.model.vo.TipBoard;
 
 public class ManagerDao {
@@ -52,10 +52,38 @@ public class ManagerDao {
 		}
 		return loginManager;
 	}
+	public boolean checkLogoutManager(Connection conn, String managerId) {
+		boolean result = false;
+		Manager loginManager = null;
+		PreparedStatement pstat = null;
+		ResultSet rSet = null;
+
+		String query = "select * from manager where manager_id = ?";
+
+		try {
+			pstat = conn.prepareStatement(query);
+			pstat.setString(1, managerId);
+			rSet = pstat.executeQuery();
+
+			if (rSet.next()) {
+				loginManager = new Manager();
+				loginManager.setManagerId(managerId);
+				System.out.println(loginManager + "<- loginManager Dao");
+			}
+			if(loginManager != null) {
+				result = true;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(rSet);
+			close(pstat);
+		}
+		return result;
+	}
 
 	public ArrayList<FreeBoard> selectFreeBoardList(Connection conn, int currentPage, int pageList, String option, String word) {
-		// 게시판 목록 조회용
-		// 일단 자유게시판 하나만 실험
+		// 자유 게시판 목록 조회용
 		ArrayList<FreeBoard> freeboardList = new ArrayList<>();
 		PreparedStatement pstat = null;
 		ResultSet rSet = null;
@@ -114,14 +142,6 @@ public class ManagerDao {
 					freeBoard.setFreeboardDelete(rSet.getString("freeboard_delete"));
 					freeBoard.setFreeboardContent(rSet.getString("freeboard_content"));
 					freeBoard.setFreeboardDate(rSet.getDate("freeboard_date"));
-					/*
-					 * freeBoard.setFreeboardOriginalFile(rSet.getString("freeboard_originfile"));
-					 * freeBoard.setFreeboardViews(rSet.getInt("freeboard_views"));
-					 * freeBoard.setFreeboardRecommend(rSet.getInt("freeboard_recommend"));
-					 * freeBoard.setFreeboardDelete(rSet.getString("freeboard_delete"));
-					 * freeBoard.setFreeboardRefile(rSet.getString("freeboard_refile"));
-					 */
-					/* System.out.println(managerList + "<- list dao"); */
 					freeboardList.add(freeBoard);
 				}
 			} else if(option.equals("writer")) { //2 if
@@ -225,7 +245,6 @@ public class ManagerDao {
 			close(rSet);
 			close(stat);
 		}
-		System.out.println("디비 리스트 카운트 : " + result);
 
 		return result;
 	}
@@ -263,34 +282,11 @@ public class ManagerDao {
 			close(rSet);
 			close(stat);
 		}
-		System.out.println("디비 리스트 카운트 : " + result);
-
-		return result;
-	}
-	public int faqboardListCount(Connection conn) {
-		int result = 0;
-		Statement stat = null;
-		ResultSet rSet = null;
-		String query = ("select count(*) from faq");
-		try {
-			stat = conn.createStatement();
-			rSet = stat.executeQuery(query);
-
-			if (rSet.next()) {
-				result = rSet.getInt(1);
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			close(rSet);
-			close(stat);
-		}
 
 		return result;
 	}
 
-	public ArrayList<TipBoard> selectTipBoardList(Connection conn, int currentPage, int pageList, String option,
-			String word) {
+	public ArrayList<TipBoard> selectTipBoardList(Connection conn, int currentPage, int pageList, String option, String word) {
 		// 관리자 페이지 팁게시판 목록 조회용
 		ArrayList<TipBoard> tipboardList = new ArrayList<>();
 		PreparedStatement pstat = null;
@@ -458,47 +454,6 @@ public class ManagerDao {
 		
 		return result;
 	}
-
-	public ArrayList<Faq> selectFAQList(Connection conn, int currentPage, int pageList) {
-		ArrayList<Faq> faqList = new ArrayList<>();
-		PreparedStatement pstat = null;
-		ResultSet rSet = null;
-
-		int startCount = (currentPage - 1) * pageList + 1;
-		int endCount = currentPage * pageList;
-
-		StringBuffer query = new StringBuffer();
-		query.append("select b.rnum, b.faq_no, b.manager_id, b.faq_title, b.faq_content, b.faq_date ")
-				.append("from ( select rownum as rnum, a.faq_no, a.manager_id, a.faq_title, a.faq_content, a.faq_date ")
-				.append("from ( select faq_no, manager_id, faq_title, faq_content, faq_date ")
-				.append("from faq order by faq_date) a ").append("where rownum <= ?) b ")
-				.append("where b.rnum >= ?");
-		try {
-			pstat = conn.prepareStatement(query.toString());
-			pstat.setInt(1, endCount);
-			pstat.setInt(2, startCount);
-			rSet = pstat.executeQuery();
-
-			while (rSet.next()) {
-				Faq faq = new Faq();
-				faq.setFaqTitle(rSet.getString("faq_title"));
-				faq.setManagerId(rSet.getString("manager_id"));
-				faq.setFaqNo(rSet.getInt("faq_no"));
-				faq.setFaqContent(rSet.getString("faq_content"));
-				faq.setFaqDate(rSet.getDate("faq_date"));
-				
-				faqList.add(faq);
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			close(rSet);
-			close(pstat);
-		}
-
-		return faqList;
-	}
-	
 	
 	public int memberListCount(Connection conn, HashMap<String, Object> listOpt) {
 		PreparedStatement pstmt = null;
@@ -1020,6 +975,81 @@ public class ManagerDao {
 		return flist;
 	}
 
+
+	public ArrayList<Question> selectQuestionList(Connection conn, int limit, int currentPage) {
+		ArrayList<Question> list = new ArrayList<Question>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		int startRow = 1;//(currentPage - 1) * limit + 1;
+		int endRow = startRow + limit - 1;
+		System.out.println("디에오"+startRow + "=" + endRow);
+		String query = "SELECT * FROM (SELECT ROWNUM RNUM, QUESTION_NO, QUESTION_TITLE, "
+				+ "QUESTION_CONTENT, QUESTION_DATE, REPLY_YN, " 
+				+ "USER_ID, QUESTION_ORIGINAL_FILENAME, " 
+				+ "QUESTION_RENAME_FILENAME, QUESTION_REF, "
+				+ "QUESTION_REPLY_REF, QUESTION_REPLY_LEV, " 
+				+ "QUESTION_REPLY_SEQ "
+				+ "FROM (SELECT * FROM QUESTION ORDER BY QUESTION_REF DESC, QUESTION_REPLY_REF ASC, "
+				+ "QUESTION_REPLY_LEV ASC, QUESTION_REPLY_SEQ ASC)) WHERE RNUM >= ? AND RNUM <= ?";
+
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, startRow);
+			pstmt.setInt(2, endRow);
+			rset = pstmt.executeQuery();
+
+			while (rset.next()) {
+				Question question = new Question();
+
+				question.setQuestionNo(rset.getInt("question_no"));
+				question.setQuestionTitle(rset.getString("question_title"));
+				question.setQuestionContent(rset.getString("question_content"));
+				question.setQuestionDate(rset.getDate("question_date"));
+				question.setQuestionReplyYn(rset.getString("reply_yn"));
+				question.setUserId(rset.getString("user_id"));				
+				question.setQuestionOriginalFileName(rset.getString("question_original_filename"));
+				question.setQuestionRenameFileName(rset.getString("question_rename_filename"));
+				question.setQuestionRef(rset.getInt("question_ref"));
+				question.setQuestionReplyRef(rset.getInt("question_reply_ref"));
+				question.setQuestionReplyLev(rset.getInt("question_reply_lev"));
+				question.setQuestionReplySeq(rset.getInt("question_reply_seq"));
+
+				list.add(question);
+				System.out.println(question);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+			close(rset);
+		}
+
+		return list;
+	}
+
+	public int questionListCount(Connection conn) {
+		PreparedStatement pstmt =null;
+		ResultSet rset = null;
+		int result =0;
+		String query ="select count(*) from question";
+		try {
+			pstmt = conn.prepareStatement(query);
+			rset = pstmt.executeQuery();
+
+			if (rset.next()) {
+				result = rset.getInt(1);
+			}
+    }catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+			close(rset);
+		}
+    return result
+  }
+  
+
 	public int managerDeleteMember(Connection conn, String delId) {
 		int result = 0;
 		PreparedStatement pstmt = null;
@@ -1031,14 +1061,16 @@ public class ManagerDao {
 			pstmt.setString(1, delId);
 			
 			result = pstmt.executeUpdate();
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}finally {
+
+			close(rset);
 			close(pstmt);
 		}
-	  return result;	
-	}
+		return result;
+	} 
 
 	public ArrayList<TipBoard> selectReadCountTBTop5(Connection conn) {
 		ArrayList<TipBoard> tlist = new ArrayList<> ();
@@ -1068,6 +1100,7 @@ public class ManagerDao {
 		} finally {
 			close(rSet);
 			close(pstat);
+
 		}
 		return tlist;
 	}

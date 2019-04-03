@@ -188,7 +188,7 @@ public class PetDao {
 		Pet pet = new Pet();
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
-		String query = "SELECT PET_NAME, PET_BREADS, TRUNC(MONTHS_BETWEEN(sysdate, pet_date)/12) as AGE, PET_SIZE, PET_GENDER, PET_NEUTRALIZE, PET_CHARATER, PET_REFILE FROM PET WHERE USER_ID = ?";
+		String query = "SELECT PET_NAME, PET_BREADS, TRUNC(MONTHS_BETWEEN(sysdate, pet_date)/12) as AGE, PET_SIZE, PET_GENDER, PET_NEUTRALIZE, PET_CHARATER, PET_REFILE, PET_NO FROM PET WHERE USER_ID = ?";
 		try {
 			pstmt = conn.prepareStatement(query);
 			pstmt.setString(1, petSitterId);
@@ -202,8 +202,8 @@ public class PetDao {
 				pet.setPetGender(rset.getString("PET_GENDER"));
 				pet.setPetNeutralize(rset.getString("PET_NEUTRALIZE"));
 				pet.setPetCharater(rset.getString("PET_CHARATER"));
-        pet.setRenameFileName(rset.getString("PET_REFILE"));
-				
+				pet.setRenameFileName(rset.getString("PET_REFILE"));
+				pet.setPetNo(rset.getInt("PET_NO"));
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

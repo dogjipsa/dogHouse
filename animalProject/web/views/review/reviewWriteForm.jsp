@@ -3,6 +3,7 @@
 <%@ page import='member.model.vo.Member' %>
 <%
 Member loginUser = (Member)session.getAttribute("loginUser");
+String bookingNo = request.getParameter("bookingNo");
 %>
 <!doctype html>
 <html>
@@ -130,9 +131,16 @@ input[type=submit]:hover {
   
      function closeWindow() {  
     	/* console.log($("input[name=star-input]").val(); */
-       	alert('후기작성이 완료되었습니다');
-        window.close();  
-           
+       	//setTimeout(function(){  }, 3000);  
+       	
+     alert('후기작성이 완료되었습니다');
+   // window.close(); 
+    	
+       	 /* setTimeout(function () { 
+       		alert('후기작성이 완료되었습니다');
+       			window.close();
+       		}, 3000);  */
+       //	window.close();
      }   
 
      
@@ -140,9 +148,10 @@ input[type=submit]:hover {
 
 <!-- <a href="#" onClick="javascript:window.close();">닫기</a> -->  
 <div class="container">
-  <%System.out.println("뷰단에서 bookingNo 가져오는지 : " + request.getParameter("bookingNo")); %>
-  <form action="/doggybeta/rinsert?bookingNo=<%=request.getParameter("bookingNo")%>">
+  <%System.out.println("뷰단에서 bookingNo 가져오는지 : " + bookingNo); %>
+  <form action="/doggybeta/rinsert">
   <input type="hidden" name="userid" value="<%=loginUser.getUserId()%>">
+  <input type="hidden" name="bookingno" value="<%=bookingNo%>">
   <h3 align="center">후기작성</h3>
  <!--  <div class="row">
     <div class="col-25">

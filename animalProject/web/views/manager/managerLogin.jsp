@@ -15,22 +15,26 @@
 </script>
 </head>
 <body>
-<div class='lnwrapper'>
 <% if(loginManager == null) { %>
-<div class='lncon'>
-<h1>로그인페이지</h1>
-<form action='/doggybeta/dhMLogin' class='lnform'>
-아이디 : <input type='text' name='managerid' required placeholder='ID'/>
-비밀번호 : <input type='password' name='managerpwd' required placeholder='PASSWORD'/>
-	<a href='/doggybeta/dhMLogin'>
-	<input type="submit" name="Login" value="Login" class="login-submit" id='btnLogin' /></a><br>
-</form>
+<h1 id='h11'>ADMIN LOGIN</h1>
+<div class='inputinfo'>
+	<div class='superout'>
+		<div class='lncon'>
+			<div class='lncon-2'>
+			<form action='/doggybeta/dhMLogin' class='lnform'>
+				<input type='text' class='inputid-1' name='managerid' required placeholder='ID'/>
+				<input type='password' class='inputid-1' name='managerpwd' required placeholder='PASSWORD'/>
+				<a href='/doggybeta/dhMLogin'>
+				<input type="submit" name="Login" value="Login" class="login-submit" id='btnLogin' /></a><br>
+			</form>
+			</div>
+		</div>
+	</div>
 </div>
 <% 
 	} else {
 		 response.sendRedirect("/doggybeta/views/manager/managerLogin.jsp");
 	}
 %>
-</div>
 </body>
 </html>

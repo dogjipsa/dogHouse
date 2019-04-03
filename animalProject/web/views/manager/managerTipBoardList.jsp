@@ -178,8 +178,5 @@ $(function(){
 	</div>
 </div>
 </section>
-<%-- <% } else { %>
-<% pageContext.forward("/views/manager/managerLogin.jsp"); %>
-<% } %> --%>
 </body>
 </html>

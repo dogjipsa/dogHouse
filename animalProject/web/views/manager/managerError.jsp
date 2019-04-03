@@ -6,12 +6,32 @@
 <head>
 <meta charset="UTF-8">
 <title>도그하우스</title>
+<link href="/doggybeta/resources/css/svErrorStyle.css" rel="stylesheet" type="text/css">
 </head>
 <body>
 <% if(exception != null) { %>
-JSP예외발생 : <%= exception.getMessage() %> <br>
+	<div id="notfound">
+		<div class="notfound">
+			<div class="notfound-404">
+				<h1>:(</h1>
+			</div>
+			<h2>!!</h2>
+			<p><%= exception.getMessage() %></p>
+			<a href="/doggybeta/index.jsp">home page</a>
+		</div>
+	</div>
 <% } else { %>
-서블릿이 전달한 메세지 : <%= message %>    <br>
+<div id="notfound">
+		<div class="notfound">
+			<div class="notfound-404">
+				<h1>:(</h1>
+			</div>
+			<h2>!!</h2>
+			<p><%= message %></p>
+			<a href="/doggybeta/index.jsp">home page</a>
+		</div>
+	</div>
 <% } %>
 </body>
 </html>
+

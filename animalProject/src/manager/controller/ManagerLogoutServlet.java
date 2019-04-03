@@ -32,9 +32,14 @@ public class ManagerLogoutServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// 관리자페이지 로그아웃
 		HttpSession session = request.getSession(false);
-		if(session != null) {
+		Manager m = (Manager)session.getAttribute("loginmanager");
+		System.out.println("관리자 m : " + m.getManagerId());
+		boolean result = new ManagerService().checkLogoutManager(m.getManagerId());
+		
+		if(session != null && result == true) {
 			//로그인상태이다.
-			session.invalidate();
+			session.removeAttribute("loginmanager");
+			/*session.invalidate();*/
 			response.sendRedirect("/doggybeta/views/manager/managerLogin.jsp"); //로그아웃시 첫화면 뜨게함.
 		}
 	}

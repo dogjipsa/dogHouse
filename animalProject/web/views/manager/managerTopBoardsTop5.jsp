@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8" errorPage="managerError.jsp"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -40,8 +40,8 @@ $(function() {
 </head>
 <body>
 <div>
+<h3 id='tbh'>팁 게시판 최신글</h3>
 <table class='tfree' style="text-align:center; border:1px solid #dddddd">
-	<h3 align='center'>팁 게시판 최신글</h3>
 	<thead> 
 		<tr>
 			<th style="background-color: #eeeeee; text-align: center;">분류</th>

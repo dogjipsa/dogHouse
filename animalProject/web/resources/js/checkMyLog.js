@@ -643,6 +643,11 @@ function requestBkAjax() {
                         popupOpen(tableForm.bookingNo);
                     });
                     tr.appendChild(td).appendChild(button);
+                } else if(json.list[i].progress === "4"){
+                    const td = document.createElement('td');
+                    const button = document.createElement("button");
+                    button.textContent = "내 리뷰 확인하기";
+                    tr.appendChild(td).appendChild(button);
                 } else {
                     const td = document.createElement('td');
                     td.textContent = "진행 중";
