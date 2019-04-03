@@ -56,22 +56,26 @@
   color: #fff;
   font-size: 12px;
 }
+.ps_reg_form textarea {
+  background: transparent;
+  outline: none;
+  color: #fff;
+  font-size: 12px;
+}
 .ps_reg_form .section1 label {
 	color : white;
 }
 
 .ps_reg_form .section2 .image_box{
-	height: 200px;
+	height: 180px;
 	display: flex;
 	flex-direction: column;
-	align-items: right;
 	justify-content: space-between;
 }
 
 .ps_reg_form .section2 .image_box .image_box_pic {
-	width: 80%;
-	margin-left: 5%;
-	height: 50%;
+	width: 70%;
+	height: 70%;
 }
 .ps_reg_form .section3 #reg_map_box{
 	border:1px solid rgba(255,255,255,0.2);
@@ -85,12 +89,12 @@
   display:block;
   border: none;
   outline: none;
-  width: 80%;
-  height:25px;
+  
+  height:20px;
   background: #58B19F;
   border-radius: 5px;
   color: #fff;
-  font-size: 14px;
+  font-size: 12px;
   text-align: center;
 }
 #ppics_upload {
