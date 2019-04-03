@@ -981,7 +981,7 @@ public class ManagerDao {
 		ResultSet rset = null;
 		
 		int startRow = 1;//(currentPage - 1) * limit + 1;
-		int endRow = startRow + limit - 1;
+		int endRow = startRow + limit;
 		System.out.println("디에오"+startRow + "=" + endRow);
 		String query = "SELECT * FROM (SELECT ROWNUM RNUM, QUESTION_NO, QUESTION_TITLE, "
 				+ "QUESTION_CONTENT, QUESTION_DATE, REPLY_YN, " 
