@@ -73,4 +73,34 @@ function showPPics(input){
 	document.querySelector('#fileList').setAttribute('value',fileList);
 }
 
+const psSubmitBtn = document.querySelector('#submit-btn');
+psSubmitBtn.addEventListener('click', (e)=> {
+	e.preventDefault();
+	psRegBox.style.display = "none";
+	const formData = new FormData(psRegBox);
+	const xhr = new XMLHttpRequest();
 
+	xhr.onload = ()=>{
+		
+		const popup = document.querySelector('.modal-content');
+        popup.style.display = "block";
+
+        // 클로징 처리
+        const mCloses = document.querySelectorAll('.m-close');
+        for (let i = 0; i < mCloses.length; i++) {
+            mCloses[i].addEventListener('click', () => {
+                popup.style.display = "none"; // 팝업 내리기
+                petUpForm.reset(); // 인풋 클리어                
+            });
+        }
+        modalText = document.getElementById('modal-text');
+        if (xhr.responseText === 'ok') {
+            modalText.textContent = "성공적으로 펫시터 등록이 완료되었습니다.";
+        } else {
+            modalText.textContent = "펫시터 등록에 실패했습니다. 관리자에게 문의하세요";
+        }
+	}
+
+	xhr.open('POST', '/doggybeta/hostup');
+	xhr.send(formData);
+})

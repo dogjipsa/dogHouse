@@ -221,7 +221,7 @@
 
 	<!-- 펫시터 신청 버튼 클릭시 생성 보여지는 HTML 부분. 로그인 부분 구현시 인풋에 세션으로 값 넣어놓고 readonly 처리할 것  -->
 
-	<form class="ps_reg_form" action="/doggybeta/hostup" method="POST" enctype="multipart/form-data">
+	<form class="ps_reg_form">
 		<span class="close">x</span>
 		<div class="section1">
 			<p>아이디</p>
@@ -272,7 +272,14 @@
 			<span><button type="submit" id="submit-btn">펫시터 등록하기</button></span>
 		</div>
 	</form>
-
+	<div class="modal-content animate">
+			<span class="m-close xBtn" title="Close Modal">&times;</span>
+			<div class="modal-container">
+				<img src="/doggybeta/resources/images/modal.gif" id="modal-img">
+				<h4 id="modal-text"></h4>
+				<button type="button" class="m-close cancelbtn">확인</button>
+			</div>
+		</div>
 	<script type="text/javascript" src="/doggybeta/resources/js/petSitting.js"></script>
 	<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
 	<script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=b9810167e43ee638a44b19264113db0d&libraries=services"></script>

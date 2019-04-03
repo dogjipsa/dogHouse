@@ -5,6 +5,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -74,6 +75,7 @@ public class MemberHostUpdateServlet extends HttpServlet {
 		m.setAddress(fullAddr);
 		m.setPrice(Integer.parseInt(mrequest.getParameter("price")));
 		m.setEmail(mrequest.getParameter("email"));
+		m.setpContent(mrequest.getParameter("myinfo"));
 		String originFileName = mrequest.getFilesystemName("pic");
 		String renameFileName = renameFile(originFileName, savePath);
 		m.setUseroriginfile(originFileName);
@@ -101,13 +103,14 @@ public class MemberHostUpdateServlet extends HttpServlet {
 		}
 		int result = new MemberService().updateHost(m);
 		int result2 = new MemberService().insertSitterImages(list);
-		if (result > 0 && result2 > 0)
-			System.out.println("성공!!");
-		else
-			System.out.println("실패!!");
+		if (result > 0 && result2 > 0) {
+			PrintWriter out = response.getWriter();
+			out.append("ok");
+			out.flush();
+			out.close();
+		}
 
 
-		response.sendRedirect("/doggybeta/index.jsp");
 
 	}
 
@@ -118,8 +121,23 @@ public class MemberHostUpdateServlet extends HttpServlet {
 					+ originFileName.substring(originFileName.lastIndexOf(".") + 1);
 			File originFile = new File(savePath + "\\" + originFileName);
 			File renameFile = new File(savePath + "\\" + renameFileName);
-
-			if (!originFile.renameTo(renameFile)) {
+			
+			if(originFile.exists()) {
+				originFile.renameTo(renameFile);
+			} else {
+				while(true) {
+				int count = 0;
+				count++;
+				String newOriginFileName = originFileName.substring(0, originFileName.lastIndexOf(".")) + (count) + originFileName.substring(originFileName.lastIndexOf("."));
+				System.out.println(newOriginFileName);
+				File newOriginFile = new File(savePath + "\\"+ newOriginFileName);
+				if(newOriginFile.exists()) {
+					newOriginFile.delete();
+					break;
+				}
+				}
+			}
+			/*if (!originFile.renameTo(renameFile) && originFile.exists()) {
 				// 파일명 직접 바꾸기
 				// 원본 파일이 내용 읽어서, 리네임 파일에 복사 기록하기
 				// 원본 파일 삭제
@@ -135,7 +153,7 @@ public class MemberHostUpdateServlet extends HttpServlet {
 				fin.close();
 				fout.close();
 				originFile.delete();
-			}
+			}*/
 			return renameFileName;
 		}
 		return "";
