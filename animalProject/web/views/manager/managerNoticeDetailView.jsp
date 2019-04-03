@@ -99,7 +99,7 @@ h2{
 		<% }else{ %>
 			첨부파일없음
 		<% } %> 
-	</td>
+	</td> 
 </tr> 
 <tr>
 	<th>내용</th>
@@ -111,7 +111,7 @@ h2{
 		<a href="/doggybeta/nupview?nnum=<%= notice.getNoticeNo() %>">[수정페이지로 이동]</a> 
 		&nbsp; &nbsp;
 		<a href="/doggybeta/ndelete?nnum=<%= notice.getNoticeNo() %>">[글삭제]</a>
-	 <% } %> 
+	 <% } %>  
 	&nbsp; &nbsp;
 	 <a href="/doggybeta/mannNotice">[목록]</a> 
 	</th>	

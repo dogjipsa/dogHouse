@@ -1333,8 +1333,7 @@ public class ManagerDao {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}finally {
-			close(rset);
-			close(pstmt);
+			
 		}
 	
 		return notice;
