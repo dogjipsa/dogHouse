@@ -19,6 +19,7 @@ public class Report {
 		this.userId = userId;
 	}
 
+
 	public int getReportNo() {
 		return reportNo;
 	}
@@ -64,6 +65,6 @@ public class Report {
 		return "Report [reportNo=" + reportNo + ", reportContent=" + reportContent + ", reportCategory="
 				+ reportCategory + ", boardNo=" + boardNo + ", userId=" + userId + "]";
 	}
-	
+
 	
 }

@@ -459,7 +459,7 @@ public class ManagerDao {
 			String query = "SELECT * " + 
 						   "FROM (SELECT ROWNUM RNUM, USER_ID, EMAIL, USER_NAME, ADDRESS, " + 
 						   "PHONE, JOB, PETSITTER, PRICE, USER_DATE, PASSWORD, USER_DELETE, " + 
-						   "USER_ORIGINFILE, USER_REFILE, NAVER_CODE " + 
+						   "USER_ORIGINFILE, USER_REFILE, NAVER_CODE, TITLE_IMG, REPORT_ADD " + 
 						   "FROM (SELECT * FROM MEMBER WHERE USER_DELETE IN('N', 'n', null) and petsitter = '0' " + 
 						   "ORDER BY USER_ID DESC)) " + 
 						   "WHERE RNUM >= ? AND RNUM <= ?";
@@ -489,6 +489,8 @@ public class ManagerDao {
 					member.setUseroriginfile(rset.getString("USER_ORIGINFILE"));
 					member.setUserrefile(rset.getString("USER_REFILE"));
 					member.setNaverCode(rset.getString("NAVER_CODE"));
+					member.setTitleImg(rset.getString("TITLE_IMG"));
+					member.setReportAdd(rset.getInt("REPORT_ADD"));
 					
 					list.add(member);
 					
@@ -507,7 +509,7 @@ public class ManagerDao {
 			String query = "SELECT * " + 
 					   "FROM (SELECT ROWNUM RNUM, USER_ID, EMAIL, USER_NAME, ADDRESS, " + 
 					   "PHONE, JOB, PETSITTER, PRICE, USER_DATE, PASSWORD, USER_DELETE, " + 
-					   "USER_ORIGINFILE, USER_REFILE, NAVER_CODE " + 
+					   "USER_ORIGINFILE, USER_REFILE, NAVER_CODE, TITLE_IMG, REPORT_ADD " + 
 					   "FROM (SELECT * FROM MEMBER WHERE USER_ID LIKE ? and USER_DELETE IN('N', 'n', null) and petsitter = '0' " + 
 					   "ORDER BY USER_ID DESC)) " + 
 					   "WHERE RNUM >= ? AND RNUM <= ?";
@@ -537,6 +539,8 @@ public class ManagerDao {
 						member.setUseroriginfile(rset.getString("USER_ORIGINFILE"));
 						member.setUserrefile(rset.getString("USER_REFILE"));
 						member.setNaverCode(rset.getString("NAVER_CODE"));
+						member.setTitleImg(rset.getString("TITLE_IMG"));
+						member.setReportAdd(rset.getInt("REPORT_ADD"));
 						
 						list.add(member);
 						}
@@ -555,7 +559,7 @@ public class ManagerDao {
 			String query = "SELECT * " + 
 					   "FROM (SELECT ROWNUM RNUM, USER_ID, EMAIL, USER_NAME, ADDRESS, " + 
 					   "PHONE, JOB, PETSITTER, PRICE, USER_DATE, PASSWORD, USER_DELETE, " + 
-					   "USER_ORIGINFILE, USER_REFILE, NAVER_CODE " + 
+					   "USER_ORIGINFILE, USER_REFILE, NAVER_CODE, TITLE_IMG, REPORT_ADD  " + 
 					   "FROM (SELECT * FROM MEMBER WHERE USER_NAME LIKE ? and USER_DELETE IN('N', 'n', null)  and petsitter = '0' " + 
 					   "ORDER BY USER_ID DESC)) " + 
 					   "WHERE RNUM >= ? AND RNUM <= ?";
@@ -586,6 +590,8 @@ public class ManagerDao {
 						member.setUseroriginfile(rset.getString("USER_ORIGINFILE"));
 						member.setUserrefile(rset.getString("USER_REFILE"));
 						member.setNaverCode(rset.getString("NAVER_CODE"));
+						member.setTitleImg(rset.getString("TITLE_IMG"));
+						member.setReportAdd(rset.getInt("REPORT_ADD"));
 						
 						list.add(member);
 					}
@@ -614,7 +620,7 @@ public class ManagerDao {
 			String query = "SELECT * " + 
 						   "FROM (SELECT ROWNUM RNUM, USER_ID, EMAIL, USER_NAME, ADDRESS, " + 
 						   "PHONE, JOB, PETSITTER, PRICE, USER_DATE, PASSWORD, USER_DELETE, " + 
-						   "USER_ORIGINFILE, USER_REFILE, NAVER_CODE " + 
+						   "USER_ORIGINFILE, USER_REFILE, NAVER_CODE ,TITLE_IMG, REPORT_ADD " + 
 						   "FROM (SELECT * FROM MEMBER WHERE USER_DELETE IN('N', 'n', null) and petsitter = '1' or petsitter = '2' " + 
 						   "ORDER BY USER_ID DESC)) " + 
 						   "WHERE RNUM >= ? AND RNUM <= ?";
@@ -644,6 +650,8 @@ public class ManagerDao {
 					member.setUseroriginfile(rset.getString("USER_ORIGINFILE"));
 					member.setUserrefile(rset.getString("USER_REFILE"));
 					member.setNaverCode(rset.getString("NAVER_CODE"));
+					member.setTitleImg(rset.getString("TITLE_IMG"));
+					member.setReportAdd(rset.getInt("REPORT_ADD"));
 					
 					list.add(member);
 					
@@ -662,7 +670,7 @@ public class ManagerDao {
 			String query = "SELECT * " + 
 					   "FROM (SELECT ROWNUM RNUM, USER_ID, EMAIL, USER_NAME, ADDRESS, " + 
 					   "PHONE, JOB, PETSITTER, PRICE, USER_DATE, PASSWORD, USER_DELETE, " + 
-					   "USER_ORIGINFILE, USER_REFILE, NAVER_CODE " + 
+					   "USER_ORIGINFILE, USER_REFILE, NAVER_CODE, TITLE_IMG, REPORT_ADD  " + 
 					   "FROM (SELECT * FROM MEMBER WHERE USER_ID LIKE ? and USER_DELETE IN('N', 'n', null) and petsitter = '1' or petsitter = '2' " + 
 					   "ORDER BY USER_ID DESC)) " + 
 					   "WHERE RNUM >= ? AND RNUM <= ?";
@@ -692,6 +700,8 @@ public class ManagerDao {
 						member.setUseroriginfile(rset.getString("USER_ORIGINFILE"));
 						member.setUserrefile(rset.getString("USER_REFILE"));
 						member.setNaverCode(rset.getString("NAVER_CODE"));
+						member.setTitleImg(rset.getString("TITLE_IMG"));
+						member.setReportAdd(rset.getInt("REPORT_ADD"));
 						
 						list.add(member);
 						}
@@ -710,7 +720,7 @@ public class ManagerDao {
 			String query = "SELECT * " + 
 					   "FROM (SELECT ROWNUM RNUM, USER_ID, EMAIL, USER_NAME, ADDRESS, " + 
 					   "PHONE, JOB, PETSITTER, PRICE, USER_DATE, PASSWORD, USER_DELETE, " + 
-					   "USER_ORIGINFILE, USER_REFILE, NAVER_CODE " + 
+					   "USER_ORIGINFILE, USER_REFILE, NAVER_CODE, TITLE_IMG, REPORT_ADD  " + 
 					   "FROM (SELECT * FROM MEMBER WHERE USER_NAME LIKE ? and USER_DELETE IN('N', 'n', null)  and petsitter = '1' or petsitter = '2' " + 
 					   "ORDER BY USER_ID DESC)) " + 
 					   "WHERE RNUM >= ? AND RNUM <= ?";
@@ -741,6 +751,8 @@ public class ManagerDao {
 						member.setUseroriginfile(rset.getString("USER_ORIGINFILE"));
 						member.setUserrefile(rset.getString("USER_REFILE"));
 						member.setNaverCode(rset.getString("NAVER_CODE"));
+						member.setTitleImg(rset.getString("TITLE_IMG"));
+						member.setReportAdd(rset.getInt("REPORT_ADD"));
 						
 						list.add(member);
 					}
@@ -830,7 +842,7 @@ public class ManagerDao {
 		int result = 0;
 		PreparedStatement pstmt = null;
 		System.out.println("dao userId : " + userId);
-		String query = "update member set petsitter = 2 where user_id = ? and user_delete in('n', 'N', null) and petsitter = 1"; 
+		String query = "update member set petsitter = 2 where user_id = ? and petsitter = 1"; 
 		
 		
 		try {
@@ -845,12 +857,11 @@ public class ManagerDao {
 			e.printStackTrace();
 		}finally {
 			close(pstmt);
-			close(conn);
 		}
-		
-		
+			
 		return result;
 	}
+	
 
 	public ArrayList<FreeBoard> selectReadCountTop5(Connection conn) {
 		ArrayList<FreeBoard> flist = new ArrayList<> ();
@@ -884,6 +895,7 @@ public class ManagerDao {
 		return flist;
 	}
 
+<<<<<<< HEAD
 	public ArrayList<Question> selectQuestionList(Connection conn, int limit, int currentPage) {
 		ArrayList<Question> list = new ArrayList<Question>();
 		PreparedStatement pstmt = null;
@@ -948,10 +960,24 @@ public class ManagerDao {
 			if (rset.next()) {
 				result = rset.getInt(1);
 			}
+=======
+	public int managerDeleteMember(Connection conn, String delId) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		
+		String query = "update member set member_delete = 'y' where user_id = ?";
+		
+		try {
+			pstmt = conn.prepareStatement(query);				
+			pstmt.setInt(1, Integer.parseInt(delId));
+			
+			result = pstmt.executeUpdate();
+>>>>>>> adfe9757eddb37d8b3c58dc2ac94ff6b68018554
 			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}finally {
+<<<<<<< HEAD
 			close(rset);
 			close(pstmt);
 		}
@@ -961,5 +987,12 @@ public class ManagerDao {
 		
 		return result;
 	} 
+=======
+			close(pstmt);
+		}
+		
+		return result;
+>>>>>>> adfe9757eddb37d8b3c58dc2ac94ff6b68018554
 	
+		}
 }

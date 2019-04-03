@@ -145,6 +145,7 @@ public class ManagerService {
 		return flist;
 	}
 
+<<<<<<< HEAD
 	public ArrayList<Question> selectQuestionList(int currentPage, int limit) {
 		Connection conn = getConnection();
 		ArrayList<Question> list = manDao.selectQuestionList(conn,currentPage,limit);
@@ -160,6 +161,15 @@ public class ManagerService {
 			commit(conn);
 		else
 			rollback(conn);
+=======
+	public int managerDeleteMember(String delId) {
+		Connection conn = getConnection();
+		int result = manDao.managerDeleteMember(conn, delId);
+		if(result > 0)
+		commit(conn);
+			else
+		rollback(conn);
+>>>>>>> adfe9757eddb37d8b3c58dc2ac94ff6b68018554
 		return result;
 	}
 	

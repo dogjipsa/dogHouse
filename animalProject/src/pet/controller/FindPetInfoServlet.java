@@ -42,7 +42,7 @@ public class FindPetInfoServlet extends HttpServlet {
 		
 		Pet pet = new PetService().findPetInfo(petuserid);
 
-		job.put("petimg", URLEncoder.encode(pet.getRenameFileName(), "UTF-8"));	
+		//job.put("petimg", URLEncoder.encode(pet.getRenameFileName(), "UTF-8"));	
 		job.put("petname", URLEncoder.encode(pet.getPetName(), "UTF-8"));
 		job.put("petsize", URLEncoder.encode(pet.getPetSize(), "UTF-8"));
 		job.put("breads", URLEncoder.encode(pet.getBreeds(), "UTF-8"));
