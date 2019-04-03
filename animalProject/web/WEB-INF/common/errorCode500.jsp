@@ -20,7 +20,7 @@ response.setStatus(200);
    이용자분들께 보다 나은 서비스를 제공할 수 있도록 최선을 다하겠습니다.</ü>
   <p class="output">로그인 화면으로 돌아가기 <a href="/doggybeta/index.jsp">링크 1</a> or <a href="../doggybeta/index.jsp">링크 2</a></p>
   <br>
-  <p class="output">기타 문의 사항은 dogjipsa@kh.or 로 문의해주시기 바랍니다.</p>
+  <p class="output">기타 문의 사항은 dogjipsa@kh.org 로 문의해주시기 바랍니다.</p>
 </div>
 </body>
 </html>

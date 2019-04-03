@@ -65,7 +65,7 @@ public class CountVisitorServlet extends HttpServlet {
 			response.setContentType("application/json; charset=utf-8");
 			JSONObject job = new JSONObject();
 			if(cntToday == null) {
-				job.put("cntToday", "0");
+				job.put("cntToday", 0);
 			} else {
 				job.put("cntToday", cntToday.getCountVisitor());
 			}

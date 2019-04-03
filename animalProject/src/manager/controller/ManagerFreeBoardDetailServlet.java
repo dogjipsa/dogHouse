@@ -42,7 +42,7 @@ public class ManagerFreeBoardDetailServlet extends HttpServlet {
 		response.setContentType("text/html; charset=utf-8");
 		RequestDispatcher view = null;
 		if(board != null) {
-			view = request.getRequestDispatcher("views/manager/managerBoardDetailView.jsp");
+			view = request.getRequestDispatcher("views/manager/managerFreeBoardDetailView.jsp");
 			request.setAttribute("fboard", board);
 			request.setAttribute("currentPage", currentPage);
 			view.forward(request, response);

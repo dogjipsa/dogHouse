@@ -9,7 +9,6 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import faq.model.vo.Faq;
 import freeboard.model.vo.FreeBoard;
 import manager.model.vo.Manager;
 import member.model.vo.Member;
@@ -1046,7 +1045,7 @@ public class ManagerDao {
 			close(pstmt);
 			close(rset);
 		}
-    return result
+    return result;
   }
   
 
@@ -1065,8 +1064,6 @@ public class ManagerDao {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}finally {
-
-			close(rset);
 			close(pstmt);
 		}
 		return result;

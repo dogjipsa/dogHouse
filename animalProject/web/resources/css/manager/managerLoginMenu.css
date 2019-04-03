@@ -1,4 +1,5 @@
 @charset "UTF-8";
+@import url("https://fonts.googleapis.com/css?family=Sunflower:300,500,700&amp;subset=korean");
 @import url("http://netdna.bootstrapcdn.com/font-awesome/3.1.1/css/font-awesome.min.css");
 @import url("//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css");
 .tfree thead th {
@@ -31,10 +32,7 @@
 	text-decoration: none;
 	color: black;
 }
-.icon-heart:after,
-.icon-heart-2:before {
-	content: "\e00a";
-}
+
 #managerMainPageBg {
 	margin: 0;
 	padding: 0;
@@ -52,6 +50,7 @@
 	outline: none;
 }
 ul.mVertical-menu {
+	font-family: 'Sunflower', 'sans-serif';
 	position: fixed;
   	z-index: 9;
   	top: 0;
@@ -109,6 +108,7 @@ ul.mVertical-menu {
 	float: right;
 }
 .submenu {
+	font-family: 'Sunflower', 'sans-serif';
 	display: none;
     font-size: 13px;
     box-sizing: border-box;
@@ -146,10 +146,8 @@ ul.mVertical-menu {
 .submenu li span {
     margin-left: 30px;
 }
-
 .btn {
 	border: none;
-	font-family: inherit;
 	font-size: 15px;
 	background: none;
 	cursor: pointer;

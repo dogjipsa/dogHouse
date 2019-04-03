@@ -20,11 +20,11 @@ $(function() {
 			var json = JSON.parse(jsonStr);
 			$.each(data.freeboardlist, function(i) {
 				var items = [];
-				items.push('<td>자유</td>');
-				items.push('<td>' + json.freeboardlist[i].fnum + '</td>');
-				items.push("<td><a href='/doggybeta/manbdetail?fnum="+ json.freeboardlist[i].fnum +"&page=1'>" 
+				items.push('<td style="width: 100px;">자유</td>');
+				items.push('<td style="width: 100px;">' + json.freeboardlist[i].fnum + '</td>');
+				items.push("<td style='width: 300px;'><a href='/doggybeta/manbdetail?fnum="+ json.freeboardlist[i].fnum +"&page=1'>" 
 						+ decodeURIComponent(json.freeboardlist[i].ftitle).replace(/\+/gi, " ") + '</td>');
-				items.push('<td>' + json.freeboardlist[i].frcount + '</td>');
+				items.push('<td style="width: 100px;">' + json.freeboardlist[i].frcount + '</td>');
 				$('<tr/>', {
 					html: items
 				}).appendTo('#topfb');
