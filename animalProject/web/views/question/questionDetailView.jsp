@@ -30,11 +30,10 @@ function deleteQuestion(){
 <%@ include file="../common/menu.jsp" %>
 <div id="wrap">
 <div id="cotent">
-<br>
+<br><br>
 <h1 align="center" style="color:white;">해당글 상세보기</h1>
 <hr align="center" style="width:600px">
-
-<br><br><br>
+<br><br>
 <table align="center" cellpadding="10" cellspacing="0" border="1" width="600" bgcolor=oldlace>
 	<tr>
 		<th>제목</th>
@@ -46,7 +45,7 @@ function deleteQuestion(){
 			<% if(question.getQuestionOriginalFileName() != null){ %>
 				<a href="/doggybeta/qfdown?ofile=<%=question.getQuestionOriginalFileName()%>&rfile<%=question.getQuestionRenameFileName() %>"><%=question.getQuestionOriginalFileName() %></a>	
 			<% }else{ %>
-				&nbsp; 첨부파일 없음
+				첨부파일 없음
 			<% } %>
 		</td>
 	</tr>
@@ -76,10 +75,11 @@ function deleteQuestion(){
     </div></div>	
 </table>
 <% } %>
-<%-- <% } %> --%>
-<br><br><br><br><br><br><br><br><br><br>
-</div></div>	
-<hr>
-<div id="footer"><%@ include file="../common/footer.jsp"%></div>
+</div>
+</div>
+
+<br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br>
+<div align="center" id="footer"><%@ include file="../common/footer.jsp"%></div></div>
 </body>
 </html>

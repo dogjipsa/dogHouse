@@ -3,6 +3,7 @@ package manager.model.service;
 import manager.model.dao.ManagerDao;
 import manager.model.vo.Manager;
 import member.model.vo.Member;
+import notice.model.vo.Notice;
 import question.model.vo.Question;
 import tipboard.model.vo.TipBoard;
 

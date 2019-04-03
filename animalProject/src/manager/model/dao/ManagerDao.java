@@ -975,7 +975,6 @@ public class ManagerDao {
 		return flist;
 	}
 
-
 	public ArrayList<Question> selectQuestionList(Connection conn, int limit, int currentPage) {
 		ArrayList<Question> list = new ArrayList<Question>();
 		PreparedStatement pstmt = null;
@@ -1040,13 +1039,13 @@ public class ManagerDao {
 			if (rset.next()) {
 				result = rset.getInt(1);
 			}
-    }catch (Exception e) {
+		}catch (Exception e) {
 			e.printStackTrace();
 		} finally {
 			close(pstmt);
 			close(rset);
 		}
-    return result
+		return result;
   }
   
 
@@ -1065,8 +1064,6 @@ public class ManagerDao {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}finally {
-
-			close(rset);
 			close(pstmt);
 		}
 		return result;

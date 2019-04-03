@@ -18,7 +18,7 @@
 <%@ include file="../common/menu.jsp" %>
 <div id="wrap">
 <div id="cotent">
-<h1 align="left" style="color:white;">1:1문의 상세정보 입력 </h1>
+<h1 align="left" style="color:ghostwhite;">1:1문의 상세정보 입력 </h1>
 <hr align="left" style="width:600px">
 <br><br>
 <form action="/doggybeta/qinsert" method="post" enctype="multipart/form-data">

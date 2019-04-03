@@ -27,13 +27,13 @@
 	
 </script>
 </head>
-<body background="/doggybeta/resources/images/puppies_1.1.jpg">
+<body background="/doggybeta/resources/images/puppies_1.2.jpg">
 
 
 <%@ include file="../common/menu.jsp" %>
 <div id="wrap">
 <div id="cotent">
-
+<br>
 <h1 align="left" style="color:ghostwhite;">&nbsp;&nbsp;1:1 문의 </h1>
 <hr align="left" style="width:880px"><br><br>
 <div style="border:2px solid white; width:600px; height:100%; align=center	;">

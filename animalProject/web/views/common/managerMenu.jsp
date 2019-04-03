@@ -67,6 +67,7 @@ $(function() {
 			<ul class='submenu'>
 				<li><a href="/doggybeta/mmsearch">전체 회원 관리</a></li>
 				<li><a href='/doggybeta/mpsearch'>펫시터 관리</a></li>
+				<li><a href='/doggybeta/manquestion'>1:1문의 관리</a></li>
 			</ul>
 		</li>
 	</ul>

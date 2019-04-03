@@ -17,7 +17,7 @@
 <head>
 <meta charset="UTF-8">
 <title>doghouse</title>
-<link href="/doggybeta/resources/css/manager/managerQuestionList.css" rel="stylesheet" type="text/css">
+<link href="/doggybeta/resources/css/manager/managerBoardList.css" rel="stylesheet" type="text/css">
 <script type="text/javascript" src="/doggybeta/resources/js/jquery-3.3.1.min.js"></script>
 </head>
 <body>
