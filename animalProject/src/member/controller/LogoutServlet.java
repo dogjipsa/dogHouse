@@ -1,6 +1,8 @@
 package member.controller;
 
 import java.io.IOException;
+
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -32,10 +34,24 @@ public class LogoutServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// Logout
 		HttpSession session = request.getSession(false);
-		if(session != null) {
+		Member s = (Member)session.getAttribute("loginUser");
+		boolean result = false;
+		if(s.getNaverCode() == null) 
+			result = new MemberService().checkLogoutUser(s.getUserId());
+		else 
+			result = new MemberService().checkLogoutNUser(s.getUserId());
+			
+		System.out.println("user 로그아웃 : " + result);
+		System.out.println("s : " + s.getUserId());
+		
+		if(session != null && result == true) {
 			//로그인상태이다.
-			session.invalidate();
+			session.removeAttribute("loginUser");
 			response.sendRedirect("/doggybeta/index.jsp"); //로그아웃시 첫화면 뜨게함.
+		} else {
+			RequestDispatcher view = request.getRequestDispatcher("views/member/memberError.jsp");
+			request.setAttribute("message", "로그아웃에 실패하였습니다.");
+			view.forward(request, response);;
 		}
 	}
 

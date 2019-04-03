@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" errorPage="managerError.jsp"%>
-<%@page import='freeboard.model.vo.FreeBoard, java.util.ArrayList, '%>
+<%@page import='freeboard.model.vo.FreeBoard, java.util.ArrayList'%>
 
 <%
 	ArrayList<FreeBoard> list = (ArrayList<FreeBoard>)request.getAttribute("flist");
@@ -16,11 +16,7 @@
 		search = request.getAttribute("search").toString();
 		keyword = request.getAttribute("keyword").toString();
 	}
-	System.out.println("cp " + currentPage);
-	System.out.println("sp " + startPage);
-	System.out.println("ep " + endPage);
-	System.out.println("tp " + totalPage);
-	System.out.println("flist " + list);
+
 %>
 <!DOCTYPE html>
 <html>
@@ -30,55 +26,6 @@
 <link href="/doggybeta/resources/css/manager/managerBoardList.css" rel="stylesheet" type="text/css">
 <script type="text/javascript" src="/doggybeta/resources/js/jquery-3.3.1.min.js"></script>
 <script type="text/javascript">
-/* $(function(){
-	$('ul.tabs li').click(function(){
-		var tab_id = $(this).attr('data-tab');
-
-		$('ul.tabs li').removeClass('current');
-		$('.row').removeClass('current');
-
-		$(this).addClass('current');
-		$("#"+tab_id).addClass('current');
-		console.log();
-	}); //click function
-}); //ready */
-/*$(function() {
-	$.ajax({
-		url: '/doggybeta/manboard',
-		type: 'post',
-		cache: false,
-		datatype: 'json',
-		success: function(data) {
-			console.log('성공!');
-			/* var jsonStr = JSON.stringify(data);
-			var json = JSON.parse(jsonStr);
-			
-			var values = $('.row').html();
-			for(var i in json.managerList) {
-				values += json.managerList[i].freeno + json.managerList[i].freetitle +
-					      json.managerList[i].freedate +
-					      json.managerList[i].freeuserid + json.managerList[i].freedel
-			}
-			$('.row').html(values); */
-	/*	$.each(data.managerList, function(index) {
-				var items = [];
-				items.push("<td class='firstTd'><input type='checkbox'/></td>");
-				items.push('<td>' + '자유' + '</td>');
-				items.push('<td>' + data.managerList[index].freeno + '</td>');
-				items.push("<td class='fourthTd'>" + decodeURIComponent(data.managerList[index].freetitle) + '</td>');
-				items.push('<td>' + data.managerList[index].freeuserid + '</td>');
-				items.push('<td>' + data.managerList[index].freedate + '</td>');
-				$('<tr/>', {
-					html: items
-				}).appendTo('tbody');
-			}); //each  
-		},//success
-		error : function(data) {
-			alert('에러!');
-		} */
-	/*});//ajax
-});//ready 
-*/
 $(function(){
     //최상단 체크박스 클릭
     $("#checkAll").click(function(){
@@ -111,7 +58,9 @@ $(function(){
     			type: 'post',
     			cache: false,
     			success: function(data) {
-    				chageVal(data);
+    				cBox.html(data);
+    				/* chageVal(data); */
+    				refreshMemList();
     				alert('변경이 완료되었습니다!');
     			} //success
     		});//ajax
@@ -122,6 +71,10 @@ $(function(){
     	$('input[id=keyw]').hide();
     });
 });
+function refreshMemList(){
+	location.reload();
+}
+
 </script>
 <style type="text/css">
 	#formDialogDiv {
@@ -135,11 +88,6 @@ $(function(){
 	<ul class="tabs">
 		<li class="tab-link current" data-tab="tab-1">자유게시판 관리</li>
 	</ul>
-	<!-- <div class='tabs'>
-		<button class="tab-link current" data-tab="tab-1">자유</button>
-		<button class="tl" data-tab="tab-2">자유</button>
-		<button class="tab-link" data-tab="tab-4">자유</button>
-	</div> -->
 	<div id="tab-1" class="row current">
 		<table class='t' style="text-align:center; border:1px solid #dddddd"> 
 			<thead>
@@ -155,7 +103,7 @@ $(function(){
 			</thead>
 			<% for(FreeBoard fb : list) { %>
 			<tbody>
-				<tr>
+				<tr id='fbtr'>
 					<td class='firstTd'><input type='checkbox' class='checkDel' value='<%= fb.getFreeboardNo() %>' name='delNo'/>삭제</td>
 					<td>자유</td>
 					<td><%= fb.getFreeboardNo() %></td>
@@ -218,40 +166,6 @@ $(function(){
 		<% } else { %>
 			<a href='/doggybeta/manboard?word=<%= keyword %>&page=<%= totalPage %>&option=<%= search %>'>▷▷</a>
 		<% } } %>
-		<%-- <% if(startPage > 1) { %>
-			<a href='/doggybeta/manboard?page=1'>[HOME]</a><br>
-		
-		<% } else if(startPage == 1) { %>
-			[HOME]
-		<% } %>
-		<% if(currentPage > 1) { %>
-			<a href='/doggybeta/manboard?page=<%= currentPage - 1 %>'>[prev]</a>
-		<% } 
-		   for(int i = startPage; i <= endPage; i ++) {
-			   if(i == currentPage) {
-		%>
-			<b><%= i %></b>
-		<% 
-			   } else if(currentPage <= listCount && currentPage >= startPage) {
-		%>
-			
-			&nbsp;<a href='/doggybeta/manboard?page=<%= i %>'><%= i %></a> &nbsp;
-		<%
-			   }
-		   } 
-		   if(currentPage < totalPage) {
-		%>
-			<a href='/doggybeta/manboard?page=<%= currentPage + 1 %>'>[NEXT]</a>
-		<% 
-			} 
-		   if(endPage < totalPage) {
-		%>
-			<a href='/doggybeta/manboard?page=<%= totalPage %>'>[END]</a>
-		<% } %>
-		</div>
-		<a href = "write.jsp" class="btn btn-primary pull-right">글쓰기</a>
-		<!-- <a href = "#" >전체 삭제</a> -->
-		--%>
 	</div>
 	<input type="checkbox" id="checkAll" class='styled-checkbox'/>전체선택
 	<input type='button' id='del' value='선택삭제'/>
@@ -272,8 +186,5 @@ $(function(){
 	</div>
 </div>
 </section>
-<%-- <% } else { %>
-<% pageContext.forward("/views/manager/managerLogin.jsp"); %>
-<% } %> --%>
 </body>
 </html>

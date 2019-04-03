@@ -157,7 +157,7 @@
 		<a  href='/doggybeta/jipsalogout'><span class='btn btn-1 btn-sign'>로그아웃</span></a>
 		<% if(access_token != null) { %>
 		<!-- 네이버로그인이 제대로 되었음을 확인 -->
-			<%= loginUser.getUserName() %> 님 환영합니다
+			<%= loginUser.getUserId() %> 님 환영합니다
 		<% } else { %>
 			<%= loginUser.getUserName() %> 님 환영합니다
 		<% } %>
