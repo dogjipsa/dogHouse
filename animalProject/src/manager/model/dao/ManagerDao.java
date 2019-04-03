@@ -230,14 +230,30 @@ public class ManagerDao {
 
 		return result;
 	}
-	public int tipboardListCount(Connection conn) {
+	public int tipboardListCount(Connection conn, String option, String word) {
 		int result = 0;
 		Statement stat = null;
+		PreparedStatement pstat = null;
 		ResultSet rSet = null;
 		String query = ("select count(*) from tipboard");
 		try {
-			stat = conn.createStatement();
-			rSet = stat.executeQuery(query);
+			if(option == null) {
+				stat = conn.createStatement();
+				rSet = stat.executeQuery(query);
+			} else if(option.equals("writer")) {
+				query = ("select count(*) from tipboard where user_id like ?"); 
+				pstat = conn.prepareStatement(query);
+				pstat.setString(1, "%" + word + "%");
+				rSet = pstat.executeQuery();
+			} else if(option.equals("createDel")) {
+				query = ("select count(*) from tipboard where tipboard_date like ?"); 
+				pstat = conn.prepareStatement(query);
+				pstat.setString(1, "%" + word + "%");
+				rSet = pstat.executeQuery();
+			} else {
+				stat = conn.createStatement();
+				rSet = stat.executeQuery(query);
+			}
 
 			if (rSet.next()) {
 				result = rSet.getInt(1);
@@ -248,6 +264,7 @@ public class ManagerDao {
 			close(rSet);
 			close(stat);
 		}
+		System.out.println("디비 리스트 카운트 : " + result);
 
 		return result;
 	}
@@ -273,36 +290,125 @@ public class ManagerDao {
 		return result;
 	}
 
-	public ArrayList<TipBoard> selectTipBoardList(Connection conn, int currentPage, int pageList) {
-		// 게시판 목록 조회용
-		// 일단 자유게시판 하나만 실험
+	public ArrayList<TipBoard> selectTipBoardList(Connection conn, int currentPage, int pageList, String option,
+			String word) {
+		// 관리자 페이지 팁게시판 목록 조회용
 		ArrayList<TipBoard> tipboardList = new ArrayList<>();
 		PreparedStatement pstat = null;
 		ResultSet rSet = null;
 
-		int startCount = (currentPage - 1) * pageList + 1;
-		int endCount = currentPage * pageList;
+		int startRow = (currentPage - 1) * pageList + 1;
+		int endRow = startRow + pageList - 1;
 
 		StringBuffer query = new StringBuffer();
-		query.append("select b.rnum, b.tipboard_no, b.user_id, b.tipboard_title, b.tipboard_content, b.tipboard_date ")
-				.append("from ( select rownum as rnum, a.tipboard_no, a.user_id, a.tipboard_title, a.tipboard_content, a.tipboard_date ")
-				.append("from ( select tipboard_no, user_id, tipboard_title, tipboard_content, tipboard_date ")
-				.append("from tipboard order by tipboard_date) a ").append("where rownum <= ?) b ")
-				.append("where b.rnum >= ?");
 		try {
-			pstat = conn.prepareStatement(query.toString());
-			pstat.setInt(1, endCount);
-			pstat.setInt(2, startCount);
-			rSet = pstat.executeQuery();
+			if (option == null) {
+				query.append("select b.rnum, b.tipboard_no, b.user_id, b.tipboard_title, b.tipboard_content, b.tipboard_date, b.tipboard_delete ")
+					 .append("from ( select rownum as rnum, a.tipboard_no, a.user_id, a.tipboard_title, a.tipboard_content, a.tipboard_date, a.tipboard_delete ")
+					 .append("from ( select tipboard_no, user_id, tipboard_title, tipboard_content, tipboard_date, tipboard_delete ")
+					 .append("from tipboard order by tipboard_date desc) a ").append("where rownum <= ?) b ")
+					 .append("where b.rnum >= ?");
 
-			while (rSet.next()) {
-				TipBoard tipBoard = new TipBoard();
-				tipBoard.setTipBoardTitle(rSet.getString("tipboard_title"));
-				tipBoard.setUserId(rSet.getString("user_id"));
-				tipBoard.setTipBoardNo(rSet.getInt("tipboard_no"));
-				tipBoard.setTipBoardContent(rSet.getString("tipboard_content"));
-				tipBoard.setTipBoardDate(rSet.getDate("tipboard_date"));
-				tipboardList.add(tipBoard);
+				pstat = conn.prepareStatement(query.toString());
+				pstat.setInt(1, endRow);
+				pstat.setInt(2, startRow);
+
+				rSet = pstat.executeQuery();
+				// 한 페이지당 10개까지만 출력되게
+
+				while (rSet.next()) {
+					TipBoard tipBoard = new TipBoard();
+					tipBoard.setTipBoardTitle(rSet.getString("tipboard_title"));
+					tipBoard.setUserId(rSet.getString("user_id"));
+					tipBoard.setTipBoardNo(rSet.getInt("tipboard_no"));
+					tipBoard.setTipBoardDelete(rSet.getString("tipboard_delete"));
+					tipBoard.setTipBoardContent(rSet.getString("tipboard_content"));
+					tipBoard.setTipBoardDate(rSet.getDate("tipboard_date"));
+
+					tipboardList.add(tipBoard);
+				}
+			} else if (option.equals("delyorn")) {// 1 if
+				query.append(
+						"select b.rnum, b.tipboard_no, b.user_id, b.tipboard_title, b.tipboard_content, b.tipboard_date, b.tipboard_delete ")
+						.append("from ( select rownum as rnum, a.tipboard_no, a.user_id, a.tipboard_title, a.tipboard_content, a.tipboard_date, a.tipboard_delete ")
+						.append("from ( select tipboard_no, user_id, tipboard_title, tipboard_content, tipboard_date, tipboard_delete ")
+						.append("from tipboard where tipboard_delete like ? order by tipboard_date desc) a ").append("where rownum <= ?) b ")
+						.append("where b.rnum >= ?");
+
+				pstat = conn.prepareStatement(query.toString());
+				pstat.setString(1, "%" + word + "%");
+				pstat.setInt(2, endRow);
+				pstat.setInt(3, startRow);
+
+				rSet = pstat.executeQuery();
+				// 한 페이지당 10개까지만 출력되게
+
+				while (rSet.next()) {
+					TipBoard tipBoard = new TipBoard();
+					tipBoard.setTipBoardTitle(rSet.getString("tipboard_title"));
+					tipBoard.setUserId(rSet.getString("user_id"));
+					tipBoard.setTipBoardNo(rSet.getInt("tipboard_no"));
+					tipBoard.setTipBoardDelete(rSet.getString("tipboard_delete"));
+					tipBoard.setTipBoardContent(rSet.getString("tipboard_content"));
+					tipBoard.setTipBoardDate(rSet.getDate("tipboard_date"));
+
+					tipboardList.add(tipBoard);
+				}
+			} else if (option.equals("writer")) { // 2 if
+				query.append(
+						"select b.rnum, b.tipboard_no, b.user_id, b.tipboard_title, b.tipboard_content, b.tipboard_date, b.tipboard_delete ")
+						.append("from ( select rownum as rnum, a.tipboard_no, a.user_id, a.tipboard_title, a.tipboard_content, a.tipboard_date, a.tipboard_delete ")
+						.append("from ( select tipboard_no, user_id, tipboard_title, tipboard_content, tipboard_date, tipboard_delete ")
+						.append("from tipboard where user_id like ? order by tipboard_date desc) a ").append("where rownum <= ?) b ")
+						.append("where b.rnum >= ?");
+
+				pstat = conn.prepareStatement(query.toString());
+				pstat.setString(1, "%" + word + "%");
+				pstat.setInt(2, endRow);
+				pstat.setInt(3, startRow);
+
+				rSet = pstat.executeQuery();
+				// 한 페이지당 10개까지만 출력되게
+
+				while (rSet.next()) {
+					TipBoard tipBoard = new TipBoard();
+					tipBoard.setTipBoardTitle(rSet.getString("tipboard_title"));
+					tipBoard.setUserId(rSet.getString("user_id"));
+					tipBoard.setTipBoardNo(rSet.getInt("tipboard_no"));
+					tipBoard.setTipBoardDelete(rSet.getString("tipboard_delete"));
+					tipBoard.setTipBoardContent(rSet.getString("tipboard_content"));
+					tipBoard.setTipBoardDate(rSet.getDate("tipboard_date"));
+
+					tipboardList.add(tipBoard);
+				}
+			} else if (option.equals("createDel")) {
+				System.out.println("디비 날짜 date " + word);
+				query.append(
+						"select b.rnum, b.tipboard_no, b.user_id, b.tipboard_title, b.tipboard_content, b.tipboard_date, b.tipboard_delete ")
+						.append("from ( select rownum as rnum, a.tipboard_no, a.user_id, a.tipboard_title, a.tipboard_content, a.tipboard_date, a.tipboard_delete ")
+						.append("from ( select tipboard_no, user_id, tipboard_title, tipboard_content, tipboard_date, tipboard_delete ")
+						.append("from tipboard where tipboard_date like ? order by tipboard_date desc) a ")
+						.append("where rownum <= ?) b ").append("where b.rnum >= ?");
+				java.sql.Date date = java.sql.Date.valueOf(word);
+				pstat = conn.prepareStatement(query.toString());
+				pstat.setDate(1, date);
+				pstat.setInt(2, endRow);
+				pstat.setInt(3, startRow);
+
+				rSet = pstat.executeQuery();
+				// 한 페이지당 10개까지만 출력되게
+
+				while (rSet.next()) {
+					TipBoard tipBoard = new TipBoard();
+					tipBoard.setTipBoardTitle(rSet.getString("tipboard_title"));
+					tipBoard.setUserId(rSet.getString("user_id"));
+					tipBoard.setTipBoardNo(rSet.getInt("tipboard_no"));
+					tipBoard.setTipBoardDelete(rSet.getString("tipboard_delete"));
+					tipBoard.setTipBoardContent(rSet.getString("tipboard_content"));
+					tipBoard.setTipBoardDate(rSet.getDate("tipboard_date"));
+
+					tipboardList.add(tipBoard);
+				}
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -318,6 +424,26 @@ public class ManagerDao {
 		PreparedStatement pstmt = null;
 		
 		String query = "update freeboard set freeboard_delete = 'y' where freeboard_no in ?";
+		
+		try {
+			pstmt = conn.prepareStatement(query);				
+			pstmt.setInt(1, Integer.parseInt(delNo));
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+	public int managerDeleteTipBoard(Connection conn, String delNo) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		
+		String query = "update tipboard set tipboard_delete = 'y' where tipboard_no in ?";
 		
 		try {
 			pstmt = conn.prepareStatement(query);				
@@ -895,7 +1021,7 @@ public class ManagerDao {
 		return flist;
 	}
 
-<<<<<<< HEAD
+
 	public ArrayList<Question> selectQuestionList(Connection conn, int limit, int currentPage) {
 		ArrayList<Question> list = new ArrayList<Question>();
 		PreparedStatement pstmt = null;
@@ -960,7 +1086,16 @@ public class ManagerDao {
 			if (rset.next()) {
 				result = rset.getInt(1);
 			}
-=======
+    }catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+			close(rset);
+		}
+    return result
+  }
+  
+
 	public int managerDeleteMember(Connection conn, String delId) {
 		int result = 0;
 		PreparedStatement pstmt = null;
@@ -972,27 +1107,48 @@ public class ManagerDao {
 			pstmt.setInt(1, Integer.parseInt(delId));
 			
 			result = pstmt.executeUpdate();
->>>>>>> adfe9757eddb37d8b3c58dc2ac94ff6b68018554
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}finally {
-<<<<<<< HEAD
+
 			close(rset);
 			close(pstmt);
 		}
-		
-		
-		
-		
 		return result;
 	} 
-=======
-			close(pstmt);
-		}
+
+	public ArrayList<TipBoard> selectReadCountTBTop5(Connection conn) {
+		ArrayList<TipBoard> tlist = new ArrayList<> ();
+		Statement pstat = null;
+		ResultSet rSet = null;
 		
-		return result;
->>>>>>> adfe9757eddb37d8b3c58dc2ac94ff6b68018554
-	
+		StringBuffer query = new StringBuffer();
+		query.append("select rownum, tipboard_no, tipboard_title, tipboard_views ")
+			 .append("from tipboard where rownum >= 1 and rownum <= 5 and tipboard_delete = 'n'")
+			 .append("order by tipboard_date desc");
+		
+		try {
+			pstat = conn.createStatement();
+			rSet = pstat.executeQuery(query.toString());
+			
+			while(rSet.next()) {
+				TipBoard board = new TipBoard();
+				
+				board.setTipBoardNo(rSet.getInt("tipboard_no"));
+				board.setTipBoardTitle(rSet.getString("tipboard_title"));
+				board.setTipBoardViews(rSet.getInt("tipboard_views"));
+				
+				tlist.add(board);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(rSet);
+			close(pstat);
+
 		}
+		return tlist;
+	}
+	
 }

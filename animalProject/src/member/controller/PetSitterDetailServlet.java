@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import member.model.service.MemberService;
 import member.model.vo.Member;
 import member.model.vo.SitterImage;
+import review.model.service.ReviewService;
 
 /**
  * Servlet implementation class PetSitterDetailServlet
@@ -39,7 +40,8 @@ public class PetSitterDetailServlet extends HttpServlet {
 		Member petSitter = new MemberService().selectDetailPetSitter(petSitterId);
 		ArrayList<SitterImage> sitterFacilityImg = new MemberService().selectSitterFacilityImg(petSitterId);
 		response.setContentType("text/html; charset=utf-8");
-		
+		double starAvg = new ReviewService().selectStarAvg(petSitterId);
+		System.out.println("dao에서 가져온 startAvg 값 : " + starAvg);
 		String service = request.getParameter("service");//petsitterlistview.jsp에서 넘겨받은 서비스
 		System.out.println("detail서블릿에서 서비스 : "  + service);
 		RequestDispatcher view = null;
@@ -47,7 +49,8 @@ public class PetSitterDetailServlet extends HttpServlet {
 		System.out.println(petSitter);
 		request.setAttribute("petSitter", petSitter);
 		request.setAttribute("sitterFacilityImg", sitterFacilityImg);
-		request.setAttribute("service", service);//petsitterdetail.jsp로 넘긴 후 
+		request.setAttribute("service", service);//petsitterdetail.jsp로 넘긴 후
+		request.setAttribute("starAvg", starAvg);
 		view.forward(request, response);
 		
 	}

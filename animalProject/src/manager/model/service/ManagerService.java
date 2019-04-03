@@ -49,9 +49,9 @@ public class ManagerService {
 		return result;
 	}
 	
-	public int tipboardListCount() {
+	public int tipboardListCount(String option, String word) {
 		Connection conn = getConnection();
-		int result = manDao.tipboardListCount(conn);
+		int result = manDao.tipboardListCount(conn, option, word);
 		if(result > 0)
 			commit(conn);
 		else
@@ -68,9 +68,9 @@ public class ManagerService {
 		return fList;
 	}
 
-	public ArrayList<TipBoard> selectTipBoardList(int currentPage, int pageList) {
+	public ArrayList<TipBoard> selectTipBoardList(int currentPage, int pageList, String option, String word) {
 		Connection conn = getConnection();
-		ArrayList<TipBoard> tList = manDao.selectTipBoardList(conn, currentPage, pageList);
+		ArrayList<TipBoard> tList = manDao.selectTipBoardList(conn, currentPage, pageList, option, word);
 		close(conn);
 		
 		return tList;
@@ -136,6 +136,17 @@ public class ManagerService {
 			rollback(conn);
 		return result;
 	}
+	public int managerDeleteTipBoard(String delNo) {
+		Connection conn = getConnection();
+		int result = manDao.managerDeleteTipBoard(conn, delNo);
+		if(result > 0)
+			commit(conn);
+		else
+			rollback(conn);
+		return result;
+	}
+	
+	
 
 	public ArrayList<FreeBoard> selectReadCountTop5() {
 		Connection conn = getConnection();
@@ -145,7 +156,7 @@ public class ManagerService {
 		return flist;
 	}
 
-<<<<<<< HEAD
+
 	public ArrayList<Question> selectQuestionList(int currentPage, int limit) {
 		Connection conn = getConnection();
 		ArrayList<Question> list = manDao.selectQuestionList(conn,currentPage,limit);
@@ -161,7 +172,19 @@ public class ManagerService {
 			commit(conn);
 		else
 			rollback(conn);
-=======
+    close(conn);
+    return result;
+  }
+
+	public ArrayList<TipBoard> selectReadCountTBTop5() {
+		Connection conn = getConnection();
+		ArrayList<TipBoard> tlist = manDao.selectReadCountTBTop5(conn);
+		close(conn);
+		
+		return tlist;
+	}
+	
+
 	public int managerDeleteMember(String delId) {
 		Connection conn = getConnection();
 		int result = manDao.managerDeleteMember(conn, delId);
@@ -169,7 +192,6 @@ public class ManagerService {
 		commit(conn);
 			else
 		rollback(conn);
->>>>>>> adfe9757eddb37d8b3c58dc2ac94ff6b68018554
 		return result;
 	}
 	

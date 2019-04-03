@@ -43,25 +43,23 @@ function showDiv(){
 h2{
    position: relative;
    top: 20px;
-   left : 200px;
+   left : 0px;
    width: 70%;
    padding: 2rem 0px;
 }
+#search{ 
+	text-align:center;	
+	}
 .board { 
    position: relative;
    left : 150px;
-   top: 100px;
    width: 60%;
+   top: -50px;
    border-collapse: collapse;
    text-align: left;
    line-height: 1.5;
-   table-layout:fixed; 
+   table-layout:fixed;   
    
-}
-.button{
-   position: relative;
-   left : 200px;
-   top: 50px;
 }
 
 /* list_table 에서 사용되는 thead */
@@ -71,23 +69,20 @@ h2{
     vertical-align: top;
     color: #369;
     border-bottom: 3px solid #036;}
-
+.board tr{
+line-height : 2em;
+}
 /* list_table 에서 사용되는 tbody */
 .board tbody td { 
 	width: 150px;
     padding: 10px;
     font-weight: bold;
     vertical-align: top;
-    border-bottom: 1px solid #ccc;   
-    
+    border-bottom: 1px solid #ccc;       
 }
 
 .board tbody tr:hover{
 	background-color : #f3f6f7;
-}
-header{
-	text-align:center;	
-	padding: 2rem 0px;
 }
 
 .board tbody td a{
@@ -95,15 +90,18 @@ header{
 	color: black;
 }
 .search{
-	display: flex;
-	justify-content: center;
+	position: relative;
+   left : 100px;
+   width: 60%;
+   top: -150px;
+   border-collapse: collapse;
+   text-align: left;
+   line-height: 1.5;
+   table-layout:fixed;
 }
-.insert{
-	padding: 0 2rem;
-}
+
 #wrap{
 	left: 200px;
-	border: 1px solid red;
 	margin: 0 auto;
 }
 </style>
@@ -115,28 +113,7 @@ header{
 		  <div id="content">
 
 <h2 align="center">공지사항 게시판</h2>
-<header>
-<div class="search">
-	<form action="/doggybeta/nsearch" method="post">
-	<select name="opt"> <!-- 검색 컬럼 -->
-		<option value="0">제목</option>
-		<option value="1">내용</option>
-		<option value="2">제목+내용</option>
-	</select>
-	<input type="text" size="20" name="search"> 
-	<input type="submit" value="검색">
-	</form>
-	<div class="insert">
-<% if(loginUser != null){ %>
-	<input type="button" onclick="showWriteForm();" value="글쓰기">
-<%} %>
-	</div>
-</div>
-
-
-</header>
-
-<br>
+<br><br><br>
 <!-- 테이블 시작 -->
    <table class="board">
       <thead>
@@ -164,8 +141,8 @@ header{
    </td>
    <td><%= notice.getManagerId() %></td>
    <td><%= notice.getNoticeDate() %></td>
-   <td><%= notice.getNoticeViews() %></td>
-   <td>
+   <td>&nbsp;&nbsp;&nbsp;<%= notice.getNoticeViews() %></td>
+   <td>&nbsp;&nbsp;&nbsp;
    <%if(notice.getNoticeOriginFile() != null) {%>
    <img src="/doggybeta/resources/images/paw.png" width="20px;" align="center;">
    <% }else{ %>
@@ -176,8 +153,29 @@ header{
    <% } %>     
    </tbody>   
 </table>
-<br>         
+<br> <br><br><br><br><br><br>        
 <!-- 테이블 종료 -->
+
+<div class="search" align="center" id="search">
+	<form action="/doggybeta/nsearch" method="post">
+	<select name="opt"> <!-- 검색 컬럼 -->
+		<option value="0">제목</option>
+		<option value="1">내용</option>
+		<option value="2">제목+내용</option>
+	</select>
+	<input type="text" size="20" name="search"> 
+	<input type="submit" value="검색">
+	<% if(loginUser != null){ %>
+	<input type="button" onclick="showWriteForm();" value="글쓰기">
+<%} %>
+	</form>
+</div>
+
+
+
+
+<br>
+
 
 
 </div>

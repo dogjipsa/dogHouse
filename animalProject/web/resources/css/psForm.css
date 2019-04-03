@@ -8,7 +8,7 @@
 	height: 700px;
 	background-color: rgba(0,0,0,0.8);
 	border-radius: 20px;
-	display: none;
+	display: grid;
 	z-index: 1500;
 	grid-template-columns: 1fr 1fr 1.5fr;
 }
@@ -43,33 +43,39 @@
 }
 .ps_reg_form p{
 	font-weight: 600;
+	font-size: 12px;
 	color: white;
+	margin-bottom: 2px;
 }
 .ps_reg_form .ps_input{
   border: none;
   border-bottom: 1px solid #fff;
   background: transparent;
   outline: none;
-  height: 40px;
+  height: 20px;
   color: #fff;
-  font-size: 16px;
+  font-size: 12px;
+}
+.ps_reg_form textarea {
+  background: transparent;
+  outline: none;
+  color: #fff;
+  font-size: 12px;
 }
 .ps_reg_form .section1 label {
 	color : white;
 }
 
 .ps_reg_form .section2 .image_box{
-	height: 250px;
+	height: 180px;
 	display: flex;
 	flex-direction: column;
-	align-items: right;
 	justify-content: space-between;
 }
 
 .ps_reg_form .section2 .image_box .image_box_pic {
-	width: 90%;
-	margin-left: 5%;
-	height: 180px;
+	width: 70%;
+	height: 70%;
 }
 .ps_reg_form .section3 #reg_map_box{
 	border:1px solid rgba(255,255,255,0.2);
@@ -83,12 +89,12 @@
   display:block;
   border: none;
   outline: none;
-  width: 100%;
-  height: 30px;
+  
+  height:20px;
   background: #58B19F;
   border-radius: 5px;
   color: #fff;
-  font-size: 14px;
+  font-size: 12px;
   text-align: center;
 }
 #ppics_upload {

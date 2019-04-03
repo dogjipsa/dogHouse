@@ -43,13 +43,25 @@ function clickbtn(){
 	<div id="wrap">
 		  <div id="content">
 <header>
-회원정보변경
+<h2>회원정보변경</h2>
 </header>
-
-<div class="top">
-회원님의 정보를 안전하게 보호하기 위해 비밀번호를 다시 확인합니다.
+<br>
+<br>
+<br>
+<br>
+<style>
+#id{
+background-color:#f3f6f7;
+padding: 30px 30px;
+font-size: 16px;
+font: bold;
+height: auto;
+width: 500px;
+}
+</style>
 <div id="id">
-아이디 <%=loginUser.getUserId() %>
+아이디 : <%=loginUser.getUserId() %>
+<br>
 <br>
 <div id="pwd">
 비밀번호 
@@ -59,14 +71,16 @@ function clickbtn(){
 <input type="submit" onclick="return clickbtn();" value="확인">
 <input type="submit" id="clickbtn" value="정보수정하러가기" onclick="location.href='/doggybeta/views/member/changeInformation.jsp'">
 </div>
+<br>
+<hr>
+<div class="bottom" style="font-size: 12px;">
+회원님의 정보를 안전하게 보호하기 위해 비밀번호를 다시 확인합니다.
+</div>
+
 </div>
 </div>
 
-<div class="bottom">
 
-<button onclick="location.href='/doggybeta/index.jsp'">메인으로</button>
-
-</div>
 
 </div>
 		<div id="footer"><%@ include file="..//common/footer.jsp"%></div>

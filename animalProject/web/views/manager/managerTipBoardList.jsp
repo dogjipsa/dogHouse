@@ -1,19 +1,20 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" errorPage="managerError.jsp"%>
-<%@page 
-import='freeboard.model.vo.FreeBoard, java.util.ArrayList, faq.model.vo.Faq,
-		tipboard.model.vo.TipBoard' 
-
-%>
-
+<%@page import='java.util.ArrayList, tipboard.model.vo.TipBoard'%>
 <%
-	ArrayList<Faq> faqlist = (ArrayList<Faq>)request.getAttribute("faqList");
-	
+	ArrayList<TipBoard> tlist = (ArrayList<TipBoard>)request.getAttribute("tlist");
 	int listCount = ((Integer)request.getAttribute("listCount"));
 	int startPage = ((Integer)request.getAttribute("startPage"));
 	int endPage = ((Integer)request.getAttribute("endPage"));
 	int currentPage = ((Integer)request.getAttribute("currentPage"));
 	int totalPage = ((Integer)request.getAttribute("totalPage"));
+	
+	String search = null;
+	String keyword = null;
+	if(request.getAttribute("search") != null) {
+		search = request.getAttribute("search").toString();
+		keyword = request.getAttribute("keyword").toString();
+	}
 %>
 <!DOCTYPE html>
 <html>
@@ -23,13 +24,62 @@ import='freeboard.model.vo.FreeBoard, java.util.ArrayList, faq.model.vo.Faq,
 <link href="/doggybeta/resources/css/manager/managerBoardList.css" rel="stylesheet" type="text/css">
 <script type="text/javascript" src="/doggybeta/resources/js/jquery-3.3.1.min.js"></script>
 <script type="text/javascript">
+$(function(){
+    //최상단 체크박스 클릭
+    $("#checkAll").click(function(){
+        //클릭되었으면
+        if($("#checkAll").prop("checked")){
+            //input태그의 name이 chk인 태그들을 찾아서 checked옵션을 true로 정의
+            $("input[class=checkDel]").prop("checked",true);
+            //클릭이 안되있으면
+        }else{
+            //input태그의 name이 chk인 태그들을 찾아서 checked옵션을 false로 정의
+            $("input[class=checkDel]").prop("checked",false);
+        }
+    }); //전체선택 click fx
+    
+    var chkBoxArray = [];
+    var cBox = $('.checkDel');
+    
+    $('#del').click(function() {
+    	$('input[name=delNo]:checked').each(function(i){
+    		chkBoxArray.push($(this).val());
+    	});
+    	
+    	console.log(chkBoxArray);
+    	alert(chkBoxArray);
+    	if(confirm('정말 삭제하시겠습니까?')) {
+    		$.ajax({
+    			url: '/doggybeta/mantbdel',
+    			datatype: 'text',
+    			data: { delNo: chkBoxArray },
+    			type: 'post',
+    			cache: false,
+    			success: function(data) {
+    				chageVal(data);
+    				alert('변경이 완료되었습니다!');
+    			} //success
+    		});//ajax
+        } //if confirm
+    }); //delete click
+    $('#days').click(function(){
+    	$('#searchDate').show();
+    	$('input[id=keyw]').hide();
+    });
+});
 </script>
+<style type="text/css">
+	#formDialogDiv {
+	display:none;}
+</style>
 </head>
 <body id='mBoardListBody'>
-<%@ include file="../../../managerMainPage.jsp" %>
 <section>
+<%@ include file="../../views/common/managerMenu.jsp" %>
 <div class="mcontainer">
-	<h3>게시판 관리</h3>
+	<ul class="tabs">
+		<li class="tab-link current" data-tab="tab-1">팁게시판 관리</li>
+	</ul>
 	<div id="tab-1" class="row current">
 		<table class='t' style="text-align:center; border:1px solid #dddddd"> 
 			<thead>
@@ -43,56 +93,93 @@ import='freeboard.model.vo.FreeBoard, java.util.ArrayList, faq.model.vo.Faq,
 					<th style="background-color: #eeeeee; text-align: center;">삭제여부</th>
 				</tr>
 			</thead>
-			<% for(Faq faq : faqlist) { %>
+			<% for(TipBoard tb : tlist) { %>
 			<tbody>
 				<tr>
-					<td class='firstTd'><input type='checkbox'/>삭제</td>
+					<td class='firstTd'><input type='checkbox' class='checkDel' value='<%= tb.getTipBoardNo() %>' name='delNo'/>삭제</td>
 					<td>자유</td>
-					<td><%= faq.getFaqNo() %></td>
-					<td class='fourthTd'><a href='/doggybeta/manbdetail?bnum=<%= faq.getFaqNo() %>&page=<%= currentPage %>'><%= faq.getFaqTitle() %></a></td>
-					<td><%= faq.getManagerId() %></td>
-					<td><%= faq.getFaqDate() %></td>
-					<td><%= faq.getFaqType() %></td>
+					<td><%= tb.getTipBoardNo() %></td>
+					<td class='fourthTd'><a href='/doggybeta/mantbdetail?fnum=<%= tb.getTipBoardNo() %>&page=<%= currentPage %>'><%= tb.getTipBoardTitle() %></a></td>
+					<td><%= tb.getUserId() %></td>
+					<td><%= tb.getTipBoardDate() %></td>
+					<td class='yorn'><%= tb.getTipBoardDelete() %></td>
 				</tr>
 			</tbody>
 			<% } %> <%-- for each --%>
 		</table>
 		<%-- 페이징 --%>
 		<div style='text-align: center;'>
-		<% if(startPage > 1) { %>
-			<a href='/doggybeta/manboard?page=1'>[HOME]</a><br>
-		<% } else if(startPage == 1) { %>
-			[HOME]
-		<% } %>
-		<% if(currentPage > 1) { %>
-			<a href='/doggybeta/manboard?page=<%= currentPage - 1 %>'>[prev]</a>
-		<% } 
-		   for(int i = startPage; i <= endPage; i ++) {
-			   if(i == currentPage) {
-		%>
-			<b><%= i %></b>
-		<% 
-			   } else if(currentPage <= listCount && currentPage >= startPage) {
-		%>
+		<% if(currentPage <= 1) { %>
+		◁◁&nbsp;
+		<% } else { %>
+			<% if(search == null) { %>
+			<a href='/doggybeta/mantb?page=1'>◁</a><br>
+			<% } else { %>
+			<a href='/doggybeta/mantb?word=<%= keyword %>&page=1&option=<%= search %>'>[HOME]</a>
 			
-			&nbsp;<a href='/doggybeta/manboard?page=<%= i %>'><%= i %></a> &nbsp;
-		<%
-			   }
-		   } 
-		   if(currentPage < totalPage) {
-		%>
-			<a href='/doggybeta/manboard?page=<%= currentPage + 1 %>'>[NEXT]</a>
-		<% 
-			} 
-		   if(endPage < totalPage) {
-		%>
-			<a href='/doggybeta/manboard?page=<%= totalPage %>'>[END]</a>
+			<% } %>
 		<% } %>
+		<% if((currentPage - 10) <= startPage && (currentPage - 10) >= 1) { %>
+			<% if(search == null) { %>
+			<a href='/doggybeta/mantb?page=<%= startPage - 1%>'>◁</a><br>
+			<% } else { %>
+			<a href='/doggybeta/mantb?word=<%= keyword %>&page=<%= startPage - 1%>&option=<%= search %>'>[HOME]</a>
+			
+			<% } %>
+		<% } else { %>
+		◁
+		<% } %>
+		<% for(int p = startPage; p <= endPage; p ++) {
+			if(p == currentPage) { %>
+				<font color='skyblue' size='4'><b><%= p %></b></font>
+			<% } else { %>
+				<% if(search == null) { %>
+					<a href='/doggybeta/mantb?page=<%= p %>'><%= p %></a>
+				<% } else { %>
+					<a href='/doggybeta/mantb?word=<%= keyword %>&page<%= p %>&option=<%= search%>'><%= p %></a>
+				<% } %>
+			<% } %>
+		<% } //for문 %>&nbsp;
+		<% if(endPage < totalPage) { %>
+		<!-- ◁◁ -->
+			<% if(search == null) { %>
+				<a href='/doggybeta/mantb?page=<%= totalPage %>'>▷▷</a>
+			<% } else { %>
+				<a href='/doggybeta/mantb?word=<%= keyword %>&page=<%= totalPage %>&option<%= search %>'>▷▷</a>
+			<% } %>
+		<% } else { %>
+			▷&nbsp;
+		<% } %>
+		<% if(currentPage >= totalPage) { %>
+		▷▷
+		<% }  else {%>
+		<% if(search == null) { %>
+			<a href='/doggybeta/mantb?page=<%= totalPage %>'>▷▷</a>
+		<% } else { %>
+			<a href='/doggybeta/mantb?word=<%= keyword %>&page=<%= totalPage %>&option=<%= search %>'>▷▷</a>
+		<% } } %>
+	</div>
+	<input type="checkbox" id="checkAll" class='styled-checkbox'/>전체선택
+	<input type='button' id='del' value='선택삭제'/>
+	<div>
+	<div class="fsearch" align="center" id="searchT">
+ 	<form name="form1" method="post" action="/doggybeta/mantb">
+  	<select name="option">
+  		<option value="delyorn" >삭제여부</option>
+  		<option value="writer" >작성자</option>
+  		<option value="createDel" id='days'>날짜</option>
+   	</select>
+   		<input type='date' id='searchDate' name='keyword'/>
+ 		<input type="text" size="20" name="keyword" id='keyw'/>&nbsp;
+ 		<input type="submit" value ="검색"/>
+	</form>
 		</div>
-		<a href = "write.jsp" class="btn btn-primary pull-right">글쓰기</a>
-		<a href = "#" >전체 삭제</a>
+		</div>
 	</div>
 </div>
 </section>
+<%-- <% } else { %>
+<% pageContext.forward("/views/manager/managerLogin.jsp"); %>
+<% } %> --%>
 </body>
 </html>

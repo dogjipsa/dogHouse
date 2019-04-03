@@ -8,6 +8,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import member.model.service.MemberService;
+import member.model.vo.Member;
+
 /**
  * Servlet implementation class LogoutServlet
  */

@@ -62,7 +62,6 @@
 				</div>
 			</div>
 		</div>
-		<div id="footer"><%@ include file="../views/common/footer.jsp"%></div>
 	</div>
 	<script>
 		var slideIndex = 1;

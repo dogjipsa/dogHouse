@@ -17,7 +17,7 @@
 </script>
 </head>
 <body>
-<%@ include file="../../../managerMainPage.jsp" %>
+<%@ include file="../../views/common/managerMenu.jsp" %>
 <br>
 <section>
 <div id='mainSet'>

@@ -87,4 +87,23 @@ public class BookingService {
 		close(conn);
 		return result;
 	}
+
+	public ArrayList<Booking> bookingAlert(String puserid) {
+		Connection conn = getConnection();
+		ArrayList<Booking> list = bdao.bookingAlert(conn, puserid);
+		System.out.println("service 단에서 " + list + ", " + puserid);
+		close(conn);
+		return list;
+	}
+
+	public int bookingCount(String puserid) {
+		Connection conn = getConnection();
+		int count = bdao.bookingCount(conn, puserid);
+		if(count > 0)
+			commit(conn);
+		else
+			rollback(conn);
+		close(conn);
+		return count;
+	}
 }
