@@ -106,4 +106,15 @@ public class BookingService {
 		close(conn);
 		return count;
 	}
+
+	public int updateBookingStatusFour(int bookingNo) {
+		Connection conn = getConnection();
+		int result = bdao.updateBookingStatusFour(conn, bookingNo);
+		if(result > 0)
+			commit(conn);
+		else
+			rollback(conn);
+		close(conn);
+		return result;
+	}
 }

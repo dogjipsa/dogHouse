@@ -1,23 +1,27 @@
 package manager.controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import manager.model.service.ManagerService;
+
 /**
- * Servlet implementation class ManagerSearchDelServlet
+ * Servlet implementation class ManagerDeletePetsitterServlet
  */
-@WebServlet("/delornot")
-public class ManagerSearchDelServlet extends HttpServlet {
+@WebServlet("/manpdelete")
+public class ManagerDeletePetsitterServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ManagerSearchDelServlet() {
+    public ManagerDeletePetsitterServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -26,10 +30,24 @@ public class ManagerSearchDelServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// 관리자 페이지 게시판 삭제여부 검색용 컨트롤러
-		
-	}
-
+		//멤버 강퇴 처리용 컨트롤러
+		request.setCharacterEncoding("utf-8");
+		response.setContentType("text/html;charset=utf-8");
+		String []delId = request.getParameterValues("delId[]");
+		System.out.println(delId);
+		int result = 0;
+						
+		for(int i = 0; i < delId.length; i ++) {
+			result = new ManagerService().managerDeleteMember(delId[i]);
+						}
+			PrintWriter out = response.getWriter();
+				if(result > 0) {
+					out.println("y");
+				} else {
+					out.print("n");
+						}
+					}
+			
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */

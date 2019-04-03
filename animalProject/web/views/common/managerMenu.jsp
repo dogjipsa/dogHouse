@@ -52,15 +52,14 @@ $(function() {
 			</a>
 		</li>
 		<li class="selected">
-			<span class="messages"><i class="icon-envelope-alt"></i>쪽지<em>5</em></span>
+			<span class="messages"><i class="icon-cog"></i>공지사항</span>
 		</li>
 		<li>
 			<span class="manage"><i class="icon-cog"></i>게시판관리</span>
 			<ul class='submenu'>
-				<li>게시판 공지사항</li>
+				<li><a href="/doggybeta/mannotice">게시판 공지사항</a></li>
 				<li><a href='/doggybeta/manboard'>자유게시판 관리</a></li>
 				<li><a href='/doggybeta/mantb'>팁 게시판 관리</a></li>
-				<li>신고 게시물 관리</li>
 			</ul>
 		</li>
 		<li>

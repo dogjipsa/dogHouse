@@ -192,7 +192,7 @@ img {
 /* 평균 별점 css  */
 span.star-prototype, span.star-prototype > * {
     height: 16px; 
-    background: url(http://i.imgur.com/YsyS5y8.png) 0 -16px repeat-x;
+    background: url('/doggybeta/resources/img/YsyS5y8.png') 0 -16px repeat-x;
     width: 80px;
     display: inline-block;
 }
@@ -306,12 +306,15 @@ function showSlides(n) {
 </table>
 <script type="text/javascript">
 /* 별점처리 jquery  */
- $.fn.generateStars = function() {
-	    return this.each(function(i,e){$(e).html($('<span/>').width($(e).text()*16));});
- };
+ $(function(){
+	 $.fn.generateStars = function() {
+		    return this.each(function(i,e){$(e).html($('<span/>').width($(e).text()*16));});
+	 };
 
- // 숫자 평점을 별로 변환하도록 호출하는 함수
- $('.star-prototype').generateStars();
+	 // 숫자 평점을 별로 변환하도록 호출하는 함수
+	 $('.star-prototype').generateStars();
+ });
+ 
  
 </script>
 <br>
@@ -394,73 +397,14 @@ geocoder.addressSearch('<%=petSitter.getAddress()%>', function(result, status) {
       <tbody>
       	
       </tbody>
-      
-      <%-- <tbody>      
-       <%   for(Notice notice : list){ %>
-   <tr>
-   <td><%= notice.getNoticeNo() %></td>
-   
-   <td>
-   <%if(loginUser != null){ %>
-   <a href="/doggybeta/ndetail?no=<%= notice.getNoticeNo()%>"><%= notice.getNoticeTitle() %></a>
-   <% }else{ %>
-   <%= notice.getNoticeTitle() %>
-   <% } %>
-   </td>
-   <td><%= notice.getManagerId() %></td>
-   <td><%= notice.getNoticeDate() %></td>
-   <td><%= notice.getNoticeViews() %></td>
-   <td>
-   <%if(notice.getNoticeOriginFile() != null) {%>
-   <img src="/doggybeta/resources/images/paw.png" width="20px;" align="center;">
-   <% }else{ %>
-   &nbsp;
-   <%} %>
-   </td>
-   </tr>   
-   <% } %>     
-   </tbody>    --%>
 </table>
 
 <p id="test"></p>
 <input id="currentpage" value="1">
 <script type="text/javascript">
-
+/* 리뷰게시판 조회   */
 $(function() {
 	console.log($('#petSitterId').val());
-	$.ajax({
-		url: '/doggybeta/rlist',
-		type: 'post',
-		dataType: 'json',
-		data : {petSitterId : $('#petSitterId').val()},
-		
-		/* reviewJson.put("reviewno", String.valueOf(review.getReviewNo()));
-		reviewJson.put("userid", review.getUserId());
-		reviewJson.put("bookingno", String.valueOf(review.getReviewNo()));
-		reviewJson.put("point", review.getPoint());
-		reviewJson.put("reviewcontent", URLEncoder.encode(review.getReviewContent(), "UTF-8"));
-		reviewJson.put("revieworiginal", review.getReviewOriginFile());
-		reviewJson.put("reviewre", review.getReviewReFile());
-		reviewJson.put("reviewdate", review.getReviewDate()); */
-		success: function(data){
-			console.log(data);
-				 console.log('성공!');
-				 var jsonStr = JSON.stringify(data);
-				 var json = JSON.parse(jsonStr); 
-				 var values = "";
-				 for(var i in json.list){
-					$("#reviewboard")
-					.append("<tr><td>"
-							+json.list[i].reviewno
-							+"</td><td>"+json.list[i].point
-							+"</td><td>"+decodeURIComponent(json.list[i].reviewcontent)
-							);
-				 }
-				 $("#reviewboard").html(values);
-				 
-		}
-	});
-		
 		$.ajax({
 			url: '/doggybeta/rlist',
 			type: 'post',
@@ -472,9 +416,22 @@ $(function() {
 					 var jsonStr = JSON.stringify(data);
 					 var json = JSON.parse(jsonStr); 
 					 for(var i in json.list){
-						 if(json.list[i].point==3){
-							$("#reviewboard").append("<tr><td>"+json.list[i].reviewno+"</td><td><span class='star-prototype'>3</span></td><td>"+decodeURIComponent(json.list[i].reviewcontent)+"</td><td>"+json.list[i].reviewdate+"</tr>");
+						 /* $("#reviewboard").append("<tr><td><span class='star-prototype'>"+i+"</span></td><td>"+json.list[i].userid+"</td><td>"+decodeURIComponent(json.list[i].reviewcontent)+"</td><td>"+json.list[i].reviewdate+"</tr>"); */
+						 if(json.list[i].point==1){
+								$("#reviewboard").append("<tr><td>★</td><td>"+json.list[i].userid+"</td><td>"+decodeURIComponent(json.list[i].reviewcontent)+"</td><td>"+json.list[i].reviewdate+"</tr>");
+					     }
+						 if(json.list[i].point==2){
+								$("#reviewboard").append("<tr><td>★★</td><td>"+json.list[i].userid+"</td><td>"+decodeURIComponent(json.list[i].reviewcontent)+"</td><td>"+json.list[i].reviewdate+"</tr>");
 						 }
+						 if(json.list[i].point==3){
+							$("#reviewboard").append("<tr><td>★★★</td><td>"+json.list[i].userid+"</td><td>"+decodeURIComponent(json.list[i].reviewcontent)+"</td><td>"+json.list[i].reviewdate+"</tr>");
+						 }
+						 if(json.list[i].point==4){
+							 $("#reviewboard").append("<tr><td>★★★★</td><td>"+json.list[i].userid+"</td><td>"+decodeURIComponent(json.list[i].reviewcontent)+"</td><td>"+json.list[i].reviewdate+"</tr>");
+							 }
+						 if(json.list[i].point==5){
+							 $("#reviewboard").append("<tr><td>★★★★★</td><td>"+json.list[i].userid+"</td><td>"+decodeURIComponent(json.list[i].reviewcontent)+"</td><td>"+json.list[i].reviewdate+"</tr>");
+							 }
 						<%-- <span class="star-prototype"><%= starAvg %></span> --%>
 					 }
 					 $("#test").append("리스트카운트 ; "+data.listCount);
@@ -495,59 +452,6 @@ $(function() {
 		});
 	
 });
-
-/* success: function(data){
-console.log('성공!');
- var jsonStr = JSON.stringify(data);
-var json = JSON.parse(jsonStr);
-
-var values = $('.row').html();
-for(var i in json.managerList) {
-	values += json.managerList[i].freeno + json.managerList[i].freetitle +
-		      json.managerList[i].freedate +
-		      json.managerList[i].freeuserid + json.managerList[i].freedel
-}
-$('.row').html(values);
-} */
-
-/*$(function() {
-$.ajax({
-	url: '/doggybeta/manboard',
-	type: 'post',
-	cache: false,
-	datatype: 'json',
-	success: function(data) {
-		console.log('성공!');
-		/* var jsonStr = JSON.stringify(data);
-		var json = JSON.parse(jsonStr);
-		
-		var values = $('.row').html();
-		for(var i in json.managerList) {
-			values += json.managerList[i].freeno + json.managerList[i].freetitle +
-				      json.managerList[i].freedate +
-				      json.managerList[i].freeuserid + json.managerList[i].freedel
-		}
-		$('.row').html(values); */
-/*	$.each(data.managerList, function(index) {
-			var items = [];
-			items.push("<td class='firstTd'><input type='checkbox'/></td>");
-			items.push('<td>' + '자유' + '</td>');
-			items.push('<td>' + data.managerList[index].freeno + '</td>');
-			items.push("<td class='fourthTd'>" + decodeURIComponent(data.managerList[index].freetitle) + '</td>');
-			items.push('<td>' + data.managerList[index].freeuserid + '</td>');
-			items.push('<td>' + data.managerList[index].freedate + '</td>');
-			$('<tr/>', {
-				html: items
-			}).appendTo('tbody');
-		}); //each  
-	},//success
-	error : function(data) {
-		alert('에러!');
-	} */
-/*});//ajax
-});//ready */
-
-
 </script>
 
 <br><br><div id="paging"></div>
@@ -556,34 +460,84 @@ $.ajax({
 <span class="star-prototype"><%= starAvg %></span>
 
 </div><!-- 가운데 영역  끝-->
-<div style="float:left;padding-top:100px"><!-- 오른쪽 영역  --> 
-<div><!-- 날짜 입력  -->
+
+<style>
+input[type=text], select {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  font-size:15px;
+}
+
+input[type=submit] {
+  width: 100%;
+  background-color: #4CAF50;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size:30px;
+}
+
+input[type=submit]:hover {
+  background-color: #45a049;
+}
+
+
+</style>
+
+
+<div style="float:left;padding-top:100px;padding-left:30px;"><!-- 오른쪽 영역  --> 
+<div id="rightpart" style="border-radius: 5px; background-color: #f2f2f2; padding: 20px;"><!-- 날짜 입력  -->
 <form action="/doggybeta/bkinsert" type="post">
-예약날짜 <br><input type="text" name="datetimes" onchange="priceCal()" id="datetimes" size="35"/>
+예약날짜(최대 2주) <br><input type="text" name="datetimes" onchange="priceCal()" id="datetimes" size="35" readonly/>
 <br><br>
-특이사항 <br><textarea  style="resize: none;" name="etc"  rows="4" cols="37"></textarea>
+이용할 서비스<input type="text" id="servicedate" readonly>
+<br><br>
+요청사항 <br><br><textarea  style="resize: none;" name="etc"  rows="4" cols="37" placeholder="펫시터에게 전할 말.."></textarea>
 <input type="hidden" name="service" id="service" value="<%=service%>">
 <input type="hidden" name="petSitterId" id="petSitterId" value="<%=petSitter.getUserId()%>">
 <input type="hidden" name="userId" value="<%=loginUser.getUserId()%>">
 <input type="hidden" name="price" id="price" value="<%=petSitter.getPrice() %>">
 <br><br>
-총 가격 : <input type="text" value=""  id="priceSum" name="priceSum" readonly> 원
+총 가격 : <input type="text" value=""  id="priceSum" name="priceSum" readonly>
+<p id="pricesum"></p>
 <br><br>
 <input type="submit" value="예약하기">
 <script>
+$("document").ready(function() {  
+	   
+    $(window).scroll(function()  
+    {  
+        $('#scroll').animate({top:$(window).scrollTop()+"px" },{queue: false, duration: 350});    
+    });  
+ 
+    $('#scroll').click(function()  
+    {  
+        $('#scroll').animate({ top:"+=15px",opacity:0 }, "slow");  
+    })
+       
+});  
+
+
 $(function() {
   $('input[name="datetimes"]').daterangepicker({
     timePicker: true,
-    startDate: moment().startOf('hour'),
+    timePicker24Hour: true,
+    startDate: moment().startOf('hour').add(3,'hour'),
+    minDate : moment().startOf('hour').add(3,'hour'),
     endDate: moment().startOf('hour').add(32, 'hour'),
-    
+    maxDate: moment().startOf('day').add(14,'day'),
     locale: {
       format: 'YYYY/MM/DD HH:mm'
     }
-	
   });
-  
- 
 });
 
   /* 가격계산 ajax  */
@@ -599,12 +553,11 @@ function priceCal(){
 						price: $('#price').val(),
 						service: $('#service').val()},
 				success: function(data){
-							$("#priceSum").val(data.pricesum);
+							$("#priceSum").val(data.pricesum+" 원");
+							$("#servicedate").val(data.service + data.dateStr);
+							$("#pricesum").append(pricesum);
 						}
-				
-				
 			});
-   	 
   }
 </script>
 </form>

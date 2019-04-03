@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8" errorPage="managerError.jsp"%>
  <%@page import='tipboard.model.vo.TipBoard, freeboardreply.model.vo.FreeBoardReply, java.util.ArrayList, manager.model.vo.Manager' %>   
  <%
     int currentPage = ((Integer)request.getAttribute("currentPage")).intValue();

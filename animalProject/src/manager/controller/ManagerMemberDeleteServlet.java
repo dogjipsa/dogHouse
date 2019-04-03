@@ -14,7 +14,7 @@ import manager.model.service.ManagerService;
 /**
  * Servlet implementation class ManagerMemberDeleteServlet
  */
-@WebServlet("/mmdelete")
+@WebServlet("/manmdelete")
 public class ManagerMemberDeleteServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        

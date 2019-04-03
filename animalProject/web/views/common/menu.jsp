@@ -4,6 +4,7 @@
 <%@ page import="java.security.SecureRandom" %>
 <%@ page import="java.math.BigInteger" %>
 <%@ page import='member.model.vo.Member' %>
+
 <%
 	Member loginUser = (Member)session.getAttribute("loginUser");
 	String access_token = (String)session.getAttribute("access_token");
@@ -70,7 +71,7 @@
 						us</span></a>
 				<ul class="m2">
 					<li><a href="/doggybeta/views/aboutus/companyIntroduce.jsp">회사소개</a></li>
-					<li><a>연혁</a></li>
+					<li><a href="/doggybeta/views/aboutus/history.jsp">연혁</a></li>
 					<li><a href="/doggybeta/views/aboutus/teamIntroduce.jsp">팀
 							도그집사</a></li>
 					<li><a href="/doggybeta/views/aboutus/location.jsp">오시는 길</a></li>
@@ -160,9 +161,10 @@
 		<a href='/doggybeta/jipsalogout'><span class='btn btn-1 btn-sign'>로그아웃</span></a>
 		<% if(access_token != null) { %>
 		<!-- 네이버로그인이 제대로 되었음을 확인 -->
-		<%= loginUser.getUserName() %> 님 환영합니다
+
+			<%= loginUser.getUserId() %> 님 환영합니다
 		<% } else { %>
-		<%= loginUser.getUserName() %> 님 환영합니다
+			<%= loginUser.getUserName() %> 님 환영합니다 <div id="bookingalert"></div>
 		<% } %>
 		<!-- -------------------------------------------------------------------------  -->
 		<ul class='icon' id='icon'>
@@ -174,7 +176,7 @@
 						us</span></a>
 				<ul class="m2">
 					<li><a href="/doggybeta/views/aboutus/companyIntroduce.jsp">회사소개</a></li>
-					<li><a>연혁</a></li>
+					<li><a href="/doggybeta/views/aboutus/history.jsp">연혁</a></li>
 					<li><a href="/doggybeta/views/aboutus/teamIntroduce.jsp">팀
 							도그집사</a></li>
 					<li><a href="/doggybeta/views/aboutus/location.jsp">오시는 길</a></li>
@@ -199,11 +201,12 @@
 			</li>
 
 			<li class="m1"><a href="#" id='icon6'>
-					<span id="bookingalert">
-						&nbsp;&nbsp;&nbsp;마이페이지
-					</span>
-				</a>
-				<input type="hidden" id=puserid name=puserid value=<%=loginUser.getUserId() %>>
+
+			<span>
+			&nbsp;&nbsp;&nbsp;마이페이지
+			</span>
+			</a>
+			<input type="hidden" id=puserid name=puserid value=<%=loginUser.getUserId() %>>
 				<ul class="m2">
 					<li><a href='/doggybeta/views/member/reconfirmPassword.jsp'>정보수정</a></li>
 					<li><a href='/doggybeta/views/customerservice/checkMyLog.jsp'>이용내역/예약확인</a></li>
@@ -212,7 +215,8 @@
 				</ul>
 			</li>
 		</ul>
-
+	
+	</div>
 	</nav>
 
 	<!-- 펫시터 신청 버튼 클릭시 생성 보여지는 HTML 부분. 로그인 부분 구현시 인풋에 세션으로 값 넣어놓고 readonly 처리할 것  -->
@@ -290,20 +294,29 @@
 							+ "<img src='/doggybeta/resources/images/alarm.png' style='width: 20px;'>"
 							+ "(" + data.count + ")")
 
+
+					$("#bookingalert").on("click", function(e){
+						location.href="/doggybeta/views/customerservice/checkMyLog.jsp";
+						})
+						 
 					}
 
+			
 				},  //success
-				error: function (jqXHR, textStatus, errorThrown) {
-					alert(jqXHR.status);
-					alert(jqXHR.statusText);
-					alert(jqXHR.responseText);
-					alert(jqXHR.readyState);
+				error :  function( jqXHR, textStatus, errorThrown ) {
+					alert( jqXHR.status );
+					alert( jqXHR.statusText );
+					alert( jqXHR.responseText );
+					alert( jqXHR.readyState );
 
-				}	//error
+					}	//error
+				
+			});	
 
-			});
-		});
 
+	 });
+
+	
 		$('.m1').click(function () {
 			if ($(this).children('.m2').is(':visible')) {
 				$(this).children('.m2').slideUp(200);
