@@ -4,6 +4,7 @@
 <%@ page import="java.security.SecureRandom" %>
 <%@ page import="java.math.BigInteger" %>
 <%@ page import='member.model.vo.Member' %>
+
 <%
 	Member loginUser = (Member)session.getAttribute("loginUser");
 	String access_token = (String)session.getAttribute("access_token");
@@ -158,9 +159,9 @@
 		<a  href='/doggybeta/jipsalogout'><span class='btn btn-1 btn-sign'>로그아웃</span></a>
 		<% if(access_token != null) { %>
 		<!-- 네이버로그인이 제대로 되었음을 확인 -->
-			<%= loginUser.getUserName() %> 님 환영합니다
+			<%= loginUser.getUserName() %> 님 환영합니다 <div id="bookingalert"></div>
 		<% } else { %>
-			<%= loginUser.getUserName() %> 님 환영합니다
+			<%= loginUser.getUserName() %> 님 환영합니다 <div id="bookingalert"></div>
 		<% } %>
 		<!-- -------------------------------------------------------------------------  -->
 		<ul class='icon' id='icon'>
@@ -196,7 +197,7 @@
 			</li>
 
 			<li class="m1"><a href="#" id='icon6'>
-			<span id="bookingalert">
+			<span>
 			&nbsp;&nbsp;&nbsp;마이페이지
 			</span>
 			</a>
@@ -209,7 +210,8 @@
 				</ul>
 			</li>
 		</ul>
-
+	
+	</div>
 	</nav>
 
 	<!-- 펫시터 신청 버튼 클릭시 생성 보여지는 HTML 부분. 로그인 부분 구현시 인풋에 세션으로 값 넣어놓고 readonly 처리할 것  -->
@@ -286,8 +288,13 @@
 					$("#bookingalert").html($("#bookingalert").text()
 							+ "<img src='/doggybeta/resources/images/alarm.png' style='width: 20px;'>" 
 							+ "(" + data.count + ")")
-							
-					}		
+
+					$("#bookingalert").on("click", function(e){
+						location.href="/doggybeta/views/customerservice/checkMyLog.jsp";
+						})
+						 
+					}
+
 			
 				},  //success
 				error :  function( jqXHR, textStatus, errorThrown ) {
@@ -298,8 +305,11 @@
 
 					}	//error
 				
-			});			 
+			});	
+
+
 	 });
+
 	 
 		$('.m1').click(function () {
 			if ($(this).children('.m2').is(':visible')) {
