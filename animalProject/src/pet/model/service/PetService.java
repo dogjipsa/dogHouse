@@ -75,4 +75,11 @@ public class PetService {
 		return sub;
 	}
 
+	public ArrayList<Pet> selectPetAllList(String userid) {
+		Connection conn = getConnection();
+		ArrayList<Pet> list = pdao.selectPetAllList(conn, userid);
+		close(conn);
+		return list;
+	}
+
 }
