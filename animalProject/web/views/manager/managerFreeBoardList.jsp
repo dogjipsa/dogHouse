@@ -67,7 +67,7 @@ $(function(){
     		});//ajax
         } //if confirm
     }); //delete click
-    });
+    
 });
 function refreshMemList(){
 	location.reload();

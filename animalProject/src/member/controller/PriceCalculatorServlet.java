@@ -42,17 +42,30 @@ public class PriceCalculatorServlet extends HttpServlet {
 		}
 		System.out.println("서비스 체크 : " + service);
 		System.out.println("가격체크 : " + price);*/
+		System.out.println("서비스체크 : " + request.getParameter("selectservice"));
+		String selectedService = request.getParameter("selectservice");
+		String check = "";
+		if(selectedService.equals("펫시터 집에 맡기기")) {
+			check = "1";
+		}else {
+			check = "2";
+		}
 		String[] date = request.getParameter("datetimes").split(" - ");
 		String checkin = date[0];
 		String checkout = date[1];
 		int dates = new BookingService().selectDates(checkin,checkout);
 		String service = "";
 		String dateStr = " (당일)";
-		if(dates == 0) {
+		if(dates == 0 && check.equals("1")) {
 			price = (int) ((price*0.8)/1000) *1000;
 			service = "펫시터에게 맡기기";
-		}else {
+		}else if(check.equals("1")){
 			service = "펫시터에게 맡기기";
+			dateStr = " ("+dates+"박"+(dates+1)+" 일)";
+		}else if(dates == 0 && check.equals("2")) {
+			service = "펫시터 우리집으로 부르기";
+		}else if(check.equals("2")) {
+			service = "펫시터 우리집으로 부르기";
 			dateStr = " ("+dates+"박"+(dates+1)+" 일)";
 		}
 		int priceSum = (dates+1)*price;

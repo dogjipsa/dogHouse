@@ -1,4 +1,9 @@
+@font-face{
+    font-family: 'SDMiSaeng';
+    src: url('/doggybeta/resources/fonts/SDMiSaeng.ttf');
+}
 .wrap_content{
+    font-family: 'SDMiSaeng';
     height:100%;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
@@ -63,6 +68,8 @@
     width: 50%;
 }
 .member__box input {
+    font-family: 'SDMiSaeng';
+    font-weight: 300;
     border: none;
     border-bottom: 1px solid rgba(0, 0, 0, 0.3);
     background: transparent;
@@ -70,11 +77,11 @@
     height: 25px;
     width: 80%;
     color: rgba(0, 0, 0, 0.7);
-    font-size: 12px;
+    font-size: 20px;
 }
 
 .member__box p {
-    font-size: 13px;
+    font-size: 22px;
     font-weight: 500;
     margin-bottom: 3px;
 }

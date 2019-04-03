@@ -225,7 +225,7 @@ public class MemberDao {
 		PreparedStatement pstat = null;
 		StringBuffer query = new StringBuffer();
 		query.append("insert into member values ( ")
-		 	 .append("?,?,?,?,?,?,default,?,?,?,default,?,?,?,?,0)");
+		 	 .append("?,?,?,?,?,?,default,?,?,?,default,?,?,?,?,0,?)");
 		
 		try {
 			
@@ -244,6 +244,7 @@ public class MemberDao {
 			pstat.setString(11, member.getUserrefile());
 			pstat.setString(12, member.getNaverCode());
 			pstat.setString(13, member.getTitleImg());
+			pstat.setString(14, member.getpContent());
 			
 			result = pstat.executeUpdate();
 			System.out.println("DAO : " + result);
@@ -285,7 +286,7 @@ public class MemberDao {
 	public int updateHost(Connection conn, Member m) {
 	      int result = 0;
 	      PreparedStatement pstmt = null;
-	      String query = "update member set petsitter = '1', phone=? , email = ?, address = ? , price = ?, user_originfile = ?, user_refile =?, user_name = ? where user_id = ?";
+	      String query = "update member set petsitter = '1', phone=? , email = ?, address = ? , price = ?, user_originfile = ?, user_refile =?, user_name = ?, petsitter_content =? where user_id = ?";
 	      
 	      try {
 	         pstmt = conn.prepareStatement(query);
@@ -296,7 +297,8 @@ public class MemberDao {
 	         pstmt.setString(5, m.getUseroriginfile());
 	         pstmt.setString(6, m.getUserrefile());
 	         pstmt.setString(7, m.getUserName());
-	         pstmt.setString(8, m.getUserId());
+	         pstmt.setString(8, m.getpContent());
+	         pstmt.setString(9, m.getUserId());
 	         
 	         result = pstmt.executeUpdate();
 	      } catch (Exception e) {

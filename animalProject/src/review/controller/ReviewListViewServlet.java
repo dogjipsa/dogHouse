@@ -68,6 +68,7 @@ public class ReviewListViewServlet extends HttpServlet {
 		JSONArray jsonArr = new JSONArray();
 		
 		for(Review review :  list) {
+			
 			JSONObject reviewJson = new JSONObject();
 			reviewJson.put("reviewno", review.getReviewNo());
 			reviewJson.put("userid", review.getUserId());

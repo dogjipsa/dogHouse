@@ -13,7 +13,7 @@
 	<div id="notfound">
 		<div class="notfound">
 			<div class="notfound-404">
-				<h1>:(</h1>
+				<h3>:(</h3>
 			</div>
 			<h2>!!</h2>
 			<p><%= exception.getMessage() %></p>
