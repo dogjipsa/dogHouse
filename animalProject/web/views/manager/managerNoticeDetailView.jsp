@@ -94,12 +94,12 @@ h2{
 	<th>첨부파일</th>
 	<td>
 	 		<% if(notice.getNoticeOriginFile() != null){ %>
-			<a href="/doggybeta/mndown?nofile=<%= notice.getNoticeOriginFile() %>&nrfile=<%= notice.getNoticeReFile() %>"><%= notice.getNoticeOriginFile()%></a>
+			<a href="/doggybeta/manndown?mnofile=<%= notice.getNoticeOriginFile() %>&mnrfile=<%= notice.getNoticeReFile() %>"><%= notice.getNoticeOriginFile()%></a>
 			
 		<% }else{ %>
 			첨부파일없음
 		<% } %> 
-	</td>
+	</td> 
 </tr> 
 <tr>
 	<th>내용</th>
@@ -107,11 +107,9 @@ h2{
 </tr>
 <tr>
 	<th colspan="2" align="center">
-<% if(loginUser.getUserId().equals(notice.getManagerId())){ %> 
-		<a href="/doggybeta/nupview?nnum=<%= notice.getNoticeNo() %>">[수정페이지로 이동]</a> 
+		<a href="/doggybeta/mnupdate?nnum=<%= notice.getNoticeNo() %>">[수정페이지로 이동]</a> 
 		&nbsp; &nbsp;
-		<a href="/doggybeta/ndelete?nnum=<%= notice.getNoticeNo() %>">[글삭제]</a>
-	 <% } %> 
+		<a href="/doggybeta/mndelete?nnum=<%= notice.getNoticeNo() %>">[글삭제]</a>
 	&nbsp; &nbsp;
 	 <a href="/doggybeta/mannNotice">[목록]</a> 
 	</th>	

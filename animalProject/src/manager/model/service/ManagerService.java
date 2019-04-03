@@ -3,6 +3,7 @@ package manager.model.service;
 import manager.model.dao.ManagerDao;
 import manager.model.vo.Manager;
 import member.model.vo.Member;
+import notice.model.vo.Notice;
 import question.model.vo.Question;
 import tipboard.model.vo.TipBoard;
 
@@ -219,6 +220,26 @@ public class ManagerService {
 		close(conn);
 		return notice;
 
+	}
+
+	public int updateNotice(Notice notice) {
+		Connection conn = getConnection();
+		int result = manDao.updateNotice(conn, notice);
+		if(result > 0)
+			commit(conn);
+		else
+			rollback(conn);
+		return result;
+	}
+
+	public int deleteNotice(int noticeNo) {
+		Connection conn = getConnection();
+		int result = manDao.deleteNotice(conn, noticeNo);
+		if(result > 0)
+			commit(conn);
+		else
+			rollback(conn);
+		return result;
 	}
 	
 }
