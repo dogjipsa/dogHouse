@@ -4,7 +4,7 @@
 <%
 	Member petSitter = (Member)request.getAttribute("petSitter");
 	ArrayList<SitterImage> sitterFacilityImg = (ArrayList<SitterImage>)request.getAttribute("sitterFacilityImg");
-	String service = (String)request.getAttribute("service");
+	//String service = (String)request.getAttribute("service");
 	String[] location = (petSitter.getAddress()).split(",");//상세주소가 다 나오지 않게 ,로 구분
 	double starAvg = (Double)request.getAttribute("starAvg");
 
@@ -16,7 +16,7 @@
 <title>Dog House</title>
 <link rel="shortcut icon" href="/doggybeta/resources/images/favicon.ico">
 <link href="/doggybeta/resources/css/footer.css" rel="stylesheet" type="text/css">
-
+<link rel="stylesheet" href="/doggybeta/resources/css/checkMyLog.css">
 <!-- 시간(DateTimePicker) 위젯 링크들은 menu.jsp에 추가  -->
 
 <style type="text/css">
@@ -384,26 +384,37 @@ geocoder.addressSearch('<%=petSitter.getAddress()%>', function(result, status) {
 });     
 </script>
 
+<br>
+<br>
 <div style="height:800px"><!-- 리뷰게시판  -->
 <table class="board" id="reviewboard">
       <thead>
          <tr>
-            <th width="50">작성자</th>
-            <th width="70">별점</th>
-            <th width="300">내용</th>
-            <th width="130">작성일</th>
+            <th width="70">리뷰</th>
+            <th width="50"></th>
+            <th width="350"></th>
+            <th width="100"></th>
          </tr>   
       </thead>
       <tbody>
       	
       </tbody>
 </table>
-
+<div class="section5"><!-- 페이징처리부분  -->
+		<div class="pagination"></div>
+</div>
 <p id="test"></p>
 <input id="currentpage" value="1">
 <script type="text/javascript">
+
 /* 리뷰게시판 조회   */
-$(function() {
+
+const pagination = document.querySelector('.section5 .pagination');
+function replaceAll(str, searchStr, replaceStr) {
+    return str.split(searchStr).join(replaceStr);
+}
+ 
+$(function rlist() {
 	console.log($('#petSitterId').val());
 		$.ajax({
 			url: '/doggybeta/rlist',
@@ -413,21 +424,25 @@ $(function() {
 				    currentPage : $('#currentpage').val()},
 			success: function(data){
 					 console.log('성공!');
+					 
 					 var jsonStr = JSON.stringify(data);
 					 var json = JSON.parse(jsonStr); 
 					 for(var i in json.list){
-						 /* $("#reviewboard").append("<tr><td><span class='star-prototype'>"+i+"</span></td><td>"+json.list[i].userid+"</td><td>"+decodeURIComponent(json.list[i].reviewcontent)+"</td><td>"+json.list[i].reviewdate+"</tr>"); */
-						 if(json.list[i].point==1){
+						 
+						 var content = decodeURIComponent(json.list[i].reviewcontent);
+						 content = replaceAll(content,"+", " ")
+						 //$("#reviewboard").append("<tr><td><span class='star-prototype'>"+i+"</span></td><td>"+json.list[i].userid+"</td><td>"+decodeURIComponent(json.list[i].reviewcontent)+"</td><td>"+json.list[i].reviewdate+"</tr>");
+						  if(json.list[i].point==1){
 								$("#reviewboard").append("<tr><td>★</td><td>"+json.list[i].userid+"</td><td>"+decodeURIComponent(json.list[i].reviewcontent)+"</td><td>"+json.list[i].reviewdate+"</tr>");
 					     }
 						 if(json.list[i].point==2){
 								$("#reviewboard").append("<tr><td>★★</td><td>"+json.list[i].userid+"</td><td>"+decodeURIComponent(json.list[i].reviewcontent)+"</td><td>"+json.list[i].reviewdate+"</tr>");
 						 }
 						 if(json.list[i].point==3){
-							$("#reviewboard").append("<tr><td>★★★</td><td>"+json.list[i].userid+"</td><td>"+decodeURIComponent(json.list[i].reviewcontent)+"</td><td>"+json.list[i].reviewdate+"</tr>");
+							$("#reviewboard").append("<tr><td>★★★</td><td>"+json.list[i].userid+"</td><td>"+content+"</td><td>"+json.list[i].reviewdate+"</tr>");
 						 }
 						 if(json.list[i].point==4){
-							 $("#reviewboard").append("<tr><td>★★★★</td><td>"+json.list[i].userid+"</td><td>"+decodeURIComponent(json.list[i].reviewcontent)+"</td><td>"+json.list[i].reviewdate+"</tr>");
+							 $("#reviewboard").append("<tr><td>★★★★</td><td>"+json.list[i].userid+"</td><td>"+content+"</td><td>"+json.list[i].reviewdate+"</tr>");
 							 }
 						 if(json.list[i].point==5){
 							 $("#reviewboard").append("<tr><td>★★★★★</td><td>"+json.list[i].userid+"</td><td>"+decodeURIComponent(json.list[i].reviewcontent)+"</td><td>"+json.list[i].reviewdate+"</tr>");
@@ -446,15 +461,88 @@ $(function() {
 					 $('#currentpage').val(data.currentPage);
 					 /* $("#currentpage").val(data.currentPage); */
 					 /* 페이징 개 빡친다 그냥 팁게시판 페이징 처리처럼 해야할듯  */
+					 const startPage = data.startPage;
+            const endPage = data.endPage;
+            const currentPage = data.currentPage;
+            const totalPage = data.maxPage;
+
+            while (pagination.firstChild) {
+                pagination.removeChild(pagination.firstChild);
+            }
+
+            const pageBox = document.createElement('div');
+            pageBox.setAttribute('class', 'pagebox');
+
+            if (startPage > 1) {
+                const pageBox = document.createElement('div');
+                pageBox.setAttribute('class', 'pagebox');
+                pageBox.textContent = '<<';
+                pagination.appendChild(pageBox);
+                page.onclick = () => {
+                    chosenPage = 1;
+                    rlist();
+                }
+            }
+            if (currentPage > 1) {
+                const pageBox = document.createElement('div');
+                pageBox.setAttribute('class', 'pagebox');
+                pageBox.textContent = '<';
+                pagination.appendChild(pageBox);
+                pageBox.onclick = () => {
+                    chosenPage = currentPage - 1;
+                    rlist();
+                }
+            }
+            for (let i = startPage; i <= endPage; i++) {
+                const pageBox = document.createElement('div');
+                pageBox.setAttribute('class', 'pagebox');
+                if (i === currentPage) {
+                    pageBox.textContent = i;
+                    pageBox.style.color = 'dodgerblue';
+                    pagination.appendChild(pageBox);
+                } else {
+                    pageBox.textContent = i;
+                    pagination.appendChild(pageBox);
+                }
+                pageBox.onclick = () => {
+                    chosenPage = i;
+                    rlist();
+                }
+            }
+
+            if (currentPage < totalPage) {
+                const pageBox = document.createElement('div');
+                pageBox.setAttribute('class', 'pagebox');
+                pageBox.textContent = '>';
+                pagination.appendChild(pageBox);
+                pageBox.onclick = () => {
+                    chosenPage = currentPage + 1;
+                    rlist();
+                }
+            }
+            if (endPage < totalPage) {
+                const pageBox = document.createElement('div');
+                pageBox.setAttribute('class', 'pagebox');
+                pageBox.textContent = '>>';
+                pagination.appendChild(pageBox);
+                pageBox.onclick = () => {
+                    chosenPage = totalPage;
+                    rlist();
+                }
+            }
 						
 					 
 			}
+				    
+				    
+			
 		});
 	
 });
+		document.addEventListener('DOMContentLoaded', () => { rlist(); });
 </script>
 
-<br><br><div id="paging"></div>
+<br><br><div id="paging">테스트</div>
 </div>
 페이징처리2<br>
 <span class="star-prototype"><%= starAvg %></span>
@@ -496,22 +584,36 @@ input[type=submit]:hover {
 <div style="float:left;padding-top:100px;padding-left:30px;"><!-- 오른쪽 영역  --> 
 <div id="rightpart" style="border-radius: 5px; background-color: #f2f2f2; padding: 20px;"><!-- 날짜 입력  -->
 <form action="/doggybeta/bkinsert" type="post">
-예약날짜(최대 2주) <br><input type="text" name="datetimes" onchange="priceCal()" id="datetimes" size="35" readonly/>
+이용할 서비스
+<select id="selectservice" onchange="priceCal()">
+<!-- selected가 바뀔 때마다 서비스가 바뀌도록  -->
+<option>펫시터 집에 맡기기</option>
+<option>펫시터 우리집으로 부르기</option>
+</select>
 <br><br>
-이용할 서비스<input type="text" id="servicedate" readonly>
+예약날짜(최대 2주) <br><input type="text" name="datetimes" onchange="priceCal()" id="datetimes" size="35" readonly/>
+<!-- 날짜값이 바뀔 때마다 가격과 서비스가 바뀌도록  -->
+<br><br>
+이용할 서비스<input type="text" id="service" readonly>
+<br><br>
+나의 애완견
+<select name="mypet" id="mypet">
+
+</select>
 <br><br>
 요청사항 <br><br><textarea  style="resize: none;" name="etc"  rows="4" cols="37" placeholder="펫시터에게 전할 말.."></textarea>
-<input type="hidden" name="service" id="service" value="<%=service%>">
+<%-- <input type="hidden" name="service" id="service" value="<%=service%>"> --%>
 <input type="hidden" name="petSitterId" id="petSitterId" value="<%=petSitter.getUserId()%>">
-<input type="hidden" name="userId" value="<%=loginUser.getUserId()%>">
+<input type="hidden" name="userId" id="userId" value="<%=loginUser.getUserId()%>">
 <input type="hidden" name="price" id="price" value="<%=petSitter.getPrice() %>">
+<input type="hidden" name="petno" value="<%=request.getParameter("petno")%>">
 <br><br>
 총 가격 : <input type="text" value=""  id="priceSum" name="priceSum" readonly>
 <p id="pricesum"></p>
 <br><br>
 <input type="submit" value="예약하기">
 <script>
-$("document").ready(function() {  
+$("document").ready(function() {
 	   
     $(window).scroll(function()  
     {  
@@ -530,8 +632,8 @@ $(function() {
   $('input[name="datetimes"]').daterangepicker({
     timePicker: true,
     timePicker24Hour: true,
-    startDate: moment().startOf('hour').add(3,'hour'),
-    minDate : moment().startOf('hour').add(3,'hour'),
+    startDate: moment().startOf('day').add(1,'day'),
+    minDate : moment().startOf('day').add(1,'day'),
     endDate: moment().startOf('hour').add(32, 'hour'),
     maxDate: moment().startOf('day').add(14,'day'),
     locale: {
@@ -551,14 +653,34 @@ function priceCal(){
 				dataType: 'json',
 				data: {datetimes: $('#datetimes').val(),
 						price: $('#price').val(),
-						service: $('#service').val()},
+						selectservice: $("#selectservice").val()},
 				success: function(data){
 							$("#priceSum").val(data.pricesum+" 원");
-							$("#servicedate").val(data.service + data.dateStr);
+							$("#service").val(data.service + data.dateStr);
 							$("#pricesum").append(pricesum);
 						}
 			});
   }
+  
+</script>
+<script type="text/javascript">
+$(function(){
+	 $.ajax({
+		 url: '/doggybeta/palllist',
+			type: 'post',
+			dataType: 'json',
+			data : {userId : $('#userId').val()},
+			success: function(data){
+					 var jsonStr = JSON.stringify(data);
+					 var json = JSON.parse(jsonStr); 
+					 for(var i in json.list){
+						 $("#mypet").append("<option>"+decodeURIComponent(json.list[i].pname)+"  "+decodeURIComponent(json.list[i].breeds)+"  "+decodeURIComponent(json.list[i].gender)+"</option>");
+						 //$("#reviewboard").append("<tr><td><span class='star-prototype'>"+i+"</span></td><td>"+json.list[i].userid+"</td><td>"+decodeURIComponent(json.list[i].reviewcontent)+"</td><td>"+json.list[i].reviewdate+"</tr>");
+					 }
+			}
+	 	});
+ 	});
+
 </script>
 </form>
 </div>

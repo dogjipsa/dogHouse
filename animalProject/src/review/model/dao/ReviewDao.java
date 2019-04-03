@@ -85,7 +85,7 @@ public class ReviewDao {
 	public int insertReview(Connection conn, Review review) {
 		int result = 0;
 		PreparedStatement pstmt = null;
-		String query = "insert into review values(seq_reviewno.nextval, (select puser_id from booking where booking_no = ?), ?, ?, ?, null, null, default)";
+		String query = "insert into review values(seq_reviewno.nextval, (select user_id from booking where booking_no = ?), ?, ?, ?, null, null, default)";
 		try {
 			pstmt = conn.prepareStatement(query);
 			pstmt.setInt(1, review.getBookingNo());

@@ -10,6 +10,7 @@ import static common.JDBCTemplate.*;
 import booking.model.vo.Booking;
 import booking.model.vo.BookingCheck;
 import booking.model.vo.BookingForHost;
+import pet.model.vo.Pet;
 
 public class BookingDao {
 
@@ -139,21 +140,23 @@ public class BookingDao {
 		return count;
 	}
 
-	public int insertBooking(Connection conn, String checkin, String checkout, String petSitterId, String userId,
-			String etc, String service) {
+	public int insertBooking(Connection conn, String checkin, String checkout,Pet pet,Booking booking) {
 		int result = 0;
 		PreparedStatement pstmt = null;
-		String query = "insert into booking values(seq_bookingno.nextval, to_date(?, 'YYYY/MM/DD HH24:MI'), to_date(?, 'YYYY/MM/DD HH24:MI'), (select pet_no from pet where user_id = ?), ?,1,?,?,?)";
+		String query = "insert into booking values(seq_bookingno.nextval, to_date(?, 'YYYY/MM/DD HH24:MI'), to_date(?, 'YYYY/MM/DD HH24:MI'), (select pet_no from pet where user_id = ? and pet_name = ? and pet_gender = ? and pet_breads = ?), ?,1,?,?,?)";
 		
 		try {
 			pstmt = conn.prepareStatement(query);
 			pstmt.setString(1, checkin);
 			pstmt.setString(2, checkout);
-			pstmt.setString(3, userId);
-			pstmt.setString(4, userId);
-			pstmt.setString(5, etc);
-			pstmt.setString(6, service);//serviceKind 입력 받아야 함.
-			pstmt.setString(7, petSitterId);
+			pstmt.setString(3, booking.getUserId());
+			pstmt.setString(4, pet.getPetName());
+			pstmt.setString(5, pet.getPetGender());
+			pstmt.setString(6, pet.getBreeds());
+			pstmt.setString(7, booking.getUserId());
+			pstmt.setString(8, booking.getBookingEtc());
+			pstmt.setString(9, booking.getServiceKind());//serviceKind 입력 받아야 함.
+			pstmt.setString(10, booking.getPuserId());
 			result = pstmt.executeUpdate();
 		} catch (Exception e) {
 			e.printStackTrace();
