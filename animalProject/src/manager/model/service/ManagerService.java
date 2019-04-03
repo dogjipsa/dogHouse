@@ -221,5 +221,25 @@ public class ManagerService {
 		return notice;
 
 	}
+
+	public int updateNotice(Notice notice) {
+		Connection conn = getConnection();
+		int result = manDao.updateNotice(conn, notice);
+		if(result > 0)
+			commit(conn);
+		else
+			rollback(conn);
+		return result;
+	}
+
+	public int deleteNotice(int noticeNo) {
+		Connection conn = getConnection();
+		int result = manDao.deleteNotice(conn, noticeNo);
+		if(result > 0)
+			commit(conn);
+		else
+			rollback(conn);
+		return result;
+	}
 	
 }

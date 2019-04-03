@@ -87,10 +87,10 @@ table td {
 </tr>
 </table>
 <div class="buttons">
-	<%-- <% if(loginUser.getUserId().equals(notice.getNoticeWriter())){%> --%>
+	 <% if(loginUser.getUserId().equals(notice.getManagerId())){%> 
 		<button id="button1" onclick="moveUpdatePage();">수정페이지로 이동</button> &nbsp;
 		<button id="button2" onclick="deleteNotice();">글 삭제</button> &nbsp;
-	<%-- <% } %>  --%>
+	 <% } %>  
 	<button id="button3" onclick="location.href='/doggybeta/nlist'; return false;">목록</button>
 	</th>
 </div>

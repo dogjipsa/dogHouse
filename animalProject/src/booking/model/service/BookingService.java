@@ -9,6 +9,7 @@ import booking.model.dao.BookingDao;
 import booking.model.vo.Booking;
 import booking.model.vo.BookingCheck;
 import booking.model.vo.BookingForHost;
+import pet.model.vo.Pet;
 
 
 public class BookingService {
@@ -43,9 +44,9 @@ public class BookingService {
 		return count;
 	}
 
-	public int insertBooking(String checkin, String checkout, String petSitterId, String userId, String etc, String service) {
+	public int insertBooking(String checkin, String checkout,Pet pet,Booking booking) {
 		Connection conn = getConnection();
-		int result = bdao.insertBooking(conn, checkin, checkout, petSitterId, userId, etc, service);
+		int result = bdao.insertBooking(conn, checkin, checkout, pet, booking);
 		if(result > 0)
 			commit(conn);
 		else

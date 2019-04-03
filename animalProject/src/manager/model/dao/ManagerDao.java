@@ -1363,11 +1363,64 @@ public class ManagerDao {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}finally {
-			close(rset);
-			close(pstmt);
+			
 		}
 	
 		return notice;
 	}
+
 	
+	public int updateNotice(Connection conn, Notice notice) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		
+		String query = "update notice "
+				+ "set notice_title = ?, "
+				+ "notice_content = ?, "
+				+ "notice_originfile = ?, "
+				+ "notice_refile = ? "
+				+ "where notice_no = ?";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+				
+			pstmt.setString(1, notice.getNoticeTitle());
+			pstmt.setString(2, notice.getNoticeContent());
+			pstmt.setString(3, notice.getNoticeOriginFile());
+			pstmt.setString(4, notice.getNoticeReFile());
+			pstmt.setInt(5, notice.getNoticeNo());
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
+	public int deleteNotice(Connection conn, int noticeNo) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		
+		String query = "update notice set notice_delete = 'y' where notice_no = ?";
+		
+		try {
+			pstmt = conn.prepareStatement(query);				
+			pstmt.setInt(1, noticeNo);
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
 }
+	
+
