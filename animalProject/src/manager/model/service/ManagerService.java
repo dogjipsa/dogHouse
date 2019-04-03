@@ -3,7 +3,7 @@ package manager.model.service;
 import manager.model.dao.ManagerDao;
 import manager.model.vo.Manager;
 import member.model.vo.Member;
-import notice.model.vo.Notice;
+import question.model.vo.Question;
 import tipboard.model.vo.TipBoard;
 
 import static common.JDBCTemplate.*;
@@ -39,7 +39,6 @@ public class ManagerService {
 			rollback(conn);
 		return result;
 	}
-
 	
 	public int tipboardListCount(String option, String word) {
 		Connection conn = getConnection();
@@ -111,7 +110,6 @@ public class ManagerService {
 		
 		return result;
 	}
-		
 	
 	public int managerDeleteFreeBoard(String delNo) {
 		Connection conn = getConnection();
@@ -142,6 +140,26 @@ public class ManagerService {
 		return flist;
 	}
 
+
+	public ArrayList<Question> selectQuestionList(int currentPage, int limit) {
+		Connection conn = getConnection();
+		ArrayList<Question> list = manDao.selectQuestionList(conn,currentPage,limit);
+		System.out.println("서비스"+currentPage + "=" + limit + "=" + list );
+		close(conn);
+		return list;
+	}
+
+	public int QuestionListCount() {
+		Connection conn = getConnection();
+		int result = manDao.questionListCount(conn);
+		if(result > 0)
+			commit(conn);
+		else
+			rollback(conn);
+    close(conn);
+    return result;
+  }
+
 	public ArrayList<TipBoard> selectReadCountTBTop5() {
 		Connection conn = getConnection();
 		ArrayList<TipBoard> tlist = manDao.selectReadCountTBTop5(conn);
@@ -161,12 +179,46 @@ public class ManagerService {
 		return result;
 	}
 
+
 	public boolean checkLogoutManager(String managerId) {
 		Connection conn = getConnection();
 		boolean result = manDao.checkLogoutManager(conn, managerId);
 		close(conn);
 		
 		return result;
+  }
+
+	public ArrayList<Notice> searchNoticeList(HashMap<String, Object> listOpt) {
+		Connection conn = getConnection();
+		ArrayList<Notice> mlist = manDao.searchNoticeList(conn, listOpt);
+		close(conn);
+		return mlist;
+	}
+
+	public int getNoticeListCount(HashMap<String, Object> listOpt) {
+		Connection conn = getConnection();
+		int listCount = manDao.getNoticeListCount(conn, listOpt);
+		close(conn);
+		return listCount;
+	}
+
+	public void addReadCount(int noticeNo) {
+		Connection conn = getConnection();
+		int result = manDao.addReadCount(conn, noticeNo);
+		if(result > 0)
+			commit(conn);
+		else
+			rollback(conn);
+		close(conn);
+		
+	}
+
+	public Notice selectNoitce(int noticeNo) {
+		Connection conn = getConnection();
+		Notice notice = manDao.selectNotice(conn, noticeNo);
+		close(conn);
+		return notice;
+
 	}
 	
 }

@@ -2,6 +2,7 @@
     pageEncoding="UTF-8" errorPage="managerError.jsp"%>
 <%@page import='freeboard.model.vo.FreeBoard, java.util.ArrayList'%>
 
+
 <%
 	ArrayList<FreeBoard> list = (ArrayList<FreeBoard>)request.getAttribute("flist");
 	int listCount = ((Integer)request.getAttribute("listCount"));
@@ -66,15 +67,11 @@ $(function(){
     		});//ajax
         } //if confirm
     }); //delete click
-    $('#days').click(function(){
-    	$('#searchDate').show();
-    	$('input[id=keyw]').hide();
     });
 });
 function refreshMemList(){
 	location.reload();
 }
-
 </script>
 <style type="text/css">
 	#formDialogDiv {
