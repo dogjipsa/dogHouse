@@ -52,7 +52,8 @@
 						+ "<tr><th>성별</th><td>" + data.gender + "</td></tr>"
 						+ "<tr><th>중성화여부</th><td>" + data.yesorno + "</td></tr>"
 						+ "<tr><td colspan='2' align='center'>" + "<img src='/doggybeta/files/pet/" + decodeURIComponent(data.img) + "'style='width: 100px; height: auto; border-radius:70px; border: 3px solid gold;'>" + "</td></tr></table>"
-						 )
+						 );
+				$("#petno").val(data.petno);
 
 			}  //success
 			
@@ -162,7 +163,7 @@ font-size: 12px;
 <br>
 <form name="petinfo" method="post" action="/doggybeta/fplist">
 	<!-- 조건 검색 테이블  -->	
-		
+<input type="hidden" id="petno"><!-- detailView에 petno 전송  -->
  <div id="bringpetinfo">		
 <input type="hidden" id="userid" name="userid" value="<%=loginUser.getUserId() %>">	
 </div>

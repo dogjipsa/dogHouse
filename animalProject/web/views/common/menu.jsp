@@ -70,7 +70,7 @@
 						us</span></a>
 				<ul class="m2">
 					<li><a href="/doggybeta/views/aboutus/companyIntroduce.jsp">회사소개</a></li>
-					<li><a>연혁</a></li>
+					<li><a href="/doggybeta/views/aboutus/history.jsp">연혁</a></li>
 					<li><a href="/doggybeta/views/aboutus/teamIntroduce.jsp">팀
 							도그집사</a></li>
 					<li><a href="/doggybeta/views/aboutus/location.jsp">오시는 길</a></li>
@@ -174,7 +174,7 @@
 						us</span></a>
 				<ul class="m2">
 					<li><a href="/doggybeta/views/aboutus/companyIntroduce.jsp">회사소개</a></li>
-					<li><a>연혁</a></li>
+					<li><a href="/doggybeta/views/aboutus/history.jsp">연혁</a></li>
 					<li><a href="/doggybeta/views/aboutus/teamIntroduce.jsp">팀
 							도그집사</a></li>
 					<li><a href="/doggybeta/views/aboutus/location.jsp">오시는 길</a></li>
