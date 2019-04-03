@@ -14,39 +14,40 @@
 
 <head>
 
-<meta charset="UTF-8">
-<title>Insert title here</title>
-<link rel="stylesheet" href="/doggybeta/resources/css/psForm.css">
-<link href='/doggybeta/resources/css/member/login.css' rel='stylesheet' type='text/css'>
-<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet" />
+	<meta charset="UTF-8">
+	<title>Insert title here</title>
+	<link rel="stylesheet" href="/doggybeta/resources/css/psForm.css">
+	<link href='/doggybeta/resources/css/member/login.css' rel='stylesheet' type='text/css'>
+	<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet" />
 
-<link href="/doggybeta/resources/css/mainV2.css" rel="stylesheet" type="text/css">
-<script type="text/javascript" src="/doggybeta/resources/js/jquery-3.3.1.min.js"></script>
+	<link href="/doggybeta/resources/css/mainV2.css" rel="stylesheet" type="text/css">
+	<script type="text/javascript" src="/doggybeta/resources/js/jquery-3.3.1.min.js"></script>
 
-<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
-<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
-<script type="text/javascript" src="https://static.nid.naver.com/js/naveridlogin_js_sdk_2.0.0.js" charset="utf-8"></script>
-<script type="text/javascript">
-	 $(function() {
- 		$('.loginbody').hide();
-		 
-		$('.btn').click(function() {
-			$('body').append('<div id="mask"></div>');
-		    $('#mask').fadeIn(300);
-		    $('.loginbody').fadeIn(280);
-			$('.loginbody').show();
-			
-		    $('#mask').click(function() {
-		    	$('#mask, .loginbody').fadeOut(300);
-		    });
-		    
+	<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+	<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+	<script type="text/javascript" src="https://static.nid.naver.com/js/naveridlogin_js_sdk_2.0.0.js"
+		charset="utf-8"></script>
+	<script type="text/javascript">
+		$(function () {
+			$('.loginbody').hide();
+
+			$('.btn').click(function () {
+				$('body').append('<div id="mask"></div>');
+				$('#mask').fadeIn(300);
+				$('.loginbody').fadeIn(280);
+				$('.loginbody').show();
+
+				$('#mask').click(function () {
+					$('#mask, .loginbody').fadeOut(300);
+				});
+
+			});
 		});
-	});
 
-</script>
-<style>
-</style>
+	</script>
+	<style>
+	</style>
 
 </head>
 
@@ -107,19 +108,19 @@
 	</nav>
 	<!-- Login Form ---------------------------------------------------------------------------- -->
 	<div class='loginbody'>
-	<form class="login-form" method='post' action='/doggybeta/jipsalogin'>
-		<!-- <img id='cancelBtn' src='/doggybeta/resources/images/cancel-button.jpg'> -->
-		<p class="login-text">
-			DOGHOUSE
-		</p>
-		<input type="text" name='userid' id='userid' class="login-username" autofocus required placeholder="Id" />
-		<input type="password" name='userpwd' id='passwd' class="login-password" required required
-			placeholder="Password" />
-		<a href='/doggybeta/jipsalogin'>
-			<input type="submit" name="Login" value="Login" class="login-submit" id='btnLogin' /></a><br>
-		<a href='/doggybeta/views/member/termsOfService.jsp'>
-			<input type="button" name='enroll' value='회원가입' class='login-submit' id='btnEnroll' /></a>
-		<p align='center' id='orid'>------- 또는 -------</p>
+		<form class="login-form" method='post' action='/doggybeta/jipsalogin'>
+			<!-- <img id='cancelBtn' src='/doggybeta/resources/images/cancel-button.jpg'> -->
+			<p class="login-text">
+				DOGHOUSE
+			</p>
+			<input type="text" name='userid' id='userid' class="login-username" autofocus required placeholder="Id" />
+			<input type="password" name='userpwd' id='passwd' class="login-password" required required
+				placeholder="Password" />
+			<a href='/doggybeta/jipsalogin'>
+				<input type="submit" name="Login" value="Login" class="login-submit" id='btnLogin' /></a><br>
+			<a href='/doggybeta/views/member/termsOfService.jsp'>
+				<input type="button" name='enroll' value='회원가입' class='login-submit' id='btnEnroll' /></a>
+			<p align='center' id='orid'>------- 또는 -------</p>
 			<%
    				 String clientId = "obXTFPuiHDCuNQb5kAmx";//애플리케이션 클라이언트 아이디값";
    				 String redirectURI = URLEncoder.encode("http://127.0.0.1:8333/doggybeta/naverlogin", "UTF-8");
@@ -131,12 +132,13 @@
    				 apiURL += "&state=" + state;
    				 session.setAttribute("state", state);
     		 %>
-			<a href="<%=apiURL%>"><img id='naver_id_login' style='position:relative;' height="47" width='260'  src="/doggybeta/resources/images/naverButton/네이버 아이디로 로그인_완성형_White.PNG"/></a> 
+			<a href="<%=apiURL%>"><img id='naver_id_login' style='position:relative;' height="47" width='260'
+					src="/doggybeta/resources/images/naverButton/네이버 아이디로 로그인_완성형_White.PNG" /></a>
 			<br>
 			<br>
-  			<a href="/doggybeta/views/member/findPassword.jsp" class="login-forgot-pass" id='tempPwd'>비밀번호를 잊으셨나요?</a>
+			<a href="/doggybeta/views/member/findPassword.jsp" class="login-forgot-pass" id='tempPwd'>비밀번호를 잊으셨나요?</a>
 
-	</form>
+		</form>
 	</div>
 	<script type="text/javascript">
 		$('.m1').click(function () {
@@ -148,7 +150,7 @@
 		});
 	</script>
 	<% } else { %>
-		<input type='checkbox' id='menu_state' checked />
+	<input type='checkbox' id='menu_state' checked />
 
 	<nav>
 		<ul class='doghouse'>
@@ -157,9 +159,10 @@
 			</li>
 		</ul>
 
-		<a  href='/doggybeta/jipsalogout'><span class='btn btn-1 btn-sign'>로그아웃</span></a>
+		<a href='/doggybeta/jipsalogout'><span class='btn btn-1 btn-sign'>로그아웃</span></a>
 		<% if(access_token != null) { %>
 		<!-- 네이버로그인이 제대로 되었음을 확인 -->
+
 			<%= loginUser.getUserId() %> 님 환영합니다
 		<% } else { %>
 			<%= loginUser.getUserName() %> 님 환영합니다 <div id="bookingalert"></div>
@@ -168,9 +171,8 @@
 		<ul class='icon' id='icon'>
 			<li><a href='/doggybeta' id='icon1'> <span>&nbsp;&nbsp;&nbsp;홈</span>
 
-			</a></li>
-			<li class="m1"><a
-				href="#" id='icon2'><span>&nbsp;&nbsp;&nbsp;About
+				</a></li>
+			<li class="m1"><a href="#" id='icon2'><span>&nbsp;&nbsp;&nbsp;About
 
 						us</span></a>
 				<ul class="m2">
@@ -179,10 +181,12 @@
 					<li><a href="/doggybeta/views/aboutus/teamIntroduce.jsp">팀
 							도그집사</a></li>
 					<li><a href="/doggybeta/views/aboutus/location.jsp">오시는 길</a></li>
-				</ul></li>
-			<li><a href='/doggybeta/views/findSitter/petSitterListView.jsp' id='icon3'> <span>&nbsp;&nbsp;&nbsp;펫시터	찾기</span></a> </li>
-			<li class="m1"><a href='#'  id='icon4'> <span>&nbsp;&nbsp;&nbsp;게시판</span>
-			</a>
+				</ul>
+			</li>
+			<li><a href='/doggybeta/views/findSitter/petSitterListView.jsp' id='icon3'> <span>&nbsp;&nbsp;&nbsp;펫시터
+						찾기</span></a> </li>
+			<li class="m1"><a href='#' id='icon4'> <span>&nbsp;&nbsp;&nbsp;게시판</span>
+				</a>
 				<ul class="m2">
 					<li><a href='/doggybeta/nlist'>공지사항</a></li>
 					<li><a href='/doggybeta/flist'>자유게시판</a></li>
@@ -198,6 +202,7 @@
 			</li>
 
 			<li class="m1"><a href="#" id='icon6'>
+
 			<span>
 			&nbsp;&nbsp;&nbsp;마이페이지
 			</span>
@@ -217,7 +222,7 @@
 
 	<!-- 펫시터 신청 버튼 클릭시 생성 보여지는 HTML 부분. 로그인 부분 구현시 인풋에 세션으로 값 넣어놓고 readonly 처리할 것  -->
 
-	<form class="ps_reg_form" action="/doggybeta/hostup" method="POST" enctype="multipart/form-data">
+	<form class="ps_reg_form">
 		<span class="close">x</span>
 		<div class="section1">
 			<p>아이디</p>
@@ -227,26 +232,24 @@
 			<input name="username" value="<%=loginUser.getUserName() %>" class="ps_input input_name" autocomplete="off"
 				readonly>
 			<p>연락처</p>
-			<input type="tel" name="phone" value="<%=loginUser.getPhone() %>" class="ps_input input_phone" autocomplete="off"
-				required>
+			<input type="tel" name="phone" value="<%=loginUser.getPhone() %>" class="ps_input input_phone"
+				autocomplete="off" required>
 			<p>이메일</p>
-			<input type="email" name="email" value="<%=loginUser.getEmail() %>" class="ps_input input_email" autocomplete="off"
-				required>
-				<p>희망 일급(원)</p>
-				<input type="number" name="price" placeholder="가격 입력" class="ps_input input_price" required>
+			<input type="email" name="email" value="<%=loginUser.getEmail() %>" class="ps_input input_email"
+				autocomplete="off" required>
+			<p>희망 일급(원)</p>
+			<input type="number" name="price" placeholder="가격 입력" class="ps_input input_price" required>
 		</div>
 		<div class="section2">
+			<input type="file" id="real-file" name="pic" hidden="hidden" />
 			<p>프로필 사진 추가</p>
-			<div class="image_box">
-				<img class="image_box_pic" />
-				<input type="file" id="real-file" name="pic" hidden="hidden" />
-				<span>
-					<button id="fake-file-btn">Choose a File</button>&nbsp;
-					<span id="file-text"></span>
-				</span>
-			</div>
+			<img class="image_box_pic" />
+			<span id="btn_text">	
+				<button id="fake-file-btn">Choose a File</button>
+				<span id="file-text"></span>
+			</span>
 			<p>자기 소개</p>
-			<textarea name="" id="" cols="20" rows="6"></textarea>
+			<textarea name="myinfo" id="" cols="20" rows="4" required></textarea>
 			<p>펫시팅 장소</p>
 			<input name="postcode" id="sample6_postcode" class="ps_input" placeholder="우편번호" required>
 			<input type="button" onclick="sample6_execDaumPostcode()" id="post-search" value="우편번호 찾기">
@@ -262,35 +265,43 @@
 				<img class="pp2" />
 				<img class="pp3" />
 			</div>
-				<input type="file" name="placepics" id="place_pics" multiple>
-				<input type="hidden" name="fileList" id="fileList">
+			<input type="file" name="placepics" id="place_pics" multiple>
+			<input type="hidden" name="fileList" id="fileList">
 			<button id="ppics_upload">Upload Files</button>
 			<span id="ppics-text"></span>
 			<div id="reg_map_box"></div>
 			<span><button type="submit" id="submit-btn">펫시터 등록하기</button></span>
 		</div>
 	</form>
-
+	<div class="modal-content animate">
+			<span class="m-close xBtn" title="Close Modal">&times;</span>
+			<div class="modal-container">
+				<img src="/doggybeta/resources/images/modal.gif" id="modal-img">
+				<h4 id="modal-text"></h4>
+				<button type="button" class="m-close cancelbtn">확인</button>
+			</div>
+		</div>
 	<script type="text/javascript" src="/doggybeta/resources/js/petSitting.js"></script>
 	<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
 	<script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=b9810167e43ee638a44b19264113db0d&libraries=services"></script>
 	<script src="/doggybeta/resources/js/addr.js"></script>
 	<script type="text/javascript">
-	 $(function(){ 
-		 console.log($("#puserid").val());
+		$(function () {
+			console.log($("#puserid").val());
 			$.ajax({
-				type : 'post',
+				type: 'post',
 				cache: false,
 				datatype: 'json',
-				data : {puserid : $("#puserid").val()},
-				url : '/doggybeta/balert',
-				success:function(data){
+				data: { puserid: $("#puserid").val() },
+				url: '/doggybeta/balert',
+				success: function (data) {
 					console.log("hi");
 					console.log(data.count);
-					if(data.count != 0){
-					$("#bookingalert").html($("#bookingalert").text()
-							+ "<img src='/doggybeta/resources/images/alarm.png' style='width: 20px;'>" 
+					if (data.count != 0) {
+						$("#bookingalert").html($("#bookingalert").text()
+							+ "<img src='/doggybeta/resources/images/alarm.png' style='width: 20px;'>"
 							+ "(" + data.count + ")")
+
 
 					$("#bookingalert").on("click", function(e){
 						location.href="/doggybeta/views/customerservice/checkMyLog.jsp";
@@ -317,7 +328,7 @@
 
 	 });
 
-	 
+	
 		$('.m1').click(function () {
 			if ($(this).children('.m2').is(':visible')) {
 				$(this).children('.m2').slideUp(200);
@@ -327,7 +338,7 @@
 		});
 
 	</script>
-	
+
 	<% } %>
 </body>
 

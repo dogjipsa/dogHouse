@@ -52,7 +52,8 @@ $(function() {
 			</a>
 		</li>
 		<li class="selected">
-			<span class="messages"><i class="icon-cog"></i>공지사항</span>
+			<a href='/doggybeta/mannotice'>
+			<span class="messages"><i class="icon-cog"></i>공지사항</span></a>
 		</li>
 		<li>
 			<span class="manage"><i class="icon-cog"></i>게시판관리</span>

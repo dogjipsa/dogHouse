@@ -16,7 +16,7 @@ xBtn.addEventListener('click', ()=>{
 const realFile = document.getElementById("real-file");
 const customBtn = document.getElementById("fake-file-btn");
 const customTxt = document.getElementById("file-text");
-const imageBox_pic = document.querySelector('.image_box .image_box_pic');
+const imageBox_pic = document.querySelector('.image_box_pic');
 
 customBtn.addEventListener('click', () =>{
 	realFile.click();
@@ -61,7 +61,7 @@ function showPPics(input){
 	const imgs = [document.querySelector('.pp1'),document.querySelector('.pp2'),document.querySelector('.pp3')];
 	let fileList ="";
 	for(let i = 0; i < imgs.length; i++){
-		if(input.files[i] && (realFile.files[0].name !== input.files[i].name)){
+		if(input.files[i]){
 			const reader = new FileReader();
 			reader.onload =function(e){
 				imgs[i].setAttribute('src',e.target.result);
@@ -73,4 +73,34 @@ function showPPics(input){
 	document.querySelector('#fileList').setAttribute('value',fileList);
 }
 
+const psSubmitBtn = document.querySelector('#submit-btn');
+psSubmitBtn.addEventListener('click', (e)=> {
+	e.preventDefault();
+	psRegBox.style.display = "none";
+	const formData = new FormData(psRegBox);
+	const xhr = new XMLHttpRequest();
 
+	xhr.onload = ()=>{
+		
+		const popup = document.querySelector('.modal-content');
+        popup.style.display = "block";
+
+        // 클로징 처리
+        const mCloses = document.querySelectorAll('.m-close');
+        for (let i = 0; i < mCloses.length; i++) {
+            mCloses[i].addEventListener('click', () => {
+                popup.style.display = "none"; // 팝업 내리기
+                petUpForm.reset(); // 인풋 클리어                
+            });
+        }
+        modalText = document.getElementById('modal-text');
+        if (xhr.responseText === 'ok') {
+            modalText.textContent = "성공적으로 펫시터 등록이 완료되었습니다.";
+        } else {
+            modalText.textContent = "펫시터 등록에 실패했습니다. 관리자에게 문의하세요";
+        }
+	}
+
+	xhr.open('POST', '/doggybeta/hostup');
+	xhr.send(formData);
+})

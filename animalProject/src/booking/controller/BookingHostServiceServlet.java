@@ -38,11 +38,12 @@ public class BookingHostServiceServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String userid = request.getParameter("userid");
+		int page = Integer.parseInt(request.getParameter("page"));
 		int currentPage = 1;
 		int limit = 12;
 		int countPage = 10;
-		if (request.getParameter("page") != null) {
-			currentPage = Integer.parseInt(request.getParameter("page"));
+		if (page != 0) {
+			currentPage = page;
 		}
 		BookingService bs = new BookingService();
 		int totalCount = bs.getTotalHostServiceListCount(userid);
