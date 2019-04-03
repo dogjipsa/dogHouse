@@ -16,7 +16,7 @@ xBtn.addEventListener('click', ()=>{
 const realFile = document.getElementById("real-file");
 const customBtn = document.getElementById("fake-file-btn");
 const customTxt = document.getElementById("file-text");
-const imageBox_pic = document.querySelector('.image_box .image_box_pic');
+const imageBox_pic = document.querySelector('.image_box_pic');
 
 customBtn.addEventListener('click', () =>{
 	realFile.click();
@@ -61,7 +61,7 @@ function showPPics(input){
 	const imgs = [document.querySelector('.pp1'),document.querySelector('.pp2'),document.querySelector('.pp3')];
 	let fileList ="";
 	for(let i = 0; i < imgs.length; i++){
-		if(input.files[i] && (realFile.files[0].name !== input.files[i].name)){
+		if(input.files[i]){
 			const reader = new FileReader();
 			reader.onload =function(e){
 				imgs[i].setAttribute('src',e.target.result);

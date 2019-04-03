@@ -2,10 +2,10 @@
 
 .ps_reg_form {
 	position: absolute;
-	top: 12%;
-	left: 400px;
-	width: 1300px;
-	height: 700px;
+	top: 5%;
+	left: 15%;
+	width: 70%;
+	height: 80%;
 	background-color: rgba(0,0,0,0.8);
 	border-radius: 20px;
 	display: grid;
@@ -34,18 +34,17 @@
 	display: grid;
 	grid-column:span 1;
 	margin: 20px;
-	padding: 0 50px; 
+	padding: 0 50px;
 }
 .ps_reg_form .section3 {
 	display: grid;
 	grid-column:span 1;
-	margin: 30px;
+	margin: 20px;
 }
 .ps_reg_form p{
 	font-weight: 600;
-	font-size: 12px;
+	font-size: 13px;
 	color: white;
-	margin-bottom: 2px;
 }
 .ps_reg_form .ps_input{
   border: none;
@@ -65,17 +64,16 @@
 .ps_reg_form .section1 label {
 	color : white;
 }
-
-.ps_reg_form .section2 .image_box{
-	height: 180px;
-	display: flex;
-	flex-direction: column;
-	justify-content: space-between;
+.ps_reg_form .section2 .image_box_pic {
+	width: 80%;
+	height: 20%;
 }
 
-.ps_reg_form .section2 .image_box .image_box_pic {
-	width: 70%;
-	height: 70%;
+#btn_text {
+	display: flex;
+	width: 100%;
+	height: 50%;
+	justify-content: space-between;
 }
 .ps_reg_form .section3 #reg_map_box{
 	border:1px solid rgba(255,255,255,0.2);
@@ -89,7 +87,7 @@
   display:block;
   border: none;
   outline: none;
-  
+  width: 50%;
   height:20px;
   background: #58B19F;
   border-radius: 5px;
@@ -108,7 +106,6 @@
   color: #fff;
   font-size: 14px;
   text-align: center;
-  margin-left: 10%;
 }
 
 #ppics_upload:hover{
@@ -123,10 +120,13 @@
 
 #file-text, #ppics-text {
 	color : white;
+	font-size: 11px;
+	width: 45%;
+	height: 20px;
 }
 .section3 .ppics_list{
 	display: flex;
-	justify-content: space-around;
+	justify-content: space-between;
 	width: 100%;
 	height: 120px;
 }
