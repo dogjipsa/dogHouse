@@ -15,6 +15,7 @@ import manager.model.service.ManagerService;
 import manager.model.vo.Manager;
 import member.model.vo.Member;
 import notice.model.vo.Notice;
+import question.model.vo.Question;
 import tipboard.model.vo.TipBoard;
 
 public class ManagerDao {
@@ -1020,6 +1021,81 @@ public class ManagerDao {
 		return flist;
 	}
 
+
+	public ArrayList<Question> selectQuestionList(Connection conn, int limit, int currentPage) {
+		ArrayList<Question> list = new ArrayList<Question>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		int startRow = 1;//(currentPage - 1) * limit + 1;
+		int endRow = startRow + limit - 1;
+		System.out.println("디에오"+startRow + "=" + endRow);
+		String query = "SELECT * FROM (SELECT ROWNUM RNUM, QUESTION_NO, QUESTION_TITLE, "
+				+ "QUESTION_CONTENT, QUESTION_DATE, REPLY_YN, " 
+				+ "USER_ID, QUESTION_ORIGINAL_FILENAME, " 
+				+ "QUESTION_RENAME_FILENAME, QUESTION_REF, "
+				+ "QUESTION_REPLY_REF, QUESTION_REPLY_LEV, " 
+				+ "QUESTION_REPLY_SEQ "
+				+ "FROM (SELECT * FROM QUESTION ORDER BY QUESTION_REF DESC, QUESTION_REPLY_REF ASC, "
+				+ "QUESTION_REPLY_LEV ASC, QUESTION_REPLY_SEQ ASC)) WHERE RNUM >= ? AND RNUM <= ?";
+
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, startRow);
+			pstmt.setInt(2, endRow);
+			rset = pstmt.executeQuery();
+
+			while (rset.next()) {
+				Question question = new Question();
+
+				question.setQuestionNo(rset.getInt("question_no"));
+				question.setQuestionTitle(rset.getString("question_title"));
+				question.setQuestionContent(rset.getString("question_content"));
+				question.setQuestionDate(rset.getDate("question_date"));
+				question.setQuestionReplyYn(rset.getString("reply_yn"));
+				question.setUserId(rset.getString("user_id"));				
+				question.setQuestionOriginalFileName(rset.getString("question_original_filename"));
+				question.setQuestionRenameFileName(rset.getString("question_rename_filename"));
+				question.setQuestionRef(rset.getInt("question_ref"));
+				question.setQuestionReplyRef(rset.getInt("question_reply_ref"));
+				question.setQuestionReplyLev(rset.getInt("question_reply_lev"));
+				question.setQuestionReplySeq(rset.getInt("question_reply_seq"));
+
+				list.add(question);
+				System.out.println(question);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+			close(rset);
+		}
+
+		return list;
+	}
+
+	public int questionListCount(Connection conn) {
+		PreparedStatement pstmt =null;
+		ResultSet rset = null;
+		int result =0;
+		String query ="select count(*) from question";
+		try {
+			pstmt = conn.prepareStatement(query);
+			rset = pstmt.executeQuery();
+
+			if (rset.next()) {
+				result = rset.getInt(1);
+			}
+    }catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+			close(rset);
+		}
+    return result
+  }
+  
+
 	public int managerDeleteMember(Connection conn, String delId) {
 		int result = 0;
 		PreparedStatement pstmt = null;
@@ -1031,14 +1107,16 @@ public class ManagerDao {
 			pstmt.setInt(1, Integer.parseInt(delId));
 			
 			result = pstmt.executeUpdate();
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}finally {
+
+			close(rset);
 			close(pstmt);
 		}
-	  return result;	
-	}
+		return result;
+	} 
 
 	public ArrayList<TipBoard> selectReadCountTBTop5(Connection conn) {
 		ArrayList<TipBoard> tlist = new ArrayList<> ();
@@ -1068,6 +1146,7 @@ public class ManagerDao {
 		} finally {
 			close(rSet);
 			close(pstat);
+
 		}
 		return tlist;
 	}
