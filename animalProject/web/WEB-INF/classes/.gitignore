@@ -5,21 +5,21 @@
 /tipboard/
 /tipboardreply/
 /manager/
-<<<<<<< HEAD
 /member/
 /answer/
 /booking/
 /countvisitor/
 /pet/
-=======
+/member/
+/answer/
 /booking/
 /countvisitor/
 /pet/
+/booking/
+/countvisitor/
 /member/
 /freeboard/
 /notice/
 /freeboard/
 /member/
 /pet/
-
->>>>>>> master
