@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" import="notice.model.vo.Notice, java.sql.Date, java.util.*"%>
+    pageEncoding="UTF-8" errorPage="managerError.jsp" import="notice.model.vo.Notice, java.sql.Date, java.util.*"%>
     
 <%
 
@@ -73,7 +73,7 @@ h2{
 
 </style> 
 <body>
-<%@ include file="../common/menu.jsp" %>
+<%@ include file="../../views/common/managerMenu.jsp" %>
 	<div id="wrap">
 		  <div id="content">
 

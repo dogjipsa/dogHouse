@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8" errorPage='reviewError.jsp'%>
 <%@ page import='member.model.vo.Member' %>
 <%
 Member loginUser = (Member)session.getAttribute("loginUser");

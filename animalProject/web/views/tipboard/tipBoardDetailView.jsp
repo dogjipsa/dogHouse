@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8" errorPage='tipBoardError.jsp'%>
 <%@ page import="tipboard.model.vo.TipBoard, member.model.vo.Member, java.sql.Date" %>
 <%@ page import="tipboardreply.model.vo.TipBoardReply" %>
 <%@ page import="java.util.ArrayList" %>
@@ -191,6 +191,11 @@ h2{
 	<% } %>
 	&nbsp; &nbsp;
 	<a href="/doggybeta/tlist?page=<%= currentPage%>">[목록]</a>
+	&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;
+	&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;
+	&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;
+	&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;
+	&nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;
 	<a href="/doggybeta/rtselect?reportTipBoardNo=<%= tboard.getTipBoardNo() %>">[신고하기]</a>
 	</th>
 </tr>
@@ -230,10 +235,11 @@ h2{
 					<!-- 댓글 작성자만 수정, 삭제 가능하도록 -->	
 					<div>
 					<%if(loginUser.getUserId().equals(t.getUserId())){ %>
-						<a href="/doggybeta/trsearch?trnum=<%= t.getTipReplyNo() %>">[수정]</a><br>	
+						<a href="/doggybeta/trsearch?trnum=<%= t.getTipReplyNo() %>">[수정]</a>	
 						<a href="/doggybeta/trdelete?trnum=<%= t.getTipReplyNo() %>&tnum=<%= t.getTipNo()%>">[삭제]</a>
+					<%}else{%>
 						<a href="/doggybeta/rtrselect?trnum=<%= t.getTipReplyNo() %>">[신고하기]</a>	
-					<%} %>
+					<% } %>
 					
 					</div>
 				</td>
