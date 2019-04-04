@@ -6,7 +6,7 @@
 	int currentPage = ((Integer)request.getAttribute("page")).intValue();
 %>  
 <!DOCTYPE html>
-<html>
+<html id="fbhtml">
 <head>
 <meta charset="UTF-8">
 <title>팁 게시판</title>
@@ -14,22 +14,36 @@
 <link href="/doggybeta/resources/css/footer.css" rel="stylesheet" type="text/css">
 
 <style type="text/css">
-.table{
-	position: relative;
-	border-collapse: separate;
-    border-spacing: 1px;
-    text-align: left;
-    line-height: 1.5;
-    margin: 20px 10px;
+
+#fbhtml {
+	font-family: 'Sunflower', 'sans-serif';
 }
+
 h2{
-	position: relative;
-	/* left: 700px; */
-    text-align: left;
-    line-height: 1.5;
-    margin: 20px 10px;
+   position: relative;
+   top: 20px;
+   left : 200px;
+   width: 70%;
+   padding: 2rem 0px;
+}
+
+.fboard { 
+   font-size: 12pt;
+   position: relative;
+   width: 60%;
+   top: -50px
+   line-height: 1.5;
+  
+}
+
+.fboard tr{
+	line-height : 2em;
 
 }
+
+#searchT{ 
+	text-align:center;	
+	}
 
 </style>
 </head>
@@ -37,7 +51,7 @@ h2{
 <%@ include file="..//common/menu.jsp" %>
 	<div id="wrap">
 		  <div id="content">
-<h2 align="right"><%=tboard.getTipBoardNo() %>번 게시글 수정페이지</h2>
+<h2 align="center"><%=tboard.getTipBoardNo() %>번 팁게시판 게시글 수정페이지</h2>
 <br>
 <%-- <% if(board.getBoardReplyLev() == 0){ //원글 수정 %> --%>
 <form action="/doggybeta/toriginup" id="writeform" name="writeform" method="post" enctype="multipart/form-data">
@@ -45,13 +59,13 @@ h2{
 <input type="hidden" name="tnum" value="<%= tboard.getTipBoardNo() %>">
 <input type="hidden" name="tofile" value="<%= tboard.getTipBoardOriginFile() %>">
 <input type="hidden" name="trfile" value="<%= tboard.getTipBoardReFile() %>">
-<table class="table" align="center">
+<table class="fboard" align="center">
 <tr><th>제목</th><td><input type="text" name="ttitle" style="width:766px" value="<%= tboard.getTipBoardTitle() %>"></td></tr>
 <tr><th>작성자</th><td><input type="text" name="twriter" style="width:766px" readonly value="<%= tboard.getUserId() %>"></td></tr>
 <tr><th>첨부파일</th>
 <td><% if(tboard.getTipBoardOriginFile() != null){ %>
 	<%= tboard.getTipBoardOriginFile() %>
-<% } %><br>
+<% } %>
 <input type="file" name="tupfile">
 </td>
 </tr>

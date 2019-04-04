@@ -241,5 +241,25 @@ public class ManagerService {
 			rollback(conn);
 		return result;
 	}
+
+	public int insertNotice(Notice notice) {
+		Connection conn = getConnection();
+		int result = manDao.insertNotice(conn, notice);
+		if(result > 0)
+			commit(conn);
+		else
+			rollback(conn);		
+		return result;
+	}
+
+	public int managerSelectDeleteNotice(String delNo) {
+		Connection conn = getConnection();
+		int result = manDao.managerSelectDeleteNotice(conn, delNo);
+		if(result > 0)
+		commit(conn);
+			else
+		rollback(conn);
+		return result;
+	}
 	
 }
