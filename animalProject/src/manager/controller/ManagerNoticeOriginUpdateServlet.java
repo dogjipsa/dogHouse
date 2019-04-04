@@ -27,13 +27,13 @@ import notice.model.vo.Notice;
  * Servlet implementation class ManagerOriginUpdateServlet
  */
 @WebServlet("/mnoriginup")
-public class ManagerOriginUpdateServlet extends HttpServlet {
+public class ManagerNoticeOriginUpdateServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ManagerOriginUpdateServlet() {
+    public ManagerNoticeOriginUpdateServlet() {
         super();
         // TODO Auto-generated constructor stub
     }

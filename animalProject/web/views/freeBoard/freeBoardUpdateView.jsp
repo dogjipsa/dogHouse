@@ -6,30 +6,45 @@
 //	int currentPage = ((Integer)request.getAttribute("page")).intValue();
 %>  
 <!DOCTYPE html>
-<html>
+<html id="fbhtml">
 <head>
 <meta charset="UTF-8">
 <title>first</title>
+<link href="/doggybeta/resources/css/footer.css" rel="stylesheet" type="text/css">
 <script type="text/javascript" src="/doggybeta/SE2/js/HuskyEZCreator.js" charset="utf-8"></script>
 <script type="text/javascript" src="/doggybeta/resources/js/jquery-3.3.1.min.js"></script>
 
 <style type="text/css">
-.table{
-	position: relative;
-	border-collapse: separate;
-    border-spacing: 1px;
-    text-align: left;
-    line-height: 1.5;
-    margin: 20px 10px;
+
+#fbhtml {
+	font-family: 'Sunflower', 'sans-serif';
 }
+
 h2{
-	position: relative;
-	/* left: 700px; */
-    text-align: left;
-    line-height: 1.5;
-    margin: 20px 10px;
+   position: relative;
+   top: 20px;
+   left : 180px;
+   width: 70%;
+   padding: 2rem 0px;
+}
+
+.fboard { 
+   font-size: 12pt;
+   position: relative;
+   width: 60%;
+   top: -50px
+   line-height: 1.5;
+  
+}
+
+.fboard tr{
+	line-height : 2em;
 
 }
+
+#searchT{ 
+	text-align:center;	
+	}
 
 </style>
 </head>
@@ -37,7 +52,7 @@ h2{
 <%@ include file="..//common/menu.jsp" %>
 	<div id="wrap">
 		  <div id="content">
-<h2 align="right"><%= freeboard.getFreeboardNo() %>번 게시글 수정페이지</h2>
+<h2 align="center"><%= freeboard.getFreeboardNo() %>번 자유게시판 게시글 수정페이지</h2>
 <br>
 <%-- <% if(board.getBoardReplyLev() == 0){ //원글 수정 %> --%>
 <form action="/doggybeta/foriginup" id="writeform" name="writeform" method="post" enctype="multipart/form-data">
@@ -45,7 +60,7 @@ h2{
 <input type="hidden" name="fnum" value="<%= freeboard.getFreeboardNo() %>">
 <input type="hidden" name="fofile" value="<%= freeboard.getFreeboardOriginalFile() %>">
 <input type="hidden" name="frfile" value="<%= freeboard.getFreeboardRefile() %>">
-<table class="table" align="right">
+<table class="fboard" align="center">
 <tr><th>제목</th><td><input type="text" style="width:766px" id="ftitle" name="ftitle" value="<%= freeboard.getFreeboardTitle() %>"></td></tr>
 <tr><th>작성자</th><td><input type="text" style="width:766px" id="fwriter" name="fwriter" readonly value="<%= freeboard.getUserId() %>"></td></tr>
 <tr><th>첨부파일</th>
@@ -101,7 +116,6 @@ $(function(){
 
 
 </script>
-<hr>
 </div>
 		<div id="footer"><%@ include file="..//common/footer.jsp"%></div>
 	</div>
