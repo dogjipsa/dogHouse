@@ -42,51 +42,24 @@ public class answerInsertServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.setCharacterEncoding("utf-8");
+		
+		String anscontent = request.getParameter("anscontent");
+		int qboardNo = Integer.parseInt(request.getParameter("qboardNo"));
+		
+		int result = new AnswerService().insertAnswer(qboardNo, anscontent);
 		
 		RequestDispatcher view = null;
-		if(!ServletFileUpload.isMultipartContent(request)){
-			view = request.getRequestDispatcher("view/question/answerError.jsp");
-			request.setAttribute("message", "form의 enctype 속성 사용 안되었음");
-			view.forward(request, response);
-		}
-				
-		Answer answer = new Answer();
-				
-		int result = new AnswerService().insertAnswer(answer);
-		
 		if(result > 0) {
-			response.sendRedirect("/doggybeta/qlist?page=1");
+			response.sendRedirect("/doggybeta/manquestion");
 		}else {
-			view = request.getRequestDispatcher("views/question/questionError.jsp");
+			view = request.getRequestDispatcher("views/manager/managerError.jsp");
 			request.setAttribute("message", "문의글 등록 실패!");
 			view.forward(request, response);			
 		}
 		
 	}
-		/*int questionNo = Integer.parseInt(request.getParameter("qnum"));
-		System.out.println("ans servlet qnum : " + questionNo);
 		
-		Answer answer = new Answer();
-		answer = new AnswerService().selectAnswer(questionNo);
-		System.out.println("servlet ans :"+answer);
-		System.out.println(answer.getAnswerNo());
-		RequestDispatcher view = null;
-		 && questionNo == answer.getAnswerNo()
-		if(answer != null) {
-			view = request.getRequestDispatcher("views/question/questionListView.jsp");
-			request.setAttribute("answer", answer);
-			view.forward(request, response);
-		}else{
-			view = request.getRequestDispatcher("views/question/questionError.jsp");
-			request.setAttribute("message", questionNo + "1:1 문의 수정페이지 이동 실패!");
-			view.forward(request, response);
-		}
-		
-	}*/
-
-/**
-* @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-*/
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doGet(request, response);

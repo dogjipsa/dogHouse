@@ -46,10 +46,9 @@ public class ManagerQuestionListServlet extends HttpServlet {
 		Question question = new Question();
 		
 		int listCount = ms.QuestionListCount();
-		System.out.println("리스트카운트트트트 : " + listCount);
 		ArrayList<Question> qlist = ms.selectQuestionList(currentPage, limit);
+		
 		for(Question  q : qlist) {
-			System.out.println("큐리스트트트트트 :"  + q);	
 		}
 			
 		int maxPage = (int)((double)listCount	/	limit + 0.9);		
@@ -62,7 +61,6 @@ public class ManagerQuestionListServlet extends HttpServlet {
 		
 		response.setContentType("text/html; charset=utf-8");
 		RequestDispatcher view = null;
-		System.out.println("QLIST 확인 서블릿 : " + qlist);
 		if(qlist.size() > 0) {
 			view = request.getRequestDispatcher("views/manager/managerQuestionList.jsp");
 			
