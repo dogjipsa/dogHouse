@@ -143,7 +143,7 @@ public class BookingDao {
 	public int insertBooking(Connection conn, String checkin, String checkout,Pet pet,Booking booking) {
 		int result = 0;
 		PreparedStatement pstmt = null;
-		String query = "insert into booking values(seq_bookingno.nextval, to_date(?, 'YYYY/MM/DD HH24:MI'), to_date(?, 'YYYY/MM/DD HH24:MI'), (select pet_no from pet where user_id = ? and pet_name = ? and pet_gender = ? and pet_breads = ?), ?,1,?,?,?)";
+		String query = "insert into booking values(seq_bookingno.nextval, to_date(?, 'YYYY/MM/DD HH24:MI'), to_date(?, 'YYYY/MM/DD HH24:MI'), (select pet_no from pet where user_id = ? and pet_name = ? and pet_gender = ? and pet_breads = ?), ?,1,?,?,?,?)";
 		
 		try {
 			pstmt = conn.prepareStatement(query);
@@ -157,6 +157,7 @@ public class BookingDao {
 			pstmt.setString(8, booking.getBookingEtc());
 			pstmt.setString(9, booking.getServiceKind());//serviceKind 입력 받아야 함.
 			pstmt.setString(10, booking.getPuserId());
+			pstmt.setInt(11, booking.getPrice());
 			result = pstmt.executeUpdate();
 		} catch (Exception e) {
 			e.printStackTrace();

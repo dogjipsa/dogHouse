@@ -38,7 +38,7 @@
 			/* alert($(this).val()); */
 			arr[index] = $(this).val();
 		});
-		alert(arr);
+		//alert(arr);
 	 var jsonData = JSON.stringify(arr);
 	 jQuery.ajaxSettings.traditional = true;
 	 console.log(arr);
@@ -54,10 +54,10 @@
 						+ data.rating)
 			},  //success
 			error       : function(request, status, error) {
-		        alert("code: "+request.status+"\n"+"message: "+request.responseText+"\n"+"error: "+error);
+		       // alert("code: "+request.status+"\n"+"message: "+request.responseText+"\n"+"error: "+error);
 		    },
 		    success     : function(msg) {
-		        alert(msg);        
+		        //alert(msg);        
 		    }//error
 
 		});
