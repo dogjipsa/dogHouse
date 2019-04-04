@@ -115,7 +115,7 @@ public class FreeBoardDao {
 		PreparedStatement pstmt = null;
 		
 		String query = "INSERT INTO FREEBOARD VALUES(seq_freeboardno.nextval, ?, ?, SYSDATE, ?, ?, ?, ?, DEFAULT, DEFAULT)";
-		System.out.println(freeboard);
+		
 		try {
 			pstmt = conn.prepareStatement(query);
 			pstmt.setString(1, freeboard.getFreeboardTitle());

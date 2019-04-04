@@ -163,7 +163,7 @@ position: relative;
    <br>
    <br>
    <br>
-   <%if(loginUser.getUserId() == faq.getManagerId()){ %>
+   <%if(loginUser.getUserId() != null){ %>
    <button onclick="location.href='/doggybeta/faqupview?fnum=<%= faq.getFaqNo()%>&page=<%= currentPage%>'">수정</button>
    &nbsp;
    <button onclick="location.href='/doggybeta/faqdel?fnum=<%= faq.getFaqNo()%>'">삭제</button>
@@ -185,7 +185,7 @@ position: relative;
 	<input type="hidden" name="search" value="title">
 	<label style="background-color : "><input type="text" name="keyword"></label>
 	<input type="submit" value="검색">
-	<% if(loginUser.equals("manager")){ %>
+	<% if(loginUser != null){ %>
 	<input type="button" onclick="showWriteForm();" value="글쓰기">
 <%} %>
 	</form>
