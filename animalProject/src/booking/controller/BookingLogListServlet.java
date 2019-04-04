@@ -77,12 +77,15 @@ public class BookingLogListServlet extends HttpServlet {
 		if (list.size() > 0) {
 			JSONObject sendJSON = new JSONObject();
 			JSONArray ar = new JSONArray();
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy'년 'MM'월 'dd'일'");
 			for (BookingCheck bc : list) {
 				JSONObject job = new JSONObject();
 				job.put("bno", bc.getBookingNo());
+				String indate = sdf.format(bc.getCheckInDate());
+				String outdate = sdf.format(bc.getCheckOutDate());
 				
-				job.put("indate", bc.getCheckInDate());
-				job.put("outdate", bc.getCheckOutDate());
+				job.put("indate", indate);
+				job.put("outdate", outdate);
 				job.put("progress", bc.getBookingProgress());
 				job.put("puserid", bc.getPuserId());
 				/*int price = bc.getPrice();

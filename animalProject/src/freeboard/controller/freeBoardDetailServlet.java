@@ -44,6 +44,7 @@ public class freeBoardDetailServlet extends HttpServlet {
 			currentPage = Integer.parseInt(request.getParameter("page"));}
 		
 		int freeBoardNo = Integer.parseInt(request.getParameter("fnum"));
+		//댓글 객체 찾기용
 		String freeBoardWriter = request.getParameter("fwriter");
 		String freeBoardContent = request.getParameter("fcontent");	
 	

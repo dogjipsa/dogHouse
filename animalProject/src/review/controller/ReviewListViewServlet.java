@@ -6,7 +6,6 @@ import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Date;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -64,7 +63,7 @@ public class ReviewListViewServlet extends HttpServlet {
 		response.setContentType("text/html; charset=utf-8");
 		ArrayList<Review> list = rservice.selectList(currentPage, limit);
 		System.out.println("리뷰에서 list 확인 : "+list);
-		System.out.println("서블릿에서 list 사이즈 : "+list.size());
+		
 		JSONObject sendjson = new JSONObject();
 		JSONArray jsonArr = new JSONArray();
 		
@@ -98,17 +97,6 @@ public class ReviewListViewServlet extends HttpServlet {
 		out.print(sendjson.toJSONString());
 		out.flush();
 		out.close();
-		
-		/*RequestDispatcher view = null;
-		view = request.getRequestDispatcher("views/review/reviewListView.jsp");
-		request.setAttribute("reviewlist", list);
-		request.setAttribute("startPage", startPage);
-		request.setAttribute("endPage", endPage);
-		request.setAttribute("maxPage", maxPage);
-		request.setAttribute("currentPage", currentPage);
-		view.forward(request, response);
-		*/
-		
 	}
 
 	/**

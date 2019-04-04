@@ -179,7 +179,7 @@ public class ReviewDao {
 			if (rset.next()) {
 				listCount = rset.getInt(1);
 			}
-			System.out.println(petSitterId + "님의 후기 개수 : ");
+			System.out.println(petSitterId + "님의 후기 개수 : " + listCount);
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {

@@ -67,8 +67,7 @@ public class NoticeSearchServlet extends HttpServlet {
 		RequestDispatcher view = null;
 		ArrayList<Notice> list = nservice.selectSearch(map);
 		
-		
-		System.out.println(list);
+
 		response.setContentType("text/html; charset=utf-8");
 		if(list.size() > 0) {
 			view = request.getRequestDispatcher("views/notice/noticeListView.jsp");

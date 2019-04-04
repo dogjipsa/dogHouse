@@ -9,8 +9,8 @@ public class BookingCheck implements Serializable {
 	 */
 	private static final long serialVersionUID = 2675965931331759210L;
 	private int bookingNo;
-	private String checkInDate;
-	private String checkOutDate;
+	private Date checkInDate;
+	private Date checkOutDate;
 	private String bookingProgress;
 	private String puserId;
 	private int price;
@@ -22,7 +22,7 @@ public class BookingCheck implements Serializable {
 		// TODO Auto-generated constructor stub
 	}
 
-	public BookingCheck(int bookingNo, String checkInDate, String checkOutDate, String bookingProgress, String puserId,
+	public BookingCheck(int bookingNo, Date checkInDate, Date checkOutDate, String bookingProgress, String puserId,
 			int price, String address, String petName, String serviceKind) {
 		super();
 		this.bookingNo = bookingNo;
@@ -44,19 +44,19 @@ public class BookingCheck implements Serializable {
 		this.bookingNo = bookingNo;
 	}
 
-	public String getCheckInDate() {
+	public Date getCheckInDate() {
 		return checkInDate;
 	}
 
-	public void setCheckInDate(String checkInDate) {
+	public void setCheckInDate(Date checkInDate) {
 		this.checkInDate = checkInDate;
 	}
 
-	public String getCheckOutDate() {
+	public Date getCheckOutDate() {
 		return checkOutDate;
 	}
 
-	public void setCheckOutDate(String checkOutDate) {
+	public void setCheckOutDate(Date checkOutDate) {
 		this.checkOutDate = checkOutDate;
 	}
 
