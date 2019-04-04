@@ -54,7 +54,7 @@ public class ManagerQuestionDetailServlet extends HttpServlet {
 			view = request.getRequestDispatcher("views/manager/managerQuestionDetailView.jsp");
 			request.setAttribute("question", question);
 			request.setAttribute("currentPage", currentPage);
-			/*request.setAttribute("answer", currentPage);*/
+			request.setAttribute("answer", currentPage);
 			view.forward(request, response);
 		}else {
 			view = request.getRequestDispatcher("views/manager/managerError.jsp");

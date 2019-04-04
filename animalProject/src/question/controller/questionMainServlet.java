@@ -35,8 +35,8 @@ public class questionMainServlet extends HttpServlet {
 		
 		QuestionService qservice = new QuestionService();
 		ArrayList<Question> list = new ArrayList<Question>();
-		list = qservice.selectList();
-		
+		/*list = qservice.selectList();	*/	
+		/*list = qservice.selectList(conn, currentPage, limit);*/
 		
 		response.setContentType("text/html; charset=utf-8");
 		RequestDispatcher view = null;		

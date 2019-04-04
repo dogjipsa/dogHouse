@@ -80,6 +80,6 @@ function deleteQuestion(){
 
 <br><br><br><br><br><br><br><br><br>
 <br><br><br><br><br><br><br><br><br>
-<div align="center" id="footer"><%@ include file="../common/footer.jsp"%></div></div>
+</div>
 </body>
 </html>

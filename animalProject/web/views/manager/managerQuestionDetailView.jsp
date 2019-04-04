@@ -24,7 +24,7 @@
 %>
 <%@ include file="../../views/common/managerMenu.jsp" %>
 <br>
-<h1 align="center" style="color:white;">해당글 상세보기</h1>
+<h1 align="center">&nbsp;해당 1:1문의 상세보기</h1>
 <hr align="center" style="width:600px">
 <br><br><br>
 
@@ -43,8 +43,27 @@
     </tr>
 </table>
 <br><br>
+<h1 align="center">&nbsp;운영자 답변 처리</h1>
+<hr align="center" style="width:600px">
+<br><br>
+<form action="/doggybeta/ansinsert" method="post" enctype="multipart/form-data">
+<table align="center" border="1" width="600" bgcolor=oldlace>	
+	<tr>
+		<td>내용입력</td>
+		<td><textarea cols="70" rows="13" name="qcontent"></textarea></td>		
+	</tr>	
+	<tr align="right">
+	<th colspan="2">
+	 <input type="button" value="뒤로가기" onclick="history.go(-1)">
+	 <input type="submit" value="전송하기" onclick="alert('등록되었습니다')">&nbsp; 	 
+	</th>
+</tr>
+</table>
+</form>
+
+<br><br>
 <br><br><br><br><br><br><br><br><br><br>
 <hr>
-<div id="footer"><%@ include file="../common/footer.jsp"%></div>
+
 </body>
 </html>
