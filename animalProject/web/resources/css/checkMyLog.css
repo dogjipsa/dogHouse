@@ -452,6 +452,7 @@
     display: flex;
     flex-direction: column;
 }
+
 #pet_up_form input, #pet_up_form textarea[name="etc"]{
 
     border: none;
