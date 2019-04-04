@@ -50,16 +50,14 @@
 			data : {petsitterid : arr},
 			url : '/doggybeta/ronlist',
 			success:function(data){
-				$("#rating").html($("#rating").text() 
-						+ data.rating)
-			},  //success
-			error       : function(request, status, error) {
-		       // alert("code: "+request.status+"\n"+"message: "+request.responseText+"\n"+"error: "+error);
-		    },
-		    success     : function(msg) {
-		        //alert(msg);        
-		    }//error
-
+				$.each(data.list, function(index){
+					var items = [];
+					items.push(data.list[index].count);
+					items.push(data.list[index].rating);
+					console.log(data.list[index].count);
+					console.log(data.list[index].rating);
+			});
+			}
 		});
 		 
  });	
@@ -145,7 +143,7 @@ font-size: 12px;
 	
 } 
 
-#detailtable:hover{
+#detailtable_table:hover{
 	background-color: rgba(210, 222, 225, 0.5);
 }
 #bringpetinfo{
@@ -221,7 +219,7 @@ font-size: 12px;
 		<input type="hidden" value="<%=m.getUserId() %>">
 		
 		<div id="detailtable" style="float:left; width: 50%;">
-		<table style="border: 1px solid #d2dee1; width: 300px; height: 350px" 
+		<table id="detailtable_table" style="border: 1px solid #d2dee1; width: 300px; height: 350px" 
 		onclick="location.href='/doggybeta/sitterdetail?petSitterId=<%=m.getUserId()%>&service=<%=service%>'">							
 		<tr>
 		<td>
@@ -313,7 +311,7 @@ listData.forEach(function(addr, index){
 </div> 
 </div>
 		
-<div id="footer"><%@ include file="..//common/footer.jsp"%></div>
+
 	
 </body>
 </html>

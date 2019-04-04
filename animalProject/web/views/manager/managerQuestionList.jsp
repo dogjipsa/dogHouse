@@ -31,8 +31,9 @@
 	<table style="text-align:center; border:1px; solid #dddddd">
 		<thead>
 		<tr>
-			<th style="background-color:#eeeee; text-align:center; color:magenta;">제목</th>
-			<th style="background-color:#eeeee; text-align:center; color:magenta;">날짜 </th>
+			<th style="background-color:#eeeee; text-align:left; color:navy;">제목</th>
+			<th style="background-color:#eeeee; text-align:center; color:navy;">날짜 </th>
+			<th style="background-color:#eeeee; text-align:right; color:navy;">답변유무</th>
 		</tr>
 		</thead>
 <% 
@@ -42,6 +43,7 @@
 	<tr>
 		<td align="left"><a href="/doggybeta/manqdetail?qnum=<%= question.getQuestionNo() %>&page=<%= currentPage %>"><%= question.getQuestionTitle() %></a></td>
 		<td align="center"><%= question.getQuestionDate() %></td>
+		<th align="left"><%= question.getQuestionReplyYn() %></th>		
 	</tr>
 	<% } %>
 </table>	

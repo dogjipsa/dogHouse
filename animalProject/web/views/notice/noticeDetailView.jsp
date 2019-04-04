@@ -95,7 +95,7 @@ table td {
 	</th>
 </div>
 </div>
-		<div id="footer"><%@ include file="..//common/footer.jsp"%></div>
+		
 </div>
 </body>
 </html>

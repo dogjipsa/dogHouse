@@ -16,9 +16,8 @@
 <link href="/doggybeta/resources/css/footer.css" rel="stylesheet" type="text/css">
 <link href="https://fonts.googleapis.com/css?family=Sunflower:300,500,700&amp;subset=korean" rel="stylesheet" type="text/css">
 <style>
- body {
+#wrap {
 	font-family: 'Sunflower', 'sans-serif';
-	font-size: 15pt;
 } 
 .hero-image {
   background-color : #d2dee1;
@@ -38,6 +37,7 @@
   left: 50%;
   transform: translate(-50%, -50%);
   color: black;
+  font-size: 15pt;
 }
 
 .hero-text button {

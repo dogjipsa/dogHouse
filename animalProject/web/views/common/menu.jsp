@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8" errorPage='memberError.jsp'%>
+	pageEncoding="UTF-8"%>
 <%@ page import="java.net.URLEncoder" %>
 <%@ page import="java.security.SecureRandom" %>
 <%@ page import="java.math.BigInteger" %>
@@ -331,10 +331,10 @@
 			
 				},  //success
 				error :  function( jqXHR, textStatus, errorThrown ) {
-					alert( jqXHR.status );
+				/* 	alert( jqXHR.status );
 					alert( jqXHR.statusText );
 					alert( jqXHR.responseText );
-					alert( jqXHR.readyState );
+					alert( jqXHR.readyState ); */
 
 					}	//error
 				

@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" import="notice.model.vo.Notice"%>
+    pageEncoding="UTF-8" import="notice.model.vo.Notice" errorPage='noticeError.jsp'%>
     <%@ page import='member.model.vo.Member' %>
 <%
 	Notice notice = (Notice)request.getAttribute("notice");
@@ -84,7 +84,7 @@
 </form>
 
 </div>
-		<div id="footer"><%@ include file="..//common/footer.jsp"%></div>
+		
 </div>
 </body>
 </html>

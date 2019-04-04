@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8" errorPage='questionError.jsp'%>
 <%@ page import="member.model.vo.Member, question.model.vo.Question, answer.model.vo.Answer, java.sql.Date" %>
 <%
 	Question question = (Question)request.getAttribute("question");
@@ -80,6 +80,6 @@ function deleteQuestion(){
 
 <br><br><br><br><br><br><br><br><br>
 <br><br><br><br><br><br><br><br><br>
-<div align="center" id="footer"><%@ include file="../common/footer.jsp"%></div></div>
+</div>
 </body>
 </html>
