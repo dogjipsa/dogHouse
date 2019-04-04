@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" errorPage="freeBoardError.jsp"%>
+    pageEncoding="UTF-8" errorPage="memberError.jsp"%>
  <%@ page import="member.model.vo.Member, freeboard.model.vo.FreeBoard" %>
  <%
  	

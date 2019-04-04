@@ -1,28 +1,27 @@
 package manager.controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import freeboard.model.service.FreeBoardService;
 import manager.model.service.ManagerService;
 
 /**
- * Servlet implementation class ManagerNoticeDeleteServlet
+ * Servlet implementation class ManagerNoticeSelectDeleteServlet
  */
-@WebServlet("/mndelete")
-public class ManagerNoticeDeleteServlet extends HttpServlet {
+@WebServlet("/mnsdelete")
+public class ManagerNoticeSelectDeleteServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ManagerNoticeDeleteServlet() {
+    public ManagerNoticeSelectDeleteServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -31,18 +30,23 @@ public class ManagerNoticeDeleteServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		//게시글 (원글, 댓글) 삭제 처리용 컨트롤러
-				int NoticeNo = Integer.parseInt(request.getParameter("nnum"));
-				ManagerService mservice = new ManagerService();
+		
+			//멤버 강퇴 처리용 컨트롤러
+		request.setCharacterEncoding("utf-8");
+		response.setContentType("text/html;charset=utf-8");
+		String []delNo = request.getParameterValues("delNo[]");
+		System.out.println(delNo);
+		int result = 0;
 				
-				int result = mservice.deleteNotice(NoticeNo);
-				
+		for(int i = 0; i < delNo.length; i ++) {
+			result = new ManagerService().managerSelectDeleteNotice(delNo[i]);
+
+				}
+			PrintWriter out = response.getWriter();
 				if(result > 0) {
-					response.sendRedirect("/doggybeta/mannotice");
-				}else {
-					RequestDispatcher view = request.getRequestDispatcher("views/manager/managerError.jsp");
-					request.setAttribute("message", NoticeNo + "번 게시글 삭제 실패!");
-					view.forward(request, response);
+					out.println("y");
+				} else {
+					out.print("n");
 				}
 			}
 
