@@ -132,8 +132,16 @@ input[type=submit]:hover {
      function closeWindow() {  
     	/* console.log($("input[name=star-input]").val(); */
        	//setTimeout(function(){  }, 3000);  
-       	
-     alert('후기작성이 완료되었습니다');
+       	var sc = $('#starcheck').val();
+    	var tx = $('#reviewcontent').val();
+     	if(!tx){
+     		alert("내용작성요망");
+     		$('#reviewcontent').select();
+     		return false;
+     	} else {
+     		return true;
+     	}
+     //alert('후기작성이 완료되었습니다');
    // window.close(); 
     	
        	 /* setTimeout(function () { 
@@ -142,14 +150,13 @@ input[type=submit]:hover {
        		}, 3000);  */
        //	window.close();
      }   
-
      
 </script>  
 
 <!-- <a href="#" onClick="javascript:window.close();">닫기</a> -->  
 <div class="container">
   <%System.out.println("뷰단에서 bookingNo 가져오는지 : " + bookingNo); %>
-  <form action="/doggybeta/rinsert">
+  <form action="/doggybeta/rinsert" onsubmit='return closeWindow();'>
   <input type="hidden" name="userid" value="<%=loginUser.getUserId()%>">
   <input type="hidden" name="bookingno" value="<%=bookingNo%>">
   <h3 align="center">후기작성</h3>
@@ -200,7 +207,7 @@ input[type=submit]:hover {
     </div>
   </div>
   <div class="row">
-    <input type="submit" value="작성하기" onclick="closeWindow();">
+    <input type="submit" value="작성하기" >
   </div>
   </form>
 </div>
