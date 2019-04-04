@@ -10,9 +10,9 @@
 <title>Dog House</title>
 
 <!-- css -->
+<link href="/doggybeta/resources/css/footer.css" rel="stylesheet" type="text/css">
 <link rel="shortcut icon" href="/doggybeta/resources/images/favicon-32x32.png">
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-<link href="/doggybeta/resources/css/footer.css" rel="stylesheet" type="text/css">
 <style>
 * {box-sizing: border-box}
 body {font-family: Verdana, sans-serif; margin:0}
@@ -23,7 +23,6 @@ img {vertical-align: middle;}
 .slideshow-container {
   max-width: 1000px;
   position: relative;
-  top: 100px;
   margin: auto;
 }
 

@@ -145,37 +145,67 @@ public class NoticeDao {
 		
 		return result;
 	}
-	public ArrayList<Notice> selectSearch(Connection conn, HashMap<String, Object> map) {
+	
+	public ArrayList<Notice> selectSearch(Connection conn, HashMap<String, Object> listOpt) {
 		
 		ArrayList<Notice> list = new ArrayList<Notice>();
 		
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		
-		String opt = (String)map.get("opt");//검색 옵션 
-		String search = (String)map.get("search");//검색내용
+		String opt = (String)listOpt.get("opt");//검색 옵션 
+		String search = (String)listOpt.get("search");//검색내용
 		String query = null;
+		int startRow = (Integer)listOpt.get("startRow");
 		
 		try {
 			if(opt == null) {
-				query = "select * from notice order by notice_date desc";
+				query = "SELECT * " + 
+						"FROM (SELECT ROWNUM RNUM, NOTICE_NO, " + 
+						"NOTICE_TITLE, NOTICE_CONTENT, " + 
+						"NOTICE_DATE, " + 
+						"NOTICE_ORIGINFILE, NOTICE_VIEWS, " + 
+						"MANAGER_ID, " + 
+						"NOTICE_DELETE, NOTICE_REFILE " + 
+						"FROM (SELECT * FROM NOTICE WHERE NOTICE_DELETE IN('n', 'N', null) " +
+						"ORDER BY NOTICE_NO DESC)) " +  
+						"WHERE RNUM >= ? AND RNUM <= ?";
+				
 				pstmt = conn.prepareStatement(query);
+				pstmt.setInt(1, startRow);
+				pstmt.setInt(2, startRow+9);
 				
 			}else if(opt.equals("0")) {//제목 검색
-				query = "select * from notice where notice_title like ? order by notice_date desc";
+				query = "SELECT * " + 
+						"FROM (SELECT ROWNUM RNUM, NOTICE_NO, " + 
+						"NOTICE_TITLE, NOTICE_CONTENT, " + 
+						"NOTICE_DATE, " + 
+						"NOTICE_ORIGINFILE, NOTICE_VIEWS, " + 
+						"MANAGER_ID, " + 
+						"NOTICE_DELETE, NOTICE_REFILE " + 
+						"FROM (SELECT * FROM NOTICE WHERE NOTICE_TITLE LIKE ? AND NOTICE_DELETE IN('n', 'N', null) " +
+						"ORDER BY NOTICE_NO DESC)) " +  
+						"WHERE RNUM >= ? AND RNUM <= ?";
 				pstmt = conn.prepareStatement(query);
 				pstmt.setString(1, "%" + search + "%");
+				pstmt.setInt(2, startRow);
+				pstmt.setInt(3, startRow+9);
 				
-			}else if(opt.equals("1")){//내용 검색
-				query = "select * from notice where notice_content like ? order by notice_date desc";
+			}else if(opt.equals("1")){// 제목 + 내용 검색
+				query = "SELECT * " + 
+						"FROM (SELECT ROWNUM RNUM, NOTICE_NO, " + 
+						"NOTICE_TITLE, NOTICE_CONTENT, " + 
+						"NOTICE_DATE, " + 
+						"NOTICE_ORIGINFILE, NOTICE_VIEWS, " + 
+						"MANAGER_ID, " + 
+						"NOTICE_DELETE, NOTICE_REFILE " + 
+						"FROM (SELECT * FROM NOTICE WHERE NOTICE_TITLE LIKE ? OR NOTICE_CONTENT LIKE ? AND NOTICE_DELETE IN('n', 'N', null) " +
+						"ORDER BY NOTICE_NO DESC)) " +  
+						"WHERE RNUM >= ? AND RNUM <= ?";
 				pstmt = conn.prepareStatement(query);
 				pstmt.setString(1, "%" + search + "%");
-				
-			}else if(opt.equals("2")) {
-				query = "select * from notice where notice_title like ? or notice_content like ? order by notice_date desc";
-				pstmt = conn.prepareStatement(query);
-				pstmt.setString(1, "%" + search + "%");
-				pstmt.setString(2, "%" + search + "%");
+				pstmt.setInt(2, startRow);
+				pstmt.setInt(3, startRow+9);
 				
 			}
 			rset = pstmt.executeQuery();
@@ -185,6 +215,7 @@ public class NoticeDao {
 				//번호제목이름조회수날짜첨부파일
 				notice.setNoticeNo(rset.getInt("notice_no"));
 				notice.setNoticeTitle(rset.getString("notice_title"));
+				notice.setNoticeContent(rset.getString("notice_content"));
 				notice.setManagerId(rset.getString("manager_id"));
 				notice.setNoticeViews(rset.getInt("notice_views"));
 				notice.setNoticeDate(rset.getDate("notice_date"));
@@ -193,6 +224,7 @@ public class NoticeDao {
 				
 				list.add(notice);
 			}
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {

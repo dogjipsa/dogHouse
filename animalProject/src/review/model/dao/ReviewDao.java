@@ -155,7 +155,6 @@ public class ReviewDao {
 			if(rset.next()) {
 				starAvg = rset.getDouble(1);
 			}
-			System.out.println(petSitterId + " : " + starAvg);
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {

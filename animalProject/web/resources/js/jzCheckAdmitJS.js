@@ -104,7 +104,7 @@ function checkid() {
 					$('#userpwd1').select();
 				} else if((pwd1 == userid) || (pwd2 == userid)) {
 					alert('아이디와 동일하게 비밀번호를 설정할 수 없습니다')
-					('#signupbtn').prop('disabled', true).css('background-color','gray');
+					$('#signupbtn').prop('disabled', true).css('background-color','gray');
 					$('#userpwd1').select();
 					pwd1 = '';
 				} else {
