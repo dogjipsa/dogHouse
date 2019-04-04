@@ -44,7 +44,6 @@
 
 #tbhtml {
 	font-family: 'Sunflower', 'sans-serif';
-	font-size: 15pt;
 }
 	
 	#searchT{ 
@@ -71,6 +70,7 @@ h2{
    text-align: left;
    line-height: 1.5;
    table-layout:fixed;   
+   font-size: 15pt;
 }
 
 .tboard tr{

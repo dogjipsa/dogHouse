@@ -269,7 +269,7 @@ h2{
 
 
 		</div>
-		<div id="footer"><%@ include file="..//common/footer.jsp"%></div>
+		
 	</div>
 	<br>
 </body>

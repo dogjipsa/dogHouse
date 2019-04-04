@@ -66,7 +66,7 @@ var map = new daum.maps.StaticMap(container, option);
 
 </script>		
 </div>
-		<div id="footer"><%@ include file="..//common/footer.jsp"%></div>
+		
 </div>
 
 </body>

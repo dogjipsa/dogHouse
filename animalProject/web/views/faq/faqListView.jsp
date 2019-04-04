@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" import="faq.model.vo.Faq, java.util.*" %>
+    pageEncoding="UTF-8" import="faq.model.vo.Faq, java.util.*" errorPage='faqError.jsp'%>
 <%
    ArrayList<Faq> list = (ArrayList<Faq>)request.getAttribute("list");
 	int listCount = ((Integer)request.getAttribute("listCount")).intValue();
@@ -45,7 +45,6 @@ $(function(){
 <style type="text/css">
 body{
 	font-family: 'Sunflower', 'sans-serif';
-	font-size: 15pt;
 }
 
 #search{ 
@@ -67,7 +66,8 @@ h1{
    border-collapse: collapse;
    text-align: left;
    line-height: 1.5;
-   table-layout:fixed;   
+   table-layout:fixed;
+   font-size: 15pt;   
 }
 .board tr{
 	line-height : 2em;
@@ -234,7 +234,7 @@ position: relative;
 </div>
 
 </div>
-		<div id="footer"><%@ include file="..//common/footer.jsp"%></div>
+		
 </div>
 </body>
 </html>
