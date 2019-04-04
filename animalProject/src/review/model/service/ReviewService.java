@@ -26,9 +26,9 @@ public class ReviewService {
 		return listCount;
 	}
 
-	public ArrayList<Review> selectList(int currentPage, int limit) {
+	public ArrayList<Review> selectList(int currentPage, int limit, String petSitterId) {
 		Connection conn = getConnection();
-		ArrayList<Review> list = rdao.selectList(conn, currentPage, limit);
+		ArrayList<Review> list = rdao.selectList(conn, currentPage, limit, petSitterId);
 		close(conn);
 		return list;
 	}
@@ -44,9 +44,9 @@ public class ReviewService {
 		return result;
 	}
 
-	public int deleteReview(int reviewNum) {
+	public int deleteReview(int bno) {
 		Connection conn = getConnection();
-		int result = rdao.deleteReview(conn, reviewNum);
+		int result = rdao.deleteReview(conn, bno);
 		if(result > 0)
 			commit(conn);
 		else
@@ -75,4 +75,22 @@ public class ReviewService {
 		return listCount;
 	}
 
+	public Review selectOneReview(int bno) {
+		Connection conn = getConnection();
+		Review r = rdao.selectOneReview(conn, bno);
+		close(conn);
+		return r;
+	}
+
+	public int updateReview(String content, String point, int rno) {
+		Connection conn = getConnection();
+		int result = rdao.updateReview(conn, content, point, rno);
+		if(result > 0)
+			commit(conn);
+		else
+			rollback(conn);
+		close(conn);
+		return result;
+	}
+	
 }
