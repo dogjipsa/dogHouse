@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" errorPage="questionError.jsp" %>
+    pageEncoding="UTF-8" errorPage="memberError.jsp" %>
 <%@ page import="question.model.vo.*, java.util.*, question.model.vo.Question" %>
 <% 
 	ArrayList<Question> list = (ArrayList<Question>)request.getAttribute("list");	
@@ -79,7 +79,7 @@
 <hr>
 
 
-<div id="footer"><%@ include file="../common/footer.jsp"%></div>
+
 
 </div>
 

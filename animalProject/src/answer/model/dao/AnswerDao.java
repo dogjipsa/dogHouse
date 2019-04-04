@@ -19,7 +19,7 @@ public class AnswerDao {
 		int result = 0;
 		PreparedStatement pstmt = null;
 		
-		String query = "insert into answer values (seq_ANSWER.nextval, ?, sysdate)";
+		String query = "insert into answer values (seq_ANSWER.nextval, ?, SYSDATE)";
 		//insert into answer values ((select question_no from question where question_no = ?), ?, sysdate)
 		
 		try {
