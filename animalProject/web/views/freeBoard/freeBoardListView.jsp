@@ -187,10 +187,10 @@ font-size: 15pt;
 <%-- 검색기능 --%>
 <div class="fsearch" align="center" id="searchT">
  <form name="form1" method="post" action="/doggybeta/flist">
-  <select name="opt">
+  <select name="opt" id="opt">
   <option value="0" >제목</option>
   <option value="1" >작성자</option>
-  <option value="2" >제목+내용</option>
+  <option value="2" >제목 + 내용</option>
    </select>
  <input type="text" size="20" name="inputdata" />&nbsp;
  <input type="submit" value ="검색"/>
@@ -231,7 +231,7 @@ font-size: 15pt;
 <% } %>
 
 <% if(currentPage >= maxPage){ %>
-	[맨끝]
+	▶▶
 <% }else{ %>
 <% if(opt == null){ %>
 	<a href="/doggybeta/flist?page=<%= maxPage %>">▶▶</a>
@@ -242,7 +242,7 @@ font-size: 15pt;
 </div> 	  
 	
 		</div>
-		<div id="footer"><%@ include file="..//common/footer.jsp"%></div>
+		
 	</div>
 
 <br>
