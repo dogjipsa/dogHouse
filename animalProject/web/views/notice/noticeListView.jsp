@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" import="notice.model.vo.Notice, java.util.*, member.model.vo.Member" %>
+    pageEncoding="UTF-8" import="notice.model.vo.Notice, java.util.*, member.model.vo.Member" errorPage='noticeError.jsp'%>
 <%
    ArrayList<Notice> list = (ArrayList<Notice>)request.getAttribute("list");
 
@@ -184,7 +184,7 @@ h2{
 
 
 </div>
-		<div id="footer"><%@ include file="..//common/footer.jsp"%></div>
+		
 </div>
 </body>
 </html>

@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8" errorPage='noticeError.jsp'%>
 
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="ko" xml:lang="ko">
@@ -144,7 +144,7 @@ function setDefaultFont() {
 </script>
 
 </div>
-		<div id="footer"><%@ include file="..//common/footer.jsp"%></div>
+		
 </div>
 </body>
 </html>

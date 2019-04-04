@@ -242,7 +242,7 @@ font-size: 15pt;
 </div> 	  
 	
 		</div>
-		<div id="footer"><%@ include file="..//common/footer.jsp"%></div>
+		
 	</div>
 
 <br>

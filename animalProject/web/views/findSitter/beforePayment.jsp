@@ -171,7 +171,7 @@ header{
 			</div>
 			<input type="submit" value="결제하기">
 		</div>
-		<div id="footer"><%@ include file="..//common/footer.jsp"%></div>
+		
 	</div>
 
 </body>

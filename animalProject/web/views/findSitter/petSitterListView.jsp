@@ -313,7 +313,7 @@ listData.forEach(function(addr, index){
 </div> 
 </div>
 		
-<div id="footer"><%@ include file="..//common/footer.jsp"%></div>
+
 	
 </body>
 </html>
