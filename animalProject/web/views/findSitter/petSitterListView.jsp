@@ -50,13 +50,13 @@
 			data : {petsitterid : arr},
 			url : '/doggybeta/ronlist',
 			success:function(data){
-				$.each(data.list, function(index){
-					var items = [];
-					items.push(data.list[index].count);
-					items.push(data.list[index].rating);
-					console.log(data.list[index].count);
-					console.log(data.list[index].rating);
-			});
+				var jsonStr = JSON.stringify(data);
+				var json = JSON.parse(jsonStr);
+				$.each(data.count, function(i){
+					console.log("제이슨 : "+data.count[i]);
+				});
+				
+				
 			}
 		});
 		 
