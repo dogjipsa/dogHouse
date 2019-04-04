@@ -35,7 +35,7 @@ public class ReviewInsertServlet extends HttpServlet {
 		
 		Review review = new Review();
 		review.setReviewContent(request.getParameter("reviewcontent").replace("\r\n","<br>"));
-		System.out.println("content확인 !!! : "+review.getReviewContent().replace("\r\n","<br>"));
+
 		review.setPoint(request.getParameter("star-input"));
 		review.setUserId(request.getParameter("userid"));
 		review.setBookingNo(Integer.parseInt(request.getParameter("bookingno")));

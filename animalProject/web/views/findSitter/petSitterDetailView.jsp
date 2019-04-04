@@ -17,6 +17,7 @@
 <link rel="shortcut icon" href="/doggybeta/resources/images/favicon.ico">
 <link href="/doggybeta/resources/css/footer.css" rel="stylesheet" type="text/css">
 <link rel="stylesheet" href="/doggybeta/resources/css/checkMyLog.css">
+
 <!-- 시간(DateTimePicker) 위젯 링크들은 menu.jsp에 추가  -->
 
 <style type="text/css">
@@ -201,6 +202,11 @@ span.star-prototype > * {
     background-position: 0 0;
     max-width:80px; 
 }
+
+
+ .review_count_two  a:link {     color:   #ff923a; font-size: 14pt; text-decoration: none;}
+ .review_count_two  a:visited {     color:   #ff923a; text-decoration: none;}
+ .review_count_two  a:hover { color:   #ff923a; text-decoration: underline;} 
 </style>
 
 </head>
@@ -302,7 +308,7 @@ function showSlides(n) {
 <td>이름 : <%=petSitter.getUserName() %></td><td></td>
 </tr>
 <tr><td>나이 : <%=String.valueOf((petSitter.getUserDate())).substring(0, 4) %> 년생</td><td></td></tr>
-<tr><td>평점 :  <span class="star-prototype"><%= starAvg %></span> (<%=starAvg %>)</td><td></td></tr></tbody>
+<tr><td>평점 :  <span class="star-prototype"><%= starAvg %></span> (<%=starAvg %>)<span id="review_count_two" class="review_count_two"></span></td><td></td></tr></tbody>
 </table>
 <script type="text/javascript">
 /* 별점처리 jquery  */
@@ -330,7 +336,7 @@ function showSlides(n) {
 <table class="board">
 
 <thead><tr><th>상세내용</th><th></th></tr></thead>
-<tr><td>내용 받아와야 함.(오라클에 컬럼 추가 요망)  </td><td></td></tr>
+<tr><td><%=petSitter.getpContent() %>  </td><td></td></tr>
 </table>
 <br>
 <table class="board">
@@ -386,25 +392,28 @@ geocoder.addressSearch('<%=petSitter.getAddress()%>', function(result, status) {
 
 <br>
 <br>
+<style>
+.listlink a:link {     color: #369; text-decoration: none;}
+ .listlink a:visited {     color: #369; text-decoration: none;}
+ .listlink a:hover { color: #369; text-decoration: underline; background:#e6e6e6;}
+
+</style>
 <div style="height:800px"><!-- 리뷰게시판  -->
 <table class="board" id="reviewboard">
       <thead>
          <tr>
-            <th width="70">리뷰</th>
-            <th width="50"></th>
+            <th width="120" colspan='2'>후기(<span id="reviewcount"></span>)</th>
+            <!-- <th width="50"></th> -->
             <th width="350"></th>
-            <th width="100"></th>
+            <th width="100"><div id="listlink" class="listlink"></div></th>
          </tr>   
       </thead>
       <tbody>
       	
       </tbody>
 </table>
-<div class="section5"><!-- 페이징처리부분  -->
-		<div class="pagination"></div>
-</div>
-<p id="test"></p>
-<input id="currentpage" value="1">
+
+
 <script type="text/javascript">
 
 /* 리뷰게시판 조회   */
@@ -413,7 +422,7 @@ function replaceAll(str, searchStr, replaceStr) {
     return str.split(searchStr).join(replaceStr);
 }
  
-$(function rlist() {
+$(function(){
 	console.log($('#petSitterId').val());
 		$.ajax({
 			url: '/doggybeta/rlist',
@@ -453,106 +462,35 @@ $(function rlist() {
 							 }
 						 if(json.list[i].point==5){
 							 $("#reviewboard").append("<tr><td>★★★★★</td><td>"+json.list[i].userid+"</td><td>"+decodeURIComponent(json.list[i].reviewcontent)+"</td><td>"+json.list[i].reviewdate+"</tr>");
-							 }
+							 } */
 						<%-- <span class="star-prototype"><%= starAvg %></span> --%>
 					 }
-					 $("#test").append("리스트카운트 ; "+data.listCount);
-					 $("#test").append("<br>startPage : "+data.startPage);
-					 $("#test").append("<br>endPage : "+data.endPage);
-					 $("#test").append("<br>maxPage : "+data.maxPage);
-					 $("#test").append("<br>currentPage : "+data.currentPage);
-					 for(var i=1; i<=data.maxPage;i++){
-					 	/* $("#paging").append(i); */
-					 	$("#paging").append("<a href='#' onclick='check();'>"+i+"</a>");
+					
+					 $("#reviewcount").append(data.listCount+"건");
+					 if(data.listCount>10){
+						 $("#listlink").html("<a href='#' onclick='popupOpen();'>더보기+</a>");
 					 }
-					 $('#currentpage').val(data.currentPage);
-					 /* $("#currentpage").val(data.currentPage); */
-					 /* 페이징 개 빡친다 그냥 팁게시판 페이징 처리처럼 해야할듯  */
-					 const startPage = data.startPage;
-            const endPage = data.endPage;
-            const currentPage = data.currentPage;
-            const totalPage = data.maxPage;
-
-            while (pagination.firstChild) {
-                pagination.removeChild(pagination.firstChild);
-            }
-
-            const pageBox = document.createElement('div');
-            pageBox.setAttribute('class', 'pagebox');
-
-            if (startPage > 1) {
-                const pageBox = document.createElement('div');
-                pageBox.setAttribute('class', 'pagebox');
-                pageBox.textContent = '<<';
-                pagination.appendChild(pageBox);
-                page.onclick = () => {
-                    chosenPage = 1;
-                    rlist();
-                }
-            }
-            if (currentPage > 1) {
-                const pageBox = document.createElement('div');
-                pageBox.setAttribute('class', 'pagebox');
-                pageBox.textContent = '<';
-                pagination.appendChild(pageBox);
-                pageBox.onclick = () => {
-                    chosenPage = currentPage - 1;
-                    rlist();
-                }
-            }
-            for (let i = startPage; i <= endPage; i++) {
-                const pageBox = document.createElement('div');
-                pageBox.setAttribute('class', 'pagebox');
-                if (i === currentPage) {
-                    pageBox.textContent = i;
-                    pageBox.style.color = 'dodgerblue';
-                    pagination.appendChild(pageBox);
-                } else {
-                    pageBox.textContent = i;
-                    pagination.appendChild(pageBox);
-                }
-                pageBox.onclick = () => {
-                    chosenPage = i;
-                    rlist();
-                }
-            }
-
-            if (currentPage < totalPage) {
-                const pageBox = document.createElement('div');
-                pageBox.setAttribute('class', 'pagebox');
-                pageBox.textContent = '>';
-                pagination.appendChild(pageBox);
-                pageBox.onclick = () => {
-                    chosenPage = currentPage + 1;
-                    rlist();
-                }
-            }
-            if (endPage < totalPage) {
-                const pageBox = document.createElement('div');
-                pageBox.setAttribute('class', 'pagebox');
-                pageBox.textContent = '>>';
-                pagination.appendChild(pageBox);
-                pageBox.onclick = () => {
-                    chosenPage = totalPage;
-                    rlist();
-                }
-            }
-						
 					 
+					 
+					 $("#review_count_two").html(" <a href='#reviewboard'>"+data.listCount+"건</a>");
+					
 			}
-				    
-				    
-			
 		});
 	
 });
-		document.addEventListener('DOMContentLoaded', () => { rlist(); });
+
+function popupOpen(){
+    var url= "/doggybeta/ralllist?puserid=<%=petSitter.getUserId()%>";    //팝업창 페이지 URL
+    var winWidth = 700;
+     var winHeight = 600;
+     var popupOption= "width="+winWidth+", height="+winHeight;    //팝업창 옵션(optoin)
+    window.open(url,"",popupOption+",left=500, top=250");
+ }
 </script>
 
-<br><br><div id="paging">테스트</div>
+
 </div>
-페이징처리2<br>
-<span class="star-prototype"><%= starAvg %></span>
+
 
 </div><!-- 가운데 영역  끝-->
 
@@ -628,7 +566,8 @@ function mypetCheck(){
 <input type="hidden" name="petSitterId" id="petSitterId" value="<%=petSitter.getUserId()%>">
 <input type="hidden" name="userId" id="userId" value="<%=loginUser.getUserId()%>">
 <input type="hidden" name="price" id="price" value="<%=petSitter.getPrice() %>">
-<input type="hidden" name="petno" value="<%=request.getParameter("petno")%>">
+<%-- <input type="hidden" name="petno" value="<%=request.getParameter("petno")%>"> --%>
+<input type="hidden" name="servicekind" id="servicekind">
 <br><br>
 총 가격 : <input type="text" value=""  id="priceSum" name="priceSum" readonly>
 <p id="pricesum"></p>
@@ -672,6 +611,7 @@ function priceCal(){
 							$("#priceSum").val(data.pricesum+" 원");
 							$("#service").val(data.service + data.dateStr);
 							$("#pricesum").append(pricesum);
+							$("#servicekind").val(data.servicekind);
 						}
 			});
   }
