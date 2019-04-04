@@ -128,11 +128,12 @@ input[type=submit]:hover {
 <script src="/doggybeta/resources/js/jquery-3.3.1.min.js"></script>
 <script src="/doggybeta/resources/js/star.js"></script>
 
-
 <!-- <a href="#" onClick="javascript:window.close();">닫기</a> -->  
 <div class="container">
   <%System.out.println("뷰단에서 bookingNo 가져오는지 : " + bookingNo); %>
+
   <form action="/doggybeta/rinsert" id="form" onsubmit="return closeWindow();">
+
   <input type="hidden" name="userid" value="<%=loginUser.getUserId()%>">
   <input type="hidden" name="bookingno" value="<%=bookingNo%>">
   <h3 align="center">후기작성</h3>
@@ -184,7 +185,9 @@ input[type=submit]:hover {
     </div>
   </div>
   <div class="row">
+
     <input type="submit" value="작성하기" id="submit">
+
   </div>
   </form>
 </div>

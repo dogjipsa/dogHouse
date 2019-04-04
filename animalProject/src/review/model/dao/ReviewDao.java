@@ -102,13 +102,20 @@ public class ReviewDao {
 		return result;
 	}
 
-	public int deleteReview(Connection conn, int reviewNum) {
+
+	public int deleteReview(Connection conn, int bno) {
 		int result = 0;
+			
 		PreparedStatement pstmt = null;
-		String query = "delete from review where review_no = ?";
+		String query = "DELETE REVIEW WHERE BOOKING_NO = ?";
 		try {
+			int result2 = updateProgress(conn, bno);
+			if(result2 > 0) {
+				System.out.println("update progressing..");
+			}
 			pstmt = conn.prepareStatement(query);
-			pstmt.setInt(1, reviewNum);
+			pstmt.setInt(1, bno);
+			
 			result = pstmt.executeUpdate();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -116,6 +123,26 @@ public class ReviewDao {
 			close(pstmt);
 		}
 		return result;
+
+	}
+
+	private int updateProgress(Connection conn, int bno) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String query = "UPDATE BOOKING SET BOOKING_PROGRESS = '3' WHERE BOOKING_NO = ?";
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, bno);
+			
+			result = pstmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			
+			close(pstmt);
+		}
+		return result;
+
 	}
 
 	public double selectStartAvg(Connection conn, String petSitterId) {
@@ -155,6 +182,7 @@ public class ReviewDao {
 			if (rset.next()) {
 				listCount = rset.getInt(1);
 			}
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -165,6 +193,55 @@ public class ReviewDao {
 		return listCount;
 		
 		
+	}
+
+	public Review selectOneReview(Connection conn, int bno) {
+		Review r = null;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String query = "SELECT * FROM REVIEW WHERE BOOKING_NO = ?";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, bno);
+			rset = pstmt.executeQuery();
+			if(rset.next()) {
+				r = new Review();
+				r.setReviewNo(rset.getInt(1));
+				r.setUserId(rset.getString(2));
+				r.setBookingNo(bno);
+				r.setPoint(rset.getString(4));
+				r.setReviewContent(rset.getString(5));
+				r.setReviewOriginFile(rset.getString(6));
+				r.setReviewReFile(rset.getString(7));
+				r.setReviewDate(rset.getDate(8));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		return r;
+	}
+
+	public int updateReview(Connection conn, String content, String point, int rno) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String query = "UPDATE REVIEW SET REVIEW_CONTENT = ? , POINT = ? WHERE REVIEW_NO = ?";
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, content);
+			pstmt.setString(2, point);
+			pstmt.setInt(3, rno);
+			result = pstmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
 	}
 
 }

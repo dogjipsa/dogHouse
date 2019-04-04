@@ -32,9 +32,11 @@ public class BookingInsertServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		System.out.println(request.getParameter("datetimes"));
+		System.out.println(request.getParameter("mypet"));
 		
 		String[] petStr = request.getParameter("mypet").split(" ");
-		String[] priceArr = request.getParameter("priceSum").split(" ");
+		
 		//혹시라도 이름을 같게 할 사람들을 위해 펫을 구별하기 위해 뷰에서 이름, 성별, 견종 펫정보 넘겨받음
 		Pet pet = new Pet();
 		pet.setPetName(petStr[0]);
@@ -49,8 +51,8 @@ public class BookingInsertServlet extends HttpServlet {
 		String petSitterId = request.getParameter("petSitterId");
 		String userId = request.getParameter("userId");
 		String etc = request.getParameter("etc");
-		String service = request.getParameter("servicekind");
-		int priceSum = Integer.parseInt(priceArr[0]);
+		String service = request.getParameter("service");
+		String priceSum = request.getParameter("priceSum");
 		
 		//***신청하는 사람이 checkin checkout 가 사이에 날짜에 booking이 있다면 예약 신청 못하게 해야 함.
 		
@@ -58,7 +60,6 @@ public class BookingInsertServlet extends HttpServlet {
 		booking.setServiceKind(service);
 		booking.setPuserId(petSitterId);
 		booking.setUserId(userId);
-		booking.setPrice(priceSum);
 		//가격도 set해서 넘겨야 함 booking.setprice
 		
 		
@@ -72,6 +73,7 @@ public class BookingInsertServlet extends HttpServlet {
 		
 		//2. 결제 직전 페이지에 booking내용을 조회하기 위해 booking테이블에서 booking_no를 select(이 booking_no를 bpselect로 넘겨줌)
 		int bookingNo = bkservice.selectBookingNo(checkin,checkout,petSitterId,userId);
+		System.out.println("예약번호조회 : " + bookingNo);
 		
 		
 		

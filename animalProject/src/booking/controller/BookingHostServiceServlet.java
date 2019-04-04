@@ -66,22 +66,25 @@ public class BookingHostServiceServlet extends HttpServlet {
 		if(list.size() > 0) {
 			JSONObject sendJSON = new JSONObject();
 			JSONArray jar = new JSONArray();
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy'년 'MM'월 'dd'일'");
 			for(BookingForHost b : list) {
 				JSONObject job = new JSONObject();
 				job.put("bno", b.getBookingNo());
 				job.put("kind", b.getServiceKind());
 				job.put("username", URLEncoder.encode(b.getUserName(),"utf-8"));
-				job.put("indate", b.getCheckInDate());
-				job.put("outdate", b.getCheckOutDate());
+				String indate = sdf.format(b.getCheckInDate());
+				String outdate = sdf.format(b.getCheckOutDate());
+				job.put("indate", indate);
+				job.put("outdate", outdate);
 				job.put("pno", b.getPetNo());
 				int price = b.getPrice();
-				/*if(b.getServiceKind().equals("0") || b.getServiceKind().equals("2")) {
+				if(b.getServiceKind().equals("0") || b.getServiceKind().equals("2")) {
 					price *= 0.8; // 당일 상품 20% 낮은 가격
 				} else {
 					price = (int) ((b.getCheckOutDate().getTime() - b.getCheckInDate().getTime())/(1000*60*60*24)) * b.getPrice();
 				}
 				price = (int) Math.floor(price/1000) * 1000; // 천단위 절사
-*/				job.put("price", price);
+				job.put("price", price);
 				job.put("pg",b.getProgress());
 				if(b.getEtc() != null) {
 					job.put("etc", URLEncoder.encode(b.getEtc(), "utf-8"));

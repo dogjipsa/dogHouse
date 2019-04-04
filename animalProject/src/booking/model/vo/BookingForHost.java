@@ -12,8 +12,8 @@ public class BookingForHost implements Serializable{
 	private int bookingNo;
 	private String serviceKind;
 	private String userName;
-	private String checkInDate;
-	private String checkOutDate;
+	private Date checkInDate;
+	private Date checkOutDate;
 	private int price;
 	private String progress;
 	private String etc;
@@ -24,7 +24,7 @@ public class BookingForHost implements Serializable{
 	public BookingForHost() {
 	}
 
-	public BookingForHost(int bookingNo, String serviceKind, String userName, String checkInDate, String checkOutDate,
+	public BookingForHost(int bookingNo, String serviceKind, String userName, Date checkInDate, Date checkOutDate,
 			int price, String progress, String etc, int petNo, String address, String userid) {
 		super();
 		this.bookingNo = bookingNo;
@@ -64,19 +64,19 @@ public class BookingForHost implements Serializable{
 		this.userName = userName;
 	}
 
-	public String getCheckInDate() {
+	public Date getCheckInDate() {
 		return checkInDate;
 	}
 
-	public void setCheckInDate(String checkInDate) {
+	public void setCheckInDate(Date checkInDate) {
 		this.checkInDate = checkInDate;
 	}
 
-	public String getCheckOutDate() {
+	public Date getCheckOutDate() {
 		return checkOutDate;
 	}
 
-	public void setCheckOutDate(String checkOutDate) {
+	public void setCheckOutDate(Date checkOutDate) {
 		this.checkOutDate = checkOutDate;
 	}
 
