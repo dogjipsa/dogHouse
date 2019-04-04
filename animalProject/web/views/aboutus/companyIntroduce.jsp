@@ -93,8 +93,7 @@
   <div class="hero-text">
     <h1 style="font-size:50px">We are DogHouse</h1>
     <p>도그하우스는 1:1 매칭 서비스를 통해 반려인과 반려견에게 양질의 펫시팅 서비스를 제공합니다.</p>
-    <button onclick="location.href='/doggybeta/views/member/termsOfService.jsp'">(로그인전이라면)회원가입하기</button>
-    <button onclick="location.href='/doggybeta/views/member/termsOfService.jsp'">(로그인했다면)펫시터찾기</button>
+    <button onclick="location.href='/doggybeta/views/member/termsOfService.jsp'">회원가입하기</button>
   </div>
 </div>
 

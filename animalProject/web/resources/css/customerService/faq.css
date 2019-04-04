@@ -1,0 +1,26 @@
+#faq_wrap{
+    height:100%;
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    grid-template-rows: 1fr 4fr;
+    background-color: #fafafc;
+    grid-gap: 10px;
+    margin-left: 200px;
+    background-image: url('/doggybeta/resources/images/faq-h-back.jpg');
+    position: absolute;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+
+#header__background{
+    position: absolute;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+
+#faq_wrap aside {
+    grid-row: span 2;
+    border: 1px solid red;
+}
