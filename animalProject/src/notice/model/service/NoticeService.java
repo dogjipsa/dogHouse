@@ -66,9 +66,9 @@ public class NoticeService {
 		
 	}
 
-	public ArrayList<Notice> selectSearch(HashMap<String, Object> map) {
+	public ArrayList<Notice> selectSearch(HashMap<String, Object> listOpt) {
 		Connection conn = getConnection();
-		ArrayList<Notice> list = ndao.selectSearch(conn, map);
+		ArrayList<Notice> list = ndao.selectSearch(conn, listOpt);
 		close(conn);
 		return list;
 	}

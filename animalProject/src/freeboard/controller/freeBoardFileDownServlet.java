@@ -4,6 +4,8 @@ import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.net.URLEncoder;
+
 import javax.servlet.ServletException;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.annotation.WebServlet;
@@ -43,15 +45,14 @@ public class freeBoardFileDownServlet extends HttpServlet {
 
 		// 3. 웹프로젝트 내의 저장폴더 지정
 		String readFolder = request.getSession().getServletContext().getRealPath("/files/freeBoard");
-		System.out.println("리드폴더 : " + readFolder);
-		
+		System.out.println("리드폴더더더더더 : " + readFolder);
 		
 		// 4. 클라이언트로 내보낼 출력 스트림 생성
 		ServletOutputStream downOut = response.getOutputStream();
 
 		// 5. 다운로드에 사용될 파일 객체 생성
 		File downFile = new File(readFolder + "/" + renameFileName);
-
+		System.out.println("다운파일일일일ㅇ : " + downFile);
 		// 6. 파일 다운로드에 대한 컨텐츠 타입 지정
 		response.setContentType("text/plain; charset=utf-8");
 		// 원본파일명에 한글 인코딩 처리
@@ -64,7 +65,7 @@ public class freeBoardFileDownServlet extends HttpServlet {
 
 		int read = -1;
 		while ((read = bin.read()) != -1) {
-			downOut.write(read);
+			downOut.print(read);
 			downOut.flush();
 		}
 
