@@ -8,6 +8,8 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import freeboard.model.vo.FreeBoard;
+
 import static common.JDBCTemplate.*;
 
 import notice.model.vo.Notice;
@@ -15,39 +17,6 @@ import notice.model.vo.Notice;
 public class NoticeDao {
 	public NoticeDao() {}
 	
-	public ArrayList<Notice> selectList(Connection conn) {
-		ArrayList<Notice> list = new ArrayList<Notice>();
-		
-		Statement stmt = null;
-		ResultSet rset = null;
-		
-		String query = "select * from notice order by notice_no desc";
-		
-		try {
-			stmt = conn.createStatement();
-			rset = stmt.executeQuery(query);
-			while(rset.next()) {
-				Notice notice = new Notice();
-				//번호제목이름조회수날짜첨부파일
-				notice.setNoticeNo(rset.getInt("notice_no"));
-				notice.setNoticeTitle(rset.getString("notice_title"));
-				notice.setManagerId(rset.getString("manager_id"));
-				notice.setNoticeViews(rset.getInt("notice_views"));
-				notice.setNoticeDate(rset.getDate("notice_date"));
-				notice.setNoticeOriginFile(rset.getString("notice_originfile"));
-				notice.setNoticeReFile(rset.getString("notice_refile"));
-				list.add(notice);
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			close(rset);
-			close(stmt);
-			
-		}
-		return list;
-	}
-
 	public int insertNotice(Connection conn, Notice notice) {
 		int result = 0;
 		PreparedStatement pstmt = null;
@@ -188,7 +157,11 @@ public class NoticeDao {
 		String query = null;
 		
 		try {
-			if(opt.equals("0")) {//제목 검색
+			if(opt == null) {
+				query = "select * from notice order by notice_date desc";
+				pstmt = conn.prepareStatement(query);
+				
+			}else if(opt.equals("0")) {//제목 검색
 				query = "select * from notice where notice_title like ? order by notice_date desc";
 				pstmt = conn.prepareStatement(query);
 				pstmt.setString(1, "%" + search + "%");
@@ -228,5 +201,75 @@ public class NoticeDao {
 		}
 		return list;
 	}
+
+	
+	public int getListCount(Connection conn, HashMap<String, Object> listOpt) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String opt = (String)listOpt.get("opt");
+		String inputdata = (String)listOpt.get("inputdata");
+		int listCount = 1;
 		
+		if(opt == null) {
+		
+		String query = "select count(*) from notice";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				listCount = rset.getInt(1);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		}else if(opt.equals("0")) {
+			
+			String query = "select count(*) from notice where notice_title like ?";
+			
+			try {
+				pstmt = conn.prepareStatement(query);
+				pstmt.setString(1, "%" + inputdata + "%");
+				
+				rset = pstmt.executeQuery();
+				
+				if(rset.next()) {
+					listCount = rset.getInt(1);
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}finally {
+				close(rset);
+				close(pstmt);
+			}
+			
+			
+		}else if(opt.equals("1")) {
+			
+			String query = "select count(*) from notice where notice_content like ?";
+			
+			try {
+				pstmt = conn.prepareStatement(query);
+				pstmt.setString(1, "%" + inputdata + "%");
+				
+				rset = pstmt.executeQuery();
+				
+				if(rset.next()) {
+					listCount = rset.getInt(1);
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}finally {
+				close(rset);
+				close(pstmt);
+			}		
+		
+	}
+	return listCount;
+}
 }

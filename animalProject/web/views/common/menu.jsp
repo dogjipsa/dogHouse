@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8" errorPage='memberError.jsp'%>
+	pageEncoding="UTF-8"%>
 <%@ page import="java.net.URLEncoder" %>
 <%@ page import="java.security.SecureRandom" %>
 <%@ page import="java.math.BigInteger" %>
@@ -28,6 +28,8 @@
 	<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
 	<script type="text/javascript" src="https://static.nid.naver.com/js/naveridlogin_js_sdk_2.0.0.js"
 		charset="utf-8"></script>
+		<script src="/doggybeta/resources/js/jquery.star-rating-svg.js"></script>
+<link rel="stylesheet" type="text/css" href="/doggybeta/resources/css/star-rating-svg.css">
 	<script type="text/javascript">
 		$(function () {
 			$('.loginbody').hide();
