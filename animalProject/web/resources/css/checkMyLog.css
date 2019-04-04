@@ -452,7 +452,9 @@
     display: flex;
     flex-direction: column;
 }
-#pet_up_form input{
+
+#pet_up_form input, #pet_up_form textarea[name="etc"]{
+
     border: none;
     border-bottom: 1px solid rgba(0, 0, 0, 0.3);
     background: transparent;
