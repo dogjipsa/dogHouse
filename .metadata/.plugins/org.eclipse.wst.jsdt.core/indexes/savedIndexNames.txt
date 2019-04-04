@@ -1,4 +1,0 @@
-INDEX VERSION 1.4+D:\semiWorkSpace\dogHouse\.metadata\.plugins\org.eclipse.wst.jsdt.core\indexes
-2761474603.index
-3590142904.index
-1895673560.index

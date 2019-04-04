@@ -1,4 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<session version="1.0">
-<refactoring comment="Rename resource &apos;animalProject/web/views/freeBoard/boardUpdateView.jsp&apos; to &apos;freeBoardUpdateView.jsp&apos;" description="Rename resource &apos;boardUpdateView.jsp&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="web/views/freeBoard/boardUpdateView.jsp" name="freeBoardUpdateView.jsp" stamp="1553237003873" updateReferences="true"/>
-</session>

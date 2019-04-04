@@ -1,4 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<session version="1.0">
-<refactoring comment="Rename resource &apos;animalProject/src/manager/controller/ManagerOriginUpdateServlet.java&apos; to &apos;ManagerNoticeOriginUpdateServlet.java&apos;" description="Rename resource &apos;ManagerOriginUpdateServlet.java&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="src/manager/controller/ManagerOriginUpdateServlet.java" name="ManagerNoticeOriginUpdateServlet.java" stamp="1554304905477" updateReferences="true"/>
-</session>
