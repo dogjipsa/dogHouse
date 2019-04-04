@@ -28,6 +28,10 @@
 <link href="/doggybeta/resources/css/manager/managerBoardList.css" rel="stylesheet" type="text/css">
 <script type="text/javascript" src="/doggybeta/resources/js/jquery-3.3.1.min.js"></script>
 <script type="text/javascript">
+function showWriteForm(){
+		location.href = "/doggybeta/views/manager/managerNoticeWriteForm.jsp";
+}
+
 $(function(){
     //최상단 체크박스 클릭
     $("#checkAll").click(function(){
@@ -50,26 +54,46 @@ $(function(){
     		chkBoxArray.push($(this).val());
     	});
     	
-    	console.log(chkBoxArray);
-    	alert(chkBoxArray);
+
     	if(confirm('정말 강퇴하시겠습니까?')) {
     		$.ajax({
-    			url: '/doggybeta/manmdelete',
+    			url: '/doggybeta/mnsdelete',
     			datatype: 'text',
     			data: { delNo: chkBoxArray },
     			type: 'post',
     			cache: false,
     			success: function(data) {
-    				chageVal(data);
-    				alert('강퇴하였습니다!');
+    				cBox.html(data);
+    				/* chageVal(data); */
+    				refreshMemList();
+    				alert('변경이 완료되었습니다!');
     			} //success
     		});//ajax
     		/* document.location.reload(); */
         } //if confirm
     }); //delete click
-    
+    	
+  
 });
+function refreshMemList(){
+	location.reload();
+}
 </script>
+
+<style type="text/css">
+
+.fbutton{
+   position: relative;
+   left : 1000px;
+   width: 60%;
+   border-collapse: collapse;
+   text-align: left;
+   line-height: 1.5;
+   table-layout:fixed;  
+
+}
+    
+</style>
 <body>
 <%@ include file="../../views/common/managerMenu.jsp" %>
 <section>
@@ -79,24 +103,26 @@ $(function(){
 		<table class='t' style="text-align:center; border:1px solid #dddddd"> 
 			<thead>
 				<tr>
-					<th style="background-color: #eeeeee; text-align: center;">삭제여부</th>
+					<th style="background-color: #eeeeee; text-align: center;">삭제</th>
 					<th style="background-color: #eeeeee; text-align: center;">글번호</th>
 					<th style="background-color: #eeeeee; text-align: center;">제목</th>
 					<th style="background-color: #eeeeee; text-align: center;">작성일</th>
 					<th style="background-color: #eeeeee; text-align: center;">첨부파일</th>
 					<th style="background-color: #eeeeee; text-align: center;">조회수</th>
+					<th style="background-color: #eeeeee; text-align: center;">삭제여부</th>
 				</tr>
 			</thead>
 			<% for(Notice n : noticeList) { %>
 			
 			<tbody>
 				<tr>
-					<td class='firstTd'><input type='checkbox' class='checkDel' value='<%= n.getNoticeNo() %>' name='delNo'/>강퇴</td>
+					<td class='firstTd'><input type='checkbox' class='checkDel' value='<%= n.getNoticeNo() %>' name='delNo'/>삭제</td>
 					<td><%= n.getNoticeNo() %>
 					<td><a href="/doggybeta/manndetail?nnum=<%= n.getNoticeNo() %>"><%= n.getNoticeTitle() %></a></td>
 					<td><%= n.getNoticeDate() %></td>
 					<td><%= n.getNoticeOriginFile() %></td>
 					<td><%= n.getNoticeViews() %></td>
+					<td><%= n.getNoticeDelete() %></td>
 				</tr>
 			</tbody>
 			<% } %> <%-- for each --%>
@@ -113,6 +139,12 @@ $(function(){
  <input type="submit" value ="검색"/>
 </form>
 </div>
+
+<%-- 글쓰기 --%>
+<div class="fbutton" style="align:right; text-align:center;">
+<button class="wbutton" type="button" onclick="showWriteForm();">공지글쓰기</button>
+</div>
+
 
 <%-- 페이징처리 --%>
 <div class="mnpage" style="text-align:center;">
@@ -157,11 +189,11 @@ $(function(){
 <%  } %>
 <% } %>
 </div> 	  
-
+</div>
 	<div>
 		<input type="checkbox" id="checkAll" class='styled-checkbox'/>전체선택
 		<input type='button' id='del' value='삭제하기'/></div>
 	</div>
-
+</section>
 </body>
 </html>
