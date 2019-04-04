@@ -13,13 +13,6 @@ public class NoticeService {
 	private NoticeDao ndao = new NoticeDao();
 	
 	public NoticeService() {}
-	
-	public ArrayList<Notice> selectList() {
-		Connection conn = getConnection();
-		ArrayList<Notice> list = ndao.selectList(conn);
-		close(conn);
-		return list;
-	}
 
 	public int insertNotice(Notice notice) {
 		Connection conn = getConnection();
@@ -73,25 +66,18 @@ public class NoticeService {
 		
 	}
 
-/*	public ArrayList<Notice> selectSearchTitle(String noticeTitle) {
-		Connection conn = getConnection();
-		ArrayList<Notice> list = ndao.selectSearchTitle(conn, noticeTitle);
-		close(conn);
-		return list;
-	}
-
-	public ArrayList<Notice> selectSearchDate(Date beginDate, Date endDate) {
-		Connection conn = getConnection();
-		ArrayList<Notice> list = ndao.selectSearchDate(conn, beginDate, endDate);
-		close(conn);
-		return list;
-	}
-*/
 	public ArrayList<Notice> selectSearch(HashMap<String, Object> map) {
 		Connection conn = getConnection();
 		ArrayList<Notice> list = ndao.selectSearch(conn, map);
 		close(conn);
 		return list;
+	}
+
+	public int getListCount(HashMap<String, Object> listOpt) {
+		Connection conn = getConnection();
+		int listCount = ndao.getListCount(conn, listOpt);
+		close(conn);
+		return listCount;
 	}
 
 }

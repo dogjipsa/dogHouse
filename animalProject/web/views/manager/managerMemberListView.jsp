@@ -50,9 +50,6 @@ $(function(){
     	$('input[name=delId]:checked').each(function(i){
     		chkBoxArray.push($(this).val());
     	});
-    	
-    	console.log(chkBoxArray);
-    	alert(chkBoxArray);
     	if(confirm('정말 강퇴하시겠습니까?')) {
     		$.ajax({
     			url: '/doggybeta/manmdelete',
@@ -61,8 +58,10 @@ $(function(){
     			type: 'post',
     			cache: false,
     			success: function(data) {
-    				chageVal(data);
-    				alert('강퇴하였습니다!');
+    				cBox.html(data);
+    				/* chageVal(data); */
+    				refreshMemList();
+    				alert('강퇴가 완료되었습니다!');  
     			} //success
     		});//ajax
     		/* document.location.reload(); */
@@ -70,6 +69,9 @@ $(function(){
     }); //delete click
     
 });
+function refreshMemList(){
+	location.reload();
+}
 </script>
 </head>
 <body>
