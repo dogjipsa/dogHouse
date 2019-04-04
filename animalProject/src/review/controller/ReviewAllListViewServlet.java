@@ -42,7 +42,7 @@ public class ReviewAllListViewServlet extends HttpServlet {
 		ReviewService rservice = new ReviewService();
 		int limit = 10;
 		int listCount = rservice.getListCount(petSitterId);
-		System.out.println("리뷰조회를 위한 listCount : " + listCount);
+
 		int maxPage = (int)((double)listCount / limit + 0.9);
 		
 		int startPage = (((int)((double)currentPage / limit + 0.9)) - 1)* limit + 1;
@@ -50,7 +50,8 @@ public class ReviewAllListViewServlet extends HttpServlet {
 		if(maxPage < endPage) {
 			endPage = maxPage;
 		}
-		ArrayList<Review> list = rservice.selectList(currentPage, limit);
+
+		ArrayList<Review> list = rservice.selectList(currentPage, limit, petSitterId);
 		response.setContentType("text/html; charset=utf-8");
 		RequestDispatcher view = null;
 		if(list.size() >= 0) {//size가 0이어도 조회되어야한다고 생각함 else 삭제해야 할듯

@@ -39,7 +39,7 @@ public class ReviewDao {
 		return listCount;
 	}
 
-	public ArrayList<Review> selectList(Connection conn, int currentPage, int limit) {
+	public ArrayList<Review> selectList(Connection conn, int currentPage, int limit, String petSitterId) {
 		ArrayList<Review> list = new ArrayList<Review>();
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
@@ -49,15 +49,16 @@ public class ReviewDao {
 		int endRow = startRow + limit - 1;
 		
 		String query = "SELECT *  FROM (SELECT ROWNUM RNUM,  REVIEW_NO,USER_ID,BOOKING_NO,POINT,REVIEW_CONTENT,REVIEW_ORIGINFILE,REVIEW_REFILE,review_date " + 
-				"				FROM (SELECT * FROM REVIEW order by REVIEW_NO desc)) " + 
+				"				FROM (SELECT * FROM REVIEW where booking_no in (select booking_no from booking where puser_id = ?) order by REVIEW_NO desc)) " + 
 				"				WHERE RNUM >= ? AND RNUM <= ? ";
 		
 		try {
 			
 				
 				pstmt = conn.prepareStatement(query);
-				pstmt.setInt(1, startRow);
-				pstmt.setInt(2, endRow);
+				pstmt.setString(1, petSitterId);
+				pstmt.setInt(2, startRow);
+				pstmt.setInt(3, endRow);
 				rset = pstmt.executeQuery();
 				while(rset.next()) {
 					Review review = new Review();
@@ -154,7 +155,6 @@ public class ReviewDao {
 			if(rset.next()) {
 				starAvg = rset.getDouble(1);
 			}
-			System.out.println(petSitterId + " : " + starAvg);
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {

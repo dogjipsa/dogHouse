@@ -12,7 +12,6 @@
 	int maxPage = ((Integer)request.getAttribute("maxPage")).intValue();
 	int currentPage = ((Integer)request.getAttribute("currentPage")).intValue();
 	
-	System.out.println("qList view : " + list);
 %>	    
 <!DOCTYPE html>
 <html>
@@ -31,7 +30,7 @@
 	<table style="text-align:center; border:1px; solid #dddddd">
 		<thead>
 		<tr>
-			<th style="background-color:#eeeee; text-align:left; color:navy;">제목</th>
+			<th style="background-color:#eeeee; text-align:center; color:navy;">제목</th>
 			<th style="background-color:#eeeee; text-align:center; color:navy;">날짜 </th>
 			<th style="background-color:#eeeee; text-align:right; color:navy;">답변유무</th>
 		</tr>

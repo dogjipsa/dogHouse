@@ -58,22 +58,23 @@ public class RatingOnFindSitterListServlet extends HttpServlet {
 				double[] rating = new double[sitterId.length];
 		
 
-				count[x] = new ReviewService().getStarCount(petSitterId); //펫시터별 후기 개수
-				rating[x] = new ReviewService().selectStarAvg(petSitterId); //펫시터별 후기 평점
-				
-				System.out.println("count : " + count[x]);
-				System.out.println("Rating : " + rating[x]);
-				
-				job.put("count", count[x]);
-				job.put("rating", rating[x]);
-				System.out.println("확인1 : " + job.toJSONString()); //배열에 덮어씌여짐
-				
-				jsonArr.add(job);
-				
-				System.out.println("확인2 : " + jsonArr.toJSONString());
-			}// for문 끝	
 
-			
+		if (sitterId.length != 0) {
+			int[] count = new int[sitterId.length];
+			double[] rating = new double[sitterId.length];
+
+			for (int y = 0; y < sitterId.length; y++) {
+				// System.out.println("아이디 확인 : " + sitterId[y]);
+				count = new int[sitterId.length];
+				rating = new double[sitterId.length];
+
+				count[y] = new ReviewService().getStarCount(sitterId[y]); // 펫시터별 후기 개수
+				rating[y] = new ReviewService().selectStarAvg(sitterId[y]); // 펫시터별 후기 평점
+
+				job.put("count"+y, count[y]);
+				job.put("rating"+y, rating[y]);
+				System.out.println(sitterId[y] + "님의 count : " + count[y]);
+				System.out.println(sitterId[y] + "님의 Rating : " + rating[y]);	
 
 			sendJson.put("list", jsonArr);
 			System.out.println("최종 job : " + sendJson.toJSONString()); 

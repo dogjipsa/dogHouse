@@ -127,29 +127,13 @@ input[type=submit]:hover {
 </div> -->
 <script src="/doggybeta/resources/js/jquery-3.3.1.min.js"></script>
 <script src="/doggybeta/resources/js/star.js"></script>
-<script language="javascript">  
-  
-     function closeWindow() {  
-    	/* console.log($("input[name=star-input]").val(); */
-       	//setTimeout(function(){  }, 3000);  
-       	
-     alert('후기작성이 완료되었습니다');
-   // window.close(); 
-    	
-       	 /* setTimeout(function () { 
-       		alert('후기작성이 완료되었습니다');
-       			window.close();
-       		}, 3000);  */
-       //	window.close();
-     }   
 
-     
-</script>  
 
 <!-- <a href="#" onClick="javascript:window.close();">닫기</a> -->  
 <div class="container">
   <%System.out.println("뷰단에서 bookingNo 가져오는지 : " + bookingNo); %>
-  <form action="/doggybeta/rinsert">
+
+  <form action="/doggybeta/rinsert" id="form" onsubmit="return closeWindow();">
   <input type="hidden" name="userid" value="<%=loginUser.getUserId()%>">
   <input type="hidden" name="bookingno" value="<%=bookingNo%>">
   <h3 align="center">후기작성</h3>
@@ -176,33 +160,64 @@ input[type=submit]:hover {
     <div class="col-75">
       <span class="star-input">
 	<span class="input">
-    	<input type="radio" name="star-input" value="1" id="p1">
+    	<input type="radio" name="star-input" value="1" onclick="starValue(1);" id="p1">
     	<label for="p1">1</label>
-    	<input type="radio" name="star-input" value="2" id="p2">
+    	<input type="radio" name="star-input" value="2" onclick="starValue(2);"  id="p2">
     	<label for="p2">2</label>
-    	<input type="radio" name="star-input" value="3" id="p3">
+    	<input type="radio" name="star-input" value="3"  onclick="starValue(3);" id="p3">
     	<label for="p3">3</label>
-    	<input type="radio" name="star-input" value="4" id="p4">
+    	<input type="radio" name="star-input" value="4"  onclick="starValue(4);" id="p4">
     	<label for="p4">4</label>
-    	<input type="radio" name="star-input" value="5" id="p5">
+    	<input type="radio" name="star-input" value="5"  onclick="starValue(5);" id="p5">
     	<label for="p5">5</label>
   	</span>
   	<output for="star-input"></output>						
 </span>
+<input type="hidden" id="starcheck">
     </div>
   </div>
   <div class="row">
     <div class="col-25">
-      <label for="subject">후기 작성</label>
+      <label for="subject">후기 작성(200자 제한)</label>
     </div>
     <div class="col-75">
-      <textarea id="reviewcontent" class="DOC_TEXT" name="reviewcontent" placeholder="후기작성.." style="height:200px"></textarea>
+      <textarea id="reviewcontent" class="DOC_TEXT" name="reviewcontent" placeholder="후기작성..(200자 제한)" style="height:200px"></textarea>
     </div>
   </div>
   <div class="row">
-    <input type="submit" value="작성하기" onclick="closeWindow();">
+
+    <input type="submit" value="작성하기" id="submit">
   </div>
   </form>
 </div>
+<script language="javascript">  
+  	 function starValue(data){
+  		$("#starcheck").val(data);
+  	 }
+     function closeWindow() {
+   		if($("#starcheck").val() == null || $("#starcheck").val() == ''){
+   			alert('별점 입력(클릭)하세요.');
+   			return false;
+   		}
+   		else if($("#reviewcontent").val() == null || $("#reviewcontent").val() == ''){
+   			alert("내용을 입력해주세요. ");
+			return false;
+   		}
+   		else{
+	       	opener.parent.location.reload();
+	     	alert('후기작성이 완료되었습니다');
+	     	return true;
+	   	}     
+     }   
+     $(document).ready(function() {//textarea 200자 제한
+    	    $('#reviewcontent').on('keyup', function() {
+    	        if($(this).val().length > 200) {
+    	            $(this).val($(this).val().substring(0, 200));
+    	        }
+    	    });
+    });
+
+     
+</script>  
 </body>
 </html>
