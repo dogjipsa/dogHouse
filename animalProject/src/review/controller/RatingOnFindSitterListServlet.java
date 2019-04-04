@@ -3,6 +3,10 @@ package review.controller;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -57,6 +61,7 @@ public class RatingOnFindSitterListServlet extends HttpServlet {
 
 				count[y] = new ReviewService().getStarCount(sitterId[y]); // 펫시터별 후기 개수
 				rating[y] = new ReviewService().selectStarAvg(sitterId[y]); // 펫시터별 후기 평점
+
 
 				job.put("count"+y, count[y]);
 				job.put("rating"+y, rating[y]);

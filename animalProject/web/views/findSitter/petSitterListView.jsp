@@ -55,6 +55,7 @@
 				$("#rating").append(data[(2*index-index)-1]) + "<br>";
 				 /* $("#count").append(data[index]); */
 				});
+
 			}
 		});
 		 
