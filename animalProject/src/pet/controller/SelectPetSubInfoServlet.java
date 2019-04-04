@@ -41,14 +41,14 @@ public class SelectPetSubInfoServlet extends HttpServlet {
 		String userid = request.getParameter("userid");
 		int pno = Integer.parseInt(request.getParameter("pno"));
 		SubInfo sub = new PetService().selectOnePet(userid, pno);
+		Date sbirth = sub.getPetDate();
+		Calendar c = Calendar.getInstance();
+		c.setTime(sbirth);
+		int year = c.get(Calendar.YEAR);
+		int month = c.get(Calendar.MONTH) + 1;
+		int day = c.get(Calendar.DAY_OF_MONTH);
+		int age = getAge(year, month, day);
 		if (sub != null) {
-			Date sbirth = sub.getPetDate();
-			Calendar c = Calendar.getInstance();
-			c.setTime(sbirth);
-			int year = c.get(Calendar.YEAR);
-			int month = c.get(Calendar.MONTH) + 1;
-			int day = c.get(Calendar.DAY_OF_MONTH);
-			int age = getAge(year, month, day);
 			JSONObject j = new JSONObject();
 			j.put("pname", URLEncoder.encode(sub.getPetName(), "utf-8"));
 			j.put("age", age);

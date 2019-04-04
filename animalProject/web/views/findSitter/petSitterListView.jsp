@@ -38,7 +38,6 @@
 			/* alert($(this).val()); */
 			arr[index] = $(this).val();
 		});
-		//alert(arr);
 	 var jsonData = JSON.stringify(arr);
 	 jQuery.ajaxSettings.traditional = true;
 	 console.log(arr);
@@ -50,13 +49,13 @@
 			data : {petsitterid : arr},
 			url : '/doggybeta/ronlist',
 			success:function(data){
-				var jsonStr = JSON.stringify(data);
-				var json = JSON.parse(jsonStr);
-				$.each(data.count, function(i){
-					console.log("제이슨 : "+data.count[i]);
+				$.each(data, function(index){
+					console.log(data.count+index);
+					console.log(data.rating+index);
+				$("#rating").append(data[(2*index-index)-1]) + "<br>";
+				 /* $("#count").append(data[index]); */
 				});
-				
-				
+
 			}
 		});
 		 
@@ -243,7 +242,8 @@ font-size: 12px;
          <tr><td><%=m.getUserName() %>에게 서비스를 신청해보세요!</td></tr>
          <tr><td><%=m.getAddress() %></td></tr>
          <tr><td>가격 : <%=m.getPrice() %>/1일 </td></tr>
-         <tr><td id=rating>평점 : </td></tr>         
+         <tr><td id="rating">평점 : </td></tr>   
+         <tr><td id="count">후기 : </td></tr>      
 		</table>
 		
 		</div>

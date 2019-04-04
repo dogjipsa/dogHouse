@@ -49,72 +49,33 @@ public class RatingOnFindSitterListServlet extends HttpServlet {
 		JSONObject sendJson = new JSONObject();
 		JSONArray jsonArr = new JSONArray();
 		PrintWriter out = response.getWriter();
-		
 
-		JSONObject j = new JSONObject();
-		if(sitterId != null) {
-			
-			ArrayList<Integer> iList = new ArrayList<> ();
-			Integer[] count = new Integer[sitterId.length];
-		if(sitterId.length > 0){
-			for(int x=0; x<sitterId.length;x++){
-				
-				System.out.println("아이디 확인 : " + sitterId[x]);
-				/*petSitterId = sitterId[x];*/
-				System.out.println("아이디확인 : " + petSitterId);
-				
-				
-				double[] rating = new double[sitterId.length];
-		
+		if (sitterId.length != 0) {
+			int[] count = new int[sitterId.length];
+			double[] rating = new double[sitterId.length];
 
-				count[x] = new ReviewService().getStarCount(sitterId[x]); //펫시터별 후기 개수
-				iList.toArray(count);
-				rating[x] = new ReviewService().selectStarAvg(sitterId[x]); //펫시터별 후기 평점
-				
-				System.out.println("count : ["+x+"]" + count[x]);
-				System.out.println("Rating : ["+x+"]" + rating[x]);
-				
-				//job.put("count", count);
-				/*job.put("rating"+x, rating[x]);*/
-				System.out.println("확인1 : " + job.toJSONString()); //배열에 덮어씌여짐
-				
-				/*jsonArr.add(job);*/
-				/*jsonArr.add(job);
-				
-				System.out.println("확인2 : " + jsonArr.toJSONString());*/
-			}// for문 끝
-			for(Integer i : iList) {
-				job.put("count", i);
+			for (int y = 0; y < sitterId.length; y++) {
+				// System.out.println("아이디 확인 : " + sitterId[y]);
+				count = new int[sitterId.length];
+				rating = new double[sitterId.length];
+
+				count[y] = new ReviewService().getStarCount(sitterId[y]); // 펫시터별 후기 개수
+				rating[y] = new ReviewService().selectStarAvg(sitterId[y]); // 펫시터별 후기 평점
+
+
+				job.put("count"+y, count[y]);
+				job.put("rating"+y, rating[y]);
+				System.out.println(sitterId[y] + "님의 count : " + count[y]);
+				System.out.println(sitterId[y] + "님의 Rating : " + rating[y]);	
+
 			}
-			/*JSONObject jo = new JSONObject();
-			Map<String, Integer> attributes = new HashMap<String, Integer>();
-			Set<Entry<String, Integer>> entrySet = job.entrySet();
-			for(Map.Entry<String,Integer> entry : entrySet){
-				attributes.put(entry.getKey(), entry.getValue());
-				System.out.println("엔트리셋맵 : " + entry.getKey());
-				System.out.println("엔트리셋맵1: "+ entry.getValue());
-
-				jo.put(entry.getKey(), entry.getValue());
-			}*/
-			
-			
-
-			/*sendJson.put("list", jsonArr);*/
-			System.out.println("최종 job : " + job.toJSONString()); 
-			out.println(job.toJSONString());	
-			}		
+			System.out.println("확인2 : " + job.toJSONString()); // 배열에 덮어씌여짐
+			out.println(job.toJSONString());
 		}
-		
-		
-
-		//job.put("count", String.valueOf(count[]));
-		//job.put("avg", String.valueOf(rating));
-		
-		
+				
 		//요청한 클라이언트쪽으로 json 객체 전송함
 		response.setContentType("application/json; charset=utf-8");
-		
-		/*out.println(job.toJSONString());*/
+
 		out.flush();
 		out.close();
 	}
