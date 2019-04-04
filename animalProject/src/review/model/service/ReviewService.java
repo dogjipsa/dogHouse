@@ -44,9 +44,9 @@ public class ReviewService {
 		return result;
 	}
 
-	public int deleteReview(int bno) {
+	public int deleteReview(int reviewNum) {
 		Connection conn = getConnection();
-		int result = rdao.deleteReview(conn, bno);
+		int result = rdao.deleteReview(conn, reviewNum);
 		if(result > 0)
 			commit(conn);
 		else
@@ -73,24 +73,6 @@ public class ReviewService {
 			rollback(conn);
 		close(conn);
 		return listCount;
-	}
-
-	public Review selectOneReview(int bno) {
-		Connection conn = getConnection();
-		Review r = rdao.selectOneReview(conn, bno);
-		close(conn);
-		return r;
-	}
-
-	public int updateReview(String content, String point, int rno) {
-		Connection conn = getConnection();
-		int result = rdao.updateReview(conn, content, point, rno);
-		if(result > 0)
-			commit(conn);
-		else
-			rollback(conn);
-		close(conn);
-		return result;
 	}
 
 }
