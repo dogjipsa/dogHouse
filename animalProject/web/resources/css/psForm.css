@@ -60,6 +60,7 @@
   height: 20px;
   color: #fff;
   font-size: 20px;
+  font-family: 'SDMiSaeng';
 }
 .ps_reg_form textarea {
   background: transparent;
@@ -101,6 +102,7 @@
   color: #fff;
   font-size: 20px;
   text-align: center;
+  font-family: 'SDMiSaeng';
 }
 #ppics_upload {
   display:block;
@@ -113,6 +115,7 @@
   color: #fff;
   font-size: 20px;
   text-align: center;
+  font-family: 'SDMiSaeng';
 }
 
 #ppics_upload:hover{
@@ -153,6 +156,7 @@
 	outline: none;
 	border-radius: 10px; 
 	font-size: 25px;
+	font-family: 'SDMiSaeng';
 }
 
 .ps_reg_form #submit-btn:hover{

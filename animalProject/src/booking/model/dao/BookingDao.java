@@ -20,7 +20,7 @@ public class BookingDao {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		
-		String query = "SELECT X.RNUM, X.BOOKING_NO, X.CHECKIN_DATE, X.CHECKOUT_DATE, X.BOOKING_PROGRESS, X.PUSER_ID, X.PRICE, X.ADDRESS, X.PET_NAME, X.SERVICE_KIND FROM (SELECT  ROWNUM AS RNUM, S.BOOKING_NO, S.CHECKIN_DATE, S.CHECKOUT_DATE, S.BOOKING_PROGRESS, S.PUSER_ID, S.PRICE, S.ADDRESS, S.PET_NAME, S.SERVICE_KIND FROM (SELECT B.BOOKING_NO, B.CHECKIN_DATE, B.CHECKOUT_DATE, B.BOOKING_PROGRESS, B.PUSER_ID, B.PRICE, M.ADDRESS, P.PET_NAME, B.SERVICE_KIND FROM BOOKING B JOIN MEMBER M ON (B.PUSER_ID = M.USER_ID) JOIN PET P ON (B.PET_NO = P.PET_NO) WHERE B.USER_ID = ? ORDER BY 1 DESC) S WHERE ROWNUM <= ?) X WHERE X.RNUM >= ?";
+		String query = "SELECT X.RNUM, X.BOOKING_NO, X.IND, X.OUTD, X.BOOKING_PROGRESS, X.PUSER_ID, X.PRICE, X.ADDRESS, X.PET_NAME, X.SERVICE_KIND FROM (SELECT  ROWNUM AS RNUM, S.BOOKING_NO, S.IND, S.OUTD, S.BOOKING_PROGRESS, S.PUSER_ID, S.PRICE, S.ADDRESS, S.PET_NAME, S.SERVICE_KIND FROM (SELECT B.BOOKING_NO, TO_CHAR(B.CHECKIN_DATE,'RRRR\"년\" MM\"월\" DD\"일\" HH24:MI') AS IND, TO_CHAR(B.CHECKOUT_DATE,'RRRR\"년\" MM\"월\" DD\"일\" HH24:MI') AS OUTD, B.BOOKING_PROGRESS, B.PUSER_ID, B.PRICE, M.ADDRESS, P.PET_NAME, B.SERVICE_KIND FROM BOOKING B JOIN MEMBER M ON (B.PUSER_ID = M.USER_ID) JOIN PET P ON (B.PET_NO = P.PET_NO) WHERE B.USER_ID = ? ORDER BY 1 DESC) S WHERE ROWNUM <= ?) X WHERE X.RNUM >= ?";
 		
 		
 		try {
@@ -32,8 +32,8 @@ public class BookingDao {
 			while(rset.next()) {
 				bc = new BookingCheck();
 				bc.setBookingNo(rset.getInt(2));
-				bc.setCheckInDate(rset.getDate(3));
-				bc.setCheckOutDate(rset.getDate(4));
+				bc.setCheckInDate(rset.getString(3));
+				bc.setCheckOutDate(rset.getString(4));
 				bc.setBookingProgress(rset.getString(5));
 				bc.setPuserId(rset.getString(6));
 				bc.setPrice(rset.getInt(7));
@@ -59,7 +59,7 @@ public class BookingDao {
 		ResultSet rset = null;
 		BookingForHost b = null;
 		
-		String query = "SELECT X.RNUM, X.BOOKING_NO, X.SERVICE_KIND, X.PET_NO, X.USER_NAME, X.ADDRESS, X.CHECKIN_DATE, X.CHECKOUT_DATE, X.BOOKING_PROGRESS, X.PRICE, X.BOOKING_ETC, X.USER_ID FROM (SELECT ROWNUM AS RNUM, S.BOOKING_NO, S.SERVICE_KIND, S.PET_NO, S.USER_NAME, S.ADDRESS, S.CHECKIN_DATE, S.CHECKOUT_DATE, S.BOOKING_PROGRESS, S.PRICE, S.BOOKING_ETC, S.USER_ID FROM (SELECT B.BOOKING_NO, B.SERVICE_KIND, P.PET_NO, M.USER_NAME,M.ADDRESS, B.CHECKIN_DATE, B.CHECKOUT_DATE,B.BOOKING_PROGRESS, B.PRICE, B.BOOKING_ETC, M.USER_ID FROM BOOKING B JOIN MEMBER M ON (B.USER_ID = M.USER_ID) LEFT JOIN PET P ON (M.USER_ID = P.USER_ID) WHERE PUSER_ID = ? ORDER BY 1 DESC) S WHERE ROWNUM <= ?) X WHERE X.RNUM >= ?";
+		String query = "SELECT X.RNUM, X.BOOKING_NO, X.SERVICE_KIND, X.PET_NO, X.USER_NAME, X.ADDRESS, X.IND, X.OUTD, X.BOOKING_PROGRESS, X.PRICE, X.BOOKING_ETC, X.USER_ID FROM (SELECT ROWNUM AS RNUM, S.BOOKING_NO, S.SERVICE_KIND, S.PET_NO, S.USER_NAME, S.ADDRESS, S.IND, S.OUTD, S.BOOKING_PROGRESS, S.PRICE, S.BOOKING_ETC, S.USER_ID FROM (SELECT B.BOOKING_NO, B.SERVICE_KIND, P.PET_NO, M.USER_NAME,M.ADDRESS, TO_CHAR(B.CHECKIN_DATE,'RRRR\"년\" MM\"월\" DD\"일\" HH24:MI') AS IND, TO_CHAR(B.CHECKOUT_DATE,'RRRR\"년\" MM\"월\" DD\"일\" HH24:MI') AS OUTD, B.BOOKING_PROGRESS, B.PRICE, B.BOOKING_ETC, M.USER_ID FROM BOOKING B JOIN MEMBER M ON (B.USER_ID = M.USER_ID) LEFT JOIN PET P ON (M.USER_ID = P.USER_ID) WHERE PUSER_ID = ? ORDER BY 1 DESC) S WHERE ROWNUM <= ?) X WHERE X.RNUM >= ?";
 		
 		try {
 			pstmt = conn.prepareStatement(query);
@@ -76,8 +76,8 @@ public class BookingDao {
 				b.setPetNo(rset.getInt(4));
 				b.setUserName(rset.getString(5));
 				b.setAddress(rset.getString(6));
-				b.setCheckInDate(rset.getDate(7));
-				b.setCheckOutDate(rset.getDate(8));
+				b.setCheckInDate(rset.getString(7));
+				b.setCheckOutDate(rset.getString(8));
 				b.setProgress(rset.getString(9));
 				b.setPrice(rset.getInt(10));
 				b.setEtc(rset.getString(11));
@@ -143,7 +143,7 @@ public class BookingDao {
 	public int insertBooking(Connection conn, String checkin, String checkout,Pet pet,Booking booking) {
 		int result = 0;
 		PreparedStatement pstmt = null;
-		String query = "insert into booking values(seq_bookingno.nextval, to_date(?, 'YYYY/MM/DD HH24:MI'), to_date(?, 'YYYY/MM/DD HH24:MI'), (select pet_no from pet where user_id = ? and pet_name = ? and pet_gender = ? and pet_breads = ?), ?,1,?,?,?)";
+		String query = "insert into booking values(seq_bookingno.nextval, to_date(?, 'YYYY/MM/DD HH24:MI'), to_date(?, 'YYYY/MM/DD HH24:MI'), (select pet_no from pet where user_id = ? and pet_name = ? and pet_gender = ? and pet_breads = ?), ?,1,?,?,?,?)";
 		
 		try {
 			pstmt = conn.prepareStatement(query);
@@ -157,6 +157,7 @@ public class BookingDao {
 			pstmt.setString(8, booking.getBookingEtc());
 			pstmt.setString(9, booking.getServiceKind());//serviceKind 입력 받아야 함.
 			pstmt.setString(10, booking.getPuserId());
+			pstmt.setInt(11, booking.getPrice());
 			result = pstmt.executeUpdate();
 		} catch (Exception e) {
 			e.printStackTrace();

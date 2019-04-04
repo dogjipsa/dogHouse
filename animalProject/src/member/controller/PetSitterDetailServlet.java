@@ -42,14 +42,14 @@ public class PetSitterDetailServlet extends HttpServlet {
 		response.setContentType("text/html; charset=utf-8");
 		double starAvg = new ReviewService().selectStarAvg(petSitterId);
 		System.out.println("dao에서 가져온 startAvg 값 : " + starAvg);
-		String service = request.getParameter("service");//petsitterlistview.jsp에서 넘겨받은 서비스
-		System.out.println("detail서블릿에서 서비스 : "  + service);
+		//String service = request.getParameter("service");//petsitterlistview.jsp에서 넘겨받은 서비스
+		//System.out.println("detail서블릿에서 서비스 : "  + service);
 		RequestDispatcher view = null;
 		view = request.getRequestDispatcher("views/findSitter/petSitterDetailView.jsp");
 		System.out.println(petSitter);
 		request.setAttribute("petSitter", petSitter);
 		request.setAttribute("sitterFacilityImg", sitterFacilityImg);
-		request.setAttribute("service", service);//petsitterdetail.jsp로 넘긴 후
+		//request.setAttribute("service", service);//petsitterdetail.jsp로 넘긴 후
 		request.setAttribute("starAvg", starAvg);
 		view.forward(request, response);
 		
