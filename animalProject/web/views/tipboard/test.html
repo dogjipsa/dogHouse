@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<head>
+<!-- <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+ -->
+ <link rel="stylesheet" type="text/css" href="/doggybeta/views/tipboard/jquery.datetimepicker.css" />
+<script src="/doggybeta/views/tipboard/jquery.js"></script>
+<script src="/doggybeta/views/tipboard//build/jquery.datetimepicker.full.min.js"></script>
+
+
+
+ </head>
+<body>
+<input id="datetimepicker" type="text" >
+<input id="datetimepicker2" type="text" >
+<script type="text/javascript">
+jQuery('#datetimepicker').datetimepicker({
+	 datepicker:false,
+	 format:'H:i',
+	 allowTimes:[
+	  '9:00', '10:00', '11:00', 
+	  '12:00', '13:00', '14:00', '15:00', '16:00', '17:00', '18:00', '19:00'
+	  , '20:00', '21:00'
+	 ]
+	
+});
+
+jQuery('#datetimepicker2').datetimepicker({
+	 datepicker:false,
+	 format:'H:i',
+	 allowTimes:[
+	  '9:00', '10:00', '11:00', 
+	  '12:00', '13:00', '14:00', '15:00', '16:00', '17:00', '18:00', '19:00'
+	  , '20:00', '21:00'
+	 ]
+	});
+</script>
+
+<!-- <input type="text" name="datetimes" /> -->
+
+<!-- <script>
+$(function() {
+  $('input[name="datetimes"]').daterangepicker({
+    timePicker: true,
+    startDate: moment().startOf('hour'),
+    endDate: moment().startOf('hour').add(32, 'hour'),
+    locale: {
+      format: 'M/DD hh:mm A'
+    }
+  });
+});
+</script> -->
+</body>
+</html>
