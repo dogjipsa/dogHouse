@@ -23,7 +23,6 @@ img {vertical-align: middle;}
 .slideshow-container {
   max-width: 1000px;
   position: relative;
-  top: 100px;
   margin: auto;
 }
 
@@ -116,10 +115,10 @@ img {vertical-align: middle;}
 </head>
 <body>
 <%@ include file="..//views/common/menu.jsp" %>
-   <div id="wrap">
+   <div id="wrap" >
         <div id="content">
          <!-- 내용작성  -->
-<div class="slideshow-container" style="max-width:100%">
+<div class="slideshow-container" style="max-width:100%;">
 
 <div class="mySlides fade">
   <div class="numbertext">1 / 3</div>

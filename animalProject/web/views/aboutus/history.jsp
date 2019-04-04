@@ -17,7 +17,6 @@
 
 body {
   background-color: #474e5d;
-  font-family: Helvetica, sans-serif;
 }
 
 /* The actual timeline (the vertical ruler) */
@@ -110,9 +109,9 @@ body {
   background-color: white;
   position: relative;
   border-radius: 6px;
-  font-family: 'Sunflower', 'sans-serif';
-  font-size: 13pt;
-  font-weight: 200;
+  font-family: 'Sunflower', 'sans-serif'; 
+  font-size: 13pt; 
+  font-weight: 200; 
 }
 
 /* Media queries - Responsive timeline on screens less than 600px wide */
