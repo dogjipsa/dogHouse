@@ -44,9 +44,7 @@ h2{
 		  <div id="content">
 <h2 align="center"><%= notice.getNoticeNo() %>번 공지글 수정페이지</h2>
 <br>
-<%-- <% if(board.getBoardReplyLev() == 0){ //원글 수정 %> --%>
 <form action="/doggybeta/mnoriginup" id="writeform" name="writeform" method="post" enctype="multipart/form-data">
-<%-- <input type="hidden" name="page" value="<%= currentPage %>"> --%>
 <input type="hidden" name="nnum" value="<%= notice.getNoticeNo() %>">
 <input type="hidden" name="mnofile" value="<%= notice.getNoticeOriginFile() %>">
 <input type="hidden" name="mnrfile" value="<%= notice.getNoticeReFile() %>">
@@ -56,7 +54,7 @@ h2{
 <tr><th>첨부파일</th>
 <td><% if(notice.getNoticeOriginFile() != null){ %>
 	<%= notice.getNoticeOriginFile() %>
-<% } %><br>
+<% } %>
 <input type="file" name="mnupfile">
 </td>
 </tr>

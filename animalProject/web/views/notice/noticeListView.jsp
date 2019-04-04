@@ -1,11 +1,26 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" import="notice.model.vo.Notice, java.util.*, member.model.vo.Member" %>
 <%
-   ArrayList<Notice> list = (ArrayList<Notice>)request.getAttribute("list");
+   ArrayList<Notice> list = (ArrayList<Notice>)request.getAttribute("nlist");
+	
+	int listCount = ((Integer)request.getAttribute("listCount")).intValue(); 
+	int startPage = ((Integer)request.getAttribute("startPage")).intValue();
+	int endPage = ((Integer)request.getAttribute("endPage")).intValue();
+	int maxPage = ((Integer)request.getAttribute("maxPage")).intValue();
+	int currentPage = ((Integer)request.getAttribute("currentPage")).intValue(); 
 
+	String opt = null;
+	String inputdata = null;
+
+	if(request.getAttribute("opt") != null){
+		opt = request.getAttribute("opt").toString();
+		
+		if(request.getAttribute("inputdata") != null){
+			inputdata = request.getAttribute("inputdata").toString();	 
+		}}
 
 %>  
-<html>
+<html id="fbhtml">
 <head>
 <title>Dog House</title>
 <link rel="shortcut icon" href="/doggybeta/resources/images/favicon.ico">
@@ -17,33 +32,21 @@ function showWriteForm(){
    location.href="/doggybeta/views/notice/noticeWriteForm.jsp"
 }
 
-$(function(){
-	showDiv();
-	
-	$("input[name=item]").on("change", function(){
-		showDiv();
-	});
-});
-
-function showDiv(){
-	if($("input[name=item]").eq(0).is(":checked")){
-		$("#titleDiv").css("display", "block");
-		$("#dateDiv").css("display", "none");
-		
-	}
-	if($("input[name=item]").eq(1).is(":checked")){
-		$("#titleDiv").css("display", "none");
-		$("#dateDiv").css("display", "block");
-	}
-
-}
 </script>
 <style type="text/css">
-body {
+
+#fbhtml {
 	font-family: 'Sunflower', 'sans-serif';
-	font-size: 15pt;
 }
-/* 화면에 보여지는 글 목록 테이블 */
+	
+	#searchT{ 
+	text-align:center;	
+	}
+	
+	.icon-left-open 
+	{ *zoom: expression( this.runtimeStyle['zoom'] = '1',
+	 this.innerHTML = '&#xe800;&nbsp;'); }
+	 
 h2{
    position: relative;
    top: 20px;
@@ -51,10 +54,8 @@ h2{
    width: 70%;
    padding: 2rem 0px;
 }
-#search{ 
-	text-align:center;	
-	}
-.board { 
+.fboard { 
+font-size: 15pt;
    position: relative;
    left : 150px;
    width: 60%;
@@ -63,38 +64,42 @@ h2{
    text-align: left;
    line-height: 1.5;
    table-layout:fixed;   
-   
 }
 
-/* list_table 에서 사용되는 thead */
-.board thead th{ 
+.fboard tr{
+	line-height : 2em;
+
+}
+
+.fboard thead th{ 
 	padding: 10px;
     font-weight: bold;
     vertical-align: top;
     color: #369;
     border-bottom: 3px solid #036;}
-    
-.board tr{
-	line-height : 2em;
-}
-/* list_table 에서 사용되는 tbody */
-.board tbody td { 
-	width: 150px;
-    padding: 10px;
-    font-weight: bold;
-    vertical-align: top;
-    border-bottom: 1px solid #ccc;       
-}
 
-.board tbody tr:hover{
+
+.fboard tbody tr:hover{
 	background-color : #f3f6f7;
 }
 
-.board tbody td a{
+.fboard tbody td a{
 	text-decoration: none;
 	color: black;
 }
-.search{
+
+.fsearch{
+   position: relative;
+   left : 100px;
+   width: 60%;
+   top: -150px;
+   border-collapse: collapse;
+   text-align: left;
+   line-height: 1.5;
+   table-layout:fixed;  
+}
+
+.fpage{
 	position: relative;
    left : 100px;
    width: 60%;
@@ -102,13 +107,27 @@ h2{
    border-collapse: collapse;
    text-align: left;
    line-height: 1.5;
-   table-layout:fixed;
+   table-layout:fixed; 
+}
+
+.fbutton{
+   position: relative;
+   left : 650px;
+   width: 60%;
+   top: -150px;
+   border-collapse: collapse;
+   text-align: left;
+   line-height: 1.5;
+   table-layout:fixed;  
+
 }
 
 #wrap{
 	left: 200px;
 	margin: 0 auto;
 }
+	 
+	 
 </style>
 </head>
 
@@ -120,7 +139,7 @@ h2{
 <h2 align="center">공지사항 게시판</h2>
 <br><br><br>
 <!-- 테이블 시작 -->
-   <table class="board">
+   <table class="fboard">
       <thead>
          <tr>
             <th width="50">번호</th>
@@ -161,26 +180,65 @@ h2{
 <br> <br><br><br><br><br><br>        
 <!-- 테이블 종료 -->
 
-<div class="search" align="center" id="search">
-	<form action="/doggybeta/nsearch" method="post">
+<div class="fsearch" align="center" id="searchT">
+ <form action="/doggybeta/nsearch" method="post" name="form1">
 	<select name="opt"> <!-- 검색 컬럼 -->
 		<option value="0">제목</option>
 		<option value="1">내용</option>
-		<option value="2">제목+내용</option>
 	</select>
-	<input type="text" size="20" name="search"> 
+	<input type="text" size="20" name="search">
+	<input type="date" name="date">
 	<input type="submit" value="검색">
 	<% if(loginUser.equals("manager")){ %>
 	<input type="button" onclick="showWriteForm();" value="글쓰기">
 <%} %>
-	</form>
+</form>
 </div>
 
 
+	<%-- 페이지징 처리 --%>
+<div class="fpage"  style=" align:center; text-align:center;">
+<% if(currentPage <= 1){ %>
+	◀◀&nbsp;
+<% }else{ %>
+	<a href="/doggybeta/nlist?page=1">◀◀</a>&nbsp;
+<% } %> 
+<!-- 이전 -->
+<% if((currentPage - 10) <= startPage && (currentPage - 10) >= 1){ %>
+	<a href="/doggybeta/nlist?page=<%= startPage - 1 %>">◀</a>
+<% }else{ %>
+	◀
+<% } %>
 
+<!-- 현재 페이지가 포함된 페이지 그룹 숫자 출력 처리 -->
+<% for(int p = startPage; p <= endPage; p++){ %>
+	<% if(opt == null){ %>
+	<a href="/doggybeta/nlist?page=<%= p %>"><%= p %></a>
+	<% }else{ %>
+	<a href="/doggybeta/nlist?opt=<%= opt %>&inputdata=<%= inputdata %>&page=<%= p %>"><%= p %></a>
+<% }} %> &nbsp;
 
-<br>
+<!-- 다음 -->
+<% if(endPage < maxPage){ %>
+<% if(opt == null){ %>
+	<a href="/doggybeta/nlist?page=<%= endPage + 1 %>">▶</a>
+<% }else{ %>
+	<a href="/doggybeta/nlist?inputdata=<%= inputdata %>&page=<%= endPage + 1 %>&opt=<%= opt %>">▶</a>&nbsp;
+<% } %>
+<% }else{ %>
+	▶&nbsp;
+<% } %>
 
+<% if(currentPage >= maxPage){ %>
+	▶▶
+<% }else{ %>
+<% if(opt == null){ %>
+	<a href="/doggybeta/nlist?page=<%= maxPage %>">▶▶</a>
+<% }else{ %>
+	<a href="/doggybeta/nlist?inputdata=<%= inputdata %> %>page=<%= maxPage %>&opt=<%= opt %>">▶▶</a>
+<%  } %>
+<% } %>
+</div> 	  
 
 
 </div>

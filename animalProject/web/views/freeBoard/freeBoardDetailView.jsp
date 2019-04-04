@@ -162,6 +162,11 @@ h2{
 	 <% } %> 
 	&nbsp; &nbsp;
 	 <a href="/doggybeta/flist">[목록]</a> 
+	&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;
+	&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;
+	&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;
+	&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;
+	&nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;
 	 <a href="/doggybeta/rfselect?reportFreeBoardNo=<%= freeboard.getFreeboardNo()%>">[신고하기]</a>
 	</th>	
 </tr>
@@ -197,9 +202,10 @@ h2{
 				<td width="100">
 					<%if(loginUser.getUserId().equals(f.getUserid())){ %>
 					<a href="/doggybeta/frsearch?frnum=<%= f.getFreereply()%>">[수정]</a>
-					<a href="/doggybeta/frdelete?frnum=<%= f.getFreereply()%>&fnum=<%= f.getFreeboardno()%>">[삭제]</a>
-					<a href="/doggybeta/rfrselect?frnum=<%= f.getFreereply()%>">[신고하기]</a>	
-					<%} %>
+					<a href="/doggybeta/frdelete?frnum=<%= f.getFreereply()%>&fnum=<%= f.getFreeboardno()%>">[삭제]</a>	
+					<%} else{ %>
+					<a href="/doggybeta/rfrselect?frnum=<%= f.getFreereply()%>">[신고하기]</a>
+					<% } %>	
 				</div>
 				</td>
 			</tr>
@@ -259,7 +265,6 @@ h2{
 <% } %>
 </div>  	 
 
-<br>
  
 
 

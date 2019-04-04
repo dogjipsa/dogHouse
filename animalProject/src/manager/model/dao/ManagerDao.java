@@ -433,6 +433,7 @@ public class ManagerDao {
 		
 		return result;
 	}
+	
 	public int managerDeleteTipBoard(Connection conn, String delNo) {
 		int result = 0;
 		PreparedStatement pstmt = null;
@@ -1409,6 +1410,54 @@ public class ManagerDao {
 		try {
 			pstmt = conn.prepareStatement(query);				
 			pstmt.setInt(1, noticeNo);
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
+	
+	public int insertNotice(Connection conn, Notice notice) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		
+		String query = "insert into notice values(seq_noticeno.nextval, ?, ?, default, ?, ?, 'manager', 'n', ?)";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			
+			pstmt.setString(1, notice.getNoticeTitle());
+			pstmt.setString(2, notice.getNoticeContent());
+			pstmt.setString(3, notice.getNoticeOriginFile());
+			pstmt.setInt(4, notice.getNoticeViews());
+			pstmt.setString(5, notice.getNoticeReFile());
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			
+		}
+	
+		return result;
+	}
+
+	public int managerSelectDeleteNotice(Connection conn, String delNo) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		
+		String query = "update notice set notice_delete = 'y' where notice_no in ?";
+		
+		try {
+			pstmt = conn.prepareStatement(query);				
+			pstmt.setInt(1, Integer.parseInt(delNo));
 			
 			result = pstmt.executeUpdate();
 			
