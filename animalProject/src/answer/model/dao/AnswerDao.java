@@ -15,20 +15,20 @@ public class AnswerDao {
 
 	public AnswerDao() {}
 	
-	public int insertAnswer(Connection conn, int qboardNo, String anscontent) {
+	public int insertAnswer(Connection conn, Answer answer) {
 		int result = 0;
 		PreparedStatement pstmt = null;
 		
-		String query = "insert into answer values (?, ?, SYSDATE)";
-		updateReply(conn, qboardNo);
+		String query = "insert into answer values (seq_ANSWER.nextval, ?, SYSDATE)";
+		//insert into answer values ((select question_no from question where question_no = ?), ?, sysdate)
 		
 		try {
 			pstmt = conn.prepareStatement(query);
-			pstmt.setInt(1, qboardNo);
-			pstmt.setString(2, anscontent);
-
-			result = pstmt.executeUpdate();
+			pstmt.setInt(1, answer.getAnswerNo());
+			pstmt.setString(2, answer.getAnswerContent());
+			pstmt.setDate(3, answer.getAnswerDate());
 			
+			result = pstmt.executeUpdate();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}finally {
@@ -36,26 +36,8 @@ public class AnswerDao {
 		}
 		
 		return result;
-	}	
-	
-	private void updateReply(Connection conn, int qboardNo) {
-		int result = 0;
-		PreparedStatement pstmt = null;
-		
-		String query = "update question set reply_yn = '답변완료' where question_no = ?";
-		try {
-			pstmt = conn.prepareStatement(query);
-			pstmt.setInt(1, qboardNo);
-			
-			result = pstmt.executeUpdate();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}finally {
-			close(pstmt);
-		}
 	}
-	
-	
+
 	public Answer selectAnswer(Connection conn, int questionNo) {
 		Answer answer = new Answer();
 		PreparedStatement pstmt = null;
@@ -80,6 +62,7 @@ public class AnswerDao {
 			close(pstmt);
 			close(rset);
 		}
+		System.out.println("dao에서 answer 확인 : " + answer);
 		return answer;
 	}
 	

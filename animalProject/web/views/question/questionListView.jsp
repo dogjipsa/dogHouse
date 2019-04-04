@@ -1,8 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" errorPage="questionError.jsp" %>
+    pageEncoding="UTF-8" errorPage="memberError.jsp" %>
 <%@ page import="member.model.vo.Member, question.model.vo.Question, answer.model.vo.Answer, java.util.ArrayList" %>
 <%
-	ArrayList<Question> list = (ArrayList<Question>)request.getAttribute("list");		
+	ArrayList<Question> list = (ArrayList<Question>)request.getAttribute("list");	
+	
 
 	Answer answer = (Answer)request.getAttribute("answer");
 
@@ -75,14 +76,15 @@
 	<tr>
 		<td align="left"><a href="/doggybeta/qdetail?no=<%= question.getQuestionNo() %>"><%= question.getQuestionTitle() %></a>&nbsp;&nbsp;&nbsp;&nbsp;</td>
 		<td align="center"><%= question.getQuestionDate() %>&nbsp;&nbsp;&nbsp;&nbsp;</td>
-		<td><% if(question.getQuestionReplyYn().equals("y")){ %>
-			답변완료
-			<% }else{ %>
-			답변대기중
-			<% } %>
-		 </td>
+		<td align="center"> <%-- <% if(answer.getAnswerContent() != null){ %>
+								답변완료
+							<% }else{ %>
+								답변대기중..
+							<% } %> - --%>
+						<%= question.getQuestionReplyYn() %>
+							</td>
 	</tr>
-<% }} %>
+<% } }%>
 </table>
 </div>
 

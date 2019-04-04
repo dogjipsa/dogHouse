@@ -17,15 +17,14 @@ public class AnswerService {
 	
 	public AnswerService() {}
 
-	public int insertAnswer(int qboardNo, String anscontent) {
+	public int insertAnswer(Answer answer) {
 		Connection conn = getConnection();
-		int result = ansdao.insertAnswer(conn, qboardNo, anscontent);
+		int result = ansdao.insertAnswer(conn, answer);
 		if(result > 0) {
 			commit(conn);
 		}else {
 			rollback(conn);
 		}
-		close(conn);
 		return result;
 	}
 

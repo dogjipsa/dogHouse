@@ -144,7 +144,7 @@ public class QuestionDao {
 		int result = 0;
 		PreparedStatement pstmt = null;
 		
-		String query = "insert into question values (seq_QUESTIONno.nextval, ?, ?, sysdate, 'n', ?, ?, ?, seq_QUESTIONno.nextval, 0, 0, 0)";
+		String query = "insert into question values (seq_QUESTIONno.nextval, ?, ?, sysdate, '대기중', ?, ?, ?, seq_QUESTIONno.nextval, 0, 0, 0)";
 		
 		try {
 			pstmt = conn.prepareStatement(query);
