@@ -6,7 +6,7 @@
 <meta charset="UTF-8">
 <title>Dog House</title>
 <link rel="shortcut icon" href="/doggybeta/resources/images/favicon.ico">
-
+<link href="/doggybeta/resources/css/footer.css" rel="stylesheet" type="text/css">
 <link href="/doggybeta/resources/css/history.css" rel="stylesheet" type="text/css">
 <link href="https://fonts.googleapis.com/css?family=Sunflower:300,500,700&amp;subset=korean" rel="stylesheet" type="text/css">
 <script type="text/javascript" src="/doggybeta/resources/js/jquery-3.3.1.min.js"></script>
@@ -17,6 +17,7 @@
 
 body {
   background-color: #474e5d;
+  font-family: Helvetica, sans-serif;
 }
 
 /* The actual timeline (the vertical ruler) */
@@ -109,9 +110,9 @@ body {
   background-color: white;
   position: relative;
   border-radius: 6px;
-  font-family: 'Sunflower', 'sans-serif'; 
-  font-size: 13pt; 
-  font-weight: 200; 
+  font-family: 'Sunflower', 'sans-serif';
+  font-size: 13pt;
+  font-weight: 200;
 }
 
 /* Media queries - Responsive timeline on screens less than 600px wide */

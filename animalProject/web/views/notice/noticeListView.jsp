@@ -10,13 +10,13 @@
 	int currentPage = ((Integer)request.getAttribute("currentPage")).intValue(); 
 
 	String opt = null;
-	String search = null;
+	String inputdata = null;
 
 	if(request.getAttribute("opt") != null){
 		opt = request.getAttribute("opt").toString();
 		
-		if(request.getAttribute("search") != null){
-			search = request.getAttribute("search").toString();	 
+		if(request.getAttribute("inputdata") != null){
+			inputdata = request.getAttribute("inputdata").toString();	 
 		}}
 
 %>  
@@ -181,14 +181,17 @@ font-size: 15pt;
 <!-- 테이블 종료 -->
 
 <div class="fsearch" align="center" id="searchT">
- <form action="/doggybeta/nlist" method="post" name="form1">
+ <form action="/doggybeta/nsearch" method="post" name="form1">
 	<select name="opt"> <!-- 검색 컬럼 -->
-		<option value="0">제목만</option>
-		<option value="1">제목 + 내용</option>
+		<option value="0">제목</option>
+		<option value="1">내용</option>
 	</select>
 	<input type="text" size="20" name="search">
+	<input type="date" name="date">
 	<input type="submit" value="검색">
-	
+	<% if(loginUser.equals("manager")){ %>
+	<input type="button" onclick="showWriteForm();" value="글쓰기">
+<%} %>
 </form>
 </div>
 
@@ -212,7 +215,7 @@ font-size: 15pt;
 	<% if(opt == null){ %>
 	<a href="/doggybeta/nlist?page=<%= p %>"><%= p %></a>
 	<% }else{ %>
-	<a href="/doggybeta/nlist?opt=<%= opt %>&serach=<%= search%>&page=<%= p %>"><%= p %></a>
+	<a href="/doggybeta/nlist?opt=<%= opt %>&inputdata=<%= inputdata %>&page=<%= p %>"><%= p %></a>
 <% }} %> &nbsp;
 
 <!-- 다음 -->
@@ -220,7 +223,7 @@ font-size: 15pt;
 <% if(opt == null){ %>
 	<a href="/doggybeta/nlist?page=<%= endPage + 1 %>">▶</a>
 <% }else{ %>
-	<a href="/doggybeta/nlist?isearch=<%= search %>&search=<%= endPage + 1 %>&opt=<%= opt %>">▶</a>&nbsp;
+	<a href="/doggybeta/nlist?inputdata=<%= inputdata %>&page=<%= endPage + 1 %>&opt=<%= opt %>">▶</a>&nbsp;
 <% } %>
 <% }else{ %>
 	▶&nbsp;
@@ -232,7 +235,7 @@ font-size: 15pt;
 <% if(opt == null){ %>
 	<a href="/doggybeta/nlist?page=<%= maxPage %>">▶▶</a>
 <% }else{ %>
-	<a href="/doggybeta/nlist?search=<%= search %> %>page=<%= maxPage %>&opt=<%= opt %>">▶▶</a>
+	<a href="/doggybeta/nlist?inputdata=<%= inputdata %> %>page=<%= maxPage %>&opt=<%= opt %>">▶▶</a>
 <%  } %>
 <% } %>
 </div> 	  

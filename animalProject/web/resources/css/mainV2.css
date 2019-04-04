@@ -1,8 +1,8 @@
 @charset "UTF-8";
 @import url("https://fonts.googleapis.com/css?family=Sunflower:300,500,700&amp;subset=korean");
-/* body,html {
+body,html {
 	height:100%;
-} */
+}
 #logo {
 	margin: 9px;
 }

@@ -41,7 +41,7 @@ public class NoticeListServlet extends HttpServlet {
 		int currentPage = 1;
 						
 		String opt = request.getParameter("opt");
-		String search = request.getParameter("search");
+		String search = request.getParameter("inputdata");
 		
 		if(opt == null) {
 			
@@ -56,12 +56,17 @@ public class NoticeListServlet extends HttpServlet {
 		NoticeService nservice = new NoticeService();
 		
 		ArrayList<Notice> nlist = nservice.selectSearch(listOpt);
+		
+		for(Notice n : nlist) {
+			System.out.println("노티스리스트트트트 :" + n);
+		}
 								
 		//한 페이지에 출력할 목록 갯수 지정
 		int limit = 10;
 		
 		//현재 페이지에 출력할 목록 조회
 		int listCount =  nservice.getListCount(listOpt);
+		System.out.println("리스트 카운트트틑: " + listCount);
 		
 		//행의 갯수가 101개일 때 다음 페이지로 넘어감.
 		
