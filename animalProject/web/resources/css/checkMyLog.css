@@ -273,7 +273,7 @@
       opacity: 1;
     }
   }
-#pet_reg_form input, #pet_reg_form textarea {
+#pet_reg_form input, #pet_reg_form textarea{
     border: 1px solid #ccc;
 	border-radius: 3px;
     padding: 15px;
@@ -452,7 +452,7 @@
     display: flex;
     flex-direction: column;
 }
-#pet_up_form input, textarea[name="etc"]{
+#pet_up_form input, #pet_up_form textarea[name="etc"]{
     border: none;
     border-bottom: 1px solid rgba(0, 0, 0, 0.3);
     background: transparent;
@@ -589,7 +589,7 @@
     to {transform: scale(1)}
   }
 
-  .modal-content {
+.modal-content, .review-box { 
     display: none;
     position: absolute;
     border-radius: 4px;
@@ -620,13 +620,8 @@
     align-items: center;
     /* justify-content: space-between; */
   }
-  #modal-img{
-     margin: 25px 0;
-     width: 400px;
-     height: 300px;
-  }
-
-  .modal-content .xBtn {
+  .modal-content .xBtn,
+  .review-box .xBtn {
     position: absolute;
     right: 25px;
     top: 0;
@@ -635,8 +630,74 @@
     font-weight: bold;
   }
 
-  .modal-content .xBtn:hover {
+  .modal-content .xBtn:hover, 
+  .review-box .xBtn:hover{
     color: red;
     cursor: pointer;
     opacity: 0.8;
   }
+
+  /* review-box inside*/
+
+.review-flexbox{
+    width: 90%;
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 5%;
+}
+
+.review-flexbox #review_pic{
+    max-width: 150px;
+    margin-bottom: 5%;
+}
+
+.review-flexbox textarea{
+    resize: none;
+    border: none;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+    background: transparent;
+    outline: none;
+    color: rgba(0, 0, 0, 0.7);
+    font-size: 17px;
+    font-family: 'SDMiSaeng';
+}
+
+.btn-flexbox{
+    display: flex;
+    justify-content: space-between;
+    margin-left: 50%;
+    width: 35%;
+}
+
+.btn-flexbox button {
+    font-size: 11px;
+}
+.btn-flexbox button:hover{
+    cursor: pointer;
+}
+.review-flexbox section{
+    display: flex;
+    flex-direction: column;
+    width: 40%;
+}
+.review-flexbox input{
+    border: none;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+    background: transparent;
+    outline: none;
+    height: 20px;
+    color: rgba(0, 0, 0, 0.7);
+    font-size: 17px;
+    font-family: 'SDMiSaeng';
+    width: 100%;
+}
+#review-fake{
+    font-size: 11px;
+    width: 80%;
+}
+#review-fake:hover{
+    opacity: 0.7;
+    cursor: pointer;
+}
+
+

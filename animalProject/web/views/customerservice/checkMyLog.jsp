@@ -9,6 +9,7 @@
 	<title>이용내역/예약 확인</title>
 	<link href="/doggybeta/resources/css/footer.css" rel="stylesheet" type="text/css">
 	<link rel="stylesheet" href="/doggybeta/resources/css/checkMyLog.css">
+	<link rel="stylesheet" href="/doggybeta/resources/css/star.css">
 </head>
 
 <body>
@@ -81,7 +82,7 @@
 				<div class="host_side2">
 					<form class="showbox">
 						<img id="showbox_img">
-						<div class="showbox_info">						
+						<div class="showbox_info">
 							<p>PET NAME</p>
 							<input type="text" name="pname" readonly>
 							<p>AGE</p>
@@ -232,8 +233,52 @@
 			</div>
 		</div>
 		<div class="review-box animate">
-			<span class="m-close xBtn" title="Close Modal">&times;</span>
-			<button type="button" class="m-close cancelbtn">확인</button>
+			<div class="modal-container">
+				<span class="m-close xBtn" title="Close Modal">&times;</span>
+				<h2>MY REVIEW</h2>
+				<form class="review-flexbox">
+					<section>
+						<p>BOOKING NO</p>
+						<input name="bno" class="review__input" readonly>
+						<p>REVIEW NO</p>
+						<input name="rnum" class="review__input" readonly>
+						<p>USER ID</p>
+						<input name="userid" class="review__input" readonly>
+						<p>CONTENT</p>
+						<textarea name="content" id="review-content" cols="21" rows="3"></textarea>
+					</section>
+					<section>
+						<p>Service</p>
+						<input name="service" class="review__input" readonly>
+							<p>WRITTEN DATE</p>
+							<input type="date" name="rdate" class="review__input" readonly>
+							<p>PRICE</p>
+							<input name="price" class="review__input" readonly>
+						<p>POINT</p>
+						<span class="star-input">
+							<span class="input">
+								<input type="radio" name="star-input" value="1" id="p1" checked>
+								<label for="p1">1</label>
+								<input type="radio" name="star-input" value="2" id="p2">
+								<label for="p2">2</label>
+								<input type="radio" name="star-input" value="3" id="p3">
+								<label for="p3">3</label>
+								<input type="radio" name="star-input" value="4" id="p4">
+								<label for="p4">4</label>
+								<input type="radio" name="star-input" value="5" id="p5">
+								<label for="p5">5</label>
+							</span>
+							<output for="star-input"></output>
+						</span>
+						
+					</section>
+				</form>
+				<div class="btn-flexbox">
+					<button type="button" class="m-close">확인</button>
+					<button id="review__up">수정하기</button>
+					<button id="review__del">삭제하기</button>
+				</div>
+			</div>
 		</div>
 	</div>
 	<script src="/doggybeta/resources/js/checkMyLog.js"></script>

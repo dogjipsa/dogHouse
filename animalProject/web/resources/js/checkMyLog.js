@@ -46,7 +46,7 @@ function requestPetListAjax() {
 
             for (let i in json.list) {
                 let etc = "";
-                if(json.list[i].etc)
+                if (json.list[i].etc)
                     etc = json.list[i].etc.replace(/\+/gi, " ");
                 const petInfo = {
                     'pno': json.list[i].pno,
@@ -554,30 +554,100 @@ function requestHostAjax() {
     xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
     xhr.send(requestData);
 }
+// 리뷰 수정 및 삭제
+const reviewForm = document.querySelector('.review-flexbox');
+
+const reviewUpBtn = document.querySelector('#review__up');
+const reviewDelBtn = document.querySelector('#review__del');
+
+reviewUpBtn.addEventListener('click', function(){
+    const xhr = new XMLHttpRequest();
+
+    xhr.onload = ()=>{
+        const popup = document.querySelector('.modal-content');
+        popup.style.display = "block";
+
+        // 클로징 처리
+        const mCloses = document.querySelectorAll('.m-close');
+        for (let i = 0; i < mCloses.length; i++) {
+            mCloses[i].addEventListener('click', () => {
+                popup.style.display = "none"; // 팝업 내리기
+                reviewForm.reset(); // 인풋 클리어                
+            });
+        }
+        modalText = document.getElementById('modal-text');
+        const reviewBox = document.querySelector('.review-box');
+        if (xhr.responseText === 'ok') {
+            reviewBox.style.display = "none";
+            modalText.textContent = "리뷰를 성공적으로 수정했습니다!";
+        } else {
+            reviewBox.style.display = "none";
+            modalText.textContent = "리뷰 수정에 실패했습니다. 관리자에게 문의하세요";
+        }
+        requestBkAjax();
+    }
+    const formData = new FormData(reviewForm);
+    xhr.open('POST','/doggybeta/reviewup');
+    
+    xhr.send(formData);
+});
+
+reviewDelBtn.addEventListener('click',function(){
+    const xhr = new XMLHttpRequest();
+
+    xhr.onload = ()=>{
+        const popup = document.querySelector('.modal-content');
+        popup.style.display = "block";
+
+        // 클로징 처리
+        const mCloses = document.querySelectorAll('.m-close');
+        for (let i = 0; i < mCloses.length; i++) {
+            mCloses[i].addEventListener('click', () => {
+                popup.style.display = "none"; // 팝업 내리기
+                reviewForm.reset(); // 인풋 클리어                
+            });
+        }
+        modalText = document.getElementById('modal-text');
+        const reviewBox = document.querySelector('.review-box');
+        if (xhr.responseText === 'ok') {
+            reviewBox.style.display = "none";
+            modalText.textContent = "리뷰를 성공적으로 삭제했습니다!";
+            requestBkAjax();
+        } else {
+            reviewBox.style.display = "none";
+            modalText.textContent = "리뷰 삭제에 실패했습니다. 관리자에게 문의하세요";
+        }
+        requestBkAjax();
+    }
+    xhr.open('GET','/doggybeta/redel?bno='+encodeURIComponent(document.querySelector('.review-flexbox input[name="bno"]').value));
+    xhr.send();
+})
+
+
 // 서브 인포메이션 출력 Ajax
 function initSubInfo(userid, pno) {
     const miniInfoForm = document.querySelector('.host_side2 .showbox');
     miniInfoForm.reset();
     const showboxImage = document.querySelector('#showbox_img');
-    showboxImage.setAttribute('src','/doggybeta/resources/images/default.jpg');
+    showboxImage.setAttribute('src', '/doggybeta/resources/images/default.jpg');
     const xhr = new XMLHttpRequest();
 
-    xhr.onload = ()=>{
-        if(xhr.responseText){
+    xhr.onload = () => {
+        if (xhr.responseText) {
             const json = JSON.parse(xhr.responseText);
-            
-            if(json.img){
-                showboxImage.setAttribute('src','/doggybeta/files/pet/'+json.img);
+
+            if (json.img) {
+                showboxImage.setAttribute('src', '/doggybeta/files/pet/' + json.img);
             }
             document.querySelector('.showbox_info input[name="pname"]').value = decodeURIComponent(json.pname);
-            document.querySelector('.showbox_info input[name="age"]').value = json.age+"살";
+            document.querySelector('.showbox_info input[name="age"]').value = json.age + "살";
             document.querySelector('.showbox_info input[name="phone"]').value = json.phone;
             document.querySelector('.showbox_info input[name="breeds"]').value = json.breeds;
         }
     }
-    const requestData = 'userid='+encodeURIComponent(userid)+'&pno='+encodeURIComponent(pno);
-    xhr.open('POST','/doggybeta/gsinfo');
-    xhr.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
+    const requestData = 'userid=' + encodeURIComponent(userid) + '&pno=' + encodeURIComponent(pno);
+    xhr.open('POST', '/doggybeta/gsinfo');
+    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
     xhr.send(requestData);
 }
 // 예약/결제 내역 Ajax
@@ -641,14 +711,51 @@ function requestBkAjax() {
                     const td = document.createElement('td');
                     const button = document.createElement("button");
                     button.textContent = "리뷰 작성";
-                    button.addEventListener('click',function(){
+                    button.addEventListener('click', function () {
                         popupOpen(tableForm.bookingNo);
                     });
                     tr.appendChild(td).appendChild(button);
-                } else if(json.list[i].progress === "4"){
+                } else if (json.list[i].progress === "4") {
                     const td = document.createElement('td');
                     const button = document.createElement("button");
                     button.textContent = "내 리뷰 확인하기";
+                    button.addEventListener('click', function () {
+                        const xhr = new XMLHttpRequest();
+                        xhr.onload = () => {
+                            const popup = document.querySelector('.review-box');
+                            popup.style.display = "block";
+
+                            // 클로징 처리
+                            const mCloses = document.querySelectorAll('.m-close');
+                            for (let i = 0; i < mCloses.length; i++) {
+                                mCloses[i].addEventListener('click', () => {
+                                    popup.style.display = "none"; // 팝업 내리기
+                                    reviewForm.reset(); // 인풋 클리어                
+                                });
+                            }
+                            
+                            if (xhr.responseText) {
+                                const json = JSON.parse(xhr.responseText);
+                                console.log(json);
+                                document.querySelector('.review-flexbox input[name="rnum"]').value = json.rno;
+                                document.querySelector('.review-flexbox input[name="bno"]').value = json.bno;
+                                document.querySelector('.review-flexbox input[name="userid"]').value = json.userid;
+                                document.querySelector('#review-content').value = decodeURIComponent(json.content).replace(/\+/gi, " ");
+                                document.querySelector('.review-flexbox input[name="service"]').value = kind;
+                                const stars = document.querySelectorAll('.review-flexbox input[name="star-input"]'); 
+                                for(let i = 0; i < stars.length; i++){
+                                    if(stars[i].value === json.point)
+                                        stars[i].checked = true;     
+                                }
+                                document.querySelector('.review-flexbox input[name="rdate"]').valueAsDate = new Date(json.rdate);
+                                document.querySelector('.review-flexbox input[name="price"]').value = tableForm.price;
+                            }
+                        }
+                        const requestData = 'bno=' + encodeURIComponent(tableForm.bookingNo);
+                        xhr.open('POST', '/doggybeta/creview');
+                        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+                        xhr.send(requestData);
+                    });
                     tr.appendChild(td).appendChild(button);
                 } else {
                     const td = document.createElement('td');
