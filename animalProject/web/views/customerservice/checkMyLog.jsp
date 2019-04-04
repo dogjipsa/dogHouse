@@ -231,6 +231,10 @@
 				<button type="button" class="m-close cancelbtn">확인</button>
 			</div>
 		</div>
+		<div class="review-box animate">
+			<span class="m-close xBtn" title="Close Modal">&times;</span>
+			<button type="button" class="m-close cancelbtn">확인</button>
+		</div>
 	</div>
 	<script src="/doggybeta/resources/js/checkMyLog.js"></script>
 	<script src="/doggybeta/resources/js/hmap.js"></script>
