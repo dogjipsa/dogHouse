@@ -1,16 +1,60 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" errorPage="managerError.jsp" %>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" lang="ko" xml:lang="ko">
+<!DOCTYPE html>
+<html>
 <head>
-<meta charset="UTF-8">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>Insert title here</title>
 <script type="text/javascript" src="/doggybeta/SE2/js/HuskyEZCreator.js" charset="utf-8"></script>
 <script type="text/javascript" src="/doggybeta/resources/js/jquery-3.3.1.min.js">
 </script>
 <link href="/doggybeta/resources/css/board.css" rel="stylesheet" type="text/css"></link>
 <link href="/doggybeta/resources/css/footer.css" rel="stylesheet" type="text/css"></link>
+ <style type="text/css">
+
+#fbhtml {
+	font-family: 'Sunflower', 'sans-serif';
+}
+
+h2{
+   position: relative;
+   top: 20px;
+   left : 150px;
+   width: 70%;
+   padding: 2rem 0px;
+}
+
+.fboard { 
+   font-size: 12pt;
+   position: relative;
+   width: 100%;
+   line-height: 1.5;
+   align: center;
+   margin-left : 300px;
+   top: 10px;
+  
+}
+
+
+.fboard th{
+	width: 70px;
+}
+
+
+
+#searchT{ 
+	text-align:center;	
+	}
+
+#wrap{
+    background-color: rgba(246, 229, 141,0.5);
+
+}
+
+
+</style> 
 </head>
+
 <body>
 <%@ include file="../../views/common/managerMenu.jsp" %>
 	<div id="wrap">
@@ -18,14 +62,14 @@
 <h2 align="center">공지글 쓰기</h2>
 
 <form action="/doggybeta/mninsert" id="writeform" method="post" enctype="multipart/form-data">
-<table class="fboard" align="center" width="100%">
-<tr><td>제목</td><td><input type="text" name="mntitle" style="width:766px"></td></tr>
-<tr><td>작성자</td><td><input type="text" name="mnwriter" style="width:766px" readonly value="관리자"></td></tr>
-<tr><td>첨부파일</td><td><input type="file" name="mnupfile"></td></tr>
+<table class="fboard" width="100%">
+<tr><th>제목</th><td><input type="text" name="mntitle" style="width:766px"></td></tr>
+<tr><th>작성자</th><td><input type="text" name="mnwriter" style="width:766px" readonly value="관리자"></td></tr>
+<tr><th>첨부파일</th><td><input type="file" name="mnupfile"></td></tr>
 		<tr><th>내용</th>
 		<td><textarea name="ir1" id="ir1" rows="10" cols="100" style="width:766px; height:412px;"></textarea></td></tr>
-		<tr><th colspan="2" align="center">
-		<input type="button" id="save" value="등록하기" />
+		<tr><th colspan="2" align="center" id="save" >
+		<input type="button" value="등록하기" />
 		<a href="/doggybeta/mannotice">[목록]</a>
 		</th>
 	</tr>
