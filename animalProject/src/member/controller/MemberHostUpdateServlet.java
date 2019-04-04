@@ -48,21 +48,12 @@ public class MemberHostUpdateServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		if (!ServletFileUpload.isMultipartContent(request)) {
-			// request에서 멀티파트 방식으로 전송이 안되었다면
-			System.out.println("not multipart");
-		}
 
-		// 업로드할 파일의 용량 제한 : 10Mb로 제한한다면
 		int maxSize = 1024 * 1024 * 10;
 
-		// 파일이 저장될 폴더 지정 : content directory 안에 파일저장폴더를 정한 경우
-		// 현재 웹 컨테이너에서 구동중인 웹 어플리케이션의 루트폴더에 대한 경로 알아냄
 		String root = request.getSession().getServletContext().getRealPath("/");
-		// 업로드 되는 파일의 저장 폴더를 루트와 연결함
 		String savePath = root + "files/profile";
 
-		// request를 MultipartRequest 객체로 변환함
 		MultipartRequest mrequest = new MultipartRequest(request, savePath, maxSize, "UTF-8",
 				new DefaultFileRenamePolicy());
 		Member m = new Member();
@@ -75,7 +66,7 @@ public class MemberHostUpdateServlet extends HttpServlet {
 		m.setAddress(fullAddr);
 		m.setPrice(Integer.parseInt(mrequest.getParameter("price")));
 		m.setEmail(mrequest.getParameter("email"));
-		m.setpContent(mrequest.getParameter("myinfo"));
+		m.setpContent(mrequest.getParameter("myinfo").replaceAll("\r\n","<br>"));
 		String originFileName = mrequest.getFilesystemName("pic");
 		String renameFileName = renameFile(originFileName, savePath);
 		m.setUseroriginfile(originFileName);
@@ -125,11 +116,11 @@ public class MemberHostUpdateServlet extends HttpServlet {
 			if(originFile.exists()) {
 				originFile.renameTo(renameFile);
 			} else {
+				String newOriginFileName = null;
 				while(true) {
 				int count = 0;
 				count++;
-				String newOriginFileName = originFileName.substring(0, originFileName.lastIndexOf(".")) + (count) + originFileName.substring(originFileName.lastIndexOf("."));
-				System.out.println(newOriginFileName);
+				newOriginFileName = originFileName.substring(0, originFileName.lastIndexOf(".")) + (count) + originFileName.substring(originFileName.lastIndexOf("."));
 				File newOriginFile = new File(savePath + "\\"+ newOriginFileName);
 				if(newOriginFile.exists()) {
 					newOriginFile.delete();
@@ -137,23 +128,7 @@ public class MemberHostUpdateServlet extends HttpServlet {
 				}
 				}
 			}
-			/*if (!originFile.renameTo(renameFile) && originFile.exists()) {
-				// 파일명 직접 바꾸기
-				// 원본 파일이 내용 읽어서, 리네임 파일에 복사 기록하기
-				// 원본 파일 삭제
-				int read = -1;
-				byte[] buf = new byte[1024];
-
-				FileInputStream fin = new FileInputStream(originFile);
-				FileOutputStream fout = new FileOutputStream(renameFile);
-
-				while ((read = fin.read(buf, 0, buf.length)) != -1) {
-					fout.write(buf, 0, read);
-				}
-				fin.close();
-				fout.close();
-				originFile.delete();
-			}*/
+			
 			return renameFileName;
 		}
 		return "";

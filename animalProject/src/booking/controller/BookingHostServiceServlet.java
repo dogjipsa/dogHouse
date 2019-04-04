@@ -41,7 +41,7 @@ public class BookingHostServiceServlet extends HttpServlet {
 		int page = Integer.parseInt(request.getParameter("page"));
 		int currentPage = 1;
 		int limit = 12;
-		int countPage = 10;
+		int countPage = 5;
 		if (page != 0) {
 			currentPage = page;
 		}

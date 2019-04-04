@@ -742,13 +742,11 @@ public class MemberDao {
 		try {
 			pstmt = conn.prepareStatement(query);
 			pstmt.setString(1, userid);
-			int result = pstmt.executeUpdate();
-			if(result > 0) {
-				System.out.println("delete complete");
-			}
+			pstmt.executeUpdate();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}finally {
+			commit(conn);
 			close(pstmt);
 		}
 	}

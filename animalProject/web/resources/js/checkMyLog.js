@@ -386,6 +386,7 @@ function requestHostAjax() {
     const xhr = new XMLHttpRequest();
     const tbody = document.querySelector('.host_table table tbody');
     xhr.onload = function () {
+        chosenPage = 1;
         if (xhr.responseText) {
             const json = JSON.parse(xhr.responseText);
             while (tbody.firstChild) {
@@ -397,7 +398,6 @@ function requestHostAjax() {
                 let pg = "";
                 let kind = "";
                 switch (json.list[i].pg) {
-
                     case '1': pg = "예약 승인"; break;
                     case '2': pg = "결제 대기"; break;
                     case '3': pg = "결제 완료"; break;
@@ -656,6 +656,7 @@ function requestBkAjax() {
     const tbody = document.querySelector('#reserv_table > tbody');
 
     xhr.onload = function () {
+        chosenPage = 1;
         if (xhr.responseText) {
             const json = JSON.parse(xhr.responseText);
             while (tbody.firstChild) {
@@ -736,7 +737,6 @@ function requestBkAjax() {
                             
                             if (xhr.responseText) {
                                 const json = JSON.parse(xhr.responseText);
-                                console.log(json);
                                 document.querySelector('.review-flexbox input[name="rnum"]').value = json.rno;
                                 document.querySelector('.review-flexbox input[name="bno"]').value = json.bno;
                                 document.querySelector('.review-flexbox input[name="userid"]').value = json.userid;

@@ -40,9 +40,18 @@ public class BookingLogListServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		String userid = request.getParameter("userid");
+		/*
+		 * System.out.println("현재 페이지: "+currentPage);
+		 * System.out.println("총 리스트 수: "+totalCount);
+		 * System.out.println("페이지 출력 수: "+countPage);
+		 * System.out.println("리스트 출력 수: "+limit);
+		 * System.out.println("시작 페이지 : "+startPage);
+		 * System.out.println("마지막 페이지: "+endPage);
+		 * System.out.println("총 페이지 : "+totalPage);
+		 */
 		int currentPage = 1;
 		int limit = 12;
-		int countPage = 10;
+		int countPage = 5;
 		if (request.getParameter("page") != null) {
 			currentPage = Integer.parseInt(request.getParameter("page"));
 		}
@@ -62,15 +71,6 @@ public class BookingLogListServlet extends HttpServlet {
 		if (endPage > totalPage) {
 			endPage = totalPage;
 		}
-		/*
-		 * System.out.println("현재 페이지: "+currentPage);
-		 * System.out.println("총 리스트 수: "+totalCount);
-		 * System.out.println("페이지 출력 수: "+countPage);
-		 * System.out.println("리스트 출력 수: "+limit);
-		 * System.out.println("시작 페이지 : "+startPage);
-		 * System.out.println("마지막 페이지: "+endPage);
-		 * System.out.println("총 페이지 : "+totalPage);
-		 */
 
 		ArrayList<BookingCheck> list = bs.selectBkList(userid, (currentPage - 1) * limit + 1, currentPage * limit);
 
@@ -85,13 +85,6 @@ public class BookingLogListServlet extends HttpServlet {
 				job.put("outdate", bc.getCheckOutDate());
 				job.put("progress", bc.getBookingProgress());
 				job.put("puserid", bc.getPuserId());
-				/*int price = bc.getPrice();
-				if (bc.getServiceKind().equals("0") || bc.getServiceKind().equals("2")) {
-					price *= 0.8; // 당일 상품 20% 낮은 가격
-					price = (int) Math.floor(price / 1000) * 1000; // 천단위 절사
-				} else {
-					price = (int) ((bc.getCheckOutDate().getTime() - bc.getCheckInDate().getTime())/ (1000 * 60 * 60 * 24)) * bc.getPrice();
-				}*/
 				job.put("price", bc.getPrice());
 				job.put("addr", URLEncoder.encode(bc.getAddress(), "utf-8"));
 				job.put("pname", URLEncoder.encode(bc.getPetName(), "utf-8"));

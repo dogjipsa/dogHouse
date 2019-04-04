@@ -90,12 +90,13 @@ psSubmitBtn.addEventListener('click', (e)=> {
         for (let i = 0; i < mCloses.length; i++) {
             mCloses[i].addEventListener('click', () => {
                 popup.style.display = "none"; // 팝업 내리기
-                petUpForm.reset(); // 인풋 클리어                
+				psRegBox.reset(); // 인풋 클리어   
+				location.replace('/doggybeta/index.jsp');             
             });
         }
         modalText = document.getElementById('modal-text');
         if (xhr.responseText === 'ok') {
-            modalText.textContent = "성공적으로 펫시터 등록이 완료되었습니다.";
+			modalText.textContent = "성공적으로 펫시터 등록이 완료되었습니다.";
         } else {
             modalText.textContent = "펫시터 등록에 실패했습니다. 관리자에게 문의하세요";
         }

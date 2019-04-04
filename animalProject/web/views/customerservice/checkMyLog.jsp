@@ -10,6 +10,7 @@
 	<link href="/doggybeta/resources/css/footer.css" rel="stylesheet" type="text/css">
 	<link rel="stylesheet" href="/doggybeta/resources/css/checkMyLog.css">
 	<link rel="stylesheet" href="/doggybeta/resources/css/star.css">
+	<link rel="shortcut icon" href="/doggybeta/resources/images/favicon-32x32.png">
 </head>
 
 <body>

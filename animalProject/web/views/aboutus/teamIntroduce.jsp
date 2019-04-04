@@ -8,6 +8,7 @@
 	<title>팀 도그집사</title>
 	<link href="/doggybeta/resources/css/footer.css" rel="stylesheet" type="text/css">
 	<link rel="stylesheet" href="/doggybeta/resources/css/aboutus/teamIntroduce.css">
+	<link rel="shortcut icon" href="/doggybeta/resources/images/favicon-32x32.png">
 </head>
 
 <body>
@@ -41,7 +42,7 @@
 						<p>EMAIL</p>
 						<input type="text" value="iaminkyung2@gmail.com" readonly>
 						<p>PHONE</p>
-						<input type="text" value="01027750649" readonly>
+						<input type="text" value="010-2775-0649" readonly>
 						<p>ROLE</p>
 						<input type="text" value="공지사항/ 펫시터 찾기/ Notification" readonly>
 					</div>
