@@ -56,7 +56,7 @@ h2{
 </th></tr>
 </table>
 </form>
-<div id="footer" align="center"><%@ include file="..//common/footer.jsp"%></div>
+
 </div>
 </body>
 </html>

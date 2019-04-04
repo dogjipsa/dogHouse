@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8" errorPage='tipBoardError.jsp'%>
 <%@ page import="tipboard.model.vo.TipBoard, member.model.vo.Member, java.sql.Date" %>
 <%@ page import="tipboardreply.model.vo.TipBoardReply" %>
 <%@ page import="java.util.ArrayList" %>

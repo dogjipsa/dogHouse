@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8" errorPage='tipBoardError.jsp'%>
 <%@ page import="tipboard.model.vo.TipBoard" %>  
 <%
 	TipBoard tboard = (TipBoard)request.getAttribute("tboard");

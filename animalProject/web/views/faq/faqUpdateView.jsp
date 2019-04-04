@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" import="faq.model.vo.Faq"%>
+    pageEncoding="UTF-8" import="faq.model.vo.Faq" errorPage='faqError.jsp'%>
     <%
     Faq faq = (Faq)request.getAttribute("faq");
     int currentPage = ((Integer)request.getAttribute("page")).intValue();

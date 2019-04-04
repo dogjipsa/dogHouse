@@ -9,7 +9,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>도그하우스</title>
 <link href="/doggybeta/resources/css/svErrorStyle.css" rel="stylesheet" type="text/css">
 </head>
 <body id='erbody'>
@@ -36,6 +36,5 @@
 		</div>
 	</div>
 <% } %>
-</body>
 </body>
 </html>
