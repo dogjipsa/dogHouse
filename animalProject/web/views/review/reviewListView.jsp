@@ -33,6 +33,7 @@ System.out.println("currentPage"+currentPage);
    text-align: left;
    line-height: 1.5;
   table-layout:fixed;   
+  word-break:break-all;
 }
 
 /* list_table 에서 사용되는 thead */

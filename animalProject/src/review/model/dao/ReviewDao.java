@@ -28,7 +28,6 @@ public class ReviewDao {
 			if (rset.next()) {
 				listCount = rset.getInt(1);
 			}
-			System.out.println(petSitterId + "님의 후기 개수 : ");
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -39,7 +38,7 @@ public class ReviewDao {
 		return listCount;
 	}
 
-	public ArrayList<Review> selectList(Connection conn, int currentPage, int limit) {
+	public ArrayList<Review> selectList(Connection conn, int currentPage, int limit, String petSitterId) {
 		ArrayList<Review> list = new ArrayList<Review>();
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
@@ -49,15 +48,16 @@ public class ReviewDao {
 		int endRow = startRow + limit - 1;
 		
 		String query = "SELECT *  FROM (SELECT ROWNUM RNUM,  REVIEW_NO,USER_ID,BOOKING_NO,POINT,REVIEW_CONTENT,REVIEW_ORIGINFILE,REVIEW_REFILE,review_date " + 
-				"				FROM (SELECT * FROM REVIEW order by REVIEW_NO desc)) " + 
+				"				FROM (SELECT * FROM REVIEW where booking_no in (select booking_no from booking where puser_id = ?) order by REVIEW_NO desc)) " + 
 				"				WHERE RNUM >= ? AND RNUM <= ? ";
 		
 		try {
 			
 				
 				pstmt = conn.prepareStatement(query);
-				pstmt.setInt(1, startRow);
-				pstmt.setInt(2, endRow);
+				pstmt.setString(1, petSitterId);
+				pstmt.setInt(2, startRow);
+				pstmt.setInt(3, endRow);
 				rset = pstmt.executeQuery();
 				while(rset.next()) {
 					Review review = new Review();
@@ -103,8 +103,19 @@ public class ReviewDao {
 	}
 
 	public int deleteReview(Connection conn, int reviewNum) {
-		// TODO Auto-generated method stub
-		return 0;
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String query = "delete from review where review_no = ?";
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, reviewNum);
+			result = pstmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
 	}
 
 	public double selectStartAvg(Connection conn, String petSitterId) {
@@ -144,7 +155,6 @@ public class ReviewDao {
 			if (rset.next()) {
 				listCount = rset.getInt(1);
 			}
-			System.out.println(petSitterId + "님의 후기 개수 : ");
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {

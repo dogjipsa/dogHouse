@@ -26,9 +26,9 @@ public class ReviewService {
 		return listCount;
 	}
 
-	public ArrayList<Review> selectList(int currentPage, int limit) {
+	public ArrayList<Review> selectList(int currentPage, int limit, String petSitterId) {
 		Connection conn = getConnection();
-		ArrayList<Review> list = rdao.selectList(conn, currentPage, limit);
+		ArrayList<Review> list = rdao.selectList(conn, currentPage, limit, petSitterId);
 		close(conn);
 		return list;
 	}

@@ -62,7 +62,7 @@ public class ReviewListViewServlet extends HttpServlet {
 			endPage = maxPage;
 		}
 		response.setContentType("text/html; charset=utf-8");
-		ArrayList<Review> list = rservice.selectList(currentPage, limit);
+		ArrayList<Review> list = rservice.selectList(currentPage, limit, petSitterId);
 		System.out.println("리뷰에서 list 확인 : "+list);
 		System.out.println("서블릿에서 list 사이즈 : "+list.size());
 		JSONObject sendjson = new JSONObject();
@@ -91,7 +91,6 @@ public class ReviewListViewServlet extends HttpServlet {
 		sendjson.put("currentPage", currentPage);
 		
 
-		System.out.println("리뷰 리스트 서블릿에서 제이슨 테스트 : " + sendjson.toJSONString());
 		
 		response.setContentType("application/json; charset=utf-8");
 		PrintWriter out = response.getWriter();

@@ -39,7 +39,7 @@ h2{
    text-align: left;
    line-height: 1.5;
    table-layout:fixed; 
-   
+   word-break:break-all;
 }
 .button{
    position: relative;
@@ -418,7 +418,6 @@ geocoder.addressSearch('<%=petSitter.getAddress()%>', function(result, status) {
 
 /* 리뷰게시판 조회   */
 
-const pagination = document.querySelector('.section5 .pagination');
 function replaceAll(str, searchStr, replaceStr) {
     return str.split(searchStr).join(replaceStr);
 }
@@ -435,12 +434,12 @@ $(function(){
 					 console.log('성공!');
 					 
 					 var jsonStr = JSON.stringify(data);
-					 var json = JSON.parse(jsonStr); 
+					  var json = JSON.parse(jsonStr); 
 					 for(var i in json.list){
 						 
 						 var content = decodeURIComponent(json.list[i].reviewcontent);
 						 content = replaceAll(content,"+", " ")
-						 $("#reviewboard").append("<tr><td><span class='my-rating'><input type='hidden' id='star' value="+json.list[i].point+"></span></td><td>"+json.list[i].userid+"</td><td>"+decodeURIComponent(json.list[i].reviewcontent)+"</td><td>"+json.list[i].reviewdate+"</tr>");
+						 $("#reviewboard").append("<tr><td><span class='my-rating'><input type='hidden' id='star' value="+json.list[i].point+"></span></td><td>"+json.list[i].userid+"</td><td>"+content+"</td><td>"+json.list[i].reviewdate+"</tr>");
 						 $(".my-rating").starRating({
 							 	readOnly: true,
 							    starSize: 10,
@@ -524,11 +523,11 @@ input[type=submit]:hover {
 
 </style>
 
-
+<!-- 예약페이지  -->
 <div style="float:left;padding-top:100px;padding-left:30px;"><!-- 오른쪽 영역  --> 
 <div id="rightpart" style="border-radius: 5px; background-color: #f2f2f2; padding: 20px;"><!-- 날짜 입력  -->
 <form action="/doggybeta/bkinsert" type="post">
-이용할 서비스()
+이용할 서비스(선택)
 <select id="selectservice" onchange="priceCal()">
 <!-- selected가 바뀔 때마다 서비스가 바뀌도록  -->
 <option>펫시터 집에 맡기기</option>
@@ -541,9 +540,24 @@ input[type=submit]:hover {
 이용할 서비스<input type="text" id="service" readonly>
 <br><br>
 나의 애완견
-<select name="mypet" id="mypet">
+<select name="mypet" id="mypet" onclick="mypetCheck();">
 
 </select>
+<script type="text/javascript">
+function mypetCheck(){
+	if($("#mypet").val() == null){
+		alert("등록된 펫이 없습니다. ");
+		//alert($("#mypet").val());
+		var submitAction = function(e) { //sumit클릭시 form action이 진행되지 않게 막음
+			e.preventDefault();
+		    e.stopPropagation();
+		};
+		$('form').bind('submit', submitAction);
+	};
+	
+};
+</script>
+
 <br><br>
 요청사항 <br><br><textarea  style="resize: none;" name="etc"  rows="4" cols="37" placeholder="펫시터에게 전할 말.."></textarea>
 <%-- <input type="hidden" name="service" id="service" value="<%=service%>"> --%>
@@ -556,22 +570,8 @@ input[type=submit]:hover {
 총 가격 : <input type="text" value=""  id="priceSum" name="priceSum" readonly>
 <p id="pricesum"></p>
 <br><br>
-<input type="submit" value="예약하기">
+<input type="submit" value="예약하기" onclick="mypetCheck();">
 <script>
-$("document").ready(function() {
-	   
-    $(window).scroll(function()  
-    {  
-        $('#scroll').animate({top:$(window).scrollTop()+"px" },{queue: false, duration: 350});    
-    });  
- 
-    $('#scroll').click(function()  
-    {  
-        $('#scroll').animate({ top:"+=15px",opacity:0 }, "slow");  
-    })
-       
-});  
-
 
 $(function() {
   $('input[name="datetimes"]').daterangepicker({
@@ -583,11 +583,17 @@ $(function() {
     maxDate: moment().startOf('day').add(14,'day'),
     locale: {
       format: 'YYYY/MM/DD HH:mm'
-    }
+    }/* ,
+    isInvalidDate: function(date) {
+        if (date.format('YYYY-M-D') == '2019-04-06') {
+            return true; 
+        }
+    } */
+  
   });
 });
 
-  /* 가격계산 ajax  */
+  /* 가격계산, 서비스 출력 ajax  */
 function priceCal(){
 	 console.log($('input[name="datetimes"]').val());
 	 console.log($('#datetimes').val());
@@ -629,6 +635,8 @@ $(function(){
 
 </script>
 </form>
+
+
 </div>
 </div>
 </div><!-- content 끝  -->
