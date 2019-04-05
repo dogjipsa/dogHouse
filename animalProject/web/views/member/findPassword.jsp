@@ -23,23 +23,21 @@
 			$.ajax({
 				type: 'post',
 				data: {userid : userId, email : useremail },
+				datatype: 'json',
 				url: '/doggybeta/jipsafindpwd',
 				success: function(result) {
 					var obj = decodeURIComponent(result.str);
 					
 					alert(obj);
+					location.href='/doggybeta/index.jsp';
 				}//success
-				,
-				error: function(jqXHR, textStatus, errorThrown) {
-					console.log("error : "+jqXHR+","+textStatus+","+errorThrown);
-				}
+				
 			});//ajax
 		});//btn
 	});
 </script>
 </head>
 <body>
-<form action='/doggybeta/jipsafindpwd'>
 <div id='tb'>
 <img id='doglogo' src='/doggybeta/resources/images/로고test2.png'>
 <h3> 비밀번호를 잊으셨나요? </h3>
@@ -56,8 +54,7 @@
 			</label>
 	</span>
 	<input type='submit' value='전송' id='btnSend'/>
-	<p>※전송버튼을 누르면 임시비밀번호 발급메일이 발송됩니다.</p>
+	<span id='tbs'>※전송버튼을 누르면 임시비밀번호 발급메일이 발송됩니다.</span>
 </div>
-</form>
 </body>
 </html>
