@@ -25,7 +25,8 @@
 <html id="tbhtml">
 <head>
 <meta charset="UTF-8">
-<title>팁게시판</title>
+<title>Dog House</title>
+<link rel="shortcut icon" href="/doggybeta/resources/images/favicon-32x32.png">
 <link href="/doggybeta/resources/css/footer.css" rel="stylesheet" type="text/css">
 
 

@@ -13,7 +13,8 @@ String priceSum = (String)(request.getAttribute("priceSum"));
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>Dog House</title>
+<link rel="shortcut icon" href="/doggybeta/resources/images/favicon-32x32.png">
 <link href="/doggybeta/resources/css/footer.css" rel="stylesheet" type="text/css">
 <style>
 h3{

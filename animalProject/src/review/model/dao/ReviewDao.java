@@ -166,33 +166,7 @@ public class ReviewDao {
 		return starAvg;
 	}
 
-	public int getStarCount(Connection conn, String petSitterId) {
-		int listCount = 0;
-		PreparedStatement pstmt = null;
-		ResultSet rset = null;
 
-		String query = "select count(*) from review where booking_no in (select booking_no from booking where puser_id= ?)";
-
-		try {
-			pstmt = conn.prepareStatement(query);
-			pstmt.setString(1, petSitterId);
-			rset = pstmt.executeQuery();
-
-			if (rset.next()) {
-				listCount = rset.getInt(1);
-			}
-
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			close(rset);
-			close(pstmt);
-		}
-
-		return listCount;
-		
-		
-	}
 
 	public Review selectOneReview(Connection conn, int bno) {
 		Review r = null;

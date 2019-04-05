@@ -121,18 +121,10 @@ function deletebtn(){
 .board { 
    position: relative;
    left : 150px;
-   top: 50px;
    border-collapse: collapse;   
    line-height: 1.5;
    table-layout:fixed; 
    
-}
-input[type="submit"]{
-   position: relative;
-   left : 200px;
-   top: 100px;
-   width: 100px;
-   height: 40px
 }
 
 #title{
@@ -150,8 +142,8 @@ input[type="submit"]{
 
 /* list_table 에서 사용되는 tbody */
 .board th{ 
-   width: 150px;
-    padding: 10px;
+   width: 180px;
+    padding: 5px;
     font-weight: bold;
     vertical-align: top;
     border-bottom: 1px solid #ccc;   
@@ -161,16 +153,22 @@ input[type="submit"]{
    border: none;
    width: 150px;
     padding: 10px;
-    text-align: left;
+    text-align: center;
     vertical-align: top;
     border-bottom: 1px solid #ccc;
 }
 .board #write:hover{
    background-color : #f3f6f7;
 }
-header{
-      
+header{    
    padding: 2rem 0px;
+}
+#buttons{
+   position: relative;
+   display: inline;
+   left : 200px;
+   width: 100px;
+   height: 40px;
 }
 
 
@@ -180,11 +178,12 @@ header{
 <body>
 <%@ include file="../common/menu.jsp"%>
    <div id="wrap">
-        <div id="content">
+        <div id="content" style="font-family:Sunflower;">
+      
 
 
 <header>
-<h5 align="center"><%= loginUser.getUserId() %> 님, 회원 정보 상세보기</h5>
+<h2 style="padding-botom:0px; text-align:center;"><%= loginUser.getUserId() %> 님, 회원 정보 상세보기</h5>
 </header>
 <br>
 <!-- 수정용 폼 태그 -->
@@ -240,7 +239,7 @@ header{
          <%}else{ %>
          <%=loginUser.getAddress() %>
          <input name="postcode" id="info_postcode" class="ps_input" placeholder="우편번호" >
-         <input type="button" onclick="info_execDaumPostcode()" id="post-search" value="주소 다시 등록하기">
+         <input type="button" onclick="info_execDaumPostcode()" id="post-search" value="주소 다시 등록하기" style="width:180px;">
          <input name="addr" id="info_address" class="ps_input input_addr" placeholder="주소" >
          <input name="daddr" id="info_detailAddress" class="ps_input" placeholder="상세주소" >
          <input name="extra" id="info_extraAddress" class="ps_input" placeholder="참고항목" >
@@ -333,13 +332,15 @@ header{
 </table>
 <br>         
 <!-- 테이블 종료 -->
+<div id="buttons">
 <input type="submit" value="정보수정하기" onclick="okbtn();">
-</form>
 <input type="button" id="deletebtn" value="탈퇴하기">
 <input type="submit" value="메인으로" onclick="location.href='/doggybeta/jipsalogout'">
+</div>
+</form>
+
 
 </div>
-      <div id="footer"><%@ include file="..//common/footer.jsp"%></div>
 </div>
 
 </body>

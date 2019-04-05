@@ -45,9 +45,11 @@ public class PetSitterListServlet extends HttpServlet {
 		String userId = request.getParameter("userid");
 		String serviceKind = request.getParameter("service");
 		String jido = request.getParameter("jido");
+		System.out.println("시 : " + jido);
+		
 		String detail = request.getParameter("detail");
 		HashMap<String, Object> map = new HashMap<String, Object>();
-		
+		System.out.println("구 : " + detail);
 		map.put("userid", userId);
 		map.put("jido", jido);
 		map.put("detail", detail);

@@ -8,10 +8,10 @@
 <head>
 <meta charset="UTF-8">
 <title>Dog House</title>
-
+<link rel="shortcut icon" href="/doggybeta/resources/images/favicon-32x32.png">
 <!-- css -->
 <!-- 변경확인용 주석2  -->
-<link rel="shortcut icon" href="/doggybeta/resources/images/favicon-32x32.png">
+
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <link href="/doggybeta/resources/css/footer.css" rel="stylesheet" type="text/css">
 <link href="https://fonts.googleapis.com/css?family=Sunflower:300,500,700&amp;subset=korean" rel="stylesheet" type="text/css">
@@ -93,8 +93,11 @@
   <div class="hero-text">
     <h1 style="font-size:50px">We are DogHouse</h1>
     <p>도그하우스는 1:1 매칭 서비스를 통해 반려인과 반려견에게 양질의 펫시팅 서비스를 제공합니다.</p>
-    <button onclick="location.href='/doggybeta/views/member/termsOfService.jsp'">(로그인전이라면)회원가입하기</button>
-    <button onclick="location.href='/doggybeta/views/member/termsOfService.jsp'">(로그인했다면)펫시터찾기</button>
+    <%if(loginUser != null) {%>
+    <button onclick="location.href='/doggybeta/views/member/termsOfService.jsp'">펫시터찾기</button>
+    <%}else{ %>
+    <button onclick="location.href='/doggybeta/views/member/termsOfService.jsp'">회원가입하기</button>
+    <%} %>
   </div>
 </div>
 

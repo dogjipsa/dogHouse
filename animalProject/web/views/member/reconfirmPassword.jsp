@@ -50,6 +50,9 @@ function clickbtn(){
 <br>
 <br>
 <style>
+header{
+margin:30px;
+}
 #id{
 background-color:#f3f6f7;
 padding: 30px 30px;
@@ -57,6 +60,7 @@ font-size: 16px;
 font: bold;
 height: auto;
 width: 500px;
+margin:30px 30px;
 }
 </style>
 <div id="id">

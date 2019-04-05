@@ -5,7 +5,8 @@
 
 <head>
 	<meta charset="UTF-8">
-	<title>팀 도그집사</title>
+	<title>Dog House</title>
+<link rel="shortcut icon" href="/doggybeta/resources/images/favicon-32x32.png">
 	<link href="/doggybeta/resources/css/footer.css" rel="stylesheet" type="text/css">
 	<link rel="stylesheet" href="/doggybeta/resources/css/aboutus/teamIntroduce.css">
 </head>
@@ -43,7 +44,7 @@
 						<p>PHONE</p>
 						<input type="text" value="01027750649" readonly>
 						<p>ROLE</p>
-						<input type="text" value="공지사항/ 펫시터 찾기/ Notification" readonly>
+						<input type="text" value="공지사항/FAQ/펫시터찾기/정보수정" readonly>
 					</div>
 			</div>
 		</div>

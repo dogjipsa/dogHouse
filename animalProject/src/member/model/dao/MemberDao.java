@@ -559,14 +559,15 @@ public class MemberDao {
 		String userId = (String)map.get("userid");
 		String jido = (String)map.get("jido");
 		String detail = (String)map.get("detail");
-
+		System.out.println("dao에서 지도값 : " + jido + "," + detail);
 
 		if(detail == null || detail.equals("전체")) {
 			jido = (String)map.get("jido");
 		}else if(detail != "전체"){
 			jido = jido + " " + detail;
 		}
-
+		
+		System.out.println("dao에서 지도값 : " + jido );
 		
 		String query = "SELECT DISTINCT P.USER_ID, P.USER_NAME, P.PRICE, P.USER_ORIGINFILE, "
 				+ "P.USER_REFILE, P.ADDRESS, P.TITLE_IMG FROM MEMBER P LEFT OUTER JOIN PET Z ON (P.USER_ID = Z.USER_ID) "
@@ -588,7 +589,7 @@ public class MemberDao {
 				findSitter.setPrice(rset.getInt(3));
 				findSitter.setUseroriginfile(rset.getString(4));
 				findSitter.setUserrefile(rset.getString(5));
-				findSitter.setAddress(rset.getString(6).substring(0, 7));
+				findSitter.setAddress(rset.getString(6).substring(0, 8));
 				findSitter.setTitleImg(rset.getString(7));
 						
 				list.add(findSitter);

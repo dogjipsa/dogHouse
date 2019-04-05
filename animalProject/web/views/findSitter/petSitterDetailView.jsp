@@ -15,7 +15,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Dog House</title>
-<link rel="shortcut icon" href="/doggybeta/resources/images/favicon.ico">
+<link rel="shortcut icon" href="/doggybeta/resources/images/favicon-32x32.png">
 <link href="/doggybeta/resources/css/footer.css" rel="stylesheet" type="text/css">
 <link rel="stylesheet" href="/doggybeta/resources/css/checkMyLog.css">
 

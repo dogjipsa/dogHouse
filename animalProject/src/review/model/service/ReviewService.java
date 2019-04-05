@@ -62,16 +62,6 @@ public class ReviewService {
 		return startAvg;
 	}
 
-	public int getStarCount(String petSitterId) {
-		Connection conn = getConnection();
-		int listCount = rdao.getStarCount(conn, petSitterId);
-		if(listCount > 0)
-			commit(conn);
-		else
-			rollback(conn);
-		close(conn);
-		return listCount;
-	}
 
 	public Review selectOneReview(int bno) {
 		Connection conn = getConnection();
