@@ -975,13 +975,14 @@ public class ManagerDao {
 		return flist;
 	}
 
-	public ArrayList<Question> selectQuestionList(Connection conn, int limit, int currentPage) {
+	public ArrayList<Question> selectQuestionList(Connection conn, int currentPage, int limit) {
 		ArrayList<Question> list = new ArrayList<Question>();
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		
-		int startRow = 1;//(currentPage - 1) * limit + 1;
-		int endRow = startRow + limit;
+		int startRow = (currentPage - 1) * limit + 1;
+		int endRow = startRow + limit - 1;
+		
 		String query = "SELECT * FROM (SELECT ROWNUM RNUM, QUESTION_NO, QUESTION_TITLE, "
 				+ "QUESTION_CONTENT, QUESTION_DATE, REPLY_YN, " 
 				+ "USER_ID, QUESTION_ORIGINAL_FILENAME, " 
@@ -1015,6 +1016,7 @@ public class ManagerDao {
 
 				list.add(question);
 				System.out.println(question);
+				System.out.println("dao list list : "+ list.size());
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -1453,6 +1455,27 @@ public class ManagerDao {
 		PreparedStatement pstmt = null;
 		
 		String query = "update notice set notice_delete = 'y' where notice_no in ?";
+		
+		try {
+			pstmt = conn.prepareStatement(query);				
+			pstmt.setInt(1, Integer.parseInt(delNo));
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
+	public int managerDeleteReport(Connection conn, String delNo) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		
+		String query = "delete from report where report_no = ?";
 		
 		try {
 			pstmt = conn.prepareStatement(query);				

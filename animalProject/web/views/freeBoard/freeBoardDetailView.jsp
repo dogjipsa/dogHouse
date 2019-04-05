@@ -39,7 +39,7 @@ $(function(){
 		document.location.reload();
 		location.href="/doggybeta/fdetail?fnum="+fnum+"&page="+page;
 	});  //click
-
+	
 }); //ready
 
 $(function(){
@@ -128,7 +128,7 @@ h2{
 		  <div id="content">
 
 <%-- 상세보기  --%>	
-<h2><%= freeboard.getFreeboardNo() %>번 게시글 상세보기</h2>
+<h2>자유게시판 <%= freeboard.getFreeboardNo() %>번 게시글 상세보기</h2>
 <br>
 <table class="fdtable" id="t" align="center"  width="800">
 <tr>
@@ -201,7 +201,7 @@ h2{
 				<!-- 버튼 -->
 				<div>
 				<td width="100">
-					<%if(loginUser.getUserId().equals(f.getUserid())){ %>
+					<%if(freeboard.getUserId().equals(f.getUserid())){ %>
 					<a href="/doggybeta/frsearch?frnum=<%= f.getFreereply()%>">[수정]</a>
 					<a href="/doggybeta/frdelete?frnum=<%= f.getFreereply()%>&fnum=<%= f.getFreeboardno()%>">[삭제]</a>	
 					<%} else{ %>
@@ -249,8 +249,12 @@ h2{
 
 <!-- 현재 페이지가 포함된 페이지 그룹 숫자 출력 처리 -->
 <% for(int p = startPage; p <= endPage; p++){ %>
+<% 	if (p == currentPage) {	 %>
+	<font color="red" size="4"><b>[<%=p%>]</b></font>
+	<% }else{ %>
 	<a href="/doggybeta/fdetail?page=<%= p %>&fnum=<%= freeboard.getFreeboardNo() %>"><%= p %></a>
-<% } %> &nbsp;
+<% }} %> &nbsp;
+
 
 <!-- 다음 -->
 <% if(endPage < maxPage){ %>

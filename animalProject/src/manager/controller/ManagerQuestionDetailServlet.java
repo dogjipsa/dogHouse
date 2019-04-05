@@ -48,6 +48,8 @@ public class ManagerQuestionDetailServlet extends HttpServlet {
 		QuestionService qservice = new QuestionService();		
 		Question question = qservice.selectQuestion(questionNo);
 		
+		/*Answer answer = new AnswerService().selectAnswer(questionNo);*/
+		
 		response.setContentType("text/html; charset=utf-8");
 		RequestDispatcher view = null;
 		if(question != null) {

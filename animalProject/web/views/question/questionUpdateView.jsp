@@ -14,6 +14,7 @@
 <%@ include file="../common/menu.jsp" %>
 <div id="wrap">
 <div id="cotent">
+<br><br>
 <h1 align="center" style="color:ivory;">1:1 문의글 수정 </h1>
 <hr align="center" style="width:600px">
 <br>

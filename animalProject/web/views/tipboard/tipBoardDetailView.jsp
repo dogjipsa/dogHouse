@@ -152,7 +152,7 @@ h2{
 		  <div id="content">
 			<!-- 내용작성  -->
 			
-			<h2 align="center"><%= tboard.getTipBoardNo() %>번 글 상세조회</h2>
+			<h2 align="center">팁게시판 <%= tboard.getTipBoardNo() %>번 글 상세조회</h2>
 			
 <br>
 <table class="ttable" id="t" align="center"  width="800">
@@ -235,7 +235,7 @@ h2{
 				<td width="100">
 					<!-- 댓글 작성자만 수정, 삭제 가능하도록 -->	
 					<div>
-					<%if(loginUser.getUserId().equals(t.getUserId())){ %>
+					<%if(tboard.getUserId().equals(t.getUserId())){ %>
 						<a href="/doggybeta/trsearch?trnum=<%= t.getTipReplyNo() %>">[수정]</a>	
 						<a href="/doggybeta/trdelete?trnum=<%= t.getTipReplyNo() %>&tnum=<%= t.getTipNo()%>">[삭제]</a>
 					<%}else{%>

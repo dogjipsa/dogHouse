@@ -41,7 +41,7 @@ public class ReportFreeBoardReplyInsertServlet extends HttpServlet {
 		
 		String fboaodNoS = String.valueOf(fboardNo);
 		String replyNoS = String.valueOf(replyNo);
-		String fboardReplyNo = "30" + fboaodNoS + replyNoS;
+		String fboardReplyNo = "20" + fboaodNoS + replyNoS;
 		int rfboardReplyNo = Integer.parseInt(fboardReplyNo); 
 		
 		Report rfreport = new Report();

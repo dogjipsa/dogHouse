@@ -39,7 +39,7 @@ public class ReportTipBoardInsertServlet extends HttpServlet {
 		int No = Integer.parseInt(request.getParameter("rtboard"));
 		
 		String rtboard = String.valueOf(No);
-		String rtboardS = "20" + rtboard;
+		String rtboardS = "30" + rtboard;
 		int rtboardNo = Integer.parseInt(rtboardS); 
 		
 		Report rtreport = new Report();

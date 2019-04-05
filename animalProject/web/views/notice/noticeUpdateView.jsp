@@ -3,7 +3,7 @@
     <%@ page import='member.model.vo.Member' %>
 <%
 	Notice notice = (Notice)request.getAttribute("notice");
-	Member loginUser = (Member)session.getAttribute("loginUser");
+	//Member loginUser = (Member)session.getAttribute("loginUser");
 %> 
 
 <!DOCTYPE html>

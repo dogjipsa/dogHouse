@@ -498,7 +498,7 @@ public class MemberDao {
 		Member petSitter = new Member();
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
-		String query = "select user_id, user_name, address, phone, price, user_date, user_originfile, user_refile  from member where user_id = ?";
+		String query = "select user_id, user_name, address, phone, price, user_date, user_originfile, user_refile, PETSITTER_CONTENT  from member where user_id = ?";
 		try {
 			pstmt = conn.prepareStatement(query);
 			pstmt.setString(1, petSitterId);
@@ -512,6 +512,7 @@ public class MemberDao {
 				petSitter.setUserDate(rset.getDate(6));
 				petSitter.setUseroriginfile(rset.getString(7));
 				petSitter.setUserrefile(rset.getString(8));
+				petSitter.setpContent(rset.getString(9));
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

@@ -34,15 +34,15 @@
 <div id="wrap">
 <div id="cotent">
 <br>
-<h1 align="left" style="color:ghostwhite;">&nbsp;&nbsp;1:1 문의 </h1>
-<hr align="left" style="width:880px"><br><br>
-<div style="border:2px solid white; width:600px; height:100%; align=center	;">
+<h1 align="left" style="color:ghostwhite;">&nbsp;&nbsp;&nbsp;1:1 문의 </h1>
+<!-- <hr align="left" style="width:880px"> --><br><br>
+<div style="border:2px solid white; width:600px; height:100%; margin-left:30px; align=center	;">
 	<h3 style="color:Cornsilk;">&nbsp; 문의하시기 전에 FAQ에서 궁금하신 사항을 확인해보세요!</h3> &nbsp;
 	<button onclick="moveFAQPage();">FAQ 게시판으로 이동</button><br><br>
 </div><br><br>
 
 <% if(loginUser != null ) { %>
-<div style="border:2px solid white; width:600px; height:100%;">
+<div style="border:2px solid white; width:600px; height:100%; margin-left:30px;">
 	<h3 style="color:Cornsilk;">&nbsp; 이용 및 처리절차</h3>
 	<li style="color:Aquamarine;">1. <a href="/doggybeta/views/question/questionWriteForm.jsp" target="_blank">문의글</a>작성</li>
     <li style="color:Aquamarine;">2. 담당자 확인 및 답변 등록</li>
@@ -50,7 +50,7 @@
     <br>
 </div>    
 <% }else{ %>
-<div style="border:2px solid white; width:600px; height:100%;">
+<div style="border:2px solid white; width:600px; height:100%; margin-left:30px;">
 	<h3 style="color:Cornsilk;">&nbsp; 이용 및 처리절차</h3>
 	<li style="color:Aquamarine;">1. 문의글작성</li>
     <li style="color:Aquamarine;">2. 담당자 확인 및 답변 등록</li>
@@ -59,14 +59,12 @@
 </div>
 <% } %><br><br>
 
-<div style="border:2px solid white; width:860px; height:100%;">
+<div style="border:2px solid white; width:1000px; height:260px; margin-left:30px;">
 	<h3 style="color:Cornsilk;">&nbsp;  로그인 후 문의하시면 상세한 답변이 제공되며, 답변 내용을 보다 편리하게 확인하실 수 있습니다.</h3> &nbsp;
 	<% if(loginUser == null ) { %>
 	<button class='btn btn-1 btn-sign'>로그인</button><br><br>	
-	<ul>
-		<li style="color:yellow;">&nbsp;아직도 도그집사의 회원이 아니신가요? 회원가입을 하시면 보다 편리한 정보 이용이 가능합니다.<button class='btn btn-1 btn-sign'>회원가입하기</button></li>
-		<li style="color:yellow;">&nbsp;아이디와 비밀번호를 잊으셨나요? <a href="/doggybeta/views/member/findPassword.jsp" class="login-forgot-pass">아이디/비밀번호 찾기</a></li>
-	</ul>
+		<h4 style="color:yellow;">&nbsp;&nbsp;&nbsp;아직도 도그집사의 회원이 아니신가요? <a href="/doggybeta/views/member/termsOfService.jsp">회원가입</a>을 하시면 보다 편리한 정보 이용이 가능합니다.</h4>	
+		<h4 style="color:yellow;">&nbsp;&nbsp;&nbsp;아이디와 비밀번호를 잊으셨나요? <a href="/doggybeta/views/member/findPassword.jsp" class="login-forgot-pass">아이디/비밀번호 찾기</a></h4>
 	<% } %>
 	<% if(loginUser != null){ %>
 	<button onclick="moveListPage();">문의내역 확인</button>&nbsp;
@@ -76,7 +74,6 @@
 </div>
 <% } %><br><br><br><br><br><br><br>
 </div>
-<hr>
 
 
 

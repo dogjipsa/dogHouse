@@ -82,7 +82,7 @@ public class FindPasswordServlet extends HttpServlet {
 				return new PasswordAuthentication(email.substring(0,idx), password);
 			}
 		});
-		session.setDebug(true);
+		//session.setDebug(true);
 		
 		try {
 			MimeMessage msg = new MimeMessage(session);

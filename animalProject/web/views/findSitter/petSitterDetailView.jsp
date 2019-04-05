@@ -1,12 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ page import="member.model.vo.Member, member.model.vo.SitterImage, java.util.ArrayList" %>
+<%@ page import="member.model.vo.Member, member.model.vo.SitterImage, java.util.ArrayList, booking.model.vo.BookingCheckDate" %>
 <%
 	Member petSitter = (Member)request.getAttribute("petSitter");
 	ArrayList<SitterImage> sitterFacilityImg = (ArrayList<SitterImage>)request.getAttribute("sitterFacilityImg");
 	//String service = (String)request.getAttribute("service");
 	String[] location = (petSitter.getAddress()).split(",");//상세주소가 다 나오지 않게 ,로 구분
 	double starAvg = (Double)request.getAttribute("starAvg");
+	ArrayList<BookingCheckDate> checkDateList = (ArrayList<BookingCheckDate>)request.getAttribute("checkDate");
 
 %>
 <!DOCTYPE html>
@@ -17,6 +18,7 @@
 <link rel="shortcut icon" href="/doggybeta/resources/images/favicon-32x32.png">
 <link href="/doggybeta/resources/css/footer.css" rel="stylesheet" type="text/css">
 <link rel="stylesheet" href="/doggybeta/resources/css/checkMyLog.css">
+
 
 <!-- 시간(DateTimePicker) 위젯 링크들은 menu.jsp에 추가  -->
 
@@ -207,6 +209,34 @@ span.star-prototype > * {
  .review_count_two  a:link {     color:   #ff923a; font-size: 14pt; text-decoration: none;}
  .review_count_two  a:visited {     color:   #ff923a; text-decoration: none;}
  .review_count_two  a:hover { color:   #ff923a; text-decoration: underline;} 
+ 
+ 
+ input[type=text], select {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  font-size:15px;
+}
+
+input[type=submit] {
+  width: 100%;
+  background-color: #4CAF50;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size:30px;
+}
+
+input[type=submit]:hover {
+  background-color: #45a049;
+}
 </style>
 
 </head>
@@ -258,7 +288,7 @@ span.star-prototype > * {
       <img class="demo cursor" src="/doggybeta/files/profile/<%=sitterFacilityImg.get(2).getRenameFile() %>" style="width:100%" onclick="currentSlide(3)" alt="<%=petSitter.getUserName()%>님의 시설사진3">
     </div> --%>
     <div class="column">
-      <img class="demo cursor" src="/doggybeta/files/profile/<%=sitterFacilityImg.get(i).getRenameFile() %>" style="width:100%" onclick="currentSlide(<%=i %>)" alt="<%=petSitter.getUserName()%>님의 시설사진<%=i%>">
+      <img class="demo cursor" src="/doggybeta/files/profile/<%=sitterFacilityImg.get(i).getRenameFile() %>" style="width:100%" onclick="currentSlide(<%=i %>)" alt="<%=petSitter.getUserName()%>님의 시설사진<%=i+1%>">
     </div>
    <%} %>
   </div>
@@ -328,7 +358,6 @@ function showSlides(n) {
 <table class="board" >
 
 <thead><tr><th>세부조건</th><th></th></tr></thead>
-<tr><td>돌봄 가능한 강아지 크기&나이 :  </td><td></td></tr>
 <tr><td>하루(1박) : <%=petSitter.getPrice() %> </td><td></td></tr>
 <tr><td>당일(체크인/체크아웃 시간 내) : <%=(int)((petSitter.getPrice() * 0.8 *1000)) /1000%> </td><td></td></tr>
 </table>
@@ -438,30 +467,14 @@ $(function(){
 					 for(var i in json.list){
 						 
 						 var content = decodeURIComponent(json.list[i].reviewcontent);
-						 content = replaceAll(content,"+", " ")
+						 content = replaceAll(content,"+", " ");
+
 						 $("#reviewboard").append("<tr><td><span class='my-rating'><input type='hidden' id='star' value="+json.list[i].point+"></span></td><td>"+json.list[i].userid+"</td><td>"+content+"</td><td>"+json.list[i].reviewdate+"</tr>");
 						 $(".my-rating").starRating({
 							 	readOnly: true,
 							    starSize: 10,
 							    initialRating: json.list[i].point	    
 							});
-						
-						  /* if(json.list[i].point==1){
-								$("#reviewboard").append("<tr><td>★</td><td>"+json.list[i].userid+"</td><td>"+decodeURIComponent(json.list[i].reviewcontent)+"</td><td>"+json.list[i].reviewdate+"</tr>");
-					     }
-						 if(json.list[i].point==2){
-								$("#reviewboard").append("<tr><td>★★</td><td>"+json.list[i].userid+"</td><td>"+decodeURIComponent(json.list[i].reviewcontent)+"</td><td>"+json.list[i].reviewdate+"</tr>");
-						 }
-						 if(json.list[i].point==3){
-							$("#reviewboard").append("<tr><td>★★★</td><td>"+json.list[i].userid+"</td><td>"+content+"</td><td>"+json.list[i].reviewdate+"</tr>");
-						 }
-						 if(json.list[i].point==4){
-							 $("#reviewboard").append("<tr><td>★★★★</td><td>"+json.list[i].userid+"</td><td>"+content+"</td><td>"+json.list[i].reviewdate+"</tr>");
-							 }
-						 if(json.list[i].point==5){
-							 $("#reviewboard").append("<tr><td>★★★★★</td><td>"+json.list[i].userid+"</td><td>"+decodeURIComponent(json.list[i].reviewcontent)+"</td><td>"+json.list[i].reviewdate+"</tr>");
-							 } */
-						<%-- <span class="star-prototype"><%= starAvg %></span> --%>
 					 }
 					
 					 $("#reviewcount").append(data.listCount+"건");
@@ -493,32 +506,7 @@ function popupOpen(){
 </div><!-- 가운데 영역  끝-->
 
 <style>
-input[type=text], select {
-  width: 100%;
-  padding: 12px 20px;
-  margin: 8px 0;
-  display: inline-block;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  box-sizing: border-box;
-  font-size:15px;
-}
 
-input[type=submit] {
-  width: 100%;
-  background-color: #4CAF50;
-  color: white;
-  padding: 14px 20px;
-  margin: 8px 0;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size:30px;
-}
-
-input[type=submit]:hover {
-  background-color: #45a049;
-}
 
 
 </style>
@@ -583,16 +571,57 @@ $(function() {
     maxDate: moment().startOf('day').add(14,'day'),
     locale: {
       format: 'YYYY/MM/DD HH:mm'
-    }/* ,
-    isInvalidDate: function(date) {
-        if (date.format('YYYY-M-D') == '2019-04-06') {
+    },
+    selectPastInvalidDate: false,
+    "timePickerIncrement": 10,
+     /* isInvalidDate: function(date) {
+        if (date.format('YYYY/MM/DD') == '2019/04/08') {
             return true; 
         }
-    } */
-  
+        if (date.format('YYYY/MM/DD') == '2019/04/09') {
+            return true; 
+        }
+       
+        return false; 
+    }, 
+     isInvalidDate: function(date) {
+    	var disabled_start = moment('2019/04/11 10:00', 'YYYY/MM/DD HH:mm');
+        var disabled_end = moment('2019/04/14 20:00', 'YYYY/MM/DD HH:mm');
+        return date.isAfter(disabled_start) && date.isBefore(disabled_end);
+    	
+      },  */ 
+      <%
+	for(BookingCheckDate b : checkDateList){
+	System.out.println("뷰에서 데이트 확인! : "+b.toString());
+	%>
+		isInvalidDate: function(date) {
+        var disabled_start = moment('<%=b.getCheckInDate()%>', 'YYYY/MM/DD HH:mm');
+        var disabled_end = moment('<%=b.getCheckOutDate()%>', 'YYYY/MM/DD HH:mm');
+        return date.isAfter(disabled_start) && date.isBefore(disabled_end)
+        //return date.isAfter(disabled_start) && date.isBefore(disabled_end) || date.isEqual(disabled_start) || date.isEqual(disabled_end);
+      },
+	<%}
+%>  
+<%-- <%
+for(BookingCheckDate b : checkDateList){
+System.out.println("뷰에서 데이트 확인! : "+b.toString());
+%>
+	isInvalidDate: function(date) {
+		  var formatted = date.format('YYYY/MM/DD');
+		  return ["<%=b.getCheckInDate()%>","<%=b.getCheckOutDate()%>"].indexOf(formatted) > -1;
+  },
+<%}
+%>  --%>
   });
 });
 
+/* ,
+isInvalidDate: function(date) {
+    if (date.format('YYYY-M-D') == '2019-04-06') {
+        return true; 
+    }
+} */
+ 
   /* 가격계산, 서비스 출력 ajax  */
 function priceCal(){
 	 console.log($('input[name="datetimes"]').val());
@@ -616,6 +645,7 @@ function priceCal(){
   
 </script>
 <script type="text/javascript">
+/* 후기게시판 조회  */
 $(function(){
 	 $.ajax({
 		 url: '/doggybeta/palllist',

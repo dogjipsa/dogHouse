@@ -39,7 +39,7 @@ public class TipBoardFileDownServlet extends HttpServlet {
 		String tipRenameFileName = request.getParameter("trfile");
 
 		// 3. 웹프로젝트 내의 저장폴더 지정
-		String readFolder = request.getSession().getServletContext().getRealPath("/files/tipboard");
+		String readFolder = request.getSession().getServletContext().getRealPath("/files/tipBoard");
 
 		// 4. 클라이언트로 내보낼 출력 스트림 생성
 		ServletOutputStream downOut = response.getOutputStream();

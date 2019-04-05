@@ -8,6 +8,7 @@ import static common.JDBCTemplate.rollback;
 import java.sql.Connection;
 import java.sql.Date;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import report.model.dao.ReportDao;
 import report.model.vo.Report;
@@ -38,6 +39,20 @@ public class ReportService {
 			rollback(conn);
 		close(conn);
 		return result;
+	}
+
+	public ArrayList<Report> selectReportList(HashMap<String, Object> listOpt) {
+		Connection conn = getConnection();
+		ArrayList<Report> rlist = repdao.selectReportList(conn, listOpt);
+		close(conn);
+		return rlist;
+	}
+
+	public int getListCount(HashMap<String, Object> listOpt) {
+		Connection conn = getConnection();
+		int listCount = repdao.getListCount(conn, listOpt);
+		close(conn);
+		return listCount;
 	}
 	
 	

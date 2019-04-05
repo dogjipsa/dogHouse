@@ -212,7 +212,7 @@ font-size: 15pt;
 	<% if(opt == null){ %>
 	<a href="/doggybeta/nlist?page=<%= p %>"><%= p %></a>
 	<% }else{ %>
-	<a href="/doggybeta/nlist?opt=<%= opt %>&serach=<%= search%>&page=<%= p %>"><%= p %></a>
+	<a href="/doggybeta/nlist?opt=<%= opt %>&search=<%= search %>&page=<%= p %>"><%= p %></a>
 <% }} %> &nbsp;
 
 <!-- 다음 -->
@@ -220,7 +220,7 @@ font-size: 15pt;
 <% if(opt == null){ %>
 	<a href="/doggybeta/nlist?page=<%= endPage + 1 %>">▶</a>
 <% }else{ %>
-	<a href="/doggybeta/nlist?isearch=<%= search %>&search=<%= endPage + 1 %>&opt=<%= opt %>">▶</a>&nbsp;
+	<a href="/doggybeta/nlist?search=<%= search %>&search=<%= endPage + 1 %>&opt=<%= opt %>">▶</a>&nbsp;
 <% } %>
 <% }else{ %>
 	▶&nbsp;

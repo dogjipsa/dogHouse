@@ -146,6 +146,7 @@ public class ManagerService {
 		Connection conn = getConnection();
 		ArrayList<Question> list = manDao.selectQuestionList(conn,currentPage,limit);
 		System.out.println("서비스"+currentPage + "=" + limit + "=" + list );
+		System.out.println("qlist qlist servlet : "+ list.size());
 		close(conn);
 		return list;
 	}
@@ -255,6 +256,16 @@ public class ManagerService {
 	public int managerSelectDeleteNotice(String delNo) {
 		Connection conn = getConnection();
 		int result = manDao.managerSelectDeleteNotice(conn, delNo);
+		if(result > 0)
+		commit(conn);
+			else
+		rollback(conn);
+		return result;
+	}
+
+	public int managerDeleteReport(String delNo) {
+		Connection conn = getConnection();
+		int result = manDao.managerDeleteReport(conn, delNo);
 		if(result > 0)
 		commit(conn);
 			else

@@ -58,10 +58,10 @@ public class ReviewService {
 	public double selectStarAvg(String petSitterId) {
 		Connection conn = getConnection();
 		double startAvg = rdao.selectStartAvg(conn, petSitterId);
-		System.out.println("서비스 단 별점 계산 아이디 : " + petSitterId);
 		close(conn);
 		return startAvg;
 	}
+
 
 	public Review selectOneReview(int bno) {
 		Connection conn = getConnection();
