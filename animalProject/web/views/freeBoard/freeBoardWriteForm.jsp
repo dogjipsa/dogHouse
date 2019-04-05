@@ -42,10 +42,7 @@ h2{
 	text-align:center;	
 	}
 
-#wrap{
-    background-color: rgba(246, 229, 141,0.5);
 
-}
 </style>
 
 <link href="/doggybeta/resources/css/footer.css" rel="stylesheet" type="text/css"></link>

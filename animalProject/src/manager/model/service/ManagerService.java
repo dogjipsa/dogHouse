@@ -261,5 +261,15 @@ public class ManagerService {
 		rollback(conn);
 		return result;
 	}
+
+	public int managerDeleteReport(String delNo) {
+		Connection conn = getConnection();
+		int result = manDao.managerDeleteReport(conn, delNo);
+		if(result > 0)
+		commit(conn);
+			else
+		rollback(conn);
+		return result;
+	}
 	
 }

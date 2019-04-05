@@ -1468,6 +1468,27 @@ public class ManagerDao {
 		
 		return result;
 	}
+
+	public int managerDeleteReport(Connection conn, String delNo) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		
+		String query = "delete from report where report_no = ?";
+		
+		try {
+			pstmt = conn.prepareStatement(query);				
+			pstmt.setInt(1, Integer.parseInt(delNo));
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
 }
 	
 
