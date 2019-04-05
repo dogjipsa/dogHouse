@@ -15,7 +15,7 @@
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <style>
 * {box-sizing: border-box}
-body {font-family: Verdana, sans-serif; margin:0}
+body {font-family: Sunflower, sans-serif; margin:0}
 .mySlides {display: none}
 img {vertical-align: middle;}
 
@@ -122,7 +122,7 @@ img {vertical-align: middle;}
 
 <div class="mySlides fade">
   <div class="numbertext">1 / 3</div>
-  <img src="/doggybeta/resources/images/dogmk1.jpg" style="width:100%">
+  <img src="/doggybeta/resources/images/dogmk1.jpg" style="width:100%; height: 890px">
   <div class="text" style="color:#222;">
   도그 하우스는 100% 회원제 서비스입니다. 회원가입을 하고 펫시팅 서비스를 신청하세요.
   </div>
@@ -130,13 +130,13 @@ img {vertical-align: middle;}
 
 <div class="mySlides fade">
   <div class="numbertext">2 / 3</div>
-  <img src="/doggybeta/resources/images/dogmk5.jpg" style="width:100%">
+  <img src="/doggybeta/resources/images/dogmk5.jpg" style="width:100%; height: 890px">">
   <div class="text">누구나 펫시터가 될 수 있습니다. 회원가입을 하고 펫시터 신청을 해보세요.</div>
 </div>
 
 <div class="mySlides fade">
   <div class="numbertext">3 / 3</div>
-  <img src="/doggybeta/resources/images/dogmk4.jpg" style="width:100%">
+  <img src="/doggybeta/resources/images/dogmk4.jpg" style="width:100%;  height: 890px">">
   <div class="text">당신이 선택한 펫시터의 평점을 확인하고 당신의 반려견에 좋은 추억을 선물하세요.</div>
 </div>
 

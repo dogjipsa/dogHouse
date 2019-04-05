@@ -10,7 +10,8 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>first</title>
+<title>Dog House</title>
+<link rel="shortcut icon" href="/doggybeta/resources/images/favicon-32x32.png">
 <script type="text/javascript" src="/doggybeta/resources/js/jquery-3.3.1.min.js"></script>
 <script type="text/javascript"></script>
 <style type="text/css">

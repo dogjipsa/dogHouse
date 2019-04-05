@@ -27,7 +27,8 @@
 <html id='fbhtml'>
 <head>
 <meta charset="UTF-8">
-<title></title>
+<title>Dog House</title>
+<link rel="shortcut icon" href="/doggybeta/resources/images/favicon-32x32.png">
 <link href="/doggybeta/resources/css/footer.css" rel="stylesheet" type="text/css">
 <link href="https://fonts.googleapis.com/css?family=Sunflower:300,500,700&amp;subset=korean" rel="stylesheet" type="text/css">
 <script type="text/javascript" src="/doggybeta/resources/js/jquery-3.3.1.min.js"></script>

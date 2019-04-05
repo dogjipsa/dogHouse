@@ -19,7 +19,7 @@
 <html>
 <head>
 <title>Dog House</title>
-<link rel="shortcut icon" href="/doggybeta/resources/images/favicon.ico">
+<link rel="shortcut icon" href="/doggybeta/resources/images/favicon-32x32.png">
 <link href="/doggybeta/resources/css/footer.css" rel="stylesheet" type="text/css">
 <script type="text/javascript" src="/doggybeta/resources/js/jquery-3.3.1.min.js"></script>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">

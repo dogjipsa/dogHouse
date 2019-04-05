@@ -22,7 +22,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Dog House</title>
-<link rel="shortcut icon" href="/doggybeta/resources/images/favicon.ico">
+<link rel="shortcut icon" href="/doggybeta/resources/images/favicon-32x32.png">
 <link href="/doggybeta/resources/css/footer.css" rel="stylesheet" type="text/css">
 <script type="text/javascript" src="/doggybeta/resources/js/jquery-3.3.1.min.js"></script>
 <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
@@ -66,7 +66,7 @@ function categoryChange(e) {
 	  var target = document.getElementById("detail");
 	   console.log("detail : " + detail);
 	  console.log("target : " + target); 
-	  if(e.value == "서울") {
+	  if(e.value == "서울시") {
 		  var d = detail_name1;
 		  if(detail_name1 == "전체"){
 			  d == null;
@@ -177,8 +177,8 @@ font-size: 12px;
 					<td>
 					  <select name="jido" onChange="categoryChange(this)" style="width:80px; height:30px;">
 						<option selected>-선택-</option>
-						<option value='서울'>서울</option>
-						<option value='경기'>경기</option>
+						<option value='서울시'>서울</option>
+						<option value='경기도'>경기</option>
 						<option value='대구'>대구</option>
 						<option value='인천'>인천</option>
 						<option value='강원'>강원</option>

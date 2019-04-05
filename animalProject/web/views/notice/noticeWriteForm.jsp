@@ -6,6 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Dog House</title>
+<link rel="shortcut icon" href="/doggybeta/resources/images/favicon-32x32.png">
 <script type="text/javascript" src="/doggybeta/SE2/js/service/HuskyEZCreator.js" charset="utf-8"></script>
 <link rel="shortcut icon" href="/doggybeta/resources/images/favicon.ico">
 <link href="/doggybeta/resources/css/footer.css" rel="stylesheet" type="text/css">
