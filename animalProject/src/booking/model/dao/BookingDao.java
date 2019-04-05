@@ -350,11 +350,7 @@ public class BookingDao {
 			pstmt.setString(1, petSitterId);
 						
 			rset = pstmt.executeQuery();
-			int i=0;
-			System.out.println("dao는 들어가나?");
 			while(rset.next()) {
-				System.out.println("dao체크" + i);
-				i++;
 				BookingCheckDate b = new BookingCheckDate();
 				b.setCheckInDate(rset.getString(1));
 				b.setCheckOutDate(rset.getString(2));
