@@ -1,12 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ page import="member.model.vo.Member, member.model.vo.SitterImage, java.util.ArrayList" %>
+<%@ page import="member.model.vo.Member, member.model.vo.SitterImage, java.util.ArrayList, booking.model.vo.BookingCheckDate" %>
 <%
 	Member petSitter = (Member)request.getAttribute("petSitter");
 	ArrayList<SitterImage> sitterFacilityImg = (ArrayList<SitterImage>)request.getAttribute("sitterFacilityImg");
 	//String service = (String)request.getAttribute("service");
 	String[] location = (petSitter.getAddress()).split(",");//상세주소가 다 나오지 않게 ,로 구분
 	double starAvg = (Double)request.getAttribute("starAvg");
+	ArrayList<BookingCheckDate> checkDateList = (ArrayList<BookingCheckDate>)request.getAttribute("checkDate");
 
 %>
 <!DOCTYPE html>
@@ -572,25 +573,55 @@ $(function() {
       format: 'YYYY/MM/DD HH:mm'
     },
     selectPastInvalidDate: false,
-    isInvalidDate: function(date) {
+    "timePickerIncrement": 10,
+     /* isInvalidDate: function(date) {
         if (date.format('YYYY/MM/DD') == '2019/04/08') {
             return true; 
         }
-        /* if(date.format('HH:mm') == )
-        return false; */
-    }
-    
-  
-  /* ,
-    isInvalidDate: function(date) {
-        if (date.format('YYYY-M-D') == '2019-04-06') {
+        if (date.format('YYYY/MM/DD') == '2019/04/09') {
             return true; 
         }
-    } */
-  
+       
+        return false; 
+    }, 
+     isInvalidDate: function(date) {
+    	var disabled_start = moment('2019/04/11 10:00', 'YYYY/MM/DD HH:mm');
+        var disabled_end = moment('2019/04/14 20:00', 'YYYY/MM/DD HH:mm');
+        return date.isAfter(disabled_start) && date.isBefore(disabled_end);
+    	
+      },  */ 
+      <%
+	for(BookingCheckDate b : checkDateList){
+	System.out.println("뷰에서 데이트 확인! : "+b.toString());
+	%>
+		isInvalidDate: function(date) {
+        var disabled_start = moment('<%=b.getCheckInDate()%>', 'YYYY/MM/DD HH:mm');
+        var disabled_end = moment('<%=b.getCheckOutDate()%>', 'YYYY/MM/DD HH:mm');
+        return date.isAfter(disabled_start) && date.isBefore(disabled_end)
+        //return date.isAfter(disabled_start) && date.isBefore(disabled_end) || date.isEqual(disabled_start) || date.isEqual(disabled_end);
+      },
+	<%}
+%>  
+<%-- <%
+for(BookingCheckDate b : checkDateList){
+System.out.println("뷰에서 데이트 확인! : "+b.toString());
+%>
+	isInvalidDate: function(date) {
+		  var formatted = date.format('YYYY/MM/DD');
+		  return ["<%=b.getCheckInDate()%>","<%=b.getCheckOutDate()%>"].indexOf(formatted) > -1;
+  },
+<%}
+%>  --%>
   });
 });
 
+/* ,
+isInvalidDate: function(date) {
+    if (date.format('YYYY-M-D') == '2019-04-06') {
+        return true; 
+    }
+} */
+ 
   /* 가격계산, 서비스 출력 ajax  */
 function priceCal(){
 	 console.log($('input[name="datetimes"]').val());

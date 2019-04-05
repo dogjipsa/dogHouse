@@ -42,9 +42,7 @@ public class ReviewListViewServlet extends HttpServlet {
 		//현재 detailview에서 petsitterid를 넘겨받아야 함.
 		String petSitterId = request.getParameter("petSitterId");
 		ReviewService rservice = new ReviewService();
-		System.out.println("리뷰조회를 위한 펫 아이디 : " + petSitterId);
 		
-		System.out.println("테스트 페이지 : " + request.getParameter("currentPage"));
 		int currentPage = 1;
 		if(request.getParameter("currentPage") != null) {
 			//currentPage = Integer.parseInt(request.getParameter("currentPage"));
@@ -53,7 +51,6 @@ public class ReviewListViewServlet extends HttpServlet {
 		
 		int limit = 10;
 		int listCount = rservice.getListCount(petSitterId);
-		System.out.println("리뷰조회를 위한 listCount : " + listCount);
 		int maxPage = (int)((double)listCount / limit + 0.9);
 		
 		int startPage = (((int)((double)currentPage / limit + 0.9)) - 1)* limit + 1;
@@ -63,8 +60,6 @@ public class ReviewListViewServlet extends HttpServlet {
 		}
 		response.setContentType("text/html; charset=utf-8");
 		ArrayList<Review> list = rservice.selectList(currentPage, limit, petSitterId);
-		System.out.println("리뷰에서 list 확인 : "+list);
-		System.out.println("서블릿에서 list 사이즈 : "+list.size());
 		JSONObject sendjson = new JSONObject();
 		JSONArray jsonArr = new JSONArray();
 		

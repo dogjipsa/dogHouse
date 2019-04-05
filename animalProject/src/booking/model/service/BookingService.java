@@ -8,6 +8,7 @@ import static common.JDBCTemplate.*;
 import booking.model.dao.BookingDao;
 import booking.model.vo.Booking;
 import booking.model.vo.BookingCheck;
+import booking.model.vo.BookingCheckDate;
 import booking.model.vo.BookingForHost;
 import pet.model.vo.Pet;
 
@@ -117,5 +118,26 @@ public class BookingService {
 			rollback(conn);
 		close(conn);
 		return result;
+	}
+
+	public ArrayList<BookingCheckDate> selectCheckDate(String petSitterId) {
+		Connection conn = getConnection();
+		ArrayList<BookingCheckDate> checkDate = bdao.selectCheckDate(conn, petSitterId); 
+		close(conn);
+		return checkDate;
+	}
+
+	public int selectCheckDateCount(String petSitterId) {
+		Connection conn = getConnection();
+		int count = bdao.selectCheckDateCount(conn, petSitterId); 
+		close(conn);
+		return count;
+	}
+
+	public int selectEachCount(int bookingNo, String checkIn, String checkOut, String petSitterId) {
+		Connection conn = getConnection();
+		int count = bdao.selectEachCount(conn, bookingNo,checkIn,checkOut,petSitterId); 
+		close(conn);
+		return count;
 	}
 }
