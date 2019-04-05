@@ -18,7 +18,7 @@ public class Booking implements Serializable {
 	private int price;
 	
 	public Booking () {}
-
+	
 	public Booking(int bookingNo, Date checkInDate, Date checkOutDate, int petNo, String userId, String bookingProgress,
 			String bookingEtc, String serviceKind, String puserId, int price) {
 		super();

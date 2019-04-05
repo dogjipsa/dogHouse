@@ -33,16 +33,8 @@ public class PriceCalculatorServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		//String date = request.getParameter("datetimes");
-		//System.out.println("ajax 확인 : "+date);
+		//petSitterDetailView.jsp에서 ajax로 가격과 서비스 정보를 받아옴
 		int price = Integer.parseInt(request.getParameter("price"));
-		/*String service = request.getParameter("service");
-		if(service.equals("0")||service.equals("2")) {
-			price = (int) ((price*0.8)/1000) *1000;
-		}
-		System.out.println("서비스 체크 : " + service);
-		System.out.println("가격체크 : " + price);*/
-		System.out.println("서비스체크 : " + request.getParameter("selectservice"));
 		String selectedService = request.getParameter("selectservice");//선택한 서비스 parameter값 받아옴
 		String check = "";
 		if(selectedService.equals("펫시터 집에 맡기기")) {//펫시터 집에 맡기기면 check는 1로 선언
@@ -53,6 +45,7 @@ public class PriceCalculatorServlet extends HttpServlet {
 		String[] date = request.getParameter("datetimes").split(" - ");//checkin, checkout시간 구분을 위해 split
 		String checkin = date[0];
 		String checkout = date[1];
+		//날짜 계산해서 int형 변수 dates에 저장
 		int dates = new BookingService().selectDates(checkin,checkout);
 		//PetSitterDetailView.jsp 에 보여질 변수 선언, service와 dateStr을 합쳐서 view단에 보여짐
 		String service = "";

@@ -28,7 +28,6 @@ public class ReviewDao {
 			if (rset.next()) {
 				listCount = rset.getInt(1);
 			}
-			System.out.println(petSitterId + "님의 후기 개수 : ");
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -103,6 +102,7 @@ public class ReviewDao {
 		return result;
 	}
 
+
 	public int deleteReview(Connection conn, int bno) {
 		int result = 0;
 			
@@ -123,6 +123,7 @@ public class ReviewDao {
 			close(pstmt);
 		}
 		return result;
+
 	}
 
 	private int updateProgress(Connection conn, int bno) {
@@ -141,6 +142,7 @@ public class ReviewDao {
 			close(pstmt);
 		}
 		return result;
+
 	}
 
 	public double selectStartAvg(Connection conn, String petSitterId) {
@@ -179,7 +181,7 @@ public class ReviewDao {
 			if (rset.next()) {
 				listCount = rset.getInt(1);
 			}
-			System.out.println(petSitterId + "님의 후기 개수 : " + listCount);
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {

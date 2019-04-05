@@ -32,10 +32,11 @@ public class BookingInsertServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+		//혹시라도 애완견의 이름을 같게 할 사람들을 위해 펫을 구별할 뷰에서 이름, 성별, 견종 펫정보 넘겨받음
 		String[] petStr = request.getParameter("mypet").split(" ");
+		//총가격 xxx원 구분
 		String[] priceArr = request.getParameter("priceSum").split(" ");
-		//혹시라도 이름을 같게 할 사람들을 위해 펫을 구별하기 위해 뷰에서 이름, 성별, 견종 펫정보 넘겨받음
+		
 		Pet pet = new Pet();
 		pet.setPetName(petStr[0]);
 		pet.setBreeds(petStr[1]);
@@ -43,6 +44,7 @@ public class BookingInsertServlet extends HttpServlet {
 		
 		Booking booking = new Booking();
 		BookingService bkservice = new BookingService(); 
+		//체크인 날짜와 체크아웃 날짜 구분
 		String[] date = request.getParameter("datetimes").split(" - ");
 		String checkin = date[0];
 		String checkout = date[1];
@@ -59,8 +61,6 @@ public class BookingInsertServlet extends HttpServlet {
 		booking.setPuserId(petSitterId);
 		booking.setUserId(userId);
 		booking.setPrice(priceSum);
-		//가격도 set해서 넘겨야 함 booking.setprice
-		
 		
 		/*Timestamp checkinTime = Timestamp.valueOf(checkin);
 		Timestamp checkoutTime = Timestamp.valueOf(checkout);
@@ -79,7 +79,9 @@ public class BookingInsertServlet extends HttpServlet {
 			//response.sendRedirect("/doggybeta/bpselect?bookingNo="+bookingNo+"&priceSum="+priceSum);//BeforePaymentSelectServlet으로 예약번호 전달
 			response.sendRedirect("views/customerservice/checkMyLog.jsp");
 		}else {
-			System.out.println("booking insert 실패");
+			RequestDispatcher view = request.getRequestDispatcher("views/findSitter/findSitterError.jsp");
+			request.setAttribute("message", "예약을 실패하였습니다. 같은 문제가 반복되면 관리자에게 문의 바랍니다.");
+			view.forward(request, response);
 		}
 	}
 

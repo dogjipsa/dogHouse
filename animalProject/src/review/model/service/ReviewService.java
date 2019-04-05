@@ -58,7 +58,6 @@ public class ReviewService {
 	public double selectStarAvg(String petSitterId) {
 		Connection conn = getConnection();
 		double startAvg = rdao.selectStartAvg(conn, petSitterId);
-		System.out.println("서비스 단 별점 계산 아이디 : " + petSitterId);
 		close(conn);
 		return startAvg;
 	}
@@ -66,7 +65,6 @@ public class ReviewService {
 	public int getStarCount(String petSitterId) {
 		Connection conn = getConnection();
 		int listCount = rdao.getStarCount(conn, petSitterId);
-		System.out.println("서비스 단 후기 개수  아이디 : " + petSitterId);
 		if(listCount > 0)
 			commit(conn);
 		else

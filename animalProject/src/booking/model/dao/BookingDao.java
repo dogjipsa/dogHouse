@@ -1,6 +1,7 @@
 package booking.model.dao;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
@@ -9,6 +10,7 @@ import static common.JDBCTemplate.*;
 
 import booking.model.vo.Booking;
 import booking.model.vo.BookingCheck;
+import booking.model.vo.BookingCheckDate;
 import booking.model.vo.BookingForHost;
 import pet.model.vo.Pet;
 
@@ -283,7 +285,6 @@ public class BookingDao {
 				booking.setPuserId(puserid);
 				list.add(booking);
 			}
-			System.out.println("dao 단에서 " + list);
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -309,7 +310,6 @@ public class BookingDao {
 				count = rset.getInt(1);
 				
 			}
-			System.out.println("dao 단에서 예약 건수 : " + count);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}finally {
@@ -335,6 +335,85 @@ public class BookingDao {
 			close(pstmt);
 		}		
 		return result;
+	}
+
+	public ArrayList<BookingCheckDate> selectCheckDate(Connection conn, String petSitterId) {
+		ArrayList<BookingCheckDate> list = new ArrayList<>(); 
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		
+		String query = "select to_char(CHECKIN_DATE-1,'yyyy/MM/dd'), to_char(CHECKOUT_DATE+1,'yyyy/MM/dd'),booking_no from booking where puser_id= ? and BOOKING_PROGRESS in ('2','3') and (CHECKOUT_DATE > sysdate)";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, petSitterId);
+						
+			rset = pstmt.executeQuery();
+			while(rset.next()) {
+				BookingCheckDate b = new BookingCheckDate();
+				b.setCheckInDate(rset.getString(1));
+				b.setCheckOutDate(rset.getString(2));
+				b.setBookingNo(rset.getInt(3));
+				list.add(b);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		return list;
+	}
+
+	public int selectCheckDateCount(Connection conn, String petSitterId) {
+		int count = 0;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String query = "select count(*) from booking where puser_id= ? and BOOKING_PROGRESS in ('2','3') and (CHECKOUT_DATE > sysdate)";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, petSitterId);
+						
+			rset = pstmt.executeQuery();
+			while(rset.next()) {
+				count=rset.getInt(1);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		return count;
+	}
+
+	public int selectEachCount(Connection conn, int bookingNo, String checkIn, String checkOut, String petSitterId) {
+		int count = 0;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String query = "SELECT count(*) AS DAY   FROM DUAL CONNECT BY LEVEL <=( TO_DATE( (select to_char(?,'yyyy/MM/dd') from booking where puser_id=? and BOOKING_PROGRESS in ('2','3') and (CHECKOUT_DATE > sysdate) and booking_no='25'), 'YYYY/MM/DD' ) - TO_DATE( (select to_char(?,'yyyy/MM/dd') from booking where puser_id=? and BOOKING_PROGRESS in ('2','3') and (CHECKOUT_DATE > sysdate) and booking_no=?), 'YYYY/MM/DD' ) +1 )";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, checkIn);
+			pstmt.setString(2, petSitterId);
+			pstmt.setString(3, checkIn);
+			pstmt.setString(4, petSitterId);
+			pstmt.setInt(4, bookingNo);
+						
+			rset = pstmt.executeQuery();
+			while(rset.next()) {
+				count=rset.getInt(1);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		return count;
 	}
 	
 }
