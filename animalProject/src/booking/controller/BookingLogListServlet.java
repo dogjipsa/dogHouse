@@ -50,7 +50,7 @@ public class BookingLogListServlet extends HttpServlet {
 		 * System.out.println("총 페이지 : "+totalPage);
 		 */
 		int currentPage = 1;
-		int limit = 12;
+		int limit = 13;
 		int countPage = 5;
 		if (request.getParameter("page") != null) {
 			currentPage = Integer.parseInt(request.getParameter("page"));

@@ -401,6 +401,7 @@ function requestHostAjax() {
                     case '1': pg = "예약 승인"; break;
                     case '2': pg = "결제 대기"; break;
                     case '3': pg = "결제 완료"; break;
+                    case '4': pg = "결제 완료"; break;
                 }
                 switch (json.list[i].kind) {
                     case '0': kind = "[당일] 펫시터 우리집으로 부르기 서비스"; break;
@@ -430,7 +431,7 @@ function requestHostAjax() {
                         tr.appendChild(td);
                     }
                 }
-
+                console.log(json.list);
                 if (json.list[i].pg !== '1') {
                     const td = document.createElement('td');
                     td.textContent = pg;

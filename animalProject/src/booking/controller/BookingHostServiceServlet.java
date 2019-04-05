@@ -40,7 +40,7 @@ public class BookingHostServiceServlet extends HttpServlet {
 		String userid = request.getParameter("userid");
 		int page = Integer.parseInt(request.getParameter("page"));
 		int currentPage = 1;
-		int limit = 12;
+		int limit = 13;
 		int countPage = 5;
 		if (page != 0) {
 			currentPage = page;
