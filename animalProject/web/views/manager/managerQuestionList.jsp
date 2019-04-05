@@ -3,7 +3,7 @@
 <%@ page import="member.model.vo.Member, question.model.vo.Question, answer.model.vo.Answer, java.util.ArrayList" %>
 <%
 	ArrayList<Question> list = (ArrayList<Question>)request.getAttribute("list");	
-	
+	/* System.out.println("list list : "+list.size()); */
 	Answer answer = (Answer)request.getAttribute("answer");
 
 	int listCount = ((Integer)request.getAttribute("listCount")).intValue();
@@ -23,15 +23,16 @@
 </head>
 <body>
 <%@ include file="../../views/common/managerMenu.jsp" %>
-<h2 align="center">유저 문의내역  답변 시스템</h2>
-<hr style="width:600px">
+<h1 align="center">유저 문의내역  답변 시스템</h1>
+<hr style="width:1000px">
 <br>
 <div align="center">
-	<table style="text-align:center; border:1px; solid #dddddd">
+	<table cellpadding="20" cellspacing="3 style="text-align:center; border:5px; solid #dddddd">
 		<thead>
 		<tr>
 			<th style="background-color:#eeeee; text-align:center; color:navy;">제목</th>
 			<th style="background-color:#eeeee; text-align:center; color:navy;">날짜 </th>
+			<th style="background-color:#eeeee; text-align:right; color:navy;">UserID</th>
 			<th style="background-color:#eeeee; text-align:right; color:navy;">답변유무</th>
 		</tr>
 		</thead>
@@ -42,7 +43,9 @@
 	<tr>
 		<td align="left"><a href="/doggybeta/manqdetail?qnum=<%= question.getQuestionNo() %>&page=<%= currentPage %>"><%= question.getQuestionTitle() %></a></td>
 		<td align="center"><%= question.getQuestionDate() %></td>
-		<th align="left"><%= question.getQuestionReplyYn() %></th>		
+		<td align="left"><%= question.getUserId() %></td>
+		<td align="left"><%= question.getQuestionReplyYn() %></td>		
+		
 	</tr>
 	<% } %>
 </table>	

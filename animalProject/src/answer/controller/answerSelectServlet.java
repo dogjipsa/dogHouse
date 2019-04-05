@@ -33,12 +33,12 @@ public class answerSelectServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int questionNo = Integer.parseInt(request.getParameter("qnum"));
-		System.out.println("ans servlet qnum : " + questionNo);
+		/*System.out.println("ans servlet qnum : " + questionNo);*/
 		
 		Answer answer = new Answer();
 		answer = new AnswerService().selectAnswer(questionNo);
-		System.out.println("servlet ans :"+answer);
-		System.out.println(answer.getAnswerNo());
+		/*System.out.println("servlet ans :"+answer);*/
+		/*System.out.println(answer.getAnswerNo());*/
 		RequestDispatcher view = null; && questionNo == answer.getAnswerNo()
 		if(answer != null) {
 			view = request.getRequestDispatcher("views/question/questionListView.jsp");

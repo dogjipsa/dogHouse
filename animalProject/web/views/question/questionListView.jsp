@@ -51,39 +51,38 @@
 <%@ include file="../common/menu.jsp" %>
 <div id="wrap">
 <div id="cotent">
+
 <br><br>
 	<h1 align="center" style="color:ghostWhite;"><%= loginUser.getUserId() %>&nbsp;의 문의내역</h1>
 	<hr align="center" style="width:600px">
 <br><br>
 <div align="center">
-
-
-<table style="text-align:center; border:1px; solid #dddddd">
-	<thead>
-	<tr>
-		<th style="background-color:#eeeee; text-align:center; color:white;">제목</th>
-		<th style="background-color:#eeeee; text-align:center; color:white;">날짜 </th>
-		<th style="background-color:#eeeee; text-align:center; color:white;">답변유무</th>		
-	</tr>
-	</thead>
-
-<% 
-	for(Question question : list){
-%>
-	<% if(loginUser.getUserId().equals(question.getUserId())){ %> 
-<input type="hidden" name="qnum" id="qnum" value="<%= question.getQuestionNo() %>"> 
-	<tr>
-		<td align="left"><a href="/doggybeta/qdetail?no=<%= question.getQuestionNo() %>"><%= question.getQuestionTitle() %></a>&nbsp;&nbsp;&nbsp;&nbsp;</td>
-		<td align="center"><%= question.getQuestionDate() %>&nbsp;&nbsp;&nbsp;&nbsp;</td>
-		<td><% if(question.getQuestionReplyYn().equals("y")){ %>
-			답변완료
-			<% }else{ %>
-			답변대기중
-			<% } %>
-		 </td>
-	</tr>
-<% }} %>
-</table>
+	<table style="text-align:center; border:1px; solid #dddddd">
+		<thead>
+		<tr>
+			<th style="background-color:#eeeee; text-align:center; color:white;">제목</th>
+			<th style="background-color:#eeeee; text-align:center; color:white;">날짜 </th>
+			<th style="background-color:#eeeee; text-align:center; color:white;">답변유무</th>		
+		</tr>
+		</thead>
+	
+	<% 
+		for(Question question : list){
+	%>
+		<% if(loginUser.getUserId().equals(question.getUserId())){ %> 
+	<input type="hidden" name="qnum" id="qnum" value="<%= question.getQuestionNo() %>"> 
+		<tr>
+			<td align="left"><a href="/doggybeta/qdetail?no=<%= question.getQuestionNo() %>"><%= question.getQuestionTitle() %></a>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+			<td align="center"><%= question.getQuestionDate() %>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+			<td><% if(question.getQuestionReplyYn().equals("n")){ %>
+				답변대기중
+				<% }else{ %>
+				답변완료
+				<% } %>
+			 </td>
+		</tr>
+	<% }} %>
+	</table>
 </div>
 
 <br>

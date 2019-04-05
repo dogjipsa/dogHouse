@@ -146,6 +146,7 @@ public class ManagerService {
 		Connection conn = getConnection();
 		ArrayList<Question> list = manDao.selectQuestionList(conn,currentPage,limit);
 		System.out.println("서비스"+currentPage + "=" + limit + "=" + list );
+		System.out.println("qlist qlist servlet : "+ list.size());
 		close(conn);
 		return list;
 	}
