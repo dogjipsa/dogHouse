@@ -47,7 +47,7 @@ public class ManagerQuestionListServlet extends HttpServlet {
 		
 		int listCount = ms.QuestionListCount();
 		ArrayList<Question> qlist = ms.selectQuestionList(currentPage, limit);
-		
+		/*System.out.println("qlist qlist : " qlist.size());*/
 		for(Question  q : qlist) {
 		}
 			

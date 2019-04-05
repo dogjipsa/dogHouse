@@ -37,14 +37,18 @@ public class questionFileDownServlet extends HttpServlet {
 		String renameFileName = request.getParameter("rfile");		
 		
 		String readFolder = request.getSession().getServletContext().getRealPath("/files/question");		
+		System.out.println("readFolder ques : " + readFolder);
 		
 		ServletOutputStream downOut = response.getOutputStream();
 				
-		File downFile = new File(readFolder + "/" + renameFileName);		
-		
+		File downFile = new File(readFolder + "/" + renameFileName);
+		System.out.println("original file name ques : "+ originalFileName);
+		System.out.println("rename file name ques : "+ renameFileName);
+		System.out.println("dowbFile ques : "+downFile);
 		response.setContentType("text/plain; charset=utf-8");
 		
-		response.addHeader("Content-Disposition", "attachment; filename=\"" + new String(originalFileName.getBytes("UTF-8"), "ISO-8859-1") + "\"");
+		response.addHeader("Content-Disposition", 
+				"attachment; filename=\"" + new String(originalFileName.getBytes("UTF-8"), "ISO-8859-1") + "\"");
 		response.setContentLength((int)downFile.length());
 		
 		BufferedInputStream bin = new BufferedInputStream(new FileInputStream(downFile));

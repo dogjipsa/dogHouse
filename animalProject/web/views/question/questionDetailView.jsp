@@ -4,7 +4,9 @@
 <%
 	Question question = (Question)request.getAttribute("question");
 	Answer answer = (Answer)request.getAttribute("answer");
-	int currentPage = ((Integer)request.getAttribute("currentPage"));	
+	int currentPage = ((Integer)request.getAttribute("currentPage"));
+	System.out.println("오리지날 파일 : "+question.getQuestionOriginalFileName());
+	System.out.println("리네임 파일 : " + question.getQuestionRenameFileName());
 %>
 <!DOCTYPE html>
 <html>
@@ -31,10 +33,10 @@ function deleteQuestion(){
 <div id="wrap">
 <div id="cotent">
 <br><br>
-<h1 align="center" style="color:white;">해당글 상세보기</h1>
-<hr align="center" style="width:600px">
+<h1 align="center" style="color:white;">상세보기</h1>
+<hr align="center" style="width:1000px">
 <br><br>
-<table align="center" cellpadding="10" cellspacing="0" border="1" width="600" bgcolor=oldlace>
+<table align="center" cellpadding="10" cellspacing="2" border="1" width="1000" bgcolor=oldlace>
 	<tr>
 		<th>제목</th>
 		<td><%=question.getQuestionTitle() %></td>
@@ -43,7 +45,7 @@ function deleteQuestion(){
 		<th>첨부파일</th>
 		<td>
 			<% if(question.getQuestionOriginalFileName() != null){ %>
-				<a href="/doggybeta/qfdown?ofile=<%=question.getQuestionOriginalFileName()%>&rfile<%=question.getQuestionRenameFileName() %>"><%=question.getQuestionOriginalFileName() %></a>	
+				<a href="/doggybeta/qfdown?ofile=<%=question.getQuestionOriginalFileName()%>&rfile=<%=question.getQuestionRenameFileName() %>"><%=question.getQuestionOriginalFileName() %></a>	
 			<% }else{ %>
 				첨부파일 없음
 			<% } %>
@@ -55,7 +57,7 @@ function deleteQuestion(){
     </tr>
    	<tr>
     	<th colspan="2">    	    			
-    		<button onclick="moveUpdatePage();">수정</button>&nbsp;
+    		<button onclick="moveUpdatePage();">수정</button>
     		<input type="button" value="삭제하기" onclick="deleteQuestion();">&nbsp;&nbsp;&nbsp;
     		<button onclick="location.href='/doggybeta/qlist'; return false;">뒤로가기</button>    		
     	</th>    	
@@ -63,16 +65,15 @@ function deleteQuestion(){
 </table>
 <br><br>
 <% if(answer.getAnswerContent() != null){ %>
-<%-- <% if(question.getQuestionReplyYn() != null){ %> --%>
-<h1 align="center" style=color:ghostwhite>운영자 답변</h1>
-<hr align="center" style="width:600px">
-<br><br>
-<table align="center" border=1 width=600 height=100 bgcolor=oldlace>
-	<tr>
-		<th>답변내용</th>
-		<td><%= answer.getAnswerContent() %></td>
-    </tr>   	
-    </div></div>	
+	<h1 align="center" style=color:ghostwhite>운영자 답변</h1>
+	<hr align="center" style="width:1000px">
+	<br><br>
+<table align="center" border=1 width=1000 height=100 bgcolor=oldlace>
+		<tr>
+			<th>답변내용</th>
+			<td><%= answer.getAnswerContent() %></td>
+	    </tr>   	
+	    </div></div>	
 </table>
 <% } %>
 </div>

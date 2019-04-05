@@ -6,6 +6,7 @@
    Question qboard = (Question)request.getAttribute("question");
    int currentPage = ((Integer)request.getAttribute("currentPage")).intValue();
    Manager managerLogin = (Manager)session.getAttribute("loginmanager");
+   /* Answer answer = (Answer)request.getAttribute("answer"); */
 %>
 <!DOCTYPE html>
 <html>
@@ -24,10 +25,10 @@
 <%@ include file="../../views/common/managerMenu.jsp" %>
 <br>
 <h1 align="center">&nbsp;해당 1:1문의 상세보기</h1>
-<hr align="center" style="width:600px">
+<hr align="center" style="width:800px">
 <br><br><br>
 
-<table align="center" cellpadding="10" cellspacing="0" border="1" width="600" bgcolor=oldlace>
+<table align="center" cellpadding="30" cellspacing="0" border="1" width="800" height="100" bgcolor=oldlace>
 	<tr>
 		<th>작성자</th>
 		<td><%= qboard.getUserId() %></td>
@@ -62,22 +63,31 @@
 </table>
 </form>
 <% }else{ %>
-	<td>
-	<h1 align="center" style=color:ghostwhite>운영자 답변</h1>
-<hr align="center" style="width:600px">
-<br><br>
+<%-- 	<<h1 align="center" style=color:ghostwhite>운영자 답변</h1>
+	<hr align="center" style="width:600px">
+	<br><br>
 <table align="center" border=1 width=600 height=100 bgcolor=oldlace>
-	<tr>
-		<th>답변내용</th>
-		<td><%= answer.getAnswerContent() %></td>
-    </tr>   	
-    </div></div>	
-</table>
-	</td>
+		<tr>
+			<th>답변내용</th>
+			<td><%= answer.getAnswerContent() %></td>
+	    </tr>   	
+	    </div></div>	
+</table>  --%>
 <% } %>
+<%-- <% }else{ %>
+	<h1 align="center" style=color:ghostwhite>운영자 답변</h1>
+	<hr align="center" style="width:600px">
+	<br><br>
+<table align="center" border=1 width=600 height=100 bgcolor=oldlace>
+		<tr>
+			<th>답변내용</th>
+			<td><%= answer.getAnswerContent() %></td>
+	    </tr>
+</table>
+
 <br><br>
 <br><br><br><br><br><br><br><br><br><br>
-<hr>
+<hr>--%>
 
 </body>
 </html>
