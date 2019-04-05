@@ -204,8 +204,9 @@ public class NoticeDao {
 						"WHERE RNUM >= ? AND RNUM <= ?";
 				pstmt = conn.prepareStatement(query);
 				pstmt.setString(1, "%" + search + "%");
-				pstmt.setInt(2, startRow);
-				pstmt.setInt(3, startRow+9);
+				pstmt.setString(2, "%" + search + "%");
+				pstmt.setInt(3, startRow);
+				pstmt.setInt(4, startRow+9);
 				
 			}
 			rset = pstmt.executeQuery();
@@ -283,12 +284,12 @@ public class NoticeDao {
 			
 		}else if(opt.equals("1")) {
 			
-			String query = "select count(*) from notice where notice_content like ?";
+			String query = "select count(*) from notice where notice_content like ? or notice_title like ?";
 			
 			try {
 				pstmt = conn.prepareStatement(query);
 				pstmt.setString(1, "%" + inputdata + "%");
-				
+				pstmt.setString(2, "%" + inputdata + "%");
 				rset = pstmt.executeQuery();
 				
 				if(rset.next()) {

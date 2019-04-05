@@ -65,6 +65,7 @@ function isEmpty(str){
 		<li>
 			<span class="manage"><i class="icon-cog"></i>게시판관리</span>
 			<ul class='submenu'>
+				<li><a href='/doggybeta/manrlist'>신고게시물 관리</a></li>
 				<li><a href='/doggybeta/manboard'>자유게시판 관리</a></li>
 				<li><a href='/doggybeta/mantb'>팁 게시판 관리</a></li>
 			</ul>
