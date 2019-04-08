@@ -59,7 +59,7 @@
 					<p>PHONE</p>
 					<input type="text" value="010-5550-7623" readonly>
 					<p>ROLE</p>
-					<input type="text" value="자유게시판/팁게시판/관리자페이지" readonly>
+					<input type="text" value="게시판/관리자페이지/공지사항" readonly>
 				</div>
 			</div>
 		</div>
@@ -89,7 +89,7 @@
 					<p>PHONE</p>
 					<input type="text" value="010-3311-7157" readonly>
 					<p>ROLE</p>
-					<input type="text" value="펫시터 찾기 및 프로젝트 총괄" readonly>
+					<input type="text" value="팁/리뷰/펫시터 찾기 및 프로젝트 총괄" readonly>
 				</div>
 			</div>
 		</div>
@@ -104,7 +104,7 @@
 					<p>PHONE</p>
 					<input type="text" value="010-6227-8508" readonly>
 					<p>ROLE</p>
-					<input type="text" value="펫시터 신청 및 예약 확인/결제" readonly>
+					<input type="text" value="펫시터 신청 및 예약 확인/결제/리뷰게시판" readonly>
 				</div>
 			</div>
 		</div>

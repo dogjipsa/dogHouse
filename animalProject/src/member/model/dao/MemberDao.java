@@ -225,7 +225,7 @@ public class MemberDao {
 		PreparedStatement pstat = null;
 		StringBuffer query = new StringBuffer();
 		query.append("insert into member values ( ")
-		 	 .append("?,?,?,?,?,?,default,?,?,?,default,?,?,?,?,0,?)");
+		 	 .append("?,?,?,?,?,?,'0',?,?,?,default,?,?,?,?,0,?)");
 		
 		try {
 			
@@ -529,6 +529,7 @@ public class MemberDao {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		String query = "select * from sitterimg where user_id = ?";
+		System.out.println("왜 오류?");
 		try {
 			pstmt = conn.prepareStatement(query);
 			pstmt.setString(1, petSitterId);
@@ -540,7 +541,8 @@ public class MemberDao {
 				sitterImage.setOriginFile(rset.getString("IMG_ORIGINFILE"));
 				sitterImage.setRenameFile(rset.getString("IMG_REFILE"));
 				list.add(sitterImage);
-      }
+			}
+			System.out.println("사진확인"+list);
     }catch (Exception e) {
 	  	e.printStackTrace();
 	  } finally {
@@ -550,59 +552,60 @@ public class MemberDao {
 	  return list;
   }
 	public ArrayList<Member> findPetSitterList(Connection conn, HashMap<String, Object> map) {
-		
-		
-		ArrayList<Member> list = new ArrayList<Member>();
-		PreparedStatement pstmt = null;
-		ResultSet rset = null;
-		
-		String userId = (String)map.get("userid");
-		String jido = (String)map.get("jido");
-		String detail = (String)map.get("detail");
-		System.out.println("dao에서 지도값 : " + jido + "," + detail);
+	      
+	      
+	      ArrayList<Member> list = new ArrayList<Member>();
+	      PreparedStatement pstmt = null;
+	      ResultSet rset = null;
+	      
+	      String userId = (String)map.get("userid");
+	      String jido = (String)map.get("jido");
+	      String detail = (String)map.get("detail");
+	      System.out.println("dao에서 지도값 : " + jido + "," + detail);
 
-		if(detail == null || detail.equals("전체")) {
-			jido = (String)map.get("jido");
-		}else if(detail != "전체"){
-			jido = jido + " " + detail;
-		}
-		
-		System.out.println("dao에서 지도값 : " + jido );
-		
-		String query = "SELECT DISTINCT P.USER_ID, P.USER_NAME, P.PRICE, P.USER_ORIGINFILE, "
-				+ "P.USER_REFILE, P.ADDRESS, P.TITLE_IMG FROM MEMBER P LEFT OUTER JOIN PET Z ON (P.USER_ID = Z.USER_ID) "
-				+ "WHERE P.USER_ID NOT IN ? AND P.PETSITTER = '2' AND P.ADDRESS LIKE ?";
+	      if(detail == null || detail.equals("전체")) {
+	         jido = (String)map.get("jido");
+	      }else if(detail != "전체"){
+	         jido = jido + " " + detail;
+	      }
+	      
+	      System.out.println("dao에서 지도값 : " + jido );
+	      
+	      String query = "SELECT DISTINCT P.USER_ID, P.USER_NAME, P.PRICE, P.USER_ORIGINFILE, "
+	            + "P.USER_REFILE, P.ADDRESS, P.TITLE_IMG FROM MEMBER P LEFT OUTER JOIN PET Z ON (P.USER_ID = Z.USER_ID) "
+	            + "WHERE P.USER_ID NOT IN ? AND P.PETSITTER = '2' AND P.ADDRESS LIKE ?";
 
-		try {
-			pstmt = conn.prepareStatement(query);
-			
-			pstmt.setString(1, userId);
-			pstmt.setString(2, "%" + jido + "%");
-			rset = pstmt.executeQuery();
-			
-			
-			while(rset.next()) {
-				Member findSitter = new Member();
-				
-				findSitter.setUserId(rset.getString(1));
-				findSitter.setUserName(rset.getString(2));
-				findSitter.setPrice(rset.getInt(3));
-				findSitter.setUseroriginfile(rset.getString(4));
-				findSitter.setUserrefile(rset.getString(5));
-				findSitter.setAddress(rset.getString(6).substring(0, 8));
-				findSitter.setTitleImg(rset.getString(7));
-						
-				list.add(findSitter);
-			}
-			System.out.println("dao : " + list);
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			close(rset);
-			close(pstmt);
-		}
-		return list;
-	}
+	      try {
+	         pstmt = conn.prepareStatement(query);
+	         
+	         pstmt.setString(1, userId);
+	         pstmt.setString(2, "%" + jido + "%");
+	         rset = pstmt.executeQuery();
+	         
+	         
+	         while(rset.next()) {
+	            Member findSitter = new Member();
+	            
+	            findSitter.setUserId(rset.getString(1));
+	            findSitter.setUserName(rset.getString(2));
+	            findSitter.setPrice(rset.getInt(3));
+	            findSitter.setUseroriginfile(rset.getString(4));
+	            findSitter.setUserrefile(rset.getString(5));
+	            String[] adsplit = rset.getString(6).split(",");
+	            findSitter.setAddress(adsplit[0]);
+	            findSitter.setTitleImg(rset.getString(7));
+	                  
+	            list.add(findSitter);
+	         }
+	         System.out.println("dao : " + list);
+	      } catch (Exception e) {
+	         e.printStackTrace();
+	      } finally {
+	         close(rset);
+	         close(pstmt);
+	      }
+	      return list;
+	   }
 
 
 	public ArrayList<SitterImage> selectSitterFacilityImg(Connection conn, HashMap<String, Object> img) {
@@ -744,13 +747,11 @@ public class MemberDao {
 		try {
 			pstmt = conn.prepareStatement(query);
 			pstmt.setString(1, userid);
-			int result = pstmt.executeUpdate();
-			if(result > 0) {
-				System.out.println("delete complete");
-			}
+			pstmt.executeUpdate();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}finally {
+			commit(conn);
 			close(pstmt);
 		}
 	}

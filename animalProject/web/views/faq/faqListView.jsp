@@ -164,9 +164,9 @@ position: relative;
    <br>
    <br>
    <%if(loginUser.getUserId() != null){ %>
-   <button onclick="location.href='/doggybeta/faqupview?fnum=<%= faq.getFaqNo()%>&page=<%= currentPage%>'">수정</button>
+   <%-- <button onclick="location.href='/doggybeta/faqupview?fnum=<%= faq.getFaqNo()%>&page=<%= currentPage%>'">수정</button>
    &nbsp;
-   <button onclick="location.href='/doggybeta/faqdel?fnum=<%= faq.getFaqNo()%>'">삭제</button>
+   <button onclick="location.href='/doggybeta/faqdel?fnum=<%= faq.getFaqNo()%>'">삭제</button> --%>
    <%}}else{ %>
    <%= faq.getFaqTitle() %>
    <%} %>
@@ -186,7 +186,7 @@ position: relative;
 	<label style="background-color : "><input type="text" name="keyword"></label>
 	<input type="submit" value="검색">
 	<% if(loginUser != null){ %>
-	<input type="button" onclick="showWriteForm();" value="글쓰기">
+	<!-- <input type="button" onclick="showWriteForm();" value="글쓰기"> -->
 <%} %>
 	</form>
 	
@@ -198,7 +198,7 @@ position: relative;
 <%-- 페이징 처리 --%>
 <br><br><br>
 <br><br><br>
-<div id="faqPage" style="text-align:center;">
+<%-- <div id="faqPage" style="text-align:center;">
 <% if(currentPage <= 1){ %>
 	[맨처음]&nbsp;
 <% }else{ %>
@@ -209,7 +209,7 @@ position: relative;
 <% }else{ %>
 	[prev]
 <% } %>
-<%-- 현재 페이지가 포함된 페이지 그룹 숫자 출력 처리 --%>
+현재 페이지가 포함된 페이지 그룹 숫자 출력 처리
 <% for(int p = startPage; p <= endPage; p++){ 
 		if(p == currentPage){
 %>
@@ -230,7 +230,7 @@ position: relative;
 <% }else{ %>
 	<a href="/doggybeta/faqlist?page=<%= maxPage %>">[맨끝]</a>
 <% } %>
-</div>
+</div> --%>
 </div>
 
 </div>

@@ -155,12 +155,10 @@ function popupOpen(){
 			<!-- 내용작성  -->
 
 			<h2 align="center">게시글 목록</h2>
-			<a href="/doggybeta/sitterdetail">디테일로 고고</a>
-			<a href="/doggybeta/views/tipboard/test.html">테스트하러 ㄱㄱ</a>
-			<input type="button" onclick="popupOpen();" value="확인">
+			
 			<!-- <a href="/doggybeta/views/review/reviewWriteForm.jsp">리뷰작성</a> -->
 			<h4 align="center">
-				총 게시글 갯수 :<%=listCount%></h4>
+			
 			
 			<br>
 			<%-- 검색기능 --%>
@@ -351,7 +349,7 @@ function popupOpen(){
 				</div>
 				</div>
 			
-			<div id="footer"><%@ include file="..//common/footer.jsp"%></div>
+			<%-- <div id="footer"><%@ include file="..//common/footer.jsp"%></div> --%>
 		</div>
 </body>
 </html>

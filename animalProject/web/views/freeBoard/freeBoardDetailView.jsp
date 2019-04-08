@@ -201,7 +201,7 @@ h2{
 				<!-- 버튼 -->
 				<div>
 				<td width="100">
-					<%if(freeboard.getUserId().equals(f.getUserid())){ %>
+					<%if(loginUser.getUserId().equals(f.getUserid())){ %>
 					<a href="/doggybeta/frsearch?frnum=<%= f.getFreereply()%>">[수정]</a>
 					<a href="/doggybeta/frdelete?frnum=<%= f.getFreereply()%>&fnum=<%= f.getFreeboardno()%>">[삭제]</a>	
 					<%} else{ %>

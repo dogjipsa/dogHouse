@@ -50,7 +50,7 @@ $(function(){
     	});
     	
     	console.log(chkBoxArray);
-    	alert(chkBoxArray);
+    	
     	if(confirm('정말 삭제하시겠습니까?')) {
     		$.ajax({
     			url: '/doggybeta/mandelete',

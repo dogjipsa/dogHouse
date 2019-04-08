@@ -39,7 +39,7 @@ public class ReviewUpdateServlet extends HttpServlet {
 		MultipartRequest mrequest = new MultipartRequest(request, savePath, 1024, "UTF-8", new DefaultFileRenamePolicy());
 		
 		int rno = Integer.parseInt(mrequest.getParameter("rnum"));
-		String content = mrequest.getParameter("content");
+		String content = mrequest.getParameter("content").replaceAll("\r\n", "<br>");
 		String point = mrequest.getParameter("star-input");
 		
 		int result = new ReviewService().updateReview(content, point,rno);

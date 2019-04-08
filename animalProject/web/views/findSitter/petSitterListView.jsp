@@ -1,21 +1,21 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" import="member.model.vo.*, java.util.*"%>
 <%
-	ArrayList<Member> list = (ArrayList<Member>)request.getAttribute("list");
-	ArrayList<SitterImage> imglist = (ArrayList<SitterImage>)request.getAttribute("imglist");
-	System.out.println("뷰 리스트 확인 : " + imglist);
-	String service = (String)request.getAttribute("service");
-	String petSitterId = (String)request.getAttribute("petSitterId");
-	HashMap<String, SitterImage> map = (HashMap<String, SitterImage>)request.getAttribute("map");
-	System.out.println("map jsp 확인 : " + map);
-	System.out.println("list jsp 확인 : " + list);
-	ArrayList<String> address = (ArrayList<String>)request.getAttribute("address");
-	int count = 0;
-	if(list != null){
-		 count = (int)request.getAttribute("count");
-	}
-	String imgFile = (String)request.getAttribute("imgFile");
-	
+   ArrayList<Member> list = (ArrayList<Member>)request.getAttribute("list");
+   ArrayList<SitterImage> imglist = (ArrayList<SitterImage>)request.getAttribute("imglist");
+   System.out.println("뷰 리스트 확인 : " + imglist);
+   String service = (String)request.getAttribute("service");
+   String petSitterId = (String)request.getAttribute("petSitterId");
+   HashMap<String, SitterImage> map = (HashMap<String, SitterImage>)request.getAttribute("map");
+   System.out.println("map jsp 확인 : " + map);
+   System.out.println("list jsp 확인 : " + list);
+   ArrayList<String> address = (ArrayList<String>)request.getAttribute("address");
+   int count = 0;
+   if(list != null){
+       count = (int)request.getAttribute("count");
+   }
+   String imgFile = (String)request.getAttribute("imgFile");
+   
 %>   
 <!DOCTYPE html>
 <html>
@@ -33,87 +33,87 @@
 
 <script>
  $(function(){
-	 var arr = new Array();
-		$("#detail input[type=hidden]").each(function(index){
-			/* alert($(this).val()); */
-			arr[index] = $(this).val();
-		});
-	 var jsonData = JSON.stringify(arr);
-	 jQuery.ajaxSettings.traditional = true;
-	 console.log(arr);
-	 
-		$.ajax({
-			type : 'post',
-			cache: false,
-			datatype: 'json',
-			data : {petsitterid : arr},
-			url : '/doggybeta/ronlist',
-			success:function(data){
-				$.each(data, function(index){
-					console.log(data.count+index);
-					console.log(data.rating+index);
-				$("#rating").append(data[(2*index-index)-1]) + "<br>";
-				 /* $("#count").append(data[index]); */
-				});
-			}
-		});
-		 
- });	
+    var arr = new Array();
+      $("#detail input[type=hidden]").each(function(index){
+         /* alert($(this).val()); */
+         arr[index] = $(this).val();
+      });
+    var jsonData = JSON.stringify(arr);
+    jQuery.ajaxSettings.traditional = true;
+    console.log(arr);
+    
+      $.ajax({
+         type : 'post',
+         cache: false,
+         datatype: 'json',
+         data : {petsitterid : arr},
+         url : '/doggybeta/ronlist',
+         success:function(data){
+            $.each(data, function(index){
+               console.log(data.count+index);
+               console.log(data.rating+index);
+            $("#rating").append(data[(2*index-index)-1]) + "<br>";
+             /* $("#count").append(data[index]); */
+            });
+         }
+      });
+       
+ });   
 
 function categoryChange(e) {
-	  var detail_name1 = ['전체', '강남구','강동구','강북구','강서구','관악구','광진구','구로구','금천구','노원구','도봉구','동대문구','동작구','마포구','서대문구','서초구','성동구','성북구','송파구','양천구','영등포구','용산구','은평구','종로구','중구','중랑구'];
-	  var detail_name2 = ['전체', '고양','과천','광명','광주','구리','군포','김포','남양주','동두천','부천', '성남', '수원','시흥','안산','안양','오산','용인','의왕','의정부','이천','파주','평택','하남','화성','가평','양주','양평','여주','연천','포천'];
-	  var target = document.getElementById("detail");
-	   console.log("detail : " + detail);
-	  console.log("target : " + target); 
-	  if(e.value == "서울시") {
-		  var d = detail_name1;
-		  if(detail_name1 == "전체"){
-			  d == null;
-		  }
-	  }
-	  else if(e.value == "경기") {
-		  var d = detail_name2;
-		  if(detail_name2 == "전체"){
-			  d == null;
-			  }
-		  }
+     var detail_name1 = ['전체', '강남구','강동구','강북구','강서구','관악구','광진구','구로구','금천구','노원구','도봉구','동대문구','동작구','마포구','서대문구','서초구','성동구','성북구','송파구','양천구','영등포구','용산구','은평구','종로구','중구','중랑구'];
+     var detail_name2 = ['전체', '고양','과천','광명','광주','구리','군포','김포','남양주','동두천','부천', '성남', '수원','시흥','안산','안양','오산','용인','의왕','의정부','이천','파주','평택','하남','화성','가평','양주','양평','여주','연천','포천'];
+     var target = document.getElementById("detail");
+      console.log("detail : " + detail);
+     console.log("target : " + target); 
+     if(e.value == "서울") {
+        var d = detail_name1;
+        if(detail_name1 == "전체"){
+           d == null;
+        }
+     }
+     else if(e.value == "경기") {
+        var d = detail_name2;
+        if(detail_name2 == "전체"){
+           d == null;
+           }
+        }
 
-	 
-	  target.options.length = 0;
-	 
-	  for (x in d) {
-	    var opt = document.createElement("option");
-	    opt.value = d[x];
-	    opt.innerHTML = d[x];
-	    target.appendChild(opt);
-	  } 
-	}
-					
+    
+     target.options.length = 0;
+    
+     for (x in d) {
+       var opt = document.createElement("option");
+       opt.value = d[x];
+       opt.innerHTML = d[x];
+       target.appendChild(opt);
+     } 
+   }
+               
 </script>
 
 <style type="text/css">
 body{
-	width: 1500px;
+   width: 1500px;
 }
 .checked {
   color: orange;
 }
 #searchpettable{
-	background-color: #f3f6f7;
-	padding: 30px 30px;
-	margin: 10px 50px;
-	height: auto;
-	width: 600px;
-				
+   background-color: #f3f6f7;
+   padding: 30px 30px;
+   margin: 10px 50px;
+   height: auto;
+   width: 600px;
+            
 }
 input[type=button]{
-	background-color: #2ec4b6;
-	width:100px; height:30px;
-	border: none;
-	border-radius: 12px;
-	color: white;
- 	text-align: center;
+   background-color: #2ec4b6;
+   width:100px; height:30px;
+   border: none;
+   border-radius: 12px;
+   color: white;
+    text-align: center;
 }
 
 table td{
@@ -137,22 +137,26 @@ left: 650px;
 font-size: 12px;
 }
  #detail table{`
-	margin: 8px 50px;
-	
+   margin: 8px 50px;
+   
 } 
 
 #detailtable_table:hover{
-	background-color: rgba(210, 222, 225, 0.5);
+   background-color: rgba(210, 222, 225, 0.5);
 }
 #bringpetinfo{
-	position: relative;
-	text-align: center;
+   position: relative;
+   text-align: center;
 }
 </style>
 </head>
 <body>
 <%@ include file="..//common/menu.jsp" %>
-
+<%-- <script type="text/javascript">
+<%if(loginUser.getAddress() == null)%>
+alert('주소를 입력해주세요');
+location.href='/doggybeta/index.jsp';
+</script> --%>
 <div id="wrap" >
 <div id="content">
 <input type="hidden" id="petuserid" name="petuserid" value="<%=loginUser.getUserId() %>">
@@ -162,44 +166,44 @@ font-size: 12px;
 
 <br>
 <form name="petinfo" method="post" action="/doggybeta/fplist">
-	<!-- 조건 검색 테이블  -->	
+   <!-- 조건 검색 테이블  -->   
 <input type="hidden" id="petno"><!-- detailView에 petno 전송  -->
- <div id="bringpetinfo">		
-<input type="hidden" id="userid" name="userid" value="<%=loginUser.getUserId() %>">	
+ <div id="bringpetinfo">      
+<input type="hidden" id="userid" name="userid" value="<%=loginUser.getUserId() %>">   
 </div>
  
-			<table id=searchpettable>
-				<tr>
-					<th width="300">주소</th>
-					
-				</tr>		
-				<tr>
-					<td>
-					  <select name="jido" onChange="categoryChange(this)" style="width:80px; height:30px;">
-						<option selected>-선택-</option>
-						<option value='서울시'>서울</option>
-						<option value='경기도'>경기</option>
-						<option value='대구'>대구</option>
-						<option value='인천'>인천</option>
-						<option value='강원'>강원</option>
-						<option value='충청'>충청</option>
-						<option value='대전'>대전</option>
-						<option value='울산'>울산</option>
-						<option value='부산'>부산</option>
-						<option value='경상'>경상</option>
-						<option value='전라'>전라</option>
-						<option value='제주'>제주</option>
-					</select>
-					<select name="detail" id="detail" style="width:80px; height:30px;">
-					<option>-선택-</option>
-					</select>
-					</td>
-					<td>
-					<input type="submit" value="펫시터 찾기" style="width:90px; height:30px;">					
-					</td>
-				</tr>
-			</table>
-			<br>
+         <table id=searchpettable>
+            <tr>
+               <th width="300">주소</th>
+               
+            </tr>      
+            <tr>
+               <td>
+                 <select name="jido" onChange="categoryChange(this)" style="width:80px; height:30px;">
+                  <option selected>-선택-</option>
+                  <option value='서울'>서울</option>
+                  <option value='경기'>경기</option>
+                  <option value='대구'>대구</option>
+                  <option value='인천'>인천</option>
+                  <option value='강원'>강원</option>
+                  <option value='충청'>충청</option>
+                  <option value='대전'>대전</option>
+                  <option value='울산'>울산</option>
+                  <option value='부산'>부산</option>
+                  <option value='경상'>경상</option>
+                  <option value='전라'>전라</option>
+                  <option value='제주'>제주</option>
+               </select>
+               <select name="detail" id="detail" style="width:80px; height:30px;">
+               <option>-선택-</option>
+               </select>
+               </td>
+               <td>
+               <input type="submit" value="펫시터 찾기" style="width:90px; height:30px;">               
+               </td>
+            </tr>
+         </table>
+         <br>
 </form>
 
 <br><br>
@@ -210,20 +214,20 @@ font-size: 12px;
 
 <hr>
 <br>
-	
-	<div id="detail" style="overflow-x: hidden; overflow-y:scroll; height:550px;">	
-		<%if(list != null) {for(Member m : list){%>
-		
-		<input type="hidden" value="<%=m.getUserId() %>">
-		
-		<div id="detailtable" style="float:left; width: 50%;">
-		<table id="detailtable_table" style="border: 1px solid #d2dee1; width: 300px; height: 350px" 
-		onclick="location.href='/doggybeta/sitterdetail?petSitterId=<%=m.getUserId()%>&service=<%=service%>'">							
-		<tr>
-		<td>
-		
-			<div style="position: relative;">
-		<%if(imglist.size() != 0) { %>
+   
+   <div id="detail" style="overflow-x: hidden; overflow-y:scroll; height:550px;">   
+      <%if(list != null) {for(Member m : list){%>
+      
+      <input type="hidden" value="<%=m.getUserId() %>">
+      
+      <div id="detailtable" style="float:left; width: 50%;">
+      <table id="detailtable_table" style="border: 1px solid #d2dee1; width: 300px; height: 350px" 
+      onclick="location.href='/doggybeta/sitterdetail?petSitterId=<%=m.getUserId()%>&service=<%=service%>'">                     
+      <tr>
+      <td>
+      
+         <div style="position: relative;">
+      <%if(imglist.size() != 0) { %>
           <img src="/doggybeta/files/profile/<%=m.getTitleImg() %>" height="150px;" width="100%;">   
          <%}else{ %>
          <img src="/doggybeta/resources/imgaes/로고test2.png" height="150px;" width="100%;">
@@ -233,27 +237,26 @@ font-size: 12px;
          <% if(m.getUserrefile() != null) {%>
          <img src="/doggybeta/files/profile/<%= m.getUserrefile() %>" style="height: 60px; width : 60px; border-radius: 50px; border: 3px solid white">
          <%}else{ %>
-         	<img src="/doggybeta/resources/imgaes/로고test2.png" style="height: 60px; width : 60px; border-radius: 50px; border: 3px solid white">
+            <img src="/doggybeta/resources/imgaes/로고test2.png" style="height: 60px; width : 60px; border-radius: 50px; border: 3px solid white">
          <%} %>
-         </div>	
+         </div>   
          </td>
          </tr>
          <tr><td><%=m.getUserName() %>에게 서비스를 신청해보세요!</td></tr>
          <tr><td><%=m.getAddress() %></td></tr>
          <tr><td>가격 : <%=m.getPrice() %>/1일 </td></tr>
-         <tr><td id="rating">평점 : </td></tr>   
-         <tr><td id="count">후기 : </td></tr>      
-		</table>
-		
-		</div>
-	<%}} else{ %>
-	
-<%} %>	
-		</div>
-		
-		
-	</div>
-	<!-- detailinfo닫기 -->
+              
+      </table>
+      
+      </div>
+   <%}} else{ %>
+   
+<%} %>   
+      </div>
+      
+      
+   </div>
+   <!-- detailinfo닫기 -->
 
 </div>
 <div style="float:left; width:40%;">
@@ -280,25 +283,25 @@ var geocoder = new daum.maps.services.Geocoder();
 var listData = [];
 listData.unshift('<%= address.get(i)%>');
 console.log(listData);
-	
+   
 
 listData.forEach(function(addr, index){
-	geocoder.addressSearch(listData, function(result, status){
-		if (status === daum.maps.services.Status.OK){
-			var coords = new daum.maps.LatLng(result[0].y, result[0].x);
-			
-			var marker = new daum.maps.Marker({
-				map: map,
-				position: coords
-			}); //if문 닫기
-			var infowindow = new daum.maps.InfoWindow({
-				content: '<div style="width:150px;text-align:center;padding:6px 0;"><%= list.get(i).getUserName() %>님 거주지</div>'
-				//disableAutoPan: true
-			});
-			infowindow.open(map, marker);
-			map.setCenter(coords);
-		}
-	});	
+   geocoder.addressSearch(listData, function(result, status){
+      if (status === daum.maps.services.Status.OK){
+         var coords = new daum.maps.LatLng(result[0].y, result[0].x);
+         
+         var marker = new daum.maps.Marker({
+            map: map,
+            position: coords
+         }); //if문 닫기
+         var infowindow = new daum.maps.InfoWindow({
+            content: '<div style="width:150px;text-align:center;padding:6px 0;"><%= list.get(i).getUserName() %>님 거주지</div>'
+            //disableAutoPan: true
+         });
+         infowindow.open(map, marker);
+         map.setCenter(coords);
+      }
+   });   
 });     
 </script>
 <%}} else{ } %>  
@@ -309,8 +312,8 @@ listData.forEach(function(addr, index){
 
 </div> 
 </div>
-		
+      
 
-	
+   
 </body>
 </html>

@@ -65,7 +65,7 @@ public class PetSitterListServlet extends HttpServlet {
 		
 		int count = new MemberService().countPetSitter(map);
 		//System.out.println("건 수 조회 : " + count);
-		HashMap<String, String> img = null;
+		HashMap<String, String> img = new HashMap<>();
 		ArrayList<SitterImage> imglist = null; 
 		ArrayList<String> address = null;
 		
@@ -75,7 +75,7 @@ public class PetSitterListServlet extends HttpServlet {
 			imglist = new MemberService().selectSitterFacilityImg(petSitterId);
 			
 			
-			/*img.put(petSitterId, imglist.get(0).getRenameFile());*/
+			img.put(petSitterId, imglist.get(0).getRenameFile());
 			}
 		address = new ArrayList<String>();
 		for(int i = 0; i < list.size(); i++) {
@@ -83,7 +83,7 @@ public class PetSitterListServlet extends HttpServlet {
 			//System.out.println("주소 : " + address);
 		if(imglist != null) {
 
-		//list.get(i).setTitleImg(imglist.get(i).getRenameFile());
+		list.get(i).setTitleImg(imglist.get(i).getRenameFile());
 		//System.out.println("컬럼 추가한 이미지 이름 : " + list.get(i).getTitleImg());
 
 		}

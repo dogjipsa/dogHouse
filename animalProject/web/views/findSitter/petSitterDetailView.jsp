@@ -88,7 +88,7 @@ header{
 }
 #wrap{
 	left: 200px;
-	border: 1px solid red;
+	
 	margin: 0 auto;
 }
 
@@ -541,8 +541,17 @@ function mypetCheck(){
 		    e.stopPropagation();
 		};
 		$('form').bind('submit', submitAction);
-	};
-	
+	}else{
+	function button_event(){
+		if (confirm("정말 삭제하시겠습니까??") == true){    //확인
+		    document.form.submit();
+		}else{   //취소
+		    return;
+		}
+		}
+	}
+
+
 };
 </script>
 
@@ -590,7 +599,7 @@ $(function() {
         return date.isAfter(disabled_start) && date.isBefore(disabled_end);
     	
       },  */ 
-      <%
+     <%--  <%
 	for(BookingCheckDate b : checkDateList){
 	System.out.println("뷰에서 데이트 확인! : "+b.toString());
 	%>
@@ -601,7 +610,7 @@ $(function() {
         //return date.isAfter(disabled_start) && date.isBefore(disabled_end) || date.isEqual(disabled_start) || date.isEqual(disabled_end);
       },
 	<%}
-%>  
+%>   --%>
 <%-- <%
 for(BookingCheckDate b : checkDateList){
 System.out.println("뷰에서 데이트 확인! : "+b.toString());

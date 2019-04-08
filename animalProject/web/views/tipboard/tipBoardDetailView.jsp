@@ -118,6 +118,8 @@ h2{
     border-top: 1px solid #ccc;
     width : 900px;
     margin: 20px 10px;
+     table-layout:fixed; 
+   word-break:break-all;
 }
 
 
@@ -235,7 +237,7 @@ h2{
 				<td width="100">
 					<!-- 댓글 작성자만 수정, 삭제 가능하도록 -->	
 					<div>
-					<%if(tboard.getUserId().equals(t.getUserId())){ %>
+					<%if(loginUser.getUserId().equals(t.getUserId())){ %>
 						<a href="/doggybeta/trsearch?trnum=<%= t.getTipReplyNo() %>">[수정]</a>	
 						<a href="/doggybeta/trdelete?trnum=<%= t.getTipReplyNo() %>&tnum=<%= t.getTipNo()%>">[삭제]</a>
 					<%}else{%>

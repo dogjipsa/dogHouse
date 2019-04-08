@@ -1,12 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" errorPage="memberError.jsp" %>
 <%
-	String addr = (String)request.getAttribute("addr");
-	String extra = (String)request.getAttribute("extra");
-	String daddr = (String)request.getAttribute("daddr");
-	String postcode = (String)request.getAttribute("postcode");
-	System.out.println("jsp 주소값 : " + addr);
-	System.out.println("jsp 주소값 : " + daddr);
+   String addr = (String)request.getAttribute("addr");
+   String extra = (String)request.getAttribute("extra");
+   String daddr = (String)request.getAttribute("daddr");
+   String postcode = (String)request.getAttribute("postcode");
+   System.out.println("jsp 주소값 : " + addr);
+   System.out.println("jsp 주소값 : " + daddr);
 %>
 <!DOCTYPE html>
 <html>
@@ -334,8 +334,8 @@ header{
 <!-- 테이블 종료 -->
 <div id="buttons">
 <input type="submit" value="정보수정하기" onclick="okbtn();">
-<input type="button" id="deletebtn" value="탈퇴하기">
-<input type="submit" value="메인으로" onclick="location.href='/doggybeta/jipsalogout'">
+<!-- <input type="button" id="deletebtn" value="탈퇴하기"> -->
+<input type="submit" value="메인으로" onclick="location.href='/doggybeta'">
 </div>
 </form>
 

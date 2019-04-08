@@ -40,7 +40,6 @@ h2{
 
 	
 
-<h2 align="center">오시는 길</h2>
 <img id="imgmap" src="/doggybeta/resources/images/map.JPG" width="400">
 
 <div id="map" style="width:800px; height:400px;"></div>
